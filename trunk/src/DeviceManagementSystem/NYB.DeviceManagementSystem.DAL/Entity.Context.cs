@@ -25,5 +25,7 @@ namespace NYB.DeviceManagementSystem.DAL
             throw new UnintentionalCodeFirstException();
         }
     
+        public DbSet<Table> Table { get; set; }
+        public DbSet<Table1> Table1 { get; set; }
     }
 }

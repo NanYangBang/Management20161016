@@ -63,17 +63,22 @@
       <DependentUpon>Entity.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Table.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Table1.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\NYB.DeviceManagementSystem.View\ConnectionStrings.config">
+      <Link>ConnectionStrings.config</Link>
+    </None>
+    <None Include="App.Config" />
     <EntityDeploy Include="Entity.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Entity.Designer.cs</LastGenOutput>
     </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.Config">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Entity.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Entity.edmx</DependentUpon>
