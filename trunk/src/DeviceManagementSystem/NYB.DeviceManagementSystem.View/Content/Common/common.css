@@ -1,0 +1,865 @@
+﻿html, body {
+    width: 100%;
+    height: 100%;
+    min-width: 600px;
+    overflow: hidden;
+    font-size: 12px;
+    font-family: SimSun,Arial;
+    background-color: #fff;
+}
+
+dl dt em {
+    color: Red;
+}
+
+.keyword-searcher input[type="text"] {
+    position: relative;
+    background: url(images/transparent.png);
+    line-height: 2px;
+    height: 24px;
+}
+
+.keyword-searcher span.hint {
+    position: absolute;
+    color: #ccc;
+    margin: 7px 0px 0px 5px;
+    line-height: 24px;
+    display: none;
+}
+
+.cursor-default {
+    cursor: default;
+}
+
+.op20 {
+    opacity: 0.2;
+    filter: alpha(opacity=20);
+    cursor: default;
+    zoom: 1;
+    display: inline-block;
+}
+
+a {
+    color: #069;
+}
+
+    a:visited {
+        color: #800080;
+    }
+
+input[type="password"] {
+    font-family: arial, helvetica, sans-serif;
+    font-size: 15px;
+}
+
+input[type="text"], input[type="password"], textarea {
+    border: 1px solid #ccc;
+    text-indent: 5px;
+}
+
+    input[type="text"][disabled], input[type="password"][disabled], textarea[disabled] {
+        border: none;
+        background: none;
+    }
+
+textarea {
+    line-height: 18px;
+    resize: none;
+}
+
+select {
+    vertical-align: middle;
+    height: 23px;
+}
+
+.wrap {
+    margin: 0 auto;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.page-container {
+    min-height: 100%;
+    position: relative;
+    margin: 0 auto;
+}
+
+.header {
+    min-width: 800px;
+    height: 80px;
+    position: relative;
+    background: transparent url(images/body-bg.png) repeat-x;
+}
+
+.nav-top {
+    height: 41px;
+    width: 100%;
+    min-width: 1200px;
+    background: transparent url(images/body-bg.png) repeat-x 0 -108px;
+    position: relative;
+    z-index: 2;
+}
+
+    .nav-top ul.main-view a:hover {
+        color: #fff;
+    }
+
+    .nav-top li.current {
+        background-color: #325eba;
+    }
+
+.nav-left {
+    position: fixed;
+    overflow: auto;
+    left: 0;
+}
+
+.nav-left-handle {
+    position: fixed;
+    background: #F6F6F6 url(images/nav-left-handler.png) no-repeat -10px center;
+    width: 10px;
+    height: 100%;
+    cursor: pointer;
+}
+
+    .nav-left-handle:hover {
+        background-color: #E1E1E1;
+    }
+
+.nav-left-handle-collapse {
+    background-position: 0 center;
+}
+
+.content {
+    overflow: hidden;
+    position: relative;
+    height: 500px;
+    padding-bottom: 50px;
+    visibility: hidden;
+}
+
+.sub-content {
+    position: absolute;
+    height: 100%;
+    left: 0;
+    overflow: auto;
+}
+
+.footer {
+    position: relative;
+    margin: -30px auto;
+    padding-top: 10px;
+    height: 30px;
+    text-align: center;
+    color: white;
+    font-family: Arial;
+    background: transparent url(images/body-bg.png) repeat-x;
+}
+
+/*头部*/
+.header-logo {
+    width: 444px;
+    height: 62px;
+    float: left;
+    margin: 8px 0 0 10px;
+    background-repeat: no-repeat;
+}
+
+.header-message {
+    position: absolute;
+    right: 0;
+    width: 350px;
+    height: 109px;
+    margin-right: 25px;
+    background: url(images/common.png) -781px 0px;
+}
+
+    .header-message ul {
+        width: 323px;
+        height: 40px;
+        margin-left: 16px;
+        color: #fff;
+    }
+
+        .header-message ul li {
+            height: 12px;
+            text-align: center;
+            line-height: 12px;
+            margin-left: 10px;
+            padding-right: 2px;
+            border-right: 2px solid #fff;
+            float: left;
+        }
+
+            .header-message ul li a {
+                margin-right: 4px;
+                color: White;
+                text-decoration: none;
+            }
+
+                .header-message ul li a:hover {
+                    text-decoration: underline;
+                }
+
+    .header-message p {
+        margin-top: 25px;
+        text-align: center;
+        color: #fff;
+    }
+
+    .header-message .last-border {
+        border: none;
+    }
+    /*变换颜色*/
+    .header-message ul li a.disappeared-color {
+        color: #255C77;
+    }
+
+    .header-message ul li a.flash-color {
+        color: #FFD766;
+    }
+
+    .header-message ul li a.remind-flash-color {
+        color: #84BBD6;
+    }
+/*导航条*/
+.nav-top ul.main-view {
+    text-align: center;
+    z-index: 2;
+    position: absolute;
+    float: left;
+}
+
+    .nav-top ul.main-view .main-view-link-list {
+        z-index: 6;
+        position: absolute;
+        width: 168px;
+        left: 0;
+        background-color: #fefefe;
+        border: 1px solid #ccc;
+        border-width: 0 1px;
+        -webkit-box-shadow: 0 1px 5px #ccc;
+        display: none;
+    }
+
+    .nav-top ul.main-view .shim {
+        z-index: 1;
+    }
+
+    .nav-top ul.main-view span {
+        cursor: pointer;
+    }
+
+    .nav-top ul.main-view .main-view-link-list li {
+        border-bottom: 1px solid #ccc; /*border-left: 10px solid #CCC;*/
+    }
+
+    .nav-top ul.main-view .main-view-link-list a {
+        color: #000;
+        background: none;
+    }
+
+        .nav-top ul.main-view .main-view-link-list a:hover {
+            background-color: #f0f0f0;
+        }
+
+    .nav-top ul.main-view > li {
+        float: left;
+        width: 170px;
+    }
+
+        .nav-top ul.main-view > li:hover {
+            background: transparent url(images/common.png) -255px -160px;
+        }
+
+    .nav-top ul.main-view a, .nav-top ul.main-view span {
+        color: #f5f5f5;
+        text-decoration: none;
+        font: 14px/41px SimSun;
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+
+    .nav-top ul.main-view a {
+        background: transparent url(images/common.png) -610px -160px;
+    }
+
+        .nav-top ul.main-view a.last {
+            background: transparent;
+        }
+
+    .nav-top ul.main-view li.nav-selected span {
+        color: #000;
+        cursor: default;
+        background: url(images/common.png) -440px -160px;
+    }
+
+    .nav-top ul.main-view li.nav-selected:hover {
+        background: none;
+    }
+
+    .nav-top ul.main-view > li > span {
+        background: transparent url(images/common.png) -22px -160px;
+        color: #006699;
+    }
+/*下拉菜单*/
+
+/*内容样式*/
+ul.view-path {
+    padding: 10px 20px 8px 10px;
+    background-color: #F7F7F7;
+}
+
+    ul.view-path li {
+        color: #666;
+        display: inline;
+    }
+
+        ul.view-path li a {
+            color: #333;
+            text-decoration: none;
+        }
+
+            ul.view-path li a:hover {
+                text-decoration: underline;
+            }
+
+    ul.view-path b {
+        font-weight: normal;
+        margin: 0 5px;
+    }
+/*表格样式*/
+
+.table-common {
+    table-layout: fixed;
+    width: 98%;
+    margin: 10px;
+}
+
+.sub-content > .table-common {
+    min-width: 980px;
+}
+
+form .table-common {
+    min-width: 0;
+}
+
+.table-common thead tr {
+    background: #E4ECF8 url(images/background_vertical.png);
+    height: 30px;
+    line-height: 30px;
+}
+
+.table-common thead th {
+    border: 1px solid #4170b2;
+    color: #26497a;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.table-common thead .th-check {
+    width: 30px;
+}
+
+.table-common tbody a {
+    margin-right: 10px;
+}
+
+.table-common tbody td.tc a {
+    margin: 0;
+}
+
+.table-common thead th a {
+    text-decoration: none;
+    padding-bottom: 3px;
+    border-bottom: 1px dotted #aaa;
+    cursor: pointer;
+}
+
+    .table-common thead th a:visited {
+        color: #069;
+    }
+
+.table-common tbody tr {
+    width: 100%;
+    height: 27px;
+}
+
+.table-common tbody tr {
+    background-color: #fff;
+}
+
+    .table-common tbody tr.even {
+        background-color: #f6f6f6;
+    }
+
+    .table-common tbody tr:nth-child(even) {
+        background-color: #f6f6f6;
+    }
+
+    .table-common tbody tr:hover {
+        background-color: #cadef8;
+    }
+
+.table-common tbody td {
+    border: 1px solid #C0C1C3;
+    border-top: none;
+    vertical-align: middle;
+    height: 27px;
+    padding-left: 10px;
+    line-height: 180%;
+    word-break: break-all;
+}
+
+    .table-common tbody td em {
+        color: Red;
+    }
+
+    .table-common tbody td.tc {
+        padding: 0;
+    }
+
+.table-common .table-last {
+    width: 205px;
+}
+
+.table-common .checkbox-column {
+    width: 32px;
+    padding-left: 0;
+}
+
+.table-common thead th.name-column {
+    width: 100px;
+    min-width: 100px;
+}
+
+.table-common thead th.phone-column {
+    width: 100px;
+    min-width: 100px;
+}
+
+.table-common tbody td.ellipsis-content {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.table-common th.nowrap {
+    width: 70px;
+}
+
+.table-common thead th.nowrap.reset-width {
+    width: auto;
+}
+
+.table-common thead th.shortdate-column {
+    width: 70px;
+    min-width: 70px;
+}
+
+.table-common thead th.date-column {
+    width: 130px;
+    min-width: 130px;
+}
+
+.table-common thead th.money-column {
+    width: 116px;
+}
+
+.table-common thead th.operation-column-0 {
+    width: 50px;
+}
+
+.table-common thead th.operation-column-1 {
+    width: 90px;
+}
+
+.table-common thead th.operation-column-2 {
+    width: 120px;
+}
+
+.table-common thead th.operation-column-3 {
+    width: 130px;
+}
+
+.table-common thead th.operation-column-4 {
+    width: 200px;
+}
+
+.table-common thead th.operation-column-5 {
+    width: 268px;
+}
+
+.table-common thead th.name-column {
+    width: 80px;
+}
+
+.table-common.gray-header thead tr {
+    background-color: #F3F3F3;
+}
+
+.table-common.gray-header thead th {
+    border: 1px solid #CCC;
+    color: #333;
+}
+
+.tree-hight {
+    background-color: #069;
+    padding: 1px;
+    color: White;
+    cursor: pointer;
+}
+
+.tree-title {
+    width: 200px;
+    height: 32px;
+    background-color: #EEE;
+    font-weight: bold;
+    position: relative;
+}
+
+    .tree-title p {
+        padding: 9px;
+        font-size: 13px;
+        color: #666;
+    }
+
+#tree.filetree .select-file {
+    color: white;
+    background-color: #4E94CF;
+    padding-left: 20px;
+}
+
+.link-after-button:visited {
+    color: #069;
+}
+
+button, input[type="button"], input[type="submit"], .button {
+    background-image: url(images/background_vertical.png);
+    background-repeat: repeat-x;
+    background-position: 0 -106px;
+    -webkit-user-select: none;
+    border: 1px solid #CFCFCF;
+    border-radius: 2px;
+    color: #000;
+    cursor: pointer;
+    font-size: 12px;
+    height: 29px;
+    line-height: 29px;
+    margin: 5px 2px;
+    min-width: 50px;
+    width: 80px;
+    text-align: center;
+}
+
+    button:hover, input[type="button"]:hover, input[type="submit"]:hover, .button:hover {
+        background-position: 0 -134px;
+        border: 1px solid #C6C6C6;
+        box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+        color: #333;
+    }
+
+.button {
+    height: 27px;
+    text-decoration: none;
+    color: #000;
+}
+
+    .button:visited {
+        color: #000;
+    }
+
+.hide {
+    display: none;
+}
+/*验证样式*/
+.field-validation-error {
+    color: #ff0000;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+dl.dl-common > dd.input-validation-error {
+    color: red;
+}
+
+.input-validation-error {
+    border: 1px solid red;
+    background-color: #ffeeee;
+    color: red;
+}
+
+.validation-summary-errors li, .validation-summary-hint li {
+    list-style-type: square;
+}
+
+.validation-summary-errors {
+    color: red;
+}
+
+    .validation-summary-errors ul, .validation-summary-hint ul {
+        margin-top: 3px;
+        padding-left: 15px;
+    }
+
+.validation-summary-valid {
+    display: none;
+}
+
+.validation-summary-hint {
+    color: #325eba;
+}
+
+button.blue-button, input[type="button"].blue-button, input[type="submit"].blue-button, .button.blue-button {
+    border: 1px solid #3079ED;
+    color: white;
+    background-color: #4D90FE;
+    background-position: 0 -50px;
+}
+
+    button.blue-button:hover, input[type="button"].blue-button:hover, input[type="submit"].blue-button:hover, .button.blue-button:hover {
+        border: 1px solid #2F5BB7;
+        color: white;
+        background-color: #357ae8;
+        background-position: 0 -78px;
+    }
+
+button.disabled-button, input[type="button"].disabled-button, input[type="submit"].disabled-button, button.disabled-button:hover, input[type="button"].disabled-button:hover, input[type="submit"].disabled-button:hover {
+    color: #aaa;
+}
+
+.sort-arrow {
+    font-family: Webdings;
+}
+
+.mvcPager input[type="button"], input[type="submit"].small-button {
+    width: 50px;
+    height: 23px;
+    margin: 0 0 0 6px;
+    line-height: normal;
+}
+
+.mvcPager a {
+    margin-right: -3px;
+}
+
+.table-common thead .list-tr {
+    background-color: #F3F3F3;
+}
+
+    .table-common thead .list-tr th {
+        border: 1px solid #CCC;
+        color: #333;
+    }
+
+.table-common tbody.list-body td {
+    word-break: break-all;
+    padding: 3px;
+    line-height: 16px;
+}
+
+.ui-datepicker-trigger {
+    vertical-align: -2px;
+}
+
+a[dynamic] {
+    display: none;
+}
+
+.min-width68 {
+    min-width: 68px;
+}
+
+.min-width980 {
+    min-width: 980px;
+}
+
+select.normal {
+    width: 140px;
+}
+
+.common-details-panel {
+    overflow: auto;
+    border-bottom: none;
+    width: 740px;
+    border: 30px solid #F1F1F1;
+    margin: 20px auto 0;
+}
+
+    .common-details-panel h2 {
+        background: #E3E8EB url(images/background_vertical.png);
+        padding: 5px 0;
+        text-indent: 10px;
+        font-size: 13px;
+        color: #26497A;
+        margin-bottom: 10px;
+        cursor: default;
+    }
+
+        .common-details-panel h2 b {
+            font-family: Webdings;
+            font-size: 14px;
+            margin: 0 10px;
+        }
+
+    .common-details-panel .last-modified-time {
+        margin: 10px;
+        padding: 8px 0 0 14px;
+        color: #4D90FE;
+    }
+
+.common-details-operation-panel {
+    border: 30px solid #F1F1F1;
+    border-width: 0 30px 20px;
+    width: 100%;
+    height: 40px;
+    clear: both;
+    background-color: #F1F1F1;
+    width: 740px;
+    margin: 0 auto;
+}
+
+.filetree span.folder, .filetree span.file {
+    cursor: pointer;
+}
+
+.wd50 {
+    width: 50px;
+}
+
+.wd80 {
+    width: 80px;
+}
+
+.waitShowWhenDel {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 99999;
+    background-color: Black;
+    display: none;
+    margin: 0;
+    left: 0;
+    top: 0;
+}
+
+.waitMessageWhendel {
+    text-align: center;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 30%;
+}
+
+dl.dl-common {
+    width: 870px;
+    overflow: auto;
+}
+
+    dl.dl-common > dt {
+        width: 96px;
+        color: #666;
+        text-align: right;
+        margin-right: 3px;
+        padding-top: 4px;
+        height: 18px;
+        float: left;
+        margin-bottom: 10px;
+    }
+
+    dl.dl-common > dd {
+        width: 190px;
+        color: #333;
+        float: left;
+        margin-bottom: 10px;
+    }
+
+.common-details-panel dl.dl-common textarea {
+    width: 420px;
+}
+
+.common-details-panel.date-time dl.dl-common > dd {
+    width: 140px;
+}
+
+.common-details-panel.date-time dl.dl-common input[type="text"] {
+    width: 110px;
+}
+
+.view-mode img.ui-datepicker-trigger {
+    display: none;
+}
+
+span.view-mode {
+    padding: 5px;
+    line-height: 31px;
+    cursor: default;
+    color: #555;
+}
+
+textarea.view-mode, input[type].view-mode {
+    border: none;
+    background: none;
+    outline: none;
+}
+
+a.button.view-mode {
+    margin-left: 120px;
+}
+
+    a.button.view-mode.right {
+        margin-left: 745px;
+    }
+
+a.icon {
+    display: inline-block;
+    width: 14px;
+    height: 16px;
+    background: url(images/common.png) no-repeat;
+    cursor: pointer;
+}
+
+    a.icon.op20 {
+        cursor: default;
+    }
+
+    a.icon.up {
+        background-position: -500px -335px;
+    }
+
+    a.icon.down {
+        background-position: -515px -335px;
+    }
+
+    a.icon.remove {
+        height: 15px;
+        background-position: -529px -335px;
+    }
+
+    a.icon.edit {
+        height: 15px;
+        background-position: -485px -335px;
+    }
+
+a.link-button {
+    display: inline-block;
+    border: 1px solid #CFCFCF;
+    background: #F7F7F7 url(images/background_vertical.png) repeat-x 0 -105px;
+    width: 80px;
+    height: 28px;
+    text-decoration: none;
+    color: black;
+    text-align: center;
+    line-height: 29px;
+    cursor: default;
+}
+
+ul li {
+    list-style-type: none;
+}

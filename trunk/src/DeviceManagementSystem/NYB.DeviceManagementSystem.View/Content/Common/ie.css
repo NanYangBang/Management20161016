@@ -1,0 +1,17 @@
+﻿.inline-block,.uploadify
+{
+	display: inline-block;
+	_display: inline;
+	_zoom: 1;
+	*display: inline;
+	*zoom: 1;
+}
+.arrow-down
+{
+	vertical-align: 1px;
+	*vertical-align:5px;
+}
+.link-after-button
+{
+	*vertical-align: 8px;
+}
