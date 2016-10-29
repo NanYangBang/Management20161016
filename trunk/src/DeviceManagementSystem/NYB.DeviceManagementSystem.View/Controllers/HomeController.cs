@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NYB.DeviceManagementSystem.BLL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,6 +11,9 @@ namespace NYB.DeviceManagementSystem.View.Controllers
     {
         public ActionResult Index()
         {
+            //var cl = new Class1();
+            //cl.Test();
+
             ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
 
             return View();

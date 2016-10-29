@@ -11,7 +11,7 @@ namespace NYB.DeviceManagementSystem.View.Models
     public class UsersContext : DbContext
     {
         public UsersContext()
-            : base("DefaultConnection")
+            : base("DeviceMgmtForDB")
         {
         }
 
