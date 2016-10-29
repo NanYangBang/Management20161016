@@ -1,49 +1,74 @@
-﻿<!DOCTYPE html>
-<html lang="zh">
-    <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <meta charset="utf-8" />
-        <title>@ViewBag.Title - 我的 ASP.NET MVC 应用程序</title>
-        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-        <meta name="viewport" content="width=device-width" />
-        @Styles.Render("~/Content/css")
-        @Scripts.Render("~/bundles/modernizr")
-    </head>
-    <body>
-        <header>
-            <div class="content-wrapper">
-                <div class="float-left">
-                    <p class="site-title">@Html.ActionLink("将你的徽标放置在此处", "Index", "Home")</p>
-                </div>
-                <div class="float-right">
-                    <section id="login">
-                        @Html.Partial("_LoginPartial")
-                    </section>
-                    <nav>
-                        <ul id="menu">
-                            <li>@Html.ActionLink("主页", "Index", "Home")</li>
-                            <li>@Html.ActionLink("关于", "About", "Home")</li>
-                            <li>@Html.ActionLink("联系方式", "Contact", "Home")</li>
-                        </ul>
-                    </nav>
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/Common/Common.css")
+@Styles.Render("~/Content/Common/ie.css")
+@Styles.Render("~/Content/Site.css")
+    <script type="text/javascript">
+        var Identity = {
+            AUTH: '@(Request.Cookies[FormsAuthentication.FormsCookieName] == null ? String.Empty : Request.Cookies[FormsAuthentication.FormsCookieName].Value)',
+            ASPSESSID: '@(Session.SessionID)'
+        };
+    </script>
+    @Scripts.Render("~/Scripts/jquery")
+    @Scripts.Render("~/Scripts/scripts")
+</head>
+<body>
+    <div class="wrap">
+        <div class="page-container">
+            @Html.Partial("Header")
+            @Html.Partial("NavTop")
+            <ul class="view-path">
+                正在载入...
+            </ul>
+            <div class="content">
+                @Html.Partial("NavLeft")
+                <div class="sub-content">
+                    @RenderBody()
                 </div>
             </div>
-        </header>
-        <div id="body">
-            @RenderSection("featured", required: false)
-            <section class="content-wrapper main-content clear-fix">
-                @RenderBody()
-            </section>
         </div>
-        <footer>
-            <div class="content-wrapper">
-                <div class="float-left">
-                    <p>&copy; @DateTime.Now.Year - 我的 ASP.NET MVC 应用程序</p>
-                </div>
-            </div>
-        </footer>
+    </div>
+    @Html.Partial("Footer")
+    @*<script src="@Url.Content(String.Format("~/Scripts/common.js?preventCaching={0}", DateTime.Now.Ticks))" type="text/javascript"></script>*@
+    @RenderSection("scripts", false)
 
-        @Scripts.Render("~/bundles/jquery")
-        @RenderSection("scripts", required: false)
-    </body>
+    <script type="text/javascript">
+        ResourceUrl = {
+            ViewIndex: '@Html.Raw(Url.Action("ViewIndex", "WebMap"))',
+            HomePage: '@Html.Raw(Url.Action(String.Empty, String.Empty))',
+            CurrentControllerName: '@Request.RequestContext.RouteData.Values["controller"]'
+        };
+
+        $(document).ready(function () {
+            InitializeFrameSize();
+            select_list();
+            //HighlightNavTopItem('@ViewBag.FunctionID');
+            FindMarkAndGenerateNavigateElements();
+            BindAllDisabledButton();
+            AddEditorLeavingPrompt();
+
+        });
+
+        window.Url = {
+            Action: function (action, controller, params) {
+                controller = controller || '@(Request.RequestContext.RouteData.Values["controller"].ToString())';
+                var paramString = '';
+                for (var key in params) {
+                    paramString += String.format('{0}{1}={2}', paramString.length == 0 ? '?' : '&', key, params[key]);
+                }
+                return String.format(unescape('@(Url.Action("{0}", "{1}"))'), action, controller) + paramString;
+            },
+            Content: function (path) {
+                if (path.indexOf(':') > -1) {
+                    return path;
+                }
+                return String.format(unescape('@(Url.Content("~/{0}"))'), path);
+            }
+        }
+    </script>
+
+</body>
 </html>
