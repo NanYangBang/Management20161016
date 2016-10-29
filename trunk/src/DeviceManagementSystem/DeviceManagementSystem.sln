@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NYB.DeviceManagementSystem.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NYB.DeviceManagementSystem.ViewModel", "NYB.DeviceManagementSystem.ViewModel\NYB.DeviceManagementSystem.ViewModel.csproj", "{5DD77363-BB16-45D5-9C9B-4B7ED9661BFA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NYB.DeviceManagementSystem.View", "NYB.DeviceManagementSystem.View\NYB.DeviceManagementSystem.View.csproj", "{0CBF768F-396C-4496-B9A4-2B56DB91B353}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{5DD77363-BB16-45D5-9C9B-4B7ED9661BFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5DD77363-BB16-45D5-9C9B-4B7ED9661BFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5DD77363-BB16-45D5-9C9B-4B7ED9661BFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CBF768F-396C-4496-B9A4-2B56DB91B353}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CBF768F-396C-4496-B9A4-2B56DB91B353}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CBF768F-396C-4496-B9A4-2B56DB91B353}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CBF768F-396C-4496-B9A4-2B56DB91B353}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

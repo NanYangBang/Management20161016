@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,6 +44,20 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NYB.DeviceManagementSystem.Common\NYB.DeviceManagementSystem.Common.csproj">
+      <Project>{bb2d51e1-9c37-43eb-8043-60ba56847762}</Project>
+      <Name>NYB.DeviceManagementSystem.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NYB.DeviceManagementSystem.DAL\NYB.DeviceManagementSystem.DAL.csproj">
+      <Project>{da464986-93e9-45b7-9ff3-4f063a1fff81}</Project>
+      <Name>NYB.DeviceManagementSystem.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NYB.DeviceManagementSystem.ViewModel\NYB.DeviceManagementSystem.ViewModel.csproj">
+      <Project>{5dd77363-bb16-45d5-9c9b-4b7ed9661bfa}</Project>
+      <Name>NYB.DeviceManagementSystem.ViewModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
