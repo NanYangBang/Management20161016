@@ -303,6 +303,9 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\Silverlight.js" />
     <Content Include="Scripts\swfobject.js" />
+    <Content Include="UploadFile\Logo\current-logo.png" />
+    <Content Include="UploadFile\Logo\default-logo.png" />
+    <Content Include="UploadFile\Logo\preview-logo.png" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
