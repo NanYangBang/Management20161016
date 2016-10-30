@@ -2,16 +2,17 @@
 	Layout = "~/Views/Shared/NavTopTemplate.cshtml";
 }
 <ul>
-    <li>
-        设备管理
+    <li actionname="设备管理">
+        <a href="@Url.Action("Index","Home")"> 设备管理</a>
     </li>
-    <li>
-        系统管理
+    <li actionname="系统管理">
+        <a href="@Url.Action("Index", "SystemManager")"> 系统管理</a>
     </li>
-    <li>
-        权限管理
+    <li actionname="权限管理">
+        <a href="@Url.Action("Index", "SystemManager")"> 权限管理</a>
     </li>
-    <li>
-        关于我们
+    <li actionname="关于我们">
+        <a>关于我们</a>
     </li>
 </ul>
+

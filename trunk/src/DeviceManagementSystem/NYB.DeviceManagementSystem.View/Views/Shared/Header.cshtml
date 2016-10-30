@@ -17,9 +17,9 @@
     </div>
 </div>
 <script type="text/javascript">
-    $(function () {
+    @*$(function () {
         $.get('@(Url.Action("MessageReminder", "Shared", new { _ = DateTime.Now.Ticks }))', function (data) {
             $(data).insertAfter($('.header-message li:first'));
         });
-    });
+    });*@
 </script>

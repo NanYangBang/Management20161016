@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -12,8 +12,9 @@
             ASPSESSID: '@(Session.SessionID)'
         };
     </script>
-    @Scripts.Render("~/Scripts/jquery")
-    @Scripts.Render("~/Scripts/scripts")
+    @Scripts.Render("~/Scripts/jquery.js")
+    @Scripts.Render("~/Scripts/common.js")
+    @Scripts.Render("~/Scripts/base.js");
 </head>
 <body>
     <div class="wrap">
@@ -36,38 +37,34 @@
     @RenderSection("scripts", false)
 
     <script type="text/javascript">
-        ResourceUrl = {
+        @*ResourceUrl = {
             ViewIndex: '@Html.Raw(Url.Action("ViewIndex", "WebMap"))',
             HomePage: '@Html.Raw(Url.Action(String.Empty, String.Empty))',
             CurrentControllerName: '@Request.RequestContext.RouteData.Values["controller"]'
-        };
+        };*@
 
         $(document).ready(function () {
-            InitializeFrameSize();
-            select_list();
+            //InitializeFrameSize();
+            //select_list();
             //HighlightNavTopItem('@ViewBag.FunctionID');
-            FindMarkAndGenerateNavigateElements();
-            BindAllDisabledButton();
-            AddEditorLeavingPrompt();
+            //FindMarkAndGenerateNavigateElements();
+            //BindAllDisabledButton();
+            //AddEditorLeavingPrompt();
+            //actionname();
+            HighLeight();
 
         });
 
-        window.Url = {
-            Action: function (action, controller, params) {
-                controller = controller || '@(Request.RequestContext.RouteData.Values["controller"].ToString())';
-                var paramString = '';
-                for (var key in params) {
-                    paramString += String.format('{0}{1}={2}', paramString.length == 0 ? '?' : '&', key, params[key]);
-                }
-                return String.format(unescape('@(Url.Action("{0}", "{1}"))'), action, controller) + paramString;
-            },
-            Content: function (path) {
-                if (path.indexOf(':') > -1) {
-                    return path;
-                }
-                return String.format(unescape('@(Url.Content("~/{0}"))'), path);
-            }
+        function HighLeight() {
+            var actionname = $('.sub-content div').first().attr('actionname');
+            var navTop = $('.nav-top ul li[actionname="' + actionname + '"]');
+            navTop.find('a').css('background-color','white').css('color','black');
+            
+            var otherAction = $('.nav-top ul li[actionname!="' + actionname + '"]');
+            otherAction.find('a').css('color', 'white');
+            
         }
+        
     </script>
 
 </body>
