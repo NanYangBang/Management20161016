@@ -54,7 +54,7 @@
             HighLeight();
 
         });
-
+        
         function HighLeight() {
             var actionname = $('.sub-content div').first().attr('actionname');
             var navTop = $('.nav-top ul li[actionname="' + actionname + '"]');
@@ -62,7 +62,6 @@
             
             var otherAction = $('.nav-top ul li[actionname!="' + actionname + '"]');
             otherAction.find('a').css('color', 'white');
-            
         }
         
     </script>
