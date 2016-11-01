@@ -1,0 +1,83 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+@using NYB.DeviceManagementSystem.ViewModel
+@model List<NYB.DeviceManagementSystem.ViewModel.User>
+
+<form method="get">
+    <select name="project">
+        <option value="1">项目管理部</option>
+    </select>
+    <input type="text" name="userName" id="seacheName" value="" />
+    <input type="submit" class="small-button" id="btnSearch" value="搜索" />
+</form>
+<table class="table-common" id="pileInfo">
+    <thead>
+        <tr>
+            <th class="checkbox-column">
+                <input type="checkbox" id="checkedAll_id" class="checkedAll" />
+            </th>
+            <th>
+                <a href="" sortby="">用户名</a>
+            </th>
+            <th>
+                <a href="" sortby="">登录名</a>
+            </th>
+            <th>
+                <a href="" sortby="">地址</a>
+            </th>
+            <th>
+                <a href="" sortby="">联系电话</a>
+            </th>
+            <th>
+                <a href="" sortby="">电子邮件</a>
+            </th>
+            <th class="operation-column">
+                操作
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            //string randomUrl = String.Format("{0}://{1}:{2}{3}", Request.Url.Scheme, Request.Url.Host, Request.Url.Port, ViewBag.RandomUrl);
+            foreach (var user in Model)
+            {
+                <tr pileid="">
+                    <td>
+                        @user.UserName
+                    </td>
+                    <td>
+                        @user.LogoName
+                    </td>
+                    <td>
+                        @user.Address
+                    </td>
+                    <td>
+                        @user.TelPhone
+                    </td>
+                    <td>
+                        @user.Email
+                    </td>
+                    <td>
+                        @*@{var routeValues = new PileID = pile.PileID, returnUrl = Request.Url.AbsoluteUri, _ = DateTime.Now.Ticks };}
+                            @if (pile.Editable)
+                            {
+                                @Html.ActionLink("实时填报", "RealTimeSubmit", routeValues)
+                                @Html.ActionLink("上传报表", "QualityCheckInformation", routeValues)
+                                @Html.ActionLink("修改", "DataDetail", routeValues)
+                            }
+                            else
+                            {
+                                @Html.ActionLink("查看填报数据", "RealTimeSubmit", routeValues)
+                                @Html.ActionLink("查看报表", "QualityCheckInformation", routeValues)
+                            }*@
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+
+
