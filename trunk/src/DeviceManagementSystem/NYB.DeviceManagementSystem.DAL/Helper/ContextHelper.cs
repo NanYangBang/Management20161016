@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace System.Data.Entity
 {
-    public class ContextHelper
+    public static class ContextHelper
     {
         public static IQueryable<T> Page<T, K>(this IQueryable<T> source, out int totalRecord, int pageIndex = 1, int pageSize = -1, Expression<Func<T, K>> orderby = null,
             bool ascending = true, bool addOrderByEmpty = true) where T : class
