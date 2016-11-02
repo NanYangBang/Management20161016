@@ -32,6 +32,13 @@ namespace NYB.DeviceManagementSystem.View
             );
 
             routes.MapRoute(
+                "noparam", // 路由名称
+                "{controller}/{action}/{id}" // 带有参数的 URL
+               // new { controller = "Account", action = "LogOn", id = UrlParameter.Optional }, // 参数默认值
+                //new { controller = ".*Api$" }
+            );
+            
+            routes.MapRoute(
                 "Pile", // 路由名称
                 "Pile/{action}/{id}", // 带有参数的 URL
                 new { controller = "PileConInfo", action = "Index", id = UrlParameter.Optional }// 参数默认值				
@@ -51,7 +58,7 @@ namespace NYB.DeviceManagementSystem.View
             routes.MapRoute(
                 "Default", // 路由名称
                 "{controller}/{action}/{id}", // 带有参数的 URL
-                new { controller = "Home", action = "Index", id = UrlParameter.Optional } // 参数默认值
+                new { controller = "Account", action = "LogOn", id = UrlParameter.Optional } // 参数默认值
             );
         }
 

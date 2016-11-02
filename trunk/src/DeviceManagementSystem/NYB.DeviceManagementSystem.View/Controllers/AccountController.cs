@@ -16,5 +16,10 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             return View();
         }
 
+        public ActionResult LogOn()
+        {
+            return View();
+        }
+
     }
 }

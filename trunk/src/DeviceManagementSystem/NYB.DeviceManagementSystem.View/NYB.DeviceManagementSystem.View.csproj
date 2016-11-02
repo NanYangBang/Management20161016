@@ -194,6 +194,9 @@
     <Compile Include="Views\Account\UserController.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Account\images\LogOnBackground.png" />
+    <Content Include="Content\Account\images\LogOnBodyBackground.jpg" />
+    <Content Include="Content\Account\LogOn.css" />
     <Content Include="Content\Common\common.css" />
     <Content Include="Content\Common\cursor\pg_dn.cur" />
     <Content Include="Content\Common\cursor\pg_up.cur" />
@@ -391,7 +394,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>1382</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:1382/</IISUrl>
+          <IISUrl>http://localhost:1888/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
