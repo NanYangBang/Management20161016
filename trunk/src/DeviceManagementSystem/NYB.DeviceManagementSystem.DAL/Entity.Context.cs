@@ -25,7 +25,8 @@ namespace NYB.DeviceManagementSystem.DAL
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<Table> Table { get; set; }
-        public DbSet<Table1> Table1 { get; set; }
+        public DbSet<aspnet_Profile> aspnet_Profile { get; set; }
+        public DbSet<Manufacturer> Manufacturer { get; set; }
+        public DbSet<Project> Project { get; set; }
     }
 }

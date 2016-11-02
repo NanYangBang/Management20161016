@@ -5,8 +5,10 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="65631f27c2d04759b0feeb716134f87f" Name="Diagram1" >
-        <EntityTypeShape EntityType="DeviceMgmtModel.Table" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="DeviceMgmtModel.Table1" Width="1.5" PointX="0.75" PointY="2.75" />
+        <EntityTypeShape EntityType="DeviceMgmtModel.aspnet_Profile" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="DeviceMgmtModel.Manufacturer" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="DeviceMgmtModel.Project" Width="1.5" PointX="0.75" PointY="1.5" />
+        <AssociationConnector Association="DeviceMgmtModel.FK_Manufacturer_Project" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
