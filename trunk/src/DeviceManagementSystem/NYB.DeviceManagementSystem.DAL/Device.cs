@@ -12,28 +12,29 @@ namespace NYB.DeviceManagementSystem.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class Project
+    public partial class Device
     {
-        public Project()
+        public Device()
         {
-            this.Manufacturer = new HashSet<Manufacturer>();
-            this.Device = new HashSet<Device>();
-            this.DeviceType = new HashSet<DeviceType>();
             this.MaintainRecord = new HashSet<MaintainRecord>();
             this.RepairRecord = new HashSet<RepairRecord>();
-            this.Supplier = new HashSet<Supplier>();
-            this.User = new HashSet<User>();
         }
     
         public string ID { get; set; }
         public string Name { get; set; }
+        public string DeviceTypeID { get; set; }
+        public string ManufacturerID { get; set; }
+        public string SupplierID { get; set; }
+        public Nullable<System.DateTime> ProductDate { get; set; }
+        public Nullable<System.DateTime> MaintainDate { get; set; }
+        public string ProjectID { get; set; }
+        public bool IsValid { get; set; }
     
-        public virtual ICollection<Manufacturer> Manufacturer { get; set; }
-        public virtual ICollection<Device> Device { get; set; }
-        public virtual ICollection<DeviceType> DeviceType { get; set; }
+        public virtual DeviceType DeviceType { get; set; }
+        public virtual Manufacturer Manufacturer { get; set; }
+        public virtual Project Project { get; set; }
+        public virtual Supplier Supplier { get; set; }
         public virtual ICollection<MaintainRecord> MaintainRecord { get; set; }
         public virtual ICollection<RepairRecord> RepairRecord { get; set; }
-        public virtual ICollection<Supplier> Supplier { get; set; }
-        public virtual ICollection<User> User { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace NYB.DeviceManagementSystem.View.Controllers
 {
@@ -10,8 +11,16 @@ namespace NYB.DeviceManagementSystem.View.Controllers
     {
         public ActionResult Index()
         {
-            //var cl = new Class1();
-            //cl.Test();
+            Roles.CreateRole("超级管理员");
+            //Roles.GetRolesForUser();
+
+
+            //Membership.CreateUser("", "");
+            //Membership.GetAllUsers();
+            //Membership.GetUser("");
+            //Membership.ValidateUser("","");
+            //Roles.CreateRole("");
+            //Roles.AddUsersToRole();
 
             ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
 

@@ -12,9 +12,9 @@ namespace NYB.DeviceManagementSystem.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class Manufacturer
+    public partial class Supplier
     {
-        public Manufacturer()
+        public Supplier()
         {
             this.Device = new HashSet<Device>();
         }
@@ -28,7 +28,7 @@ namespace NYB.DeviceManagementSystem.DAL
         public string ProjectID { get; set; }
         public bool IsValid { get; set; }
     
-        public virtual Project Project { get; set; }
         public virtual ICollection<Device> Device { get; set; }
+        public virtual Project Project { get; set; }
     }
 }

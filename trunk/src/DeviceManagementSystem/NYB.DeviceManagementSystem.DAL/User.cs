@@ -12,23 +12,11 @@ namespace NYB.DeviceManagementSystem.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class Manufacturer
+    public partial class User
     {
-        public Manufacturer()
-        {
-            this.Device = new HashSet<Device>();
-        }
-    
-        public string ID { get; set; }
-        public string Name { get; set; }
-        public string Address { get; set; }
-        public string Contact { get; set; }
-        public string Mobile { get; set; }
-        public string Phone { get; set; }
+        public string UserID { get; set; }
         public string ProjectID { get; set; }
-        public bool IsValid { get; set; }
     
         public virtual Project Project { get; set; }
-        public virtual ICollection<Device> Device { get; set; }
     }
 }
