@@ -182,6 +182,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SystemManagerController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
@@ -350,6 +351,7 @@
     <Content Include="Views\Shared\PartialView\MessageReminder.cshtml" />
     <Content Include="Views\SystemManager\Index.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\Account\LogOn.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NYB.DeviceManagementSystem.BLL\NYB.DeviceManagementSystem.BLL.csproj">
