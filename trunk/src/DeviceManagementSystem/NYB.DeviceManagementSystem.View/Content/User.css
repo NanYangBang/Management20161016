@@ -1,0 +1,25 @@
+﻿body {
+}
+
+.userSearchForm {
+    width: 100%;
+    margin-left: 10px;
+}
+
+[name="project"] {
+    width: 200px;
+    height: 30px;
+}
+
+[name="userName"] {
+    height: 18px;
+    margin-left: 10px;
+    /*line-height:30px;*/
+}
+
+#btnSearch {
+    width:100px;
+    height:30px;
+    margin-top:-10px;
+    line-height:30px;
+}

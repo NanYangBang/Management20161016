@@ -17,11 +17,23 @@ namespace NYB.DeviceManagementSystem.DAL
         public Project()
         {
             this.Manufacturer = new HashSet<Manufacturer>();
+            this.Device = new HashSet<Device>();
+            this.DeviceType = new HashSet<DeviceType>();
+            this.MaintainRecord = new HashSet<MaintainRecord>();
+            this.RepairRecord = new HashSet<RepairRecord>();
+            this.Supplier = new HashSet<Supplier>();
+            this.User = new HashSet<User>();
         }
     
         public string ID { get; set; }
         public string Name { get; set; }
     
         public virtual ICollection<Manufacturer> Manufacturer { get; set; }
+        public virtual ICollection<Device> Device { get; set; }
+        public virtual ICollection<DeviceType> DeviceType { get; set; }
+        public virtual ICollection<MaintainRecord> MaintainRecord { get; set; }
+        public virtual ICollection<RepairRecord> RepairRecord { get; set; }
+        public virtual ICollection<Supplier> Supplier { get; set; }
+        public virtual ICollection<User> User { get; set; }
     }
 }
