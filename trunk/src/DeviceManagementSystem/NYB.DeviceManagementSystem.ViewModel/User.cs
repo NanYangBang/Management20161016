@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace NYB.DeviceManagementSystem.ViewModel
 {
@@ -24,6 +26,9 @@ namespace NYB.DeviceManagementSystem.ViewModel
         /// <summary>
         /// 密码
         /// </summary>
+        [Required(ErrorMessage = "密码必填")]
+        [DataType(DataType.Password)]
+        [Display(Name = "密码")]
         public string Pwd
         {
             get { return _pwd; }
@@ -35,6 +40,8 @@ namespace NYB.DeviceManagementSystem.ViewModel
         /// <summary>
         /// 登录名
         /// </summary>
+        [Required(ErrorMessage = "用户名必填")]
+        [Display(Name = "用户名")]
         public string LogoName
         {
             get { return _logoName; }
@@ -81,7 +88,6 @@ namespace NYB.DeviceManagementSystem.ViewModel
             get { return _email; }
             set { _email = value; }
         }
-
 
     }
 }

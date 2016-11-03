@@ -137,7 +137,7 @@ select {
     position: relative;
     height: 500px;
     padding-bottom: 50px;
-    visibility: hidden;
+    /*visibility: hidden;*/
 }
 
 .sub-content {
