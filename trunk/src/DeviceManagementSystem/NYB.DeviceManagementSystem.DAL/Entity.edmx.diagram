@@ -5,31 +5,30 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="65631f27c2d04759b0feeb716134f87f" Name="Diagram1" >
-        <EntityTypeShape EntityType="DeviceMgmtModel.aspnet_Profile" Width="1.5" PointX="0.75" PointY="4.75" />
-        <EntityTypeShape EntityType="DeviceMgmtModel.Manufacturer" Width="1.5" PointX="3" PointY="1" />
-        <EntityTypeShape EntityType="DeviceMgmtModel.Attachment" Width="1.5" PointX="5.375" PointY="0.75" />
-        <EntityTypeShape EntityType="DeviceMgmtModel.Device" Width="1.5" PointX="5.25" PointY="5.875" />
-        <EntityTypeShape EntityType="DeviceMgmtModel.DeviceType" Width="1.5" PointX="3" PointY="12.375" />
-        <EntityTypeShape EntityType="DeviceMgmtModel.MaintainRecord" Width="1.5" PointX="7.5" PointY="4.25" />
-        <EntityTypeShape EntityType="DeviceMgmtModel.Permision" Width="1.5" PointX="7.375" PointY="0.75" />
-        <EntityTypeShape EntityType="DeviceMgmtModel.RepairRecord" Width="1.5" PointX="10.5" PointY="4.25" />
-        <EntityTypeShape EntityType="DeviceMgmtModel.Supplier" Width="1.5" PointX="3" PointY="6.375" />
-        <EntityTypeShape EntityType="DeviceMgmtModel.User" Width="1.5" PointX="3" PointY="10" />
+        <EntityTypeShape EntityType="DeviceMgmtModel.Attachment" Width="1.5" PointX="2.75" PointY="9.25" />
+        <EntityTypeShape EntityType="DeviceMgmtModel.Device" Width="1.5" PointX="3" PointY="3.625" />
+        <EntityTypeShape EntityType="DeviceMgmtModel.DeviceType" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="DeviceMgmtModel.Log" Width="1.5" PointX="10" PointY="3" />
+        <EntityTypeShape EntityType="DeviceMgmtModel.MaintainRecord" Width="1.5" PointX="5.25" PointY="5.75" />
+        <EntityTypeShape EntityType="DeviceMgmtModel.Manufacturer" Width="1.5" PointX="0.75" PointY="4.125" />
+        <EntityTypeShape EntityType="DeviceMgmtModel.Permision" Width="1.5" PointX="4.75" PointY="9.25" />
+        <EntityTypeShape EntityType="DeviceMgmtModel.RepairRecord" Width="1.5" PointX="5.25" PointY="2.625" />
+        <EntityTypeShape EntityType="DeviceMgmtModel.Supplier" Width="1.5" PointX="0.75" PointY="8.375" />
+        <EntityTypeShape EntityType="DeviceMgmtModel.User" Width="1.5" PointX="7.75" PointY="2.5" />
         <AssociationConnector Association="DeviceMgmtModel.FK_Device_DeviceType" />
         <AssociationConnector Association="DeviceMgmtModel.FK_Device_Manufacturer" />
         <AssociationConnector Association="DeviceMgmtModel.FK_Device_Supplier" />
         <AssociationConnector Association="DeviceMgmtModel.FK_MaintainRecord_Device" />
         <AssociationConnector Association="DeviceMgmtModel.FK_RepairRecord_Device" />
-        <EntityTypeShape EntityType="DeviceMgmtModel.Project" Width="1.5" PointX="0.75" PointY="8.125" />
-        <AssociationConnector Association="DeviceMgmtModel.FK_Device_Project" />
+        <AssociationConnector Association="DeviceMgmtModel.FK_Log_User" />
+        <EntityTypeShape EntityType="DeviceMgmtModel.Project" Width="1.5" PointX="0.75" PointY="4.5" />
         <AssociationConnector Association="DeviceMgmtModel.FK_DeviceType_Project" />
         <AssociationConnector Association="DeviceMgmtModel.FK_MaintainRecord_Project" />
         <AssociationConnector Association="DeviceMgmtModel.FK_Manufacturer_Project" />
         <AssociationConnector Association="DeviceMgmtModel.FK_RepairRecord_Project" />
         <AssociationConnector Association="DeviceMgmtModel.FK_Supplier_Project" />
         <AssociationConnector Association="DeviceMgmtModel.FK_User_Project" />
-        <AssociationConnector Association="DeviceMgmtModel.FK_User_User" />
-        </Diagram>
+      </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

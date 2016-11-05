@@ -14,20 +14,24 @@ namespace NYB.DeviceManagementSystem.DAL
     
     public partial class User
     {
+        public User()
+        {
+            this.Log = new HashSet<Log>();
+        }
+    
         public string UserID { get; set; }
         public string ProjectID { get; set; }
         public string Name { get; set; }
-        public string Address { get; set; }
-        public string Telephone { get; set; }
-        public bool IsValid { get; set; }
         public string LoginName { get; set; }
         public string Email { get; set; }
+        public string Address { get; set; }
+        public string Telephone { get; set; }
         public System.DateTime CreateDate { get; set; }
         public string CreateUserID { get; set; }
+        public bool IsValid { get; set; }
         public bool IsSuperAdminCreate { get; set; }
     
+        public virtual ICollection<Log> Log { get; set; }
         public virtual Project Project { get; set; }
-        public virtual User User1 { get; set; }
-        public virtual User User2 { get; set; }
     }
 }

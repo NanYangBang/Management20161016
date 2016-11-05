@@ -35,6 +35,5 @@ namespace NYB.DeviceManagementSystem.DAL
         public virtual Supplier Supplier { get; set; }
         public virtual ICollection<MaintainRecord> MaintainRecord { get; set; }
         public virtual ICollection<RepairRecord> RepairRecord { get; set; }
-        public virtual Project Project { get; set; }
     }
 }
