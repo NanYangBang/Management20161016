@@ -1,17 +1,21 @@
-﻿.inline-block,.uploadify
-{
-	display: inline-block;
-	_display: inline;
-	_zoom: 1;
-	*display: inline;
-	*zoom: 1;
+﻿.inline-block, .uploadify {
+    display: inline-block;
+    _display: inline;
+    _zoom: 1;
+    *display: inline;
+    *zoom: 1;
 }
-.arrow-down
-{
-	vertical-align: 1px;
-	*vertical-align:5px;
+
+.arrow-down {
+    vertical-align: 1px;
+    *vertical-align: 5px;
 }
-.link-after-button
-{
-	*vertical-align: 8px;
+
+.link-after-button {
+    *vertical-align: 8px;
+}
+
+.btn-opreate {
+    width: 1000px;
+    margin-left: 10px;
 }

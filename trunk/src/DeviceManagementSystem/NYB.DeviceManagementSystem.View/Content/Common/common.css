@@ -174,7 +174,6 @@ select {
     height: 109px;
     margin-right: 25px;
     background: url(images/common.png) -781px 0px;
-    margin-top: -15px;
 }
 
     .header-message ul {
@@ -182,6 +181,7 @@ select {
         height: 40px;
         margin-left: 16px;
         color: #fff;
+        margin-top: 10px;
     }
 
         .header-message ul li {
@@ -551,7 +551,7 @@ button, input[type="button"], input[type="submit"], .button {
     cursor: pointer;
     font-size: 12px;
     height: 29px;
-    line-height: 29px;
+    /*line-height: 29px;*/
     margin: 5px 2px;
     min-width: 50px;
     width: 80px;
@@ -871,10 +871,6 @@ ul li {
     height: 100%;
 }
 
-.nav-top {
-    margin-top: -12px;
-}
-
     .nav-top ul li {
         float: left;
         width: 200px;
@@ -902,9 +898,13 @@ ul li {
             -webkit-border-radius: 15px 15px 0px 0px;
             -o-border-radius: 15px 15px 0px 0px;
             -ms-border-radius: 15px 15px 0px 0px;
-            color:white;
+            color: white;
         }
 
             .nav-top ul li a:hover {
                 background-color: none;
             }
+
+.btn-opreate {
+    margin-left: 8px;
+}

@@ -197,6 +197,7 @@
     <Content Include="Content\Account\images\LogOnBackground.png" />
     <Content Include="Content\Account\images\LogOnBodyBackground.jpg" />
     <Content Include="Content\Account\LogOn.css" />
+    <Content Include="Content\base.css" />
     <Content Include="Content\Common\common.css" />
     <Content Include="Content\Common\cursor\pg_dn.cur" />
     <Content Include="Content\Common\cursor\pg_up.cur" />
@@ -263,7 +264,8 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
-    <Content Include="Content\User.css" />
+    <Content Include="Content\User\AddUpdateUserPartial.css" />
+    <Content Include="Content\User\User.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="ConnectionStrings.config" />
@@ -309,6 +311,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\Silverlight.js" />
     <Content Include="Scripts\swfobject.js" />
+    <Content Include="Scripts\User\Index.js" />
     <Content Include="UploadFile\Logo\current-logo.png" />
     <Content Include="UploadFile\Logo\default-logo.png" />
     <Content Include="UploadFile\Logo\preview-logo.png" />
@@ -356,6 +359,8 @@
     <Content Include="Views\SystemManager\Index.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Account\LogOn.cshtml" />
+    <Content Include="Views\User\AddUser.cshtml" />
+    <Content Include="Views\User\PartialView\AddUpdatePartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NYB.DeviceManagementSystem.BLL\NYB.DeviceManagementSystem.BLL.csproj">

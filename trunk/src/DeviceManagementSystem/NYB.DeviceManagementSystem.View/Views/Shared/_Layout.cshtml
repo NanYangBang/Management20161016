@@ -3,9 +3,10 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>@ViewBag.Title</title>
+    @*@Styles.Render("~/Content/Site.css")*@
     @Styles.Render("~/Content/Common/common.css")
-    @Styles.Render("~/Content/Site.css")
-
+    @Styles.Render("~/Content/base.css")
+    
     <script type="text/javascript">
         var Identity = {
             AUTH: '@(Request.Cookies[FormsAuthentication.FormsCookieName] == null ? String.Empty : Request.Cookies[FormsAuthentication.FormsCookieName].Value)',
