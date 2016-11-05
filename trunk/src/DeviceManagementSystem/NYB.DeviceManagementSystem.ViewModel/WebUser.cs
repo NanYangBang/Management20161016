@@ -8,6 +8,15 @@ namespace NYB.DeviceManagementSystem.ViewModel
 {
     public class WebUser : ViewModelBase
     {
+        private string _id;
+
+        public string ID
+        {
+            get { return _id; }
+            set { _id = value; }
+        }
+
+
         private string _userName = string.Empty;
 
         /// <summary>
@@ -70,6 +79,16 @@ namespace NYB.DeviceManagementSystem.ViewModel
         {
             get { return _email; }
             set { _email = value; }
+        }
+
+        private string _role = string.Empty;
+        /// <summary>
+        /// 角色
+        /// </summary>
+        public string Role
+        {
+            get { return _role; }
+            set { _role = value; }
         }
     }
 }

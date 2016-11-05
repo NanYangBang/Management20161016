@@ -122,6 +122,14 @@
           </Key>
           <Property Name="UserID" Type="nchar" MaxLength="36" Nullable="false" />
           <Property Name="ProjectID" Type="nchar" MaxLength="36" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LoginName" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Telephone" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="CreateUserID" Type="nchar" MaxLength="36" Nullable="false" />
+          <Property Name="IsValid" Type="bit" Nullable="false" />
         </EntityType>
         <Association Name="FK_Device_DeviceType">
           <End Role="DeviceType" Type="Self.DeviceType" Multiplicity="1" />
@@ -524,6 +532,14 @@
           <Property Name="UserID" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="true" />
           <Property Name="ProjectID" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="Project" Relationship="DeviceMgmtModel.FK_User_Project" FromRole="User" ToRole="Project" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Telephone" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="IsValid" Type="Boolean" Nullable="false" />
+          <Property Name="LoginName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateUserID" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="true" />
         </EntityType>
         <Association Name="FK_Device_DeviceType">
           <End Type="DeviceMgmtModel.DeviceType" Role="DeviceType" Multiplicity="1" />
@@ -809,6 +825,14 @@
           <EntitySetMapping Name="User">
             <EntityTypeMapping TypeName="DeviceMgmtModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="CreateUserID" ColumnName="CreateUserID" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="LoginName" ColumnName="LoginName" />
+                <ScalarProperty Name="IsValid" ColumnName="IsValid" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
               </MappingFragment>

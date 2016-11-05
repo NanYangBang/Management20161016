@@ -40,9 +40,71 @@ namespace NYB.DeviceManagementSystem.BLL
 
         public CResult<bool> AddUser(WebUser webUser)
         {
-            return new CResult<bool>(false);
+            if (Roles.RoleExists(webUser.Role) == false)
+            {
+                return new CResult<bool>(false, ErrorCode.AddUserFault);
+            }
 
-            //Membership 
+            using (DeviceMgmtEntities context = new DeviceMgmtEntities())
+            {
+                MembershipCreateStatus status;
+                var currentUser = Membership.CreateUser(webUser.LogoName, webUser.Pwd, webUser.Email, null, null, true, null, out status);
+
+                if (status == MembershipCreateStatus.Success)
+                {
+                    Roles.AddUserToRole(currentUser.UserName, webUser.Role);
+
+                    var entity = new User()
+                    {
+                        UserID = Guid.NewGuid().ToString(),
+                        Name = webUser.UserName,
+                        ProjectID = webUser.ProjectID,
+                        Address = webUser.Address,
+                        Telephone = webUser.TelPhone,
+                         CreateDate=DateTime.Now,
+                          //CreateUser=webUser.CreateUserID,
+                           
+                    };
+
+                    try
+                    {
+                        if (context.SaveChanges() > 0)
+                        {
+                            return new CResult<bool>(true);
+                        }
+                        else
+                        {
+                            Membership.DeleteUser(currentUser.UserName, true);
+                            return new CResult<bool>(false, ErrorCode.AddUserFault);
+                        }
+                    }
+                    catch
+                    {
+                        Membership.DeleteUser(currentUser.UserName, true);
+                        return new CResult<bool>(false, ErrorCode.AddUserFault);
+                    }
+                }
+            }
+
+            return new CResult<bool>(false);
         }
+
+        //public CResult<bool> IsUserNameExist(string userLoginName)
+        //{
+        //    if (string.IsNullOrWhiteSpace(userLoginName))
+        //    {
+        //        return new CResult<bool>(false, ErrorCode.ParameterError);
+        //    }
+
+        //    userLoginName = userLoginName.Trim();
+
+        //    using (var context = new DeviceMgmtEntities())
+        //    {
+        //        if (context.User.Any(u=>u.UserID))
+        //        {
+                    
+        //        }
+        //    }
+        //}
     }
 }
