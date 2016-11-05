@@ -28,7 +28,7 @@ namespace NYB.DeviceManagementSystem.DAL
         public string ProjectID { get; set; }
         public bool IsValid { get; set; }
     
-        public virtual Project Project { get; set; }
         public virtual ICollection<Device> Device { get; set; }
+        public virtual Project Project { get; set; }
     }
 }

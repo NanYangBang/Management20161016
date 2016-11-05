@@ -3,13 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 
 namespace NYB.DeviceManagementSystem.ViewModel
 {
-    public class User
+    public class WebUser : ViewModelBase
     {
+        private string _id;
+
+        public string ID
+        {
+            get { return _id; }
+            set { _id = value; }
+        }
+
+
         private string _userName = string.Empty;
 
         /// <summary>
@@ -26,9 +33,6 @@ namespace NYB.DeviceManagementSystem.ViewModel
         /// <summary>
         /// 密码
         /// </summary>
-        [Required(ErrorMessage = "密码必填")]
-        [DataType(DataType.Password)]
-        [Display(Name = "密码")]
         public string Pwd
         {
             get { return _pwd; }
@@ -40,8 +44,6 @@ namespace NYB.DeviceManagementSystem.ViewModel
         /// <summary>
         /// 登录名
         /// </summary>
-        [Required(ErrorMessage = "用户名必填")]
-        [Display(Name = "用户名")]
         public string LogoName
         {
             get { return _logoName; }
@@ -69,16 +71,6 @@ namespace NYB.DeviceManagementSystem.ViewModel
             set { _telPhone = value; }
         }
 
-        private string _projectID = string.Empty;
-
-        /// <summary>
-        /// 项目所属
-        /// </summary>
-        public string ProjectID
-        {
-            get { return _projectID; }
-            set { _projectID = value; }
-        }
         private string _email = string.Empty;
         /// <summary>
         /// 电子邮件
@@ -89,5 +81,14 @@ namespace NYB.DeviceManagementSystem.ViewModel
             set { _email = value; }
         }
 
+        private string _role = string.Empty;
+        /// <summary>
+        /// 角色
+        /// </summary>
+        public string Role
+        {
+            get { return _role; }
+            set { _role = value; }
+        }
     }
 }

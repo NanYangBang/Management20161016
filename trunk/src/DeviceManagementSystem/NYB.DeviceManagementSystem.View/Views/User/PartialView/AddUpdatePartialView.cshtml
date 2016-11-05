@@ -1,0 +1,56 @@
+﻿@using NYB.DeviceManagementSystem.ViewModel;
+@using NYB.DeviceManagementSystem.Common;
+@model NYB.DeviceManagementSystem.ViewModel.User
+    @{
+        ViewBag.Title = "AddUpdatePartialView";
+    }
+
+    <link rel="Stylesheet" href="@Url.Content("~/Content/User/AddUpdateUserPartial.css")" />
+    <div class="common-details-panel">
+        <h2><b>6</b>桩基基本信息</h2>
+        <fieldset>
+            <table class="UpdatePile-table">
+                <tr>
+                    <td>
+                        <b><em>*</em>用户名</b>
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.UserName)
+                        @Html.ValidationMessageFor(model => model.UserName)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>项目名称</b>
+                    </td>
+                    <td>
+                        <select value="" name="PileBelongID">
+                            <option id="firstOption" value="-1">请选择构件归属</option>
+                            <option value=""></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>桩基类型</b>
+                    </td>
+                    <td>
+                        <select id="pile_types" value="@Model.PileTypeID" name="PileTypeID"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>备注</b>
+                    </td>
+                    <td></td>
+                </tr>
+            </table>
+        </fieldset>
+    </div>
+    <div class="common-details-operation-panel">
+        <p class="UpdatePile-btn">
+            <input type="submit" id="btnSave" value="保存" class="blue-button" />
+            <a class="link-after-button" href="">返回</a>
+        </p>
+    </div>
+

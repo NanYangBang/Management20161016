@@ -19,5 +19,10 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             return View(userList);
         }
 
+        public ActionResult AddUser()
+        {
+            return View();
+        }
+
     }
 }

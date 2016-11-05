@@ -1,0 +1,81 @@
+﻿.UpdatePile-table td
+{
+	position: relative;
+}
+
+.UpdatePile-table tr td b
+{
+	display: block;
+	width: 54px;
+	font-weight: normal;
+	margin-right: 10px;
+	text-align: right;
+}
+.UpdatePile-table tr
+{
+	height: 50px;
+}
+.UpdatePile-table tr td input
+{
+	height: 28px;
+	width: 200px;
+	line-height: 28px;
+	border: 1px solid #cccccc;
+}
+#pileBasicInfo fieldset
+{
+	padding: 25px;
+}
+#pileBasicInfo
+{
+	margin-top: 30px;
+}
+.UpdatePile-btn
+{
+	margin-left: 88px;
+}
+.UpdatePile-btn input
+{
+	margin-right: 10px;
+}
+#pileBasicInfo fieldset legend
+{
+	margin-left: 145px;
+}
+.UpdatePile-table tr td b em
+{
+	color: Red;
+}
+.download
+{
+	margin-top: 10px;
+}
+.UpdatePile-table select
+{
+	width: 160px;
+}
+.errorMessage
+{
+	color: Red;
+	position: absolute;
+	top: 38px;
+	left: 0;
+}
+.common-details-panel, .common-details-operation-panel
+{
+	width: 400px;
+}
+.common-details-panel input
+{
+	width: 200px;
+}
+.common-details-panel select
+{
+	width: 202px;
+}
+.field-validation-error
+{
+	position: absolute;
+	top: 42px;
+	left: 0;
+}

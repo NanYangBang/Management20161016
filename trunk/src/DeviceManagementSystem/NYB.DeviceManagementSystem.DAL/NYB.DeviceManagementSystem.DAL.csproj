@@ -75,6 +75,7 @@
       <DependentUpon>Entity.edmx</DependentUpon>
     </Compile>
     <Compile Include="Helper\ContextHelper.cs" />
+    <Compile Include="Helper\PredicateExtension.cs" />
     <Compile Include="MaintainRecord.cs">
       <DependentUpon>Entity.tt</DependentUpon>
     </Compile>
