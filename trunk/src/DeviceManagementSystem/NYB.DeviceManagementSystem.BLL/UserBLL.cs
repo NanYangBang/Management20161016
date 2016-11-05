@@ -9,6 +9,7 @@ using NYB.DeviceManagementSystem.Common;
 using NYB.DeviceManagementSystem.ViewModel;
 using NYB.DeviceManagementSystem.DAL;
 using System.Linq.Expressions;
+using System.Web.Security;
 
 namespace NYB.DeviceManagementSystem.BLL
 {
@@ -35,6 +36,13 @@ namespace NYB.DeviceManagementSystem.BLL
 
                 return new CResult<List<WebProject>>(result);
             }
+        }
+
+        public CResult<bool> AddUser(WebUser webUser)
+        {
+            return new CResult<bool>(false);
+
+            //Membership 
         }
     }
 }

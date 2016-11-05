@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NYB.DeviceManagementSystem.ViewModel
 {
-    public class ProjectViewModel : ViewModelBase
+    public class WebProject : ViewModelBase
     {
         private string _id;
 

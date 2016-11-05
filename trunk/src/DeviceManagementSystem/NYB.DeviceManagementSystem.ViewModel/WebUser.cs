@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NYB.DeviceManagementSystem.ViewModel
 {
-    public class User : ViewModelBase
+    public class WebUser : ViewModelBase
     {
         private string _userName = string.Empty;
 
