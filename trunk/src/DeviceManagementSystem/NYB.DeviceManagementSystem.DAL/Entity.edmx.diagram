@@ -28,6 +28,7 @@
         <AssociationConnector Association="DeviceMgmtModel.FK_RepairRecord_Project" />
         <AssociationConnector Association="DeviceMgmtModel.FK_Supplier_Project" />
         <AssociationConnector Association="DeviceMgmtModel.FK_User_Project" />
+        <AssociationConnector Association="DeviceMgmtModel.FK_User_User" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

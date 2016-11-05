@@ -14,7 +14,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
 
         public ActionResult Index()
         {
-            List<User> userList = new List<User>();
+            List<WebUser> userList = new List<WebUser>();
 
             return View(userList);
         }

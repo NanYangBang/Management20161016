@@ -24,7 +24,10 @@ namespace NYB.DeviceManagementSystem.DAL
         public string Email { get; set; }
         public System.DateTime CreateDate { get; set; }
         public string CreateUserID { get; set; }
+        public bool IsSuperAdminCreate { get; set; }
     
         public virtual Project Project { get; set; }
+        public virtual User User1 { get; set; }
+        public virtual User User2 { get; set; }
     }
 }

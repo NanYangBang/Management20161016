@@ -1,15 +1,29 @@
-﻿using System;
+﻿using NYB.DeviceManagementSystem.Common;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace System.Data.Entity
+namespace NYB.DeviceManagementSystem.DAL
 {
     public static class ContextHelper
     {
+        public static CResult<bool> Save(this DbContext context)
+        {
+            if (context.SaveChanges() > 0)
+            {
+                return new CResult<bool>(true);
+            }
+            else
+            {
+                return new CResult<bool>(false, ErrorCode.SaveDbChangesFailed);
+            }
+        }
+
         public static IQueryable<T> Page<T, K>(this IQueryable<T> source, out int totalRecord, int pageIndex = 1, int pageSize = -1, Expression<Func<T, K>> orderby = null,
             bool ascending = true, bool addOrderByEmpty = true) where T : class
         {
@@ -45,8 +59,8 @@ namespace System.Data.Entity
             }
         }
 
-        public static IQueryable<T> Page<T>(this IQueryable<T> source, out int totalRecord, string orderbyFieldName = null,
-    bool ascending = true, int pageIndex = 1, int pageSize = -1, bool addOrderByEmpty = true) where T : class
+        public static IQueryable<T> Page<T>(this IQueryable<T> source, out int totalRecord, int pageIndex = 1, int pageSize = -1, string orderbyFieldName = null,
+    bool ascending = true, bool addOrderByEmpty = true) where T : class
         {
             totalRecord = source.Count();
 
