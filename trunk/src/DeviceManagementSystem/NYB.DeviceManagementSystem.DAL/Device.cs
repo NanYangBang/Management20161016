@@ -32,9 +32,9 @@ namespace NYB.DeviceManagementSystem.DAL
     
         public virtual DeviceType DeviceType { get; set; }
         public virtual Manufacturer Manufacturer { get; set; }
-        public virtual Project Project { get; set; }
         public virtual Supplier Supplier { get; set; }
         public virtual ICollection<MaintainRecord> MaintainRecord { get; set; }
         public virtual ICollection<RepairRecord> RepairRecord { get; set; }
+        public virtual Project Project { get; set; }
     }
 }

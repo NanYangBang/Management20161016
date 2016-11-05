@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NYB.DeviceManagementSystem.ViewModel
 {
-    public class User
+    public class User : ViewModelBase
     {
         private string _userName = string.Empty;
 
@@ -62,16 +62,6 @@ namespace NYB.DeviceManagementSystem.ViewModel
             set { _telPhone = value; }
         }
 
-        private string _projectID = string.Empty;
-
-        /// <summary>
-        /// 项目所属
-        /// </summary>
-        public string ProjectID
-        {
-            get { return _projectID; }
-            set { _projectID = value; }
-        }
         private string _email = string.Empty;
         /// <summary>
         /// 电子邮件
@@ -81,7 +71,5 @@ namespace NYB.DeviceManagementSystem.ViewModel
             get { return _email; }
             set { _email = value; }
         }
-
-
     }
 }
