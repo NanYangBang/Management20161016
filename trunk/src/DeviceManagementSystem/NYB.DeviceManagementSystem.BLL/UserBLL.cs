@@ -11,11 +11,13 @@ using NYB.DeviceManagementSystem.DAL;
 using System.Linq.Expressions;
 using System.Web.Security;
 using NYB.DeviceManagementSystem.Common.Enum;
+using System.Data;
 
 namespace NYB.DeviceManagementSystem.BLL
 {
     public class UserBLL
     {
+        private BusinessModelEnum _businessModel = BusinessModelEnum.用户;
         public CResult<List<WebUser>> GetUserList(out int totalCount, string projectID, string userID, string searchInfo, int pageIndex = 1, int pageSize = 10, string orderby = null, bool ascending = false)
         {
             Expression<Func<User, bool>> filter = t => t.ProjectID == projectID && t.UserID != userID && t.IsSuperAdminCreate == false;
@@ -140,6 +142,8 @@ namespace NYB.DeviceManagementSystem.BLL
                         IsSuperAdminCreate = isSuperAdminCreate
                     };
 
+                    LoggerBLL.AddLog(context, webUser.CreateUserID, OperatTypeEnum.添加, _businessModel, "用户名：" + webUser.LogoName);
+
                     try
                     {
                         if (context.SaveChanges() > 0)
@@ -162,137 +166,83 @@ namespace NYB.DeviceManagementSystem.BLL
 
             return new CResult<bool>(false);
         }
-        //public CResult<bool> DeleteUserByID(string userID, string operatorUserID)
-        //{
-        //    using (var context = new DeviceMgmtEntities())
-        //    {
-        //        var entity = context.User.FirstOrDefault(t => t.IsValid && t.UserID == userID);
-        //        if (entity != null)
-        //        {
-        //            entity.IsValid = false;
+        public CResult<bool> DeleteUserByID(string userID, string operatorUserID)
+        {
+            using (var context = new DeviceMgmtEntities())
+            {
+                var entity = context.User.FirstOrDefault(t => t.IsValid && t.UserID == userID);
+                if (entity != null)
+                {
+                    var deleteFlag = Membership.DeleteUser(entity.LoginName);
+                    if (deleteFlag == false)
+                    {
+                        return new CResult<bool>(false, ErrorCode.SaveDbChangesFailed);
+                    }
 
-        //            return new CResult<bool>(true);
-        //        }
-        //        else
-        //        {
-        //            return new CResult<WebUser>(null, ErrorCode.DataNoExist);
-        //        }
-        //    }
-        //}
+                    entity.IsValid = false;
 
-        //public CResult<bool> UpdateUser(WebUser webUser)
-        //{
-        //    if (string.IsNullOrWhiteSpace(webUser.UserName))
-        //    {
-        //        return new CResult<bool>(false, ErrorCode.ParameterError);
-        //    }
-        //    using (var db = new WarehouseContext())
-        //    {
-        //        var user = Membership.GetUser(webUser.UserName);
-        //        if (user == null)
-        //        {
-        //            return new CResult<bool>(false, ErrorCode.UserNoExist);
-        //        }
+                    LoggerBLL.AddLog(context, userID, OperatTypeEnum.删除, _businessModel, "用户名：" + entity.LoginName);
 
-        //        var roles = new List<string>();
-        //        var hasAddRoles = Roles.GetRolesForUser(webUser.UserName);
-        //        if (webUser.IsMonitor)
-        //        {
-        //            roles.Add(PermissionEnum.班长.ToString());
-        //        }
-        //        if (webUser.IsPutinMan)
-        //        {
-        //            roles.Add(PermissionEnum.入库员.ToString());
-        //        }
-        //        if (webUser.IsRemovalMan)
-        //        {
-        //            roles.Add(PermissionEnum.出库员.ToString());
-        //        }
-        //        var hasExistRoles = hasAddRoles.Intersect(roles);
-        //        var toDelRoles = hasAddRoles.Except(hasExistRoles);
-        //        var toAddRoles = roles.Except(hasExistRoles);
-        //        if (toDelRoles.Count() > 0)
-        //        {
-        //            Roles.RemoveUserFromRoles(webUser.UserName, toDelRoles.ToArray());
-        //        }
-        //        if (toAddRoles.Count() > 0)
-        //        {
-        //            Roles.AddUserToRoles(webUser.UserName, toAddRoles.ToArray());
-        //        }
+                    return context.Save();
+                }
+                else
+                {
+                    return new CResult<bool>(false, ErrorCode.DataNoExist);
+                }
+            }
+        }
 
-        //        var userID = (int)user.ProviderUserKey;
-        //        var repository = RepositoryIoc.GetUsersInfoRepository(db);
-        //        var userInfo = repository.FirstOrDefault(r => r.ID == userID);
-        //        if (userInfo == null)
-        //        {
-        //            return new CResult<bool>(false, ErrorCode.UserNoExist);
-        //        }
-        //        userInfo.Phone = webUser.Phone;
-        //        userInfo.Adress = webUser.Adress;
-        //        if (repository.Update(userInfo) == EntityState.Modified)
-        //        {
-        //            if (db.SaveChanges() > 0)
-        //            {
-        //                return new CResult<bool>(true);
-        //            }
-        //            else
-        //            {
-        //                return new CResult<bool>(false, ErrorCode.SaveDbChangesFailed);
-        //            }
-        //        }
-        //        else
-        //        {
-        //            return new CResult<bool>(true);
-        //        }
-        //    }
-        //}
+        public CResult<bool> UpdateUser(WebUser webUser)
+        {
+            using (var context = new DeviceMgmtEntities())
+            {
+                var entity = context.User.FirstOrDefault(t => t.UserID == webUser.ID);
+                if (entity == null)
+                {
+                    return new CResult<bool>(false, ErrorCode.DataNoExist);
+                }
 
-        //public CResult<bool> ResetPassword(string newPassword, string userName)
-        //{
-        //    if (string.IsNullOrWhiteSpace(newPassword) || string.IsNullOrWhiteSpace(userName))
-        //    {
-        //        return new CResult<bool>(false, ErrorCode.ParameterError);
-        //    }
-        //    var user = Membership.GetUser(userName);
-        //    if (user == null)
-        //    {
-        //        return new CResult<bool>(false, ErrorCode.UserNoExist);
-        //    }
+                entity.Address = webUser.Address;
+                entity.Email = webUser.Email;
+                entity.Name = webUser.UserName;
+                entity.Telephone = webUser.TelPhone;
 
-        //    var resetPassword = user.ResetPassword();
-        //    var flag = user.ChangePassword(resetPassword, newPassword);
-        //    if (flag)
-        //    {
-        //        return new CResult<bool>(true);
-        //    }
-        //    else
-        //    {
-        //        return new CResult<bool>(false, ErrorCode.SaveDbChangesFailed);
-        //    }
-        //}
+                context.Entry(entity).State = EntityState.Modified;
+                LoggerBLL.AddLog(context, webUser.CreateUserID, OperatTypeEnum.修改, _businessModel, "用户名：" + entity.LoginName);
 
-        //public CResult<bool> ChangePassword(string oldPassword, string newPassword, string userName)
-        //{
-        //    if (string.IsNullOrWhiteSpace(newPassword) || string.IsNullOrWhiteSpace(userName))
-        //    {
-        //        return new CResult<bool>(false, ErrorCode.ParameterError);
-        //    }
-        //    var user = Membership.GetUser(userName);
-        //    if (user == null)
-        //    {
-        //        return new CResult<bool>(false, ErrorCode.UserNoExist);
-        //    }
-        //    var flag = user.ChangePassword(oldPassword, newPassword);
+                return context.Save();
+            }
+        }
 
-        //    if (flag)
-        //    {
-        //        return new CResult<bool>(true);
-        //    }
-        //    else
-        //    {
-        //        return new CResult<bool>(false, ErrorCode.ChangePasswordFailed);
-        //    }
-        //}
+        public CResult<bool> ChangePassword(string oldPassword, string newPassword, string loginName, string operatorUserID)
+        {
+            if (string.IsNullOrWhiteSpace(newPassword) || string.IsNullOrWhiteSpace(loginName))
+            {
+                return new CResult<bool>(false, ErrorCode.ParameterError);
+            }
+
+            var user = Membership.GetUser(loginName);
+            if (user == null)
+            {
+                return new CResult<bool>(false, ErrorCode.DataNoExist);
+            }
+
+            var flag = user.ChangePassword(oldPassword, newPassword);
+            using (var context = new DeviceMgmtEntities())
+            {
+                LoggerBLL.AddLog(context, operatorUserID, OperatTypeEnum.修改, _businessModel, "用户名：" + loginName);
+                context.SaveChanges();
+            }
+
+            if (flag)
+            {
+                return new CResult<bool>(true);
+            }
+            else
+            {
+                return new CResult<bool>(false, ErrorCode.SaveDbChangesFailed);
+            }
+        }
 
 
         //public CResult<bool> IsUserNameExist(string userLoginName)

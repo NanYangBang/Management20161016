@@ -39,10 +39,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="WebLog.cs" />
     <Compile Include="WebProject.cs" />
     <Compile Include="WebUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModelBase.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NYB.DeviceManagementSystem.Common\NYB.DeviceManagementSystem.Common.csproj">
+      <Project>{bb2d51e1-9c37-43eb-8043-60ba56847762}</Project>
+      <Name>NYB.DeviceManagementSystem.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

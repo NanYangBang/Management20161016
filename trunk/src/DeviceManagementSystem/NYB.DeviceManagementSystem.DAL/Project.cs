@@ -16,7 +16,6 @@ namespace NYB.DeviceManagementSystem.DAL
     {
         public Project()
         {
-            this.Device = new HashSet<Device>();
             this.DeviceType = new HashSet<DeviceType>();
             this.MaintainRecord = new HashSet<MaintainRecord>();
             this.Manufacturer = new HashSet<Manufacturer>();
@@ -31,7 +30,6 @@ namespace NYB.DeviceManagementSystem.DAL
         public System.DateTime CreateDate { get; set; }
         public string CreateUserID { get; set; }
     
-        public virtual ICollection<Device> Device { get; set; }
         public virtual ICollection<DeviceType> DeviceType { get; set; }
         public virtual ICollection<MaintainRecord> MaintainRecord { get; set; }
         public virtual ICollection<Manufacturer> Manufacturer { get; set; }
