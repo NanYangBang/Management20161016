@@ -19,6 +19,7 @@
         @(Html.Hidden("returnUrl", returnUrl))
         <div class="common-details-panel">
             <h2><b>6</b>添加用户信息</h2>
+            <input hidden="hidden" name="CreateUserID" type="text" value="19668EFE-9821-4FDE-9D41-C032D6BD25FB" />
             <fieldset>
                 <table class="operateTable">
                     <tr>
@@ -26,7 +27,7 @@
                             <b>项目名称</b>
                         </td>
                         <td>
-                            <label>项目A</label>
+                            <input name="ProjectID" type="text" value="19668EFE-9821-4FDE-9D41-C032D6BD25FB" />
                         </td>
                         <td>
                             <b><em>*</em>用户名</b>
@@ -41,7 +42,7 @@
                             <b><em>*</em>登录名</b>
                         </td>
                         <td>
-                            @Html.TextBoxFor(model => model.LogoName)
+                            @Html.TextBoxFor(model => model.LogoName, new { @visiable = isUpdate ? "false" : "true" })
                             @Html.ValidationMessageFor(model => model.LogoName)
                         </td>
                         <td>

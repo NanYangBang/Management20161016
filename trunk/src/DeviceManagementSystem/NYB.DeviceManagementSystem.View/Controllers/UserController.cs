@@ -16,7 +16,6 @@ namespace NYB.DeviceManagementSystem.View.Controllers
         // GET: /User/
 
         public ActionResult Index(string searchInfo, int pageIndex = 1, int pageSize = 10, string orderBy = "", bool ascending = false)
-        
         {
             UserBLL userBLL = new UserBLL();
             int totalCount = 0;
@@ -39,18 +38,21 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             ViewBag.IsUpdate = false;
             ViewBag.ErrMsg = "";
             ViewBag.Action = "Add";
+
+
+
             return View(new WebUser());
         }
 
         [HttpPost]
-        public ActionResult AddUser(WebUser webUser, string returnUrl)
+        public ActionResult AddUser(WebUser webUser)
         {
             UserBLL userBLL = new UserBLL();
             CResult<bool> cResult = userBLL.AddUser(webUser, false);
             return JsonContentHelper.GetJsonContent(cResult);
             //if (cResult.Code == 0)
             //{
-                
+
             //}
             //else
             //{
@@ -76,11 +78,12 @@ namespace NYB.DeviceManagementSystem.View.Controllers
                 return View(new WebUser());
             }
         }
-
-        public ActionResult UpdateUser()
+        [HttpPost]
+        public ActionResult UpdateUser(WebUser user)
         {
-            return View();
+            UserBLL userBLL = new UserBLL();
+            CResult<bool> cResult = userBLL.UpdateUser(user);
+            return JsonContentHelper.GetJsonContent(cResult);
         }
-
     }
 }
