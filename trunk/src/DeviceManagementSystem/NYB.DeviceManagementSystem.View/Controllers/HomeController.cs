@@ -11,7 +11,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
     {
         public ActionResult Index()
         {
-            Roles.CreateRole("超级管理员");
+            //Roles.CreateRole("超级管理员");
             //Roles.GetRolesForUser();
 
 
