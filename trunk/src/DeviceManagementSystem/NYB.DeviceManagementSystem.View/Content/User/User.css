@@ -8,18 +8,21 @@
 
 [name="project"] {
     width: 200px;
-    height: 30px;
+    height: 28px;
 }
 
 [name="userName"] {
-    height: 18px;
+    height: 26px;
     margin-left: 10px;
-    /*line-height:30px;*/
+    line-height: 28px;
 }
 
 #btnSearch {
-    width:100px;
-    height:30px;
-    margin-top:-10px;
-    line-height:30px;
+    width: 100px;
+    height: 30px;
+    margin-top: -10px;
+    margin-left: 10px;
+    line-height: 30px;
 }
+
+

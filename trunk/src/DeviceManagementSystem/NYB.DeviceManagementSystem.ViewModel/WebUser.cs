@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,12 +17,13 @@ namespace NYB.DeviceManagementSystem.ViewModel
             set { _id = value; }
         }
 
-
         private string _userName = string.Empty;
 
         /// <summary>
         /// 用户名
         /// </summary>
+        [Required(ErrorMessage = "用户名必填")]
+        [Display(Name = "用户名")]
         public string UserName
         {
             get { return _userName; }
@@ -33,6 +35,8 @@ namespace NYB.DeviceManagementSystem.ViewModel
         /// <summary>
         /// 密码
         /// </summary>
+        [Required(ErrorMessage = "密码必填")]
+        [Display(Name = "密码")]
         public string Pwd
         {
             get { return _pwd; }
@@ -44,6 +48,8 @@ namespace NYB.DeviceManagementSystem.ViewModel
         /// <summary>
         /// 登录名
         /// </summary>
+        [Required(ErrorMessage = "登录名必填")]
+        [Display(Name = "登录名")]
         public string LogoName
         {
             get { return _logoName; }
@@ -65,6 +71,7 @@ namespace NYB.DeviceManagementSystem.ViewModel
         /// <summary>
         /// 联系电话
         /// </summary>
+        [Display(Name = "联系电话")]
         public string TelPhone
         {
             get { return _telPhone; }
@@ -75,6 +82,7 @@ namespace NYB.DeviceManagementSystem.ViewModel
         /// <summary>
         /// 电子邮件
         /// </summary>
+        [Display(Name = "电子邮件")]
         public string Email
         {
             get { return _email; }
@@ -85,6 +93,7 @@ namespace NYB.DeviceManagementSystem.ViewModel
         /// <summary>
         /// 角色
         /// </summary>
+        [Display(Name = "角色")]
         public string Role
         {
             get { return _role; }

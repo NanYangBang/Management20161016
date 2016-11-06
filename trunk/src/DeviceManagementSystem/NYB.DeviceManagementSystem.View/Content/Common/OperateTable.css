@@ -1,0 +1,88 @@
+﻿.operateTable td {
+    position: relative;
+}
+
+.operateTable tr td b {
+    display: block;
+    width: 54px;
+    font-weight: normal;
+    margin-right: 10px;
+    text-align: right;
+    float:right;
+}
+
+.operateTable tr {
+    height: 50px;
+}
+
+    .operateTable tr td input {
+        height: 28px;
+        width: 200px;
+        line-height: 28px;
+        border: 1px solid #cccccc;
+    }
+
+#pileBasicInfo fieldset {
+    padding: 25px;
+}
+
+#pileBasicInfo {
+    margin-top: 30px;
+}
+
+.UpdatePile-btn {
+    margin-left: 114px;
+}
+
+    .UpdatePile-btn input {
+        margin-right: 10px;
+    }
+
+#pileBasicInfo fieldset legend {
+    margin-left: 145px;
+}
+
+.operateTable tr td b em {
+    color: Red;
+}
+
+.download {
+    margin-top: 10px;
+}
+
+.operateTable select {
+    width: 160px;
+}
+
+.errorMessage {
+    color: Red;
+    position: absolute;
+    top: 38px;
+    left: 0;
+}
+
+.common-details-panel input {
+    width: 200px;
+}
+
+.common-details-panel select {
+    width: 202px;
+}
+
+.field-validation-error {
+    position: absolute;
+    top: 42px;
+    left: 0;
+}
+
+.common-details-panel table {
+    width: 100%;
+}
+
+    .common-details-panel table td b {
+        width: 80px;
+    }
+
+    .common-details-panel table td {
+        width: auto;
+    }

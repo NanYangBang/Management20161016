@@ -141,9 +141,9 @@ select {
 }
 
 .sub-content {
-    position: absolute;
+    /*position: absolute;*/
     height: 100%;
-    left: 0;
+    /*left: 0;*/
     overflow: auto;
 }
 
@@ -719,11 +719,10 @@ select.normal {
 .common-details-operation-panel {
     border: 30px solid #F1F1F1;
     border-width: 0 30px 20px;
-    width: 100%;
+    width: 740px;
     height: 40px;
     clear: both;
     background-color: #F1F1F1;
-    width: 740px;
     margin: 0 auto;
 }
 

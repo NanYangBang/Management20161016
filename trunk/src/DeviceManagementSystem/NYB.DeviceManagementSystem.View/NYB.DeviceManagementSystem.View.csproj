@@ -41,6 +41,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MvcPager">
+      <HintPath>..\Lib\MvcPager.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
@@ -190,6 +193,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\JsonContentHelper.cs" />
+    <Compile Include="Helper\SinaDateTimeConverter.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -264,7 +269,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
-    <Content Include="Content\User\AddUpdateUserPartial.css" />
+    <Content Include="Content\Common\OperateTable.css" />
     <Content Include="Content\User\User.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -361,6 +366,8 @@
     <Content Include="Views\Account\LogOn.cshtml" />
     <Content Include="Views\User\AddUser.cshtml" />
     <Content Include="Views\User\PartialView\AddUpdatePartialView.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\PagerView.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SimplifyPagerView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NYB.DeviceManagementSystem.BLL\NYB.DeviceManagementSystem.BLL.csproj">

@@ -1,9 +1,9 @@
 ﻿@{
     ViewBag.Title = "Index";
 }
-
+@using Webdiyer.WebControls.Mvc
 @using NYB.DeviceManagementSystem.ViewModel
-@model List<NYB.DeviceManagementSystem.ViewModel.WebUser>
+@model PagedList<NYB.DeviceManagementSystem.ViewModel.WebUser>
 
 <script type="text/javascript" src="@Url.Content("~/Scripts/User/Index.js")"></script>
 
@@ -84,7 +84,7 @@
     </table>
 
     <div class="btn-opreate">
-        @*@Html.Partial("DisplayTemplates/PagerView", Model)*@
+        @Html.Partial("DisplayTemplates/PagerView", Model)
         <p>
             <input type="button" class="blue-button" id="addUser" value="添加" />
             <input type="button" id="btnDelete" value="删除" />
@@ -92,15 +92,14 @@
     </div>
 </div>
 
-
 <script type="text/javascript">
     window.UrlResource = {
-        UrlAddAction: '@Url.Action("User","AddUser")'
+        UrlAddAction: '@Url.Action("AddUser","User",new { returnUrl = Request.Url.AbsoluteUri})'
     }
 
     $(document).ready(function () {
         AddUpdateEvent();
-        
+
     })
 
 

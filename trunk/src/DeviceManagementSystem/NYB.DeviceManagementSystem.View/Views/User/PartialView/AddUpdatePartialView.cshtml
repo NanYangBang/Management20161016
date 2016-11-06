@@ -3,87 +3,87 @@
 @model NYB.DeviceManagementSystem.ViewModel.WebUser
 @{
     ViewBag.Title = "AddUpdatePartialView";
+    string returnUrl = ViewBag.ReturnUrl;
 }
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 
-<link rel="Stylesheet" href="@Url.Content("~/Content/User/AddUpdateUserPartial.css")" />
-<div class="common-details-panel">
-    <h2><b>6</b>桩基基本信息</h2>
-    <fieldset>
-        <table class="UpdatePile-table">
-            <tr>
-                <td>
-                    <b><em>*</em>用户名</b>
-                </td>
-                <td>
-                    @Html.TextBoxFor(model => model.UserName)
-                    @Html.ValidationMessageFor(model => model.UserName)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <b>登录名</b>
-                </td>
-                <td>
-                    @Html.TextBoxFor(model => model.LogoName)
-                    @Html.ValidationMessageFor(model => model.LogoName)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <b>密码</b>
-                </td>
-                <td>
-                    @Html.TextBoxFor(model => model.Pwd)
-                    @Html.ValidationMessageFor(model => model.Pwd)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <b>项目名称</b>
-                </td>
-                <td>
-                    <select value="" name="PileBelongID">
-                        <option id="firstOption" value="-1">请选择构件归属</option>
-                        <option value=""></option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <b>地址</b>
-                </td>
-                <td>
-                    @Html.TextBoxFor(model => model.Address)
-                    @Html.ValidationMessageFor(model => model.Address)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <b>联系电话</b>
-                </td>
-                <td>
-                    @Html.TextBoxFor(model => model.TelPhone)
-                    @Html.ValidationMessageFor(model => model.TelPhone)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <b>角色</b>
-                </td>
-                <td>
-                    <select value="" name="PileBelongID">
-                        <option id="firstOption" value="-1">请选择用户角色</option>
-                        <option value=""></option>
-                    </select>
-                </td>
-            </tr>
-        </table>
-    </fieldset>
-</div>
-<div class="common-details-operation-panel">
-    <p class="UpdatePile-btn">
-        <input type="submit" id="btnSave" value="保存" class="blue-button" />
-        <a class="link-after-button" href="">返回</a>
-    </p>
-</div>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
 
+<link rel="Stylesheet" href="@Url.Content("~/Content/Common/OperateTable.css")" />
+
+<div actionname="系统管理" class="operationParent">
+    <form action="AddUser" method="post">
+        @(Html.Hidden("returnUrl", returnUrl))
+        <div class="common-details-panel">
+            <h2><b>6</b>添加用户信息</h2>
+            <fieldset>
+                <table class="operateTable">
+                    <tr>
+                        <td>
+                            <b>项目名称</b>
+                        </td>
+                        <td>
+                            <label>项目A</label>
+                        </td>
+                        <td>
+                            <b><em>*</em>用户名</b>
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.UserName)
+                            @Html.ValidationMessageFor(model => model.UserName)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b><em>*</em>登录名</b>
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.LogoName)
+                            @Html.ValidationMessageFor(model => model.LogoName)
+                        </td>
+                        <td>
+                            <b><em>*</em>密码</b>
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.Pwd)
+                            @Html.ValidationMessageFor(model => model.Pwd)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>地址</b>
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.Address)
+                            @Html.ValidationMessageFor(model => model.Address)
+                        </td>
+                        <td>
+                            <b><em>*</em>联系电话</b>
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.TelPhone)
+                            @Html.ValidationMessageFor(model => model.TelPhone)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b><em>*</em>角色</b>
+                        </td>
+                        <td>
+                            <select value="" name="PileBelongID">
+                                <option id="firstOption" value="-1">请选择用户角色</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
+
+        </div>
+        <div class="common-details-operation-panel">
+            <p class="UpdatePile-btn">
+                <input type="submit" id="btnSave" value="保存" class="blue-button" />
+                <a class="link-after-button" href="@ViewBag.ReturnUrl">返回</a>
+            </p>
+        </div>
+    </form>
+</div>

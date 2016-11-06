@@ -1,0 +1,14 @@
+﻿@using Webdiyer.WebControls.Mvc
+@model IPagedList
+@Html.Pager(Model, new PagerOptions {
+	PageIndexParameterName = "pageIndex",
+	ShowDisabledPagerItems = false,
+	ShowPageIndexBox = true,
+	PageIndexBoxType = PageIndexBoxType.DropDownList,
+	ShowGoButton = true,
+	CssClass = "inline-block fr mvcPager",
+	ShowNumericPagerItems = false,
+	ShowFirstLast = false,
+	ShowPrevNext = true,
+	ShowMorePagerItems = true,
+})
