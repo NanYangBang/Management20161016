@@ -4,11 +4,14 @@
 @{
     ViewBag.Title = "AddUpdatePartialView";
     string returnUrl = ViewBag.ReturnUrl;
+    bool isUpdate = ViewBag.IsUpdate;
+    bool isErr = ViewBag.IsErr;
+    string ErrMsg = ViewBag.ErrMsg;
 }
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
-
+<script src="@Url.Content("~/Scripts/User/AddUpdatePartial.js")"></script>
 <link rel="Stylesheet" href="@Url.Content("~/Content/Common/OperateTable.css")" />
 
 <div actionname="系统管理" class="operationParent">
@@ -70,14 +73,14 @@
                             <b><em>*</em>角色</b>
                         </td>
                         <td>
-                            <select value="" name="PileBelongID">
+                            <select value="" name="role">
                                 <option id="firstOption" value="-1">请选择用户角色</option>
+                                <option id="firstOption" value="05836979-cc43-405a-8207-6d4e7858f2b6">项目A超级管理员</option>
                             </select>
                         </td>
                     </tr>
                 </table>
             </fieldset>
-
         </div>
         <div class="common-details-operation-panel">
             <p class="UpdatePile-btn">
@@ -87,3 +90,19 @@
         </div>
     </form>
 </div>
+<script type="text/javascript">
+    window.Resource = {
+        UrlAdd: '@Url.Action("AddUser", "User")',
+        UrlEdit: '@Url.Action("UpdateUser", "User")',
+        ReturnUrl: '@returnUrl',
+        UrlAction: '@ViewBag.Action'
+    }
+
+    $(document).ready(function () {
+        if ('@isErr' == 'true') {
+            alert('@ErrMsg');
+        }
+        SaveEvent();
+    })
+
+</script>

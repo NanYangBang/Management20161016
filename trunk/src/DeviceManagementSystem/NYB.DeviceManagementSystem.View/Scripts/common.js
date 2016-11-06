@@ -599,3 +599,20 @@ function CaptureFormResult(formSelector, fn) {
 		fn(result);
 	});
 }
+
+
+
+function SortAlertRecord() {
+    $('.table-common thead tr th a').click(function (e) {
+        e.preventDefault();
+        var currentSortBy = UrlResource.UrlCurrentSortBy;
+        var currentAscending = UrlResource.UrlCurrentAscending;
+        var sortBy = $(this).attr('sortBy');
+        var ascending = true;
+        if (sortBy == currentSortBy) {
+            ascending = currentAscending == 'false';
+        }
+        location.href = $.query.set('sortBy', sortBy).set('ascending', ascending.toString()).toString();
+    })
+}
+

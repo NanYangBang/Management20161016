@@ -2,6 +2,7 @@
     ViewBag.Title = "Index";
 }
 @using Webdiyer.WebControls.Mvc
+@using NYB.DeviceManagementSystem.Common
 @using NYB.DeviceManagementSystem.ViewModel
 @model PagedList<NYB.DeviceManagementSystem.ViewModel.WebUser>
 
@@ -23,19 +24,19 @@
                     <input type="checkbox" id="checkedAll_id" class="checkedAll" />
                 </th>
                 <th>
-                    <a href="" sortby="">用户名</a>
+                    <a href="" sortby="UserName">用户名</a>
                 </th>
                 <th>
-                    <a href="" sortby="">登录名</a>
+                    <a href="" sortby="LogoName">登录名</a>
                 </th>
                 <th>
-                    <a href="" sortby="">地址</a>
+                    地址
                 </th>
                 <th>
-                    <a href="" sortby="">联系电话</a>
+                    联系电话
                 </th>
                 <th>
-                    <a href="" sortby="">电子邮件</a>
+                    电子邮件
                 </th>
                 <th class="operation-column">
                     操作
@@ -64,18 +65,8 @@
                             @user.Email
                         </td>
                         <td>
-                            @*@{var routeValues = new PileID = pile.PileID, returnUrl = Request.Url.AbsoluteUri, _ = DateTime.Now.Ticks };}
-                                @if (pile.Editable)
-                                {
-                                    @Html.ActionLink("实时填报", "RealTimeSubmit", routeValues)
-                                    @Html.ActionLink("上传报表", "QualityCheckInformation", routeValues)
-                                    @Html.ActionLink("修改", "DataDetail", routeValues)
-                                }
-                                else
-                                {
-                                    @Html.ActionLink("查看填报数据", "RealTimeSubmit", routeValues)
-                                    @Html.ActionLink("查看报表", "QualityCheckInformation", routeValues)
-                                }*@
+                            @{var routeValues = new { userID = user.ID, returnUrl = Request.Url.AbsoluteUri, _ = DateTime.Now.Ticks };}
+                            @Html.ActionLink("修改", "UpdateUser", routeValues)
                         </td>
                     </tr>
                 }
@@ -99,7 +90,7 @@
 
     $(document).ready(function () {
         AddUpdateEvent();
-
+        SortAlertRecord();
     })
 
 

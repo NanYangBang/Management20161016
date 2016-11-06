@@ -16,6 +16,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
         // GET: /User/
 
         public ActionResult Index(string searchInfo, int pageIndex = 1, int pageSize = 10, string orderBy = "", bool ascending = false)
+        
         {
             UserBLL userBLL = new UserBLL();
             int totalCount = 0;
@@ -33,8 +34,11 @@ namespace NYB.DeviceManagementSystem.View.Controllers
         [HttpGet]
         public ActionResult AddUser(string returnUrl)
         {
+            ViewBag.IsErr = false;
             ViewBag.ReturnUrl = returnUrl;
             ViewBag.IsUpdate = false;
+            ViewBag.ErrMsg = "";
+            ViewBag.Action = "Add";
             return View(new WebUser());
         }
 
@@ -43,13 +47,24 @@ namespace NYB.DeviceManagementSystem.View.Controllers
         {
             UserBLL userBLL = new UserBLL();
             CResult<bool> cResult = userBLL.AddUser(webUser, false);
-            return View();
+            return JsonContentHelper.GetJsonContent(cResult);
+            //if (cResult.Code == 0)
+            //{
+                
+            //}
+            //else
+            //{
+            //    ViewBag.IsErr = true;
+            //    ViewBag.ErrMsg = cResult.Msg;
+            //    return View(webUser);
+            //}
         }
 
         [HttpGet]
         public ActionResult UpdateUser(string userID, string returnUrl)
         {
             ViewBag.IsUpdate = true;
+            ViewBag.Action = "Update";
             UserBLL userBLL = new UserBLL();
             CResult<WebUser> cResult = userBLL.GetUserInfoByUserID(userID);
             if (cResult.Code == 0)

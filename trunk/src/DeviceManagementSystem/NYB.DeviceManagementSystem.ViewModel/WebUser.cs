@@ -99,5 +99,7 @@ namespace NYB.DeviceManagementSystem.ViewModel
             get { return _role; }
             set { _role = value; }
         }
+        
+
     }
 }

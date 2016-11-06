@@ -6,7 +6,6 @@
     @*@Styles.Render("~/Content/Site.css")*@
     @Styles.Render("~/Content/Common/common.css")
     @Styles.Render("~/Content/base.css")
-    
     <script type="text/javascript">
         var Identity = {
             AUTH: '@(Request.Cookies[FormsAuthentication.FormsCookieName] == null ? String.Empty : Request.Cookies[FormsAuthentication.FormsCookieName].Value)',
@@ -16,6 +15,7 @@
     @Scripts.Render("~/Scripts/jquery.js")
     @Scripts.Render("~/Scripts/common.js")
     @Scripts.Render("~/Scripts/base.js");
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jQuery.query.js")"></script>
 </head>
 <body>
     <div class="wrap">
@@ -53,6 +53,7 @@
             //AddEditorLeavingPrompt();
             //actionname();
             HighLeight();
+
 
         });
         
