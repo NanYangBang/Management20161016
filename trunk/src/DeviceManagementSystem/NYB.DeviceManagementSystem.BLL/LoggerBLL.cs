@@ -1,5 +1,5 @@
 ﻿using NYB.DeviceManagementSystem.Common;
-using NYB.DeviceManagementSystem.Common.Enum;
+using NYB.DeviceManagementSystem.Common;
 using NYB.DeviceManagementSystem.DAL;
 using NYB.DeviceManagementSystem.ViewModel;
 using System;

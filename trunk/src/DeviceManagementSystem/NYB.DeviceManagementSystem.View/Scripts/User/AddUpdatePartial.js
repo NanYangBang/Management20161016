@@ -11,7 +11,7 @@ function SaveEvent() {
         var Address = $('[name="Address"]').val();
         var TelPhone = $('[name="TelPhone"]').val();
         var PileBelongID = $('[name="PileBelongID"]').val();
-        var RoleName = $('[name="role"]').val();
+        var RoleName = $('[name="Role"]').val();
 
         param.UserName = UserName;
         param.LogoName = LogoName;

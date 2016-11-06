@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace NYB.DeviceManagementSystem.Common
 {
-    public enum RoleType
+    public class GetEnum
     {
-        超级管理员 = 1,
-        管理员 = 10,
-        操作员 = 20
-    }
 
+    }
 }

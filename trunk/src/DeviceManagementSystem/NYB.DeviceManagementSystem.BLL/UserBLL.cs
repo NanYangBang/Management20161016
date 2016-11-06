@@ -10,7 +10,7 @@ using NYB.DeviceManagementSystem.ViewModel;
 using NYB.DeviceManagementSystem.DAL;
 using System.Linq.Expressions;
 using System.Web.Security;
-using NYB.DeviceManagementSystem.Common.Enum;
+using NYB.DeviceManagementSystem.Common;
 using System.Data;
 
 namespace NYB.DeviceManagementSystem.BLL

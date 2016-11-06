@@ -74,9 +74,11 @@
                             <b><em>*</em>角色</b>
                         </td>
                         <td>
-                            <select value="" name="role">
-                                <option id="firstOption" value="-1">请选择用户角色</option>
-                                <option id="firstOption" value="05836979-cc43-405a-8207-6d4e7858f2b6">项目A超级管理员</option>
+                            <select value="" name="Role">
+                                @foreach (string roleName in Enum.GetNames(typeof(RoleType)))
+                                {
+                                    <option id="firstOption" value="@roleName">@roleName</option>
+                                }
                             </select>
                         </td>
                     </tr>

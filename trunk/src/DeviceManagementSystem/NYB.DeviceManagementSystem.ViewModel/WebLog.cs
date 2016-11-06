@@ -1,4 +1,4 @@
-﻿using NYB.DeviceManagementSystem.Common.Enum;
+﻿using NYB.DeviceManagementSystem.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
