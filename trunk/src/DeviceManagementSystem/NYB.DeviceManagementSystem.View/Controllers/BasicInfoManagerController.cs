@@ -16,5 +16,9 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             return View();
         }
 
+        public ActionResult SupplierManager()
+        {
+            return View();
+        }
     }
 }
