@@ -1,0 +1,97 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+@{
+    ViewBag.Title = "Index";
+}
+@using Webdiyer.WebControls.Mvc
+@using NYB.DeviceManagementSystem.Common
+@using NYB.DeviceManagementSystem.ViewModel
+@model PagedList<NYB.DeviceManagementSystem.ViewModel.WebProject>
+<script type="text/javascript" src="@Url.Content("~/Scripts/ProjectManger/Index.js")"></script>
+@Styles.Render("~/Content/User/User.css");
+<div actionname="项目管理">
+    <form method="get" class="userSearchForm">
+        <input type="text" name="userName" id="seacheName" value="" />
+        <input style="line-height:0px" type="submit" class="" id="btnSearch" value="搜索" />
+    </form>
+    <table class="table-common" id="pileInfo">
+        <thead>
+            <tr>
+                <th class="checkbox-column">
+                    <input type="checkbox" id="checkedAll_id" class="checkedAll" />
+                </th>
+                <th>
+                    <a href="" sortby="UserName">项目名称</a>
+                </th>
+                <th>
+                    <a href="" sortby="LogoName">创建用户名</a>
+                </th>
+                <th>
+                    <a href="" sortby="UserName">创建日期</a>
+                </th>
+                <th>
+                    备注
+                </th>
+                <th>
+                    登录名
+                </th>
+                <th class="operation-column">
+                    操作
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                //string randomUrl = String.Format("{0}://{1}:{2}{3}", Request.Url.Scheme, Request.Url.Host, Request.Url.Port, ViewBag.RandomUrl);
+                foreach (var project in Model)
+                {
+                    <tr pileid="">
+                        <td>
+                            <input type="checkbox" id="checkbox_id" />
+                        </td>
+                        <td>
+                            @project.Name
+                        </td>
+                        <td>
+                            @project.CreateUserName
+                        </td>
+                        <td>
+                            @project.CreateDate
+                        </td>
+                        <td>
+                            @project.Note
+                        </td>
+                        <td>
+                            @project.LogoName
+                        </td>
+                        <td>
+                            @{var routeValues = new { userID = project.ID, returnUrl = Request.Url.AbsoluteUri, _ = DateTime.Now.Ticks };}
+                            @Html.ActionLink("修改", "UpdateUser", routeValues)
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+    <div class="btn-opreate">
+        @Html.Partial("DisplayTemplates/PagerView", Model)
+        <p>
+            <input type="button" class="blue-button" id="addUser" value="添加" />
+            <input type="button" id="btnDelete" value="删除" />
+        </p>
+    </div>
+</div>
+
+<script type="text/javascript">
+    window.UrlResource = {
+        UrlAddAction: '@Url.Action("AddUser","User",new { returnUrl = Request.Url.AbsoluteUri})'
+    }
+
+    $(document).ready(function () {
+        AddUpdateEvent();
+        SortAlertRecord();
+    })
+</script>

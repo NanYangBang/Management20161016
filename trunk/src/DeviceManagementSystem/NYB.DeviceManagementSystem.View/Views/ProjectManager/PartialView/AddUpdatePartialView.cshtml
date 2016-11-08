@@ -1,0 +1,85 @@
+﻿@using NYB.DeviceManagementSystem.ViewModel;
+@using NYB.DeviceManagementSystem.Common;
+@model NYB.DeviceManagementSystem.ViewModel.WebProject
+@{
+    ViewBag.Title = "AddUpdatePartialView";
+    string returnUrl = ViewBag.ReturnUrl;
+    bool isUpdate = ViewBag.IsUpdate;
+    bool isErr = ViewBag.IsErr;
+    string ErrMsg = ViewBag.ErrMsg;
+}
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/User/AddUpdatePartial.js")"></script>
+<link rel="Stylesheet" href="@Url.Content("~/Content/Common/OperateTable.css")" />
+
+<div actionname="系统管理" class="operationParent">
+    <form action="AddUser" method="post">
+        @(Html.Hidden("returnUrl", returnUrl))
+        <div class="common-details-panel">
+            <h2><b>6</b>添加用户信息</h2>
+            <input hidden="hidden" name="CreateUserID" type="text" value="19668EFE-9821-4FDE-9D41-C032D6BD25FB" />
+            <fieldset>
+                <table class="operateTable">
+                    <tr>
+                        <td>
+                            <b>项目名称</b>
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.Name)
+                            @Html.ValidationMessageFor(model => model.Name)
+                        </td>
+                        <td>
+                            <b><em>*</em>登录名</b>
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.LogoName)
+                            @Html.ValidationMessageFor(model => model.LogoName)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b><em>*</em>密码</b>
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.Pwd, new { @visiable = "" })
+                            @Html.ValidationMessageFor(model => model.Pwd)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>备注</b>
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.Note)
+                            @Html.ValidationMessageFor(model => model.Note)
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
+        </div>
+        <div class="common-details-operation-panel">
+            <p class="UpdatePile-btn">
+                <input type="submit" id="btnSave" value="保存" class="blue-button" />
+                <a class="link-after-button" href="@ViewBag.ReturnUrl">返回</a>
+            </p>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    window.Resource = {
+        UrlAdd: '@Url.Action("AddProject", "ProjectManager")',
+        UrlEdit: '@Url.Action("UpdateProject", "ProjectManager")',
+        ReturnUrl: '@returnUrl',
+        UrlAction: '@ViewBag.Action'
+    }
+
+    $(document).ready(function () {
+        if ('@isErr' == 'true') {
+            alert('@ErrMsg');
+        }
+        SaveEvent();
+    })
+
+</script>

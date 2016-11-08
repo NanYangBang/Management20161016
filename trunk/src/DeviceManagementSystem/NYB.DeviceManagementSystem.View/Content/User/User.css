@@ -11,9 +11,12 @@
     height: 28px;
 }
 
+.userSearchForm input, select {
+    margin-right: 10px;
+}
+
 [name="userName"] {
     height: 26px;
-    margin-left: 10px;
     line-height: 28px;
 }
 
@@ -24,5 +27,3 @@
     margin-left: 10px;
     line-height: 30px;
 }
-
-
