@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NYB.DeviceManagementSystem.ViewModel
 {
-    public class WebProject : ViewModelBase
+    public class WebProject
     {
         private string _id;
 
@@ -27,11 +27,28 @@ namespace NYB.DeviceManagementSystem.ViewModel
 
         private string _note = string.Empty;
 
+        public string Address { get; set; }
+        public string Contact { get; set; }
+        public string Phone { get; set; }
+
         public string Note
         {
             get { return _note; }
             set { _note = value; }
         }
 
+        private string _adminLoginName = string.Empty;
+
+        public string AdminLoginName
+        {
+            get { return _adminLoginName; }
+            set { _adminLoginName = value; }
+        }
+
+        public string Password { get; set; }
+
+        public DateTime CreateDate { get; set; }
+
+        public string CreateUserID { get; set; }
     }
 }

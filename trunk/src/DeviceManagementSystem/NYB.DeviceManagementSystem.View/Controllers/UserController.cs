@@ -17,6 +17,8 @@ namespace NYB.DeviceManagementSystem.View.Controllers
 
         public ActionResult Index(string searchInfo, int pageIndex = 1, int pageSize = 10, string orderBy = "", bool ascending = false)
         {
+            new DatabaseInitHelper().InitDB();
+
             UserBLL userBLL = new UserBLL();
             int totalCount = 0;
             string projectID = "";

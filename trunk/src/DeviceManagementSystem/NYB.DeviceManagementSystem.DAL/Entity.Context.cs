@@ -32,9 +32,9 @@ namespace NYB.DeviceManagementSystem.DAL
         public DbSet<MaintainRecord> MaintainRecord { get; set; }
         public DbSet<Manufacturer> Manufacturer { get; set; }
         public DbSet<Permision> Permision { get; set; }
+        public DbSet<Project> Project { get; set; }
         public DbSet<RepairRecord> RepairRecord { get; set; }
         public DbSet<Supplier> Supplier { get; set; }
         public DbSet<User> User { get; set; }
-        public DbSet<Project> Project { get; set; }
     }
 }

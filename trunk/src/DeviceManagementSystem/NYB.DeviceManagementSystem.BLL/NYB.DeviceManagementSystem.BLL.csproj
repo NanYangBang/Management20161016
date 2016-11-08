@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DatabaseInitHelper.cs" />
     <Compile Include="LoggerBLL.cs" />
     <Compile Include="UserBLL.cs" />
     <Compile Include="ProjectBLL.cs" />
