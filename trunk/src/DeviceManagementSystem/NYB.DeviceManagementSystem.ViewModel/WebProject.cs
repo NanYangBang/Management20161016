@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,6 +33,33 @@ namespace NYB.DeviceManagementSystem.ViewModel
             get { return _note; }
             set { _note = value; }
         }
+
+        private string _logoName = string.Empty;
+
+        /// <summary>
+        /// 登录名
+        /// </summary>
+        [Required(ErrorMessage = "登录名必填")]
+        [Display(Name = "登录名")]
+        public string LogoName
+        {
+            get { return _logoName; }
+            set { _logoName = value; }
+        }
+
+        private string _pwd = string.Empty;
+
+        /// <summary>
+        /// 密码
+        /// </summary>
+        [Required(ErrorMessage = "密码必填")]
+        [Display(Name = "密码")]
+        public string Pwd
+        {
+            get { return _pwd; }
+            set { _pwd = value; }
+        }
+
 
     }
 }

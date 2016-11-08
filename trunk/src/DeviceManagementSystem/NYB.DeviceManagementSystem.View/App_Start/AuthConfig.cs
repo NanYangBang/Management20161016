@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Web.WebPages.OAuth;
-using NYB.DeviceManagementSystem.View.Models;
+using NYB.DeviceManagementSystem.View;
 
 namespace NYB.DeviceManagementSystem.View
 {

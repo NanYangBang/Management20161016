@@ -38,9 +38,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             ViewBag.IsUpdate = false;
             ViewBag.ErrMsg = "";
             ViewBag.Action = "Add";
-
-
-
+            
             return View(new WebUser());
         }
 

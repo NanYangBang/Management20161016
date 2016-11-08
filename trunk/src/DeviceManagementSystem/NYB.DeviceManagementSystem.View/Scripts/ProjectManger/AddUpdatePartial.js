@@ -5,19 +5,15 @@ function SaveEvent() {
         var returnUrl = $('[name="returnUrl"]');
 
         var param = {};
-        var UserName = $('[name="UserName"]').val();
+        var Name = $('[name="Name"]').val();
         var LogoName = $('[name="LogoName"]').val();
         var Pwd = $('[name="Pwd"]').val();
-        var Address = $('[name="Address"]').val();
-        var TelPhone = $('[name="TelPhone"]').val();
-        var RoleName = $('[name="Role"]').val();
+        var Note = $('[name="Note"]').val();
 
-        param.UserName = UserName;
+        param.Name = Name;
         param.LogoName = LogoName;
         param.Pwd = Pwd;
-        param.Address = Address;
-        param.TelPhone = TelPhone;
-        param.Role = RoleName;
+        param.Note = Note;
 
         if ($('span.errorMessage').length == 0 && $('.field-validation-error').length == 0) {
             if (Resource.UrlAction == 'Add') {

@@ -186,16 +186,16 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BasicInfoManagerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProjectManagerController.cs" />
     <Compile Include="Controllers\SystemManagerController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helper\JsonContentHelper.cs" />
     <Compile Include="Helper\SinaDateTimeConverter.cs" />
-    <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -314,6 +314,8 @@
     <Content Include="Scripts\MicrosoftMvcValidation.debug.js" />
     <Content Include="Scripts\MicrosoftMvcValidation.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\ProjectManger\AddUpdatePartial.js" />
+    <Content Include="Scripts\ProjectManger\Index.js" />
     <Content Include="Scripts\Silverlight.js" />
     <Content Include="Scripts\swfobject.js" />
     <Content Include="Scripts\User\AddUpdatePartial.js" />
@@ -369,6 +371,13 @@
     <Content Include="Views\User\PartialView\AddUpdatePartialView.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\PagerView.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\SimplifyPagerView.cshtml" />
+    <Content Include="Views\ProjectManager\Index.cshtml" />
+    <Content Include="Views\ProjectManager\AddProject.cshtml" />
+    <Content Include="Views\ProjectManager\PartialView\AddUpdatePartialView.cshtml" />
+    <Content Include="Views\ProjectManager\UpdateProject.cshtml" />
+    <Content Include="Views\BasicInfoManager\Index.cshtml" />
+    <Content Include="Views\BasicInfoManager\NavLeft.cshtml" />
+    <Content Include="Views\BasicInfoManager\SupplierManager.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NYB.DeviceManagementSystem.BLL\NYB.DeviceManagementSystem.BLL.csproj">
