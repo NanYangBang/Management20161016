@@ -82,5 +82,8 @@ namespace NYB.DeviceManagementSystem.Common
 
         [DescriptionAttribute("添加用户失败")]
         AddUserFault = 20101,
+
+        [DescriptionAttribute("用户或密码错误")]
+        UserNameOrPasswordWrong = 20102,
     }
 }

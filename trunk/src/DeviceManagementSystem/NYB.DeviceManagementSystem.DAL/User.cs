@@ -26,12 +26,12 @@ namespace NYB.DeviceManagementSystem.DAL
         public string Email { get; set; }
         public string Address { get; set; }
         public string Telephone { get; set; }
+        public string Moblie { get; set; }
         public System.DateTime CreateDate { get; set; }
         public string CreateUserID { get; set; }
         public bool IsValid { get; set; }
         public bool IsSuperAdminCreate { get; set; }
     
         public virtual ICollection<Log> Log { get; set; }
-        public virtual Project Project { get; set; }
     }
 }

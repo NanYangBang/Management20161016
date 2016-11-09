@@ -66,6 +66,8 @@ namespace NYB.DeviceManagementSystem.ViewModel
             set { _address = value; }
         }
 
+        public string Moblie { get; set; }
+
         private string _telPhone = string.Empty;
 
         /// <summary>

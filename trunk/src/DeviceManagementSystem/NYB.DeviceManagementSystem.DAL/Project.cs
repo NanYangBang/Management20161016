@@ -14,31 +14,11 @@ namespace NYB.DeviceManagementSystem.DAL
     
     public partial class Project
     {
-        public Project()
-        {
-            this.DeviceType = new HashSet<DeviceType>();
-            this.MaintainRecord = new HashSet<MaintainRecord>();
-            this.Manufacturer = new HashSet<Manufacturer>();
-            this.RepairRecord = new HashSet<RepairRecord>();
-            this.Supplier = new HashSet<Supplier>();
-            this.User = new HashSet<User>();
-        }
-    
         public string ID { get; set; }
         public string Name { get; set; }
-        public string Address { get; set; }
-        public string Contact { get; set; }
-        public string Phone { get; set; }
         public string Note { get; set; }
         public System.DateTime CreateDate { get; set; }
         public string CreateUserID { get; set; }
         public bool IsValid { get; set; }
-    
-        public virtual ICollection<DeviceType> DeviceType { get; set; }
-        public virtual ICollection<MaintainRecord> MaintainRecord { get; set; }
-        public virtual ICollection<Manufacturer> Manufacturer { get; set; }
-        public virtual ICollection<RepairRecord> RepairRecord { get; set; }
-        public virtual ICollection<Supplier> Supplier { get; set; }
-        public virtual ICollection<User> User { get; set; }
     }
 }

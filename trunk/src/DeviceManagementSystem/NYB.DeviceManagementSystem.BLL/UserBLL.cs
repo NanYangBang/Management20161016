@@ -20,7 +20,7 @@ namespace NYB.DeviceManagementSystem.BLL
         private BusinessModelEnum _businessModel = BusinessModelEnum.用户;
         public CResult<List<WebUser>> GetUserList(out int totalCount, string projectID, string userID, string searchInfo, int pageIndex = 1, int pageSize = 10, string orderby = null, bool ascending = false)
         {
-            Expression<Func<User, bool>> filter = t => t.ProjectID == projectID && t.UserID != userID && t.IsSuperAdminCreate == false;
+            Expression<Func<User, bool>> filter = t => t.IsValid && t.ProjectID == projectID && t.UserID != userID && t.IsSuperAdminCreate == false;
 
             if (string.IsNullOrWhiteSpace(searchInfo) == false)
             {
@@ -94,6 +94,7 @@ namespace NYB.DeviceManagementSystem.BLL
                         Email = entity.Email,
                         LogoName = entity.LoginName,
                         TelPhone = entity.Telephone,
+                        Moblie = entity.Moblie,
                         UserName = entity.Name,
                     };
 
@@ -135,6 +136,7 @@ namespace NYB.DeviceManagementSystem.BLL
                         ProjectID = webUser.ProjectID,
                         Address = webUser.Address,
                         Telephone = webUser.TelPhone,
+                        Moblie = webUser.Moblie,
                         CreateDate = DateTime.Now,
                         CreateUserID = webUser.CreateUserID,
                         Email = webUser.Email,
@@ -206,6 +208,7 @@ namespace NYB.DeviceManagementSystem.BLL
                 entity.Email = webUser.Email;
                 entity.Name = webUser.UserName;
                 entity.Telephone = webUser.TelPhone;
+                entity.Moblie = webUser.Moblie;
 
                 context.Entry(entity).State = EntityState.Modified;
                 LoggerBLL.AddLog(context, webUser.CreateUserID, OperatTypeEnum.修改, _businessModel, "用户名：" + entity.LoginName);
@@ -244,6 +247,32 @@ namespace NYB.DeviceManagementSystem.BLL
             }
         }
 
+        public CResult<bool> VerifyPassword(string userName, string password)
+        {
+            var isExist = Membership.ValidateUser(userName, password);
+            if (isExist == false)
+            {
+                return new Common.CResult<bool>(false, ErrorCode.UserNameOrPasswordWrong);
+            }
+
+            using (var context = new DeviceMgmtEntities())
+            {
+                var entity = context.User.FirstOrDefault(t => t.IsValid == true && t.LoginName == userName);
+                if (entity == null)
+                {
+                    return new CResult<bool>(false, ErrorCode.UserNameOrPasswordWrong);
+                }
+
+                var projectExist = context.Project.Any(t => t.IsValid == true && t.ID == entity.ProjectID);
+
+                if (projectExist == false)
+                {
+                    return new CResult<bool>(false, ErrorCode.UserNameOrPasswordWrong);
+                }
+
+                return new Common.CResult<bool>(true);
+            }
+        }
 
         //public CResult<bool> IsUserNameExist(string userLoginName)
         //{

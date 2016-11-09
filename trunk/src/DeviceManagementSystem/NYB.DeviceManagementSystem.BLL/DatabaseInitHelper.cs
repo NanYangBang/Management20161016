@@ -14,10 +14,6 @@ namespace NYB.DeviceManagementSystem.BLL
     {
         public void InitDB()
         {
-            return;
-
-            Membership.DeleteUser("SuperAdmin");
-
             using (var context = new DeviceMgmtEntities())
             {
                 foreach (var item in Enum.GetNames(typeof(RoleType)))
@@ -46,6 +42,7 @@ namespace NYB.DeviceManagementSystem.BLL
                        UserID = Guid.NewGuid().ToString(),
                        Name = "SuperAdmin",
                        Telephone = "",
+                       Moblie = ""
                    };
 
                     context.User.Add(superAdmin);
@@ -55,37 +52,7 @@ namespace NYB.DeviceManagementSystem.BLL
                     superAdmin = context.User.FirstOrDefault(t => t.LoginName == "SuperAdmin");
                 }
 
-                var project = context.Project.FirstOrDefault(t => t.Name == "DefaultProject");
-                if (project == null)
-                {
-                    project = new Project()
-                    {
-                        CreateDate = DateTime.Now,
-                        CreateUserID = superAdmin.UserID,
-                        ID = Guid.NewGuid().ToString(),
-                        Name = "DefaultProject",
-                        Note = "DefaultProject",
-                        IsValid = true
-                    };
-                    context.Project.Add(project);
-                    context.SaveChanges();
-
-                    var projectUser = new WebUser()
-                    {
-                        Address = "",
-                        CreateDate = DateTime.Now,
-                        CreateUserID = superAdmin.UserID,
-                        Email = "",
-                        ID = "BD3C6C02-8F92-4627-BC5E-A9606CCEF94D",
-                        LogoName = "DefaultProjectAdmin",
-                        ProjectID = project.ID,
-                        Pwd = "111111",
-                        Role = RoleType.管理员.ToString(),
-                        TelPhone = "",
-                        UserName = "DefaultProjectAdmin",
-                    };
-                    new UserBLL().AddUser(projectUser, true);
-                }
+                context.SaveChanges();
             }
         }
     }

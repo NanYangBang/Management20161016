@@ -20,7 +20,7 @@ namespace NYB.DeviceManagementSystem.BLL
         {
             using (DeviceMgmtEntities context = new DeviceMgmtEntities())
             {
-                Expression<Func<Project, bool>> filter = t => true;
+                Expression<Func<Project, bool>> filter = t => t.IsValid == true;
 
                 if (string.IsNullOrWhiteSpace(searchInfo) == false)
                 {
@@ -39,21 +39,17 @@ namespace NYB.DeviceManagementSystem.BLL
                 }).ToList();
 
                 var projectIDs = result.Select(t => t.ID).ToList();
-                var users = context.User.Where(t => t.IsSuperAdminCreate && projectIDs.Contains(t.ProjectID)).Select(t => new
+                var users = context.User.Where(t => t.IsSuperAdminCreate && projectIDs.Contains(t.ProjectID)).Select(user => new WebUser
                 {
-                    ProjectID = t.ProjectID,
-                    LoginName = t.LoginName,
-                    Name = t.Name
-                }).ToList();
+                    ID = user.UserID,
+                    Address = user.Address,
+                    Email = user.Email,
+                    LogoName = user.LoginName,
+                    TelPhone = user.Telephone,
+                    Moblie = user.Moblie,
+                    UserName = user.Name,
 
-                foreach (var item in result)
-                {
-                    var target = users.FirstOrDefault(t => t.ProjectID == item.ID);
-                    if (target != null)
-                    {
-                        item.AdminLoginName = target.LoginName;
-                    }
-                }
+                }).ToList();
 
                 return new CResult<List<WebProject>>(result);
             }
@@ -64,34 +60,32 @@ namespace NYB.DeviceManagementSystem.BLL
             using (var context = new DeviceMgmtEntities())
             {
                 var project = new Project();
-                project.Address = webProject.Address;
-                project.Contact = webProject.Contact;
                 project.CreateDate = DateTime.Now;
                 project.CreateUserID = webProject.CreateUserID;
                 project.ID = webProject.ID;
                 project.Name = webProject.Name;
                 project.Note = webProject.Note;
-                project.Phone = webProject.Phone;
                 project.IsValid = true;
 
+                var webUser = webProject.WebUser;
                 MembershipCreateStatus status;
-                var currentUser = Membership.CreateUser(webProject.AdminLoginName, webProject.Password, null, null, null, true, null, out status);
+                var currentUser = Membership.CreateUser(webUser.LogoName, webUser.Pwd, webUser.Email, null, null, true, null, out status);
 
                 if (status == MembershipCreateStatus.Success)
                 {
-                    Roles.AddUserToRole(currentUser.UserName, RoleType.管理员.ToString());
+                    Roles.AddUserToRole(currentUser.UserName, webUser.Role);
 
                     var entity = new User()
                     {
                         UserID = currentUser.ProviderUserKey.ToString(),
-                        LoginName = webProject.AdminLoginName,
-                        Name = webProject.Contact,
-                        ProjectID = webProject.ID,
-                        Address = webProject.Address,
-                        Telephone = webProject.Phone,
+                        LoginName = webUser.LogoName,
+                        Name = webUser.UserName,
+                        ProjectID = webUser.ProjectID,
+                        Address = webUser.Address,
+                        Telephone = webUser.TelPhone,
                         CreateDate = DateTime.Now,
-                        CreateUserID = webProject.CreateUserID,
-                        Email = "",
+                        CreateUserID = webUser.CreateUserID,
+                        Email = webUser.Email,
                         IsValid = true,
                         IsSuperAdminCreate = true
                     };
@@ -128,13 +122,39 @@ namespace NYB.DeviceManagementSystem.BLL
                     return new CResult<bool>(false, ErrorCode.DataNoExist);
                 }
 
-                project.Address = webProject.Address;
-                project.Contact = webProject.Contact;
                 project.Name = webProject.Name;
                 project.Note = webProject.Note;
-                project.Phone = webProject.Phone;
+
+                var user = context.User.FirstOrDefault(t => t.UserID == webProject.WebUser.ID);
+                if (user == null)
+                {
+                    return new CResult<bool>(false, ErrorCode.DataNoExist);
+                }
+
+                var webUser = webProject.WebUser;
+                user.Address = webUser.Address;
+                user.Email = webUser.Email;
+                user.Name = webUser.UserName;
+                user.Telephone = webUser.TelPhone;
+                user.Moblie = webUser.Moblie;
 
                 context.Entry(project).State = EntityState.Modified;
+                return context.Save();
+            }
+        }
+
+        public CResult<bool> DeleteProject(string projectID)
+        {
+            using (var context = new DeviceMgmtEntities())
+            {
+                var project = context.Project.FirstOrDefault(t => t.ID == projectID);
+                if (project == null)
+                {
+                    return new CResult<bool>(false, ErrorCode.DataNoExist);
+                }
+
+                project.IsValid = false;
+
                 return context.Save();
             }
         }
