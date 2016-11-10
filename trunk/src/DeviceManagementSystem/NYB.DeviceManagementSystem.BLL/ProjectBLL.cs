@@ -89,7 +89,8 @@ namespace NYB.DeviceManagementSystem.BLL
                         IsValid = true,
                         IsSuperAdminCreate = true
                     };
-
+                    context.Project.Add(project);
+                    context.User.Add(entity);
                     try
                     {
                         if (context.SaveChanges() > 0)

@@ -4,21 +4,18 @@
 @{
     ViewBag.Title = "AddUpdatePartialView";
     string returnUrl = ViewBag.ReturnUrl;
-    bool isUpdate = ViewBag.IsUpdate;
-    bool isErr = ViewBag.IsErr;
-    string ErrMsg = ViewBag.ErrMsg;
 }
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/Scripts/User/AddUpdatePartial.js")"></script>
+<script src="@Url.Content("~/Scripts/ProjectManger/AddUpdatePartial.js")"></script>
 <link rel="Stylesheet" href="@Url.Content("~/Content/Common/OperateTable.css")" />
 
-<div actionname="系统管理" class="operationParent">
+<div actionname="项目管理 " class="operationParent">
     <form action="AddUser" method="post">
         @(Html.Hidden("returnUrl", returnUrl))
         <div class="common-details-panel">
-            <h2><b>6</b>添加用户信息</h2>
+            <h2><b>6</b>添加项目信息</h2>
             <input hidden="hidden" name="CreateUserID" type="text" value="19668EFE-9821-4FDE-9D41-C032D6BD25FB" />
             <fieldset>
                 <table class="operateTable">
@@ -31,20 +28,56 @@
                             @Html.ValidationMessageFor(model => model.Name)
                         </td>
                         <td>
-                            <b><em>*</em>登录名</b>
+                            <b><em>*</em>用户姓名</b>
                         </td>
                         <td>
-                            @Html.TextBoxFor(model => model.LogoName)
-                            @Html.ValidationMessageFor(model => model.LogoName)
+                            @Html.TextBoxFor(model => model.WebUser.UserName)
+                            @Html.ValidationMessageFor(model => model.WebUser.UserName)
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <b><em>*</em>密码</b>
+                            <b><em>*</em>登录名</b>
                         </td>
                         <td>
-                            @Html.TextBoxFor(model => model.Pwd, new { @visiable = "" })
-                            @Html.ValidationMessageFor(model => model.Pwd)
+                            @Html.TextBoxFor(model => model.WebUser.LogoName)
+                            @Html.ValidationMessageFor(model => model.WebUser.LogoName)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>密码</b>
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.WebUser.Pwd)
+                            @Html.ValidationMessageFor(model => model.WebUser.Pwd)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b><em>*</em>电话</b>
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.WebUser.TelPhone)
+                            @Html.ValidationMessageFor(model => model.WebUser.TelPhone)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>地址</b>
+                        </td>
+                        <td>
+                           @Html.TextBoxFor(model => model.WebUser.Address)
+                            @Html.ValidationMessageFor(model => model.WebUser.Address)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b><em>*</em>电子邮件</b>
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.WebUser.Email)
+                            @Html.ValidationMessageFor(model => model.WebUser.Email)
                         </td>
                     </tr>
                     <tr>
@@ -76,9 +109,6 @@
     }
 
     $(document).ready(function () {
-        if ('@isErr' == 'true') {
-            alert('@ErrMsg');
-        }
         SaveEvent();
     })
 

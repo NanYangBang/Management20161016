@@ -8,10 +8,7 @@ namespace NYB.DeviceManagementSystem.ViewModel
 {
     public class WebProject
     {
-        public WebProject()
-        {
-            this.WebUser = new WebUser();
-        }
+        WebUser _webUser = new WebUser();
 
         private string _id;
 
@@ -38,7 +35,7 @@ namespace NYB.DeviceManagementSystem.ViewModel
             set { _note = value; }
         }
 
-        public WebUser WebUser { get; set; }
+        public WebUser WebUser { get { return _webUser; } set { value = _webUser; } }
 
         public DateTime CreateDate { get; set; }
 

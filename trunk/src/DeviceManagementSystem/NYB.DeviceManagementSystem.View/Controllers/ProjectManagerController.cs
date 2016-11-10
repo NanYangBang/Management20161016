@@ -1,4 +1,6 @@
-﻿using NYB.DeviceManagementSystem.ViewModel;
+﻿using NYB.DeviceManagementSystem.BLL;
+using NYB.DeviceManagementSystem.Common;
+using NYB.DeviceManagementSystem.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,20 +18,13 @@ namespace NYB.DeviceManagementSystem.View.Controllers
         public ActionResult Index(string searchInfo, int pageIndex = 1, int pageSize = 1, string orderBy = "", bool ascending = false)
         {
             List<WebProject> userList = new List<WebProject>();
-
-            userList.Add(
-                new WebProject()
-                {
-                    Name = "测试项目"
-                }
-                );
-            userList.Add(
-                new WebProject()
-                {
-                    Name = "测试项目"
-                }
-                );
-
+            int totalCount = 0;
+            ProjectBLL projectBLL = new ProjectBLL();
+            var cResult = projectBLL.GetProjectList(out totalCount, searchInfo, pageIndex, pageSize, orderBy, ascending);
+            if (cResult.Code == 0)
+            {
+                userList = cResult.Data;
+            }
             var pageList = new PagedList<WebProject>(userList, pageIndex, pageSize);
             return View(pageList);
         }
@@ -37,23 +32,38 @@ namespace NYB.DeviceManagementSystem.View.Controllers
         [HttpGet]
         public ActionResult AddProject(string returnUrl)
         {
-            return View();
+            ViewBag.Action = "Add";
+            ViewBag.ReturnUrl = returnUrl;
+            WebProject webProject = new WebProject();
+            return View(webProject);
         }
 
         [HttpPost]
-        public ActionResult AddProject(WebProject webUser)
+        public ActionResult AddProject(WebProject webProject)
         {
-            return View();
+            webProject.ID = Guid.NewGuid().ToString();
+            webProject.WebUser.ID = Guid.NewGuid().ToString();
+            webProject.WebUser.Role = RoleType.超级管理员.ToString();
+            webProject.WebUser.CreateUserID = "640C01A6-1B8F-423C-96CA-162C6A5C4034";
+            webProject.CreateUserID = "640C01A6-1B8F-423C-96CA-162C6A5C4034";
+            webProject.WebUser.ProjectID = webProject.ID;
+            webProject.WebUser.CreateUserName = "SuperAdmin";
+            ProjectBLL projectBLL = new ProjectBLL();
+
+            CResult<bool> cResult = projectBLL.InsertProject(webProject);
+
+            return JsonContentHelper.GetJsonContent(cResult);
         }
 
         [HttpGet]
-        public ActionResult UpdateProject(string returnUrl)
+        public ActionResult UpdateProject(string projectID,string returnUrl)
         {
+            ProjectBLL projectBLL = new ProjectBLL();
             return View();
         }
 
         [HttpPost]
-        public ActionResult UpdateProject(WebProject webUser)
+        public ActionResult UpdateProject(WebProject webUser, string returnUrl)
         {
             return View();
         }

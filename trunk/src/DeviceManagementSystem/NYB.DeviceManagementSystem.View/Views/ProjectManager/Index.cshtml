@@ -55,7 +55,7 @@
                             @project.Name
                         </td>
                         <td>
-                            @project.CreateUserName
+                            
                         </td>
                         <td>
                             @project.CreateDate
@@ -64,11 +64,11 @@
                             @project.Note
                         </td>
                         <td>
-                            @project.LogoName
+                            @project.WebUser.UserName
                         </td>
                         <td>
                             @{var routeValues = new { userID = project.ID, returnUrl = Request.Url.AbsoluteUri, _ = DateTime.Now.Ticks };}
-                            @Html.ActionLink("修改", "UpdateUser", routeValues)
+                            @Html.ActionLink("修改", "UpdateProject", routeValues)
                         </td>
                     </tr>
                 }
@@ -87,7 +87,7 @@
 
 <script type="text/javascript">
     window.UrlResource = {
-        UrlAddAction: '@Url.Action("AddUser","User",new { returnUrl = Request.Url.AbsoluteUri})'
+        UrlAddAction: '@Url.Action("AddProject", "ProjectManager", new { returnUrl = Request.Url.AbsoluteUri })'
     }
 
     $(document).ready(function () {

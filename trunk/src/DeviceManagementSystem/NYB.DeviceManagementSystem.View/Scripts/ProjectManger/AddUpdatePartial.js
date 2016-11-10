@@ -3,16 +3,26 @@ function SaveEvent() {
     $('form').submit(function (e) {
         e.preventDefault();
         var returnUrl = $('[name="returnUrl"]');
-
+        
         var param = {};
+        var WebUser = {};
         var Name = $('[name="Name"]').val();
-        var LogoName = $('[name="LogoName"]').val();
-        var Pwd = $('[name="Pwd"]').val();
         var Note = $('[name="Note"]').val();
 
+        var UserName = $('[name="WebUser.UserName"]').val();
+        var LogoName = $('[name="WebUser.LogoName"]').val();
+        var Pwd = $('[name="WebUser.Pwd"]').val();
+        var TelPhone = $('[name="WebUser.TelPhone"]').val();
+        var Address = $('[name="WebUser.Address"]').val();
+        var Email = $('[name="WebUser.Email"]').val();
+
         param.Name = Name;
-        param.LogoName = LogoName;
-        param.Pwd = Pwd;
+        param['WebUser.LogoName'] = LogoName;
+        param['WebUser.UserName'] = UserName;
+        param['WebUser.Pwd'] = Pwd;
+        param['WebUser.TelPhone'] = TelPhone;
+        param['WebUser.Address'] = Address;
+        param['WebUser.Email'] = Email;
         param.Note = Note;
 
         if ($('span.errorMessage').length == 0 && $('.field-validation-error').length == 0) {
