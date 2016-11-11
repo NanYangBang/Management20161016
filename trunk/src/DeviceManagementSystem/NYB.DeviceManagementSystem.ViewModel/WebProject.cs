@@ -35,7 +35,17 @@ namespace NYB.DeviceManagementSystem.ViewModel
             set { _note = value; }
         }
 
-        public WebUser WebUser { get { return _webUser; } set { value = _webUser; } }
+        public WebUser WebUser
+        {
+            get
+            {
+                return _webUser;
+            }
+            set
+            {
+                _webUser = value;
+            }
+        }
 
         public DateTime CreateDate { get; set; }
 

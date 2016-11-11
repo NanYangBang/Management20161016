@@ -6,6 +6,7 @@ function SaveEvent() {
         
         var param = {};
         var WebUser = {};
+        var ID = $('[name="ID"]').val();
         var Name = $('[name="Name"]').val();
         var Note = $('[name="Note"]').val();
 
@@ -16,6 +17,7 @@ function SaveEvent() {
         var Address = $('[name="WebUser.Address"]').val();
         var Email = $('[name="WebUser.Email"]').val();
 
+        param.ID = ID;
         param.Name = Name;
         param['WebUser.LogoName'] = LogoName;
         param['WebUser.UserName'] = UserName;

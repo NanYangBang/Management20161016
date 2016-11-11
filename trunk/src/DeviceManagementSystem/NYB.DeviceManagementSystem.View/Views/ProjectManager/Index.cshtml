@@ -67,7 +67,7 @@
                             @project.WebUser.UserName
                         </td>
                         <td>
-                            @{var routeValues = new { userID = project.ID, returnUrl = Request.Url.AbsoluteUri, _ = DateTime.Now.Ticks };}
+                            @{var routeValues = new { projectID = project.ID, returnUrl = Request.Url.AbsoluteUri, _ = DateTime.Now.Ticks };}
                             @Html.ActionLink("修改", "UpdateProject", routeValues)
                         </td>
                     </tr>

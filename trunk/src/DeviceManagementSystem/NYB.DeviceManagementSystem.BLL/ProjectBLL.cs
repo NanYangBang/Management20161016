@@ -48,8 +48,15 @@ namespace NYB.DeviceManagementSystem.BLL
                     TelPhone = user.Telephone,
                     Moblie = user.Moblie,
                     UserName = user.Name,
+                    ProjectID = user.ProjectID
 
                 }).ToList();
+
+                foreach (var user in users)
+                {
+                    var project = result.FirstOrDefault(t => t.ID == user.ProjectID);
+                    project.WebUser = user;
+                }
 
                 return new CResult<List<WebProject>>(result);
             }
@@ -62,7 +69,7 @@ namespace NYB.DeviceManagementSystem.BLL
                 var project = new Project();
                 project.CreateDate = DateTime.Now;
                 project.CreateUserID = webProject.CreateUserID;
-                project.ID = webProject.ID;
+                project.ID = Guid.NewGuid().ToString();
                 project.Name = webProject.Name;
                 project.Note = webProject.Note;
                 project.IsValid = true;
@@ -80,7 +87,7 @@ namespace NYB.DeviceManagementSystem.BLL
                         UserID = currentUser.ProviderUserKey.ToString(),
                         LoginName = webUser.LogoName,
                         Name = webUser.UserName,
-                        ProjectID = webUser.ProjectID,
+                        ProjectID = project.ID,
                         Address = webUser.Address,
                         Telephone = webUser.TelPhone,
                         CreateDate = DateTime.Now,
@@ -126,7 +133,7 @@ namespace NYB.DeviceManagementSystem.BLL
                 project.Name = webProject.Name;
                 project.Note = webProject.Note;
 
-                var user = context.User.FirstOrDefault(t => t.UserID == webProject.WebUser.ID);
+                var user = context.User.FirstOrDefault(t => t.ProjectID == webProject.ID && t.IsSuperAdminCreate == true);
                 if (user == null)
                 {
                     return new CResult<bool>(false, ErrorCode.DataNoExist);
@@ -141,6 +148,42 @@ namespace NYB.DeviceManagementSystem.BLL
 
                 context.Entry(project).State = EntityState.Modified;
                 return context.Save();
+            }
+        }
+
+        public CResult<WebProject> GetProjectInfoByID(string projectID)
+        {
+            using (var context = new DeviceMgmtEntities())
+            {
+                var project = context.Project.FirstOrDefault(t => t.ID == projectID);
+                if (project == null)
+                {
+                    return new CResult<WebProject>(null, ErrorCode.DataNoExist);
+                }
+
+                var webProject = new WebProject()
+                {
+                    CreateDate = project.CreateDate,
+                    ID = project.ID,
+                    Note = project.Note,
+                    Name = project.Name,
+                };
+
+                var user = context.User.FirstOrDefault(t => t.ProjectID == project.ID && t.IsSuperAdminCreate);
+                var webUser = new WebUser
+                {
+                    ID = user.UserID,
+                    Address = user.Address,
+                    Email = user.Email,
+                    LogoName = user.LoginName,
+                    TelPhone = user.Telephone,
+                    Moblie = user.Moblie,
+                    UserName = user.Name,
+                };
+
+                webProject.WebUser = webUser;
+
+                return new CResult<WebProject>(webProject);
             }
         }
 

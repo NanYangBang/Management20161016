@@ -17,6 +17,7 @@
         <div class="common-details-panel">
             <h2><b>6</b>添加项目信息</h2>
             <input hidden="hidden" name="CreateUserID" type="text" value="19668EFE-9821-4FDE-9D41-C032D6BD25FB" />
+            @Html.HiddenFor(model => model.ID)
             <fieldset>
                 <table class="operateTable">
                     <tr>
@@ -67,7 +68,7 @@
                             <b>地址</b>
                         </td>
                         <td>
-                           @Html.TextBoxFor(model => model.WebUser.Address)
+                            @Html.TextBoxFor(model => model.WebUser.Address)
                             @Html.ValidationMessageFor(model => model.WebUser.Address)
                         </td>
                     </tr>

@@ -41,13 +41,13 @@ namespace NYB.DeviceManagementSystem.View.Controllers
         [HttpPost]
         public ActionResult AddProject(WebProject webProject)
         {
-            webProject.ID = Guid.NewGuid().ToString();
-            webProject.WebUser.ID = Guid.NewGuid().ToString();
-            webProject.WebUser.Role = RoleType.超级管理员.ToString();
-            webProject.WebUser.CreateUserID = "640C01A6-1B8F-423C-96CA-162C6A5C4034";
-            webProject.CreateUserID = "640C01A6-1B8F-423C-96CA-162C6A5C4034";
-            webProject.WebUser.ProjectID = webProject.ID;
-            webProject.WebUser.CreateUserName = "SuperAdmin";
+            //webProject.ID = Guid.NewGuid().ToString();
+            //webProject.WebUser.ID = Guid.NewGuid().ToString();
+            //webProject.WebUser.Role = RoleType.超级管理员.ToString();
+            //webProject.WebUser.CreateUserID = "640C01A6-1B8F-423C-96CA-162C6A5C4034";
+            //webProject.CreateUserID = "640C01A6-1B8F-423C-96CA-162C6A5C4034";
+            //webProject.WebUser.ProjectID = webProject.ID;
+            //webProject.WebUser.CreateUserName = "SuperAdmin";
             ProjectBLL projectBLL = new ProjectBLL();
 
             CResult<bool> cResult = projectBLL.InsertProject(webProject);
@@ -56,16 +56,27 @@ namespace NYB.DeviceManagementSystem.View.Controllers
         }
 
         [HttpGet]
-        public ActionResult UpdateProject(string projectID,string returnUrl)
+        public ActionResult UpdateProject(string projectID, string returnUrl)
         {
             ProjectBLL projectBLL = new ProjectBLL();
-            return View();
+            var result = projectBLL.GetProjectInfoByID(projectID);
+            WebProject webProject = null;
+            if (result.Code == 0)
+            {
+                webProject = result.Data;
+            }
+            ViewBag.ReturnUrl = returnUrl;
+            return View(webProject);
         }
 
         [HttpPost]
-        public ActionResult UpdateProject(WebProject webUser, string returnUrl)
+        public ActionResult UpdateProject(WebProject webProject, string returnUrl)
         {
-            return View();
+            ProjectBLL projectBLL = new ProjectBLL();
+
+            CResult<bool> cResult = projectBLL.UpdateProjectInfo(webProject);
+
+            return JsonContentHelper.GetJsonContent(cResult);
         }
 
     }
