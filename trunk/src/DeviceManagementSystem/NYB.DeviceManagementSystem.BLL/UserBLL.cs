@@ -39,7 +39,7 @@ namespace NYB.DeviceManagementSystem.BLL
                     CreateUserID = t.CreateUserID,
                     CreateUserName = context.User.FirstOrDefault(u => u.UserID == u.UserID).Name,
                     Email = t.Email,
-                    LogoName = t.LoginName,
+                    LoginName = t.LoginName,
                     TelPhone = t.Telephone,
                     UserName = t.Name,
                     Role = Roles.GetRolesForUser(t.LoginName).FirstOrDefault(),
@@ -61,7 +61,7 @@ namespace NYB.DeviceManagementSystem.BLL
                         ID = entity.UserID,
                         Address = entity.Address,
                         Email = entity.Email,
-                        LogoName = entity.LoginName,
+                        LoginName = entity.LoginName,
                         TelPhone = entity.Telephone,
                         UserName = entity.Name,
                     };
@@ -92,7 +92,7 @@ namespace NYB.DeviceManagementSystem.BLL
                         ID = entity.UserID,
                         Address = entity.Address,
                         Email = entity.Email,
-                        LogoName = entity.LoginName,
+                        LoginName = entity.LoginName,
                         TelPhone = entity.Telephone,
                         Moblie = entity.Moblie,
                         UserName = entity.Name,
@@ -122,7 +122,7 @@ namespace NYB.DeviceManagementSystem.BLL
                 }
 
                 MembershipCreateStatus status;
-                var currentUser = Membership.CreateUser(webUser.LogoName, webUser.Pwd, webUser.Email, null, null, true, null, out status);
+                var currentUser = Membership.CreateUser(webUser.LoginName, webUser.Pwd, webUser.Email, null, null, true, null, out status);
 
                 if (status == MembershipCreateStatus.Success)
                 {
@@ -131,7 +131,7 @@ namespace NYB.DeviceManagementSystem.BLL
                     var entity = new User()
                     {
                         UserID = currentUser.ProviderUserKey.ToString(),
-                        LoginName = webUser.LogoName,
+                        LoginName = webUser.LoginName,
                         Name = webUser.UserName,
                         ProjectID = webUser.ProjectID,
                         Address = webUser.Address,
@@ -144,7 +144,7 @@ namespace NYB.DeviceManagementSystem.BLL
                         IsSuperAdminCreate = isSuperAdminCreate
                     };
 
-                    LoggerBLL.AddLog(context, webUser.CreateUserID, OperatTypeEnum.添加, _businessModel, "用户名：" + webUser.LogoName);
+                    LoggerBLL.AddLog(context, webUser.CreateUserID, OperatTypeEnum.添加, _businessModel, "用户名：" + webUser.LoginName);
 
                     try
                     {
@@ -247,30 +247,55 @@ namespace NYB.DeviceManagementSystem.BLL
             }
         }
 
-        public CResult<bool> VerifyPassword(string userName, string password)
+        public CResult<WebUser> VerifyPassword(string userName, string password)
         {
             var isExist = Membership.ValidateUser(userName, password);
             if (isExist == false)
             {
-                return new Common.CResult<bool>(false, ErrorCode.UserNameOrPasswordWrong);
+                return new Common.CResult<WebUser>(null, ErrorCode.UserNameOrPasswordWrong);
             }
 
             using (var context = new DeviceMgmtEntities())
             {
-                var entity = context.User.FirstOrDefault(t => t.IsValid == true && t.LoginName == userName);
-                if (entity == null)
+                var user = context.User.FirstOrDefault(t => t.IsValid == true && t.LoginName == userName);
+                if (user == null)
                 {
-                    return new CResult<bool>(false, ErrorCode.UserNameOrPasswordWrong);
+                    return new CResult<WebUser>(null, ErrorCode.UserNameOrPasswordWrong);
                 }
 
-                var projectExist = context.Project.Any(t => t.IsValid == true && t.ID == entity.ProjectID);
-
-                if (projectExist == false)
+                var role = Roles.GetRolesForUser(userName).FirstOrDefault();
+                if (string.IsNullOrWhiteSpace(role))
                 {
-                    return new CResult<bool>(false, ErrorCode.UserNameOrPasswordWrong);
+                    return new CResult<WebUser>(null, ErrorCode.UserNameOrPasswordWrong);
+                }
+                WebUser webUser = new WebUser()
+                {
+                    ID = user.UserID,
+                    Address = user.Address,
+                    Email = user.Email,
+                    LoginName = user.LoginName,
+                    TelPhone = user.Telephone,
+                    Moblie = user.Moblie,
+                    UserName = user.Name,
+                    Role = role,
+                };
+
+                if (role == RoleType.超级管理员.ToString())
+                {
+                }
+                else
+                {
+                    var project = context.Project.FirstOrDefault(t => t.IsValid == true && t.ID == user.ProjectID);
+
+                    if (project == null)
+                    {
+                        return new CResult<WebUser>(null, ErrorCode.UserNameOrPasswordWrong);
+                    }
+
+                    webUser.ProjectID = project.ID;
                 }
 
-                return new Common.CResult<bool>(true);
+                return new CResult<WebUser>(webUser);
             }
         }
 

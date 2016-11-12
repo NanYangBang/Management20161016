@@ -43,17 +43,17 @@ namespace NYB.DeviceManagementSystem.ViewModel
             set { _pwd = value; }
         }
 
-        private string _logoName = string.Empty;
+        private string _loginName = string.Empty;
 
         /// <summary>
         /// 登录名
         /// </summary>
         [Required(ErrorMessage = "登录名必填")]
         [Display(Name = "登录名")]
-        public string LogoName
+        public string LoginName
         {
-            get { return _logoName; }
-            set { _logoName = value; }
+            get { return _loginName; }
+            set { _loginName = value; }
         }
 
         private string _address = string.Empty;

@@ -44,7 +44,7 @@ namespace NYB.DeviceManagementSystem.BLL
                     ID = user.UserID,
                     Address = user.Address,
                     Email = user.Email,
-                    LogoName = user.LoginName,
+                    LoginName = user.LoginName,
                     TelPhone = user.Telephone,
                     Moblie = user.Moblie,
                     UserName = user.Name,
@@ -76,7 +76,7 @@ namespace NYB.DeviceManagementSystem.BLL
 
                 var webUser = webProject.WebUser;
                 MembershipCreateStatus status;
-                var currentUser = Membership.CreateUser(webUser.LogoName, webUser.Pwd, webUser.Email, null, null, true, null, out status);
+                var currentUser = Membership.CreateUser(webUser.LoginName, webUser.Pwd, webUser.Email, null, null, true, null, out status);
 
                 if (status == MembershipCreateStatus.Success)
                 {
@@ -85,7 +85,7 @@ namespace NYB.DeviceManagementSystem.BLL
                     var entity = new User()
                     {
                         UserID = currentUser.ProviderUserKey.ToString(),
-                        LoginName = webUser.LogoName,
+                        LoginName = webUser.LoginName,
                         Name = webUser.UserName,
                         ProjectID = project.ID,
                         Address = webUser.Address,
@@ -175,7 +175,7 @@ namespace NYB.DeviceManagementSystem.BLL
                     ID = user.UserID,
                     Address = user.Address,
                     Email = user.Email,
-                    LogoName = user.LoginName,
+                    LoginName = user.LoginName,
                     TelPhone = user.Telephone,
                     Moblie = user.Moblie,
                     UserName = user.Name,

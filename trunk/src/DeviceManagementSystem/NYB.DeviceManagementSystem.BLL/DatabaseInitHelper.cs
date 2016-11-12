@@ -14,6 +14,8 @@ namespace NYB.DeviceManagementSystem.BLL
     {
         public void InitDB()
         {
+            Membership.DeleteUser("SuperAdmin");
+
             using (var context = new DeviceMgmtEntities())
             {
                 foreach (var item in Enum.GetNames(typeof(RoleType)))
@@ -27,7 +29,7 @@ namespace NYB.DeviceManagementSystem.BLL
                 User superAdmin;
                 if (Membership.FindUsersByName("SuperAdmin").Count == 0)
                 {
-                    Membership.CreateUser("SuperAdmin", "111111");
+                    var member = Membership.CreateUser("SuperAdmin", "111111");
                     Roles.AddUserToRole("SuperAdmin", RoleType.超级管理员.ToString());
                     superAdmin = new User()
                    {
@@ -39,7 +41,7 @@ namespace NYB.DeviceManagementSystem.BLL
                        IsValid = true,
                        LoginName = "SuperAdmin",
                        ProjectID = "",
-                       UserID = Guid.NewGuid().ToString(),
+                       UserID = member.ProviderUserKey.ToString(),
                        Name = "SuperAdmin",
                        Telephone = "",
                        Moblie = ""

@@ -11,7 +11,7 @@ function SaveEvent() {
         var Note = $('[name="Note"]').val();
 
         var UserName = $('[name="WebUser.UserName"]').val();
-        var LogoName = $('[name="WebUser.LogoName"]').val();
+        var LoginName = $('[name="WebUser.LoginName"]').val();
         var Pwd = $('[name="WebUser.Pwd"]').val();
         var TelPhone = $('[name="WebUser.TelPhone"]').val();
         var Address = $('[name="WebUser.Address"]').val();

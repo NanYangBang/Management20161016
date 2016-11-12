@@ -1,4 +1,4 @@
-﻿@model NYB.DeviceManagementSystem.ViewModel.User
+﻿@model NYB.DeviceManagementSystem.ViewModel.WebUser
 @{
     ViewBag.Title = "登录";
     Layout = "";
@@ -39,11 +39,11 @@
                         @Html.LabelFor(m => m.UserName)
                     </dt>
                     <dd>
-                        <span class="inline-block">@Html.TextBoxFor(m => m.LogoName, new { tabIndex = 1 })</span>
+                        <span class="inline-block">@Html.TextBoxFor(m => m.LoginName, new { tabIndex = 1 })</span>
                         @*<span class="inline-block">@Html.CheckBoxFor(m => m.RememberMe) @Html.LabelFor(m => m.RememberMe)</span>*@
                     </dd>
                     <dd>
-                        @Html.ValidationMessageFor(m => m.LogoName)
+                        @Html.ValidationMessageFor(m => m.LoginName)
                     </dd>
                     <dt>
                         @Html.LabelFor(m => m.Pwd)

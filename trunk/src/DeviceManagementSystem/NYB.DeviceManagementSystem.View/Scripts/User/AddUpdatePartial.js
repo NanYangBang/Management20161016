@@ -6,14 +6,14 @@ function SaveEvent() {
 
         var param = {};
         var UserName = $('[name="UserName"]').val();
-        var LogoName = $('[name="LogoName"]').val();
+        var LoginName = $('[name="LoginName"]').val();
         var Pwd = $('[name="Pwd"]').val();
         var Address = $('[name="Address"]').val();
         var TelPhone = $('[name="TelPhone"]').val();
         var RoleName = $('[name="Role"]').val();
 
         param.UserName = UserName;
-        param.LogoName = LogoName;
+        param.LoginName = LoginName;
         param.Pwd = Pwd;
         param.Address = Address;
         param.TelPhone = TelPhone;

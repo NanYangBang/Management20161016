@@ -33,11 +33,10 @@ namespace NYB.DeviceManagementSystem.View
 
             routes.MapRoute(
                 "noparam", // 路由名称
-                "{controller}/{action}/{id}" // 带有参数的 URL
-               // new { controller = "Account", action = "LogOn", id = UrlParameter.Optional }, // 参数默认值
-                //new { controller = ".*Api$" }
+                "{controller}/{action}/{id}", // 带有参数的 URL
+                new { controller = "Account", action = "LogOn", id = UrlParameter.Optional } // 参数默认值
             );
-            
+
             routes.MapRoute(
                 "Pile", // 路由名称
                 "Pile/{action}/{id}", // 带有参数的 URL
@@ -70,18 +69,18 @@ namespace NYB.DeviceManagementSystem.View
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             BundleTable.EnableOptimizations = false;
-            
+
             DelTempFile();
         }
 
         private static void DelTempFile()
         {
-           
+
         }
 
         protected void Application_End(object sender, EventArgs e)
         {
-            
+
         }
 
         #region 添加Uploadify的Cookie值
