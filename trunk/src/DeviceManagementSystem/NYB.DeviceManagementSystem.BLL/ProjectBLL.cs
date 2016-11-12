@@ -80,7 +80,7 @@ namespace NYB.DeviceManagementSystem.BLL
 
                 if (status == MembershipCreateStatus.Success)
                 {
-                    Roles.AddUserToRole(currentUser.UserName, webUser.Role);
+                    Roles.AddUserToRole(currentUser.UserName, RoleType.管理员.ToString());
 
                     var entity = new User()
                     {

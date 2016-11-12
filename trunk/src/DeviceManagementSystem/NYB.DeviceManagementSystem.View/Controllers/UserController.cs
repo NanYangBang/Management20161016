@@ -19,9 +19,9 @@ namespace NYB.DeviceManagementSystem.View.Controllers
         {
             UserBLL userBLL = new UserBLL();
             int totalCount = 0;
-            string projectID = "";
+            string projectID = this.GetCurrentProjectID();
             List<WebUser> userList = new List<WebUser>();
-            CResult<List<WebUser>> cResult = userBLL.GetUserList(out totalCount, projectID, "", searchInfo, pageIndex, pageSize, orderBy, ascending);
+            CResult<List<WebUser>> cResult = userBLL.GetUserList(out totalCount, projectID, this.GetCurrentUserID(), searchInfo, pageIndex, pageSize, orderBy, ascending);
             if (cResult.Code == 0)
             {
                 userList = cResult.Data;
@@ -38,7 +38,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             ViewBag.IsUpdate = false;
             ViewBag.ErrMsg = "";
             ViewBag.Action = "Add";
-            
+
             return View(new WebUser());
         }
 
@@ -82,6 +82,15 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             UserBLL userBLL = new UserBLL();
             CResult<bool> cResult = userBLL.UpdateUser(user);
             return JsonContentHelper.GetJsonContent(cResult);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteUser(string userID, string returnUrl)
+        {
+            var userBLL = new UserBLL();
+            var currentUserID = Request.Cookies["CurrentUserID"].Value;
+            var result = userBLL.DeleteUserByID(userID, currentUserID);
+            return JsonContentHelper.GetJsonContent(result);
         }
     }
 }

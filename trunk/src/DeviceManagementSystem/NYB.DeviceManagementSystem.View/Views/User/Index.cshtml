@@ -70,6 +70,9 @@
                         <td>
                             @{var routeValues = new { userID = user.ID, returnUrl = Request.Url.AbsoluteUri, _ = DateTime.Now.Ticks };}
                             @Html.ActionLink("修改", "UpdateUser", routeValues)
+                            @Html.ActionLink("查看", "ViewUser", routeValues)
+                            @*@Html.ActionLink("删除", "DeleteUser", routeValues, new { name = "DeleteUser" })*@
+                            <a href="#" onclick="DeleteUser('@user.ID')" name="DeleteUSer">刪除</a>
                         </td>
                     </tr>
                 }
@@ -81,20 +84,30 @@
         @Html.Partial("DisplayTemplates/PagerView", Model)
         <p>
             <input type="button" class="blue-button" id="addUser" value="添加" />
-            <input type="button" id="btnDelete" value="删除" />
+            @*<input type="button" id="btnDelete" value="删除" />*@
         </p>
     </div>
 </div>
 
 <script type="text/javascript">
     window.UrlResource = {
-        UrlAddAction: '@Url.Action("AddUser","User",new { returnUrl = Request.Url.AbsoluteUri})'
+        UrlAddAction: '@Url.Action("AddUser","User",new { returnUrl = Request.Url.AbsoluteUri})',
     }
 
     $(document).ready(function () {
         AddUpdateEvent();
         SortAlertRecord();
     })
+
+    function DeleteUser(t) {        
+        $.post('@Url.Action("DeleteUser","User",new { returnUrl = Request.Url.AbsoluteUri})',t,function (result){
+            if (result.Code==0) {
+                window.location.reload;
+            } else {
+                alert(result.Msg);
+            }
+        })
+    }
 
 
 

@@ -196,6 +196,7 @@
     </Compile>
     <Compile Include="Helper\JsonContentHelper.cs" />
     <Compile Include="Helper\SinaDateTimeConverter.cs" />
+    <Compile Include="Helper\UserInfoHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -20,6 +20,12 @@ namespace NYB.DeviceManagementSystem.BLL
         private BusinessModelEnum _businessModel = BusinessModelEnum.用户;
         public CResult<List<WebUser>> GetUserList(out int totalCount, string projectID, string userID, string searchInfo, int pageIndex = 1, int pageSize = 10, string orderby = null, bool ascending = false)
         {
+            totalCount = 0;
+            if (string.IsNullOrWhiteSpace(projectID))
+            {
+                return new Common.CResult<List<WebUser>>(new List<WebUser>());
+            }
+
             Expression<Func<User, bool>> filter = t => t.IsValid && t.ProjectID == projectID && t.UserID != userID && t.IsSuperAdminCreate == false;
 
             if (string.IsNullOrWhiteSpace(searchInfo) == false)
@@ -42,8 +48,12 @@ namespace NYB.DeviceManagementSystem.BLL
                     LoginName = t.LoginName,
                     TelPhone = t.Telephone,
                     UserName = t.Name,
-                    Role = Roles.GetRolesForUser(t.LoginName).FirstOrDefault(),
                 }).ToList();
+
+                foreach (var item in result)
+                {
+                    item.Role = Roles.GetRolesForUser(item.LoginName).FirstOrDefault();
+                }
 
                 return new CResult<List<WebUser>>(result);
             }
