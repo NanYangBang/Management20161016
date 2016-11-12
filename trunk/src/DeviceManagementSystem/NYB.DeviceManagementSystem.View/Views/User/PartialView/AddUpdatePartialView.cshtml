@@ -17,6 +17,7 @@
 <div actionname="系统管理" class="operationParent">
     <form action="AddUser" method="post">
         @(Html.Hidden("returnUrl", returnUrl))
+        @Html.HiddenFor(t => t.ID)
         <div class="common-details-panel">
             <h2><b>6</b>添加用户信息</h2>
             <fieldset>

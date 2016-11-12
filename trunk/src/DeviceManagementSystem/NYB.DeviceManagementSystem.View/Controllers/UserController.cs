@@ -67,6 +67,10 @@ namespace NYB.DeviceManagementSystem.View.Controllers
         {
             ViewBag.IsUpdate = true;
             ViewBag.Action = "Update";
+            ViewBag.IsErr = false;
+            ViewBag.ReturnUrl = returnUrl;
+            ViewBag.ErrMsg = "";
+
             UserBLL userBLL = new UserBLL();
             CResult<WebUser> cResult = userBLL.GetUserInfoByUserID(userID);
             if (cResult.Code == 0)
@@ -75,19 +79,22 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             }
             else
             {
+                ViewBag.IsErr = true;
+                ViewBag.ErrMsg = cResult.Msg;
                 return View(new WebUser());
             }
         }
         [HttpPost]
-        public ActionResult UpdateUser(WebUser user)
+        public ActionResult UpdateUser(WebUser webUser)
         {
+            webUser.CreateUserID = this.GetCurrentUserID();
             UserBLL userBLL = new UserBLL();
-            CResult<bool> cResult = userBLL.UpdateUser(user);
+            CResult<bool> cResult = userBLL.UpdateUser(webUser);
             return JsonContentHelper.GetJsonContent(cResult);
         }
 
         [HttpPost]
-        public ActionResult DeleteUser(string userID, string returnUrl)
+        public ActionResult DeleteUser(string userID)
         {
             var userBLL = new UserBLL();
             var currentUserID = Request.Cookies["CurrentUserID"].Value;

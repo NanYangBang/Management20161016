@@ -11,7 +11,9 @@ function SaveEvent() {
         var Address = $('[name="Address"]').val();
         var TelPhone = $('[name="TelPhone"]').val();
         var RoleName = $('[name="Role"]').val();
+        var ID= $('[name="ID"]').val();
 
+        param.ID = ID;
         param.UserName = UserName;
         param.LoginName = LoginName;
         param.Pwd = Pwd;

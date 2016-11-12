@@ -379,6 +379,7 @@
     <Content Include="Views\BasicInfoManager\Index.cshtml" />
     <Content Include="Views\BasicInfoManager\NavLeft.cshtml" />
     <Content Include="Views\BasicInfoManager\SupplierManager.cshtml" />
+    <Content Include="Views\User\UpdateUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NYB.DeviceManagementSystem.BLL\NYB.DeviceManagementSystem.BLL.csproj">

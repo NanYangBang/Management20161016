@@ -100,16 +100,15 @@
     })
 
     function DeleteUser(t) {
-        $.post('@Url.Action("DeleteUser","User",new { returnUrl = Request.Url.AbsoluteUri})', { userID: t }, function (result) {
-            if (result.Code == 0) {
-                window.location.reload;
-            } else {
-                alert(result.Msg);
-            }
-        })
+        if (window.confirm("是否删除用户？")) {
+            $.post('@Url.Action("DeleteUser","User")', { userID: t }, function (result) {
+                if (result.Code == 0) {
+                    window.location.reload;
+                } else {
+                    alert(result.Msg);
+                }
+            })
+        }
     }
-
-
-
 
 </script>
