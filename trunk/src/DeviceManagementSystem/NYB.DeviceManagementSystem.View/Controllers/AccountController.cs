@@ -26,29 +26,44 @@ namespace NYB.DeviceManagementSystem.View.Controllers
         [HttpPost]
         public ActionResult LogOn(string LoginName, string Pwd)
         {
-            if (string.IsNullOrWhiteSpace(LoginName) || string.IsNullOrWhiteSpace(Pwd))
+            var errorInfo = "用戶名或密码错误";
+            if (ModelState.IsValid)
             {
-            }
-
-            var userBLL = new UserBLL();
-            var result = userBLL.VerifyPassword(LoginName, Pwd);
-            if (result.Code == 0)
-            {
-                if (result.Data.Role != null)
+                var userBLL = new UserBLL();
+                var result = userBLL.VerifyPassword(LoginName, Pwd);
+                if (result.Code == 0)
                 {
-                    if (result.Data.Role == RoleType.超级管理员.ToString())
+                    if (result.Data.Role != null)
                     {
-                        return RedirectToAction("Index", "ProjectManager");
-                    }
-                    else
-                    {
-                        return RedirectToAction("Index", "SystemManager");
+                        Response.Cookies.Add(new HttpCookie("CurrentUserID", result.Data.ID));
+                        Response.Cookies.Add(new HttpCookie("CurrentUserName", result.Data.UserName));
+                        Response.Cookies.Add(new HttpCookie("CurrentProjectID", result.Data.ProjectID));
+
+                        FormsAuthentication.SetAuthCookie(LoginName, false);
+
+                        errorInfo = result.Msg;
+
+                        if (result.Data.Role == RoleType.超级管理员.ToString())
+                        {
+                            return RedirectToAction("Index", "ProjectManager");
+                        }
+                        else
+                        {
+                            return RedirectToAction("Index", "SystemManager");
+                        }
                     }
                 }
             }
 
+            ModelState.AddModelError("", errorInfo);
             return View();
         }
 
+        public ActionResult LogOff()
+        {
+            FormsAuthentication.SignOut();
+
+            return RedirectToAction("LogOn");
+        }
     }
 }
