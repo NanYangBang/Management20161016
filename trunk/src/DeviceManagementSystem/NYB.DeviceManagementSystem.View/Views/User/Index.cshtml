@@ -99,9 +99,9 @@
         SortAlertRecord();
     })
 
-    function DeleteUser(t) {        
-        $.post('@Url.Action("DeleteUser","User",new { returnUrl = Request.Url.AbsoluteUri})',t,function (result){
-            if (result.Code==0) {
+    function DeleteUser(t) {
+        $.post('@Url.Action("DeleteUser","User",new { returnUrl = Request.Url.AbsoluteUri})', { userID: t }, function (result) {
+            if (result.Code == 0) {
                 window.location.reload;
             } else {
                 alert(result.Msg);

@@ -13,7 +13,7 @@ namespace NYB.DeviceManagementSystem.BLL
 {
     public class LoggerBLL
     {
-        public static void AddLog(DeviceMgmtEntities context, string userID, OperatTypeEnum operatType, BusinessModelEnum businessModel, string content)
+        public static void AddLog(DeviceMgmtEntities context, string userID, string projectID, OperatTypeEnum operatType, BusinessModelEnum businessModel, string content)
         {
             var entity = new Log()
             {
@@ -22,7 +22,8 @@ namespace NYB.DeviceManagementSystem.BLL
                 LogContent = content,
                 OperatType = (int)operatType,
                 UserID = userID,
-                OperatDate = DateTime.Now
+                OperatDate = DateTime.Now,
+                ProjectID = projectID
             };
 
             context.Log.Add(entity);

@@ -46,6 +46,8 @@ namespace NYB.DeviceManagementSystem.View.Controllers
         public ActionResult AddUser(WebUser webUser)
         {
             UserBLL userBLL = new UserBLL();
+            webUser.ProjectID = this.GetCurrentProjectID();
+            webUser.CreateUserID = this.GetCurrentUserID();
             CResult<bool> cResult = userBLL.AddUser(webUser, false);
             return JsonContentHelper.GetJsonContent(cResult);
             //if (cResult.Code == 0)

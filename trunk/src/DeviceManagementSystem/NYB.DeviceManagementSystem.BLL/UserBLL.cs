@@ -12,6 +12,7 @@ using System.Linq.Expressions;
 using System.Web.Security;
 using NYB.DeviceManagementSystem.Common;
 using System.Data;
+using System.Data.Entity.Validation;
 
 namespace NYB.DeviceManagementSystem.BLL
 {
@@ -153,8 +154,9 @@ namespace NYB.DeviceManagementSystem.BLL
                         IsValid = true,
                         IsSuperAdminCreate = isSuperAdminCreate
                     };
+                    context.User.Add(entity);
 
-                    LoggerBLL.AddLog(context, webUser.CreateUserID, OperatTypeEnum.添加, _businessModel, "用户名：" + webUser.LoginName);
+                    LoggerBLL.AddLog(context, webUser.CreateUserID, webUser.ProjectID, OperatTypeEnum.添加, _businessModel, "用户名：" + webUser.LoginName);
 
                     try
                     {
@@ -168,7 +170,7 @@ namespace NYB.DeviceManagementSystem.BLL
                             return new CResult<bool>(false, ErrorCode.AddUserFault);
                         }
                     }
-                    catch
+                    catch (DbEntityValidationException e)
                     {
                         Membership.DeleteUser(currentUser.UserName, true);
                         return new CResult<bool>(false, ErrorCode.AddUserFault);
@@ -180,6 +182,11 @@ namespace NYB.DeviceManagementSystem.BLL
         }
         public CResult<bool> DeleteUserByID(string userID, string operatorUserID)
         {
+            if (string.IsNullOrWhiteSpace(userID) || string.IsNullOrWhiteSpace(operatorUserID))
+            {
+                return new Common.CResult<bool>(false, ErrorCode.ParameterError);
+            }
+
             using (var context = new DeviceMgmtEntities())
             {
                 var entity = context.User.FirstOrDefault(t => t.IsValid && t.UserID == userID);
@@ -193,7 +200,7 @@ namespace NYB.DeviceManagementSystem.BLL
 
                     entity.IsValid = false;
 
-                    LoggerBLL.AddLog(context, userID, OperatTypeEnum.删除, _businessModel, "用户名：" + entity.LoginName);
+                    LoggerBLL.AddLog(context, userID, entity.ProjectID, OperatTypeEnum.删除, _businessModel, "用户名：" + entity.LoginName);
 
                     return context.Save();
                 }
@@ -221,7 +228,7 @@ namespace NYB.DeviceManagementSystem.BLL
                 entity.Moblie = webUser.Moblie;
 
                 context.Entry(entity).State = EntityState.Modified;
-                LoggerBLL.AddLog(context, webUser.CreateUserID, OperatTypeEnum.修改, _businessModel, "用户名：" + entity.LoginName);
+                LoggerBLL.AddLog(context, webUser.CreateUserID, entity.ProjectID, OperatTypeEnum.修改, _businessModel, "用户名：" + entity.LoginName);
 
                 return context.Save();
             }
@@ -243,7 +250,8 @@ namespace NYB.DeviceManagementSystem.BLL
             var flag = user.ChangePassword(oldPassword, newPassword);
             using (var context = new DeviceMgmtEntities())
             {
-                LoggerBLL.AddLog(context, operatorUserID, OperatTypeEnum.修改, _businessModel, "用户名：" + loginName);
+                var entity = context.User.FirstOrDefault(t => t.LoginName == loginName);
+                LoggerBLL.AddLog(context, operatorUserID, entity.ProjectID, OperatTypeEnum.修改, _businessModel, "用户名：" + loginName);
                 context.SaveChanges();
             }
 

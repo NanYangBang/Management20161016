@@ -19,7 +19,6 @@
         @(Html.Hidden("returnUrl", returnUrl))
         <div class="common-details-panel">
             <h2><b>6</b>添加用户信息</h2>
-            <input hidden="hidden" name="CreateUserID" type="text" value="19668EFE-9821-4FDE-9D41-C032D6BD25FB" />
             <fieldset>
                 <table class="operateTable">
                     <tr>
@@ -27,7 +26,7 @@
                             <b>项目名称</b>
                         </td>
                         <td>
-                            <input name="ProjectID" type="text" value="19668EFE-9821-4FDE-9D41-C032D6BD25FB" />
+                            @Html.DisplayFor(t => t.ProjectID)
                         </td>
                         <td>
                             <b><em>*</em>用户名</b>
