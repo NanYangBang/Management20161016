@@ -5,6 +5,17 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="DeviceMgmtModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DeviceType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="nchar" MaxLength="36" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="30" />
+          <Property Name="ProjectID" Type="nchar" MaxLength="36" />
+          <Property Name="IsValid" Type="bit" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="CreateUserID" Type="nchar" MaxLength="36" />
+        </EntityType>
         <EntityType Name="Log">
           <Key>
             <PropertyRef Name="ID" />
@@ -45,6 +56,18 @@
           <Property Name="IsValid" Type="bit" Nullable="false" />
           <Property Name="IsSuperAdminCreate" Type="bit" Nullable="false" />
         </EntityType>
+        <Association Name="FK_DeviceType_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="DeviceType" Type="Self.DeviceType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="DeviceType">
+              <PropertyRef Name="CreateUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Log_User">
           <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="Log" Type="Self.Log" Multiplicity="*" />
@@ -58,9 +81,14 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="DeviceMgmtModelStoreContainer">
+          <EntitySet Name="DeviceType" EntityType="Self.DeviceType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_DeviceType_User" Association="Self.FK_DeviceType_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="DeviceType" EntitySet="DeviceType" />
+          </AssociationSet>
           <AssociationSet Name="FK_Log_User" Association="Self.FK_Log_User">
             <End Role="User" EntitySet="User" />
             <End Role="Log" EntitySet="Log" />
@@ -77,6 +105,11 @@
           <AssociationSet Name="FK_Log_User" Association="DeviceMgmtModel.FK_Log_User">
             <End Role="User" EntitySet="User" />
             <End Role="Log" EntitySet="Log" />
+          </AssociationSet>
+          <EntitySet Name="DeviceType" EntityType="DeviceMgmtModel.DeviceType" />
+          <AssociationSet Name="FK_DeviceType_User" Association="DeviceMgmtModel.FK_DeviceType_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="DeviceType" EntitySet="DeviceType" />
           </AssociationSet>
         </EntityContainer>
         <EnumType Name="TestEnum" />
@@ -108,6 +141,7 @@
           <Property Name="IsValid" Type="Boolean" Nullable="false" />
           <Property Name="IsSuperAdminCreate" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Log" Relationship="DeviceMgmtModel.FK_Log_User" FromRole="User" ToRole="Log" />
+          <NavigationProperty Name="DeviceType" Relationship="DeviceMgmtModel.FK_DeviceType_User" FromRole="User" ToRole="DeviceType" />
         </EntityType>
         <EntityType Name="Log">
           <Key>
@@ -131,6 +165,30 @@
             </Principal>
             <Dependent Role="Log">
               <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="DeviceType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="ProjectID" Type="String" MaxLength="36" FixedLength="true" Unicode="true" />
+          <Property Name="IsValid" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateUserID" Type="String" MaxLength="36" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="User" Relationship="DeviceMgmtModel.FK_DeviceType_User" FromRole="DeviceType" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_DeviceType_User">
+          <End Type="DeviceMgmtModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="DeviceMgmtModel.DeviceType" Role="DeviceType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="DeviceType">
+              <PropertyRef Name="CreateUserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -179,6 +237,18 @@
                 <ScalarProperty Name="BusinessModel" ColumnName="BusinessModel" />
                 <ScalarProperty Name="OperatType" ColumnName="OperatType" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeviceType">
+            <EntityTypeMapping TypeName="DeviceMgmtModel.DeviceType">
+              <MappingFragment StoreEntitySet="DeviceType">
+                <ScalarProperty Name="CreateUserID" ColumnName="CreateUserID" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="IsValid" ColumnName="IsValid" />
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

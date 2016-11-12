@@ -9,6 +9,8 @@
         <EntityTypeShape EntityType="DeviceMgmtModel.User" Width="1.5" PointX="2.75" PointY="0.75" />
         <EntityTypeShape EntityType="DeviceMgmtModel.Log" Width="1.5" PointX="5" PointY="1.25" />
         <AssociationConnector Association="DeviceMgmtModel.FK_Log_User" />
+        <EntityTypeShape EntityType="DeviceMgmtModel.DeviceType" Width="1.5" PointX="5" PointY="5.375" />
+        <AssociationConnector Association="DeviceMgmtModel.FK_DeviceType_User" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -17,6 +17,7 @@ namespace NYB.DeviceManagementSystem.DAL
         public User()
         {
             this.Log = new HashSet<Log>();
+            this.DeviceType = new HashSet<DeviceType>();
         }
     
         public string UserID { get; set; }
@@ -33,5 +34,6 @@ namespace NYB.DeviceManagementSystem.DAL
         public bool IsSuperAdminCreate { get; set; }
     
         public virtual ICollection<Log> Log { get; set; }
+        public virtual ICollection<DeviceType> DeviceType { get; set; }
     }
 }
