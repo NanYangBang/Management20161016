@@ -14,7 +14,7 @@ namespace NYB.DeviceManagementSystem.BLL
     {
         public void InitDB()
         {
-            Membership.DeleteUser("SuperAdmin");
+            //Membership.DeleteUser("SuperAdmin");
 
             using (var context = new DeviceMgmtEntities())
             {
