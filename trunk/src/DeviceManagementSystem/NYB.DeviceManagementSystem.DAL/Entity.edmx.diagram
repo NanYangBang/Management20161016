@@ -11,6 +11,8 @@
         <AssociationConnector Association="DeviceMgmtModel.FK_Log_User" />
         <EntityTypeShape EntityType="DeviceMgmtModel.DeviceType" Width="1.5" PointX="5" PointY="5.375" />
         <AssociationConnector Association="DeviceMgmtModel.FK_DeviceType_User" />
+        <EntityTypeShape EntityType="DeviceMgmtModel.Manufacturer" Width="1.5" PointX="3" PointY="9.25" />
+        <AssociationConnector Association="DeviceMgmtModel.FK_Manufacturer_Project" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

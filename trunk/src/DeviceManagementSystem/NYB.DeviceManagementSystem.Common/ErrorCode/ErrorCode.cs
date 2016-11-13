@@ -85,5 +85,8 @@ namespace NYB.DeviceManagementSystem.Common
 
         [DescriptionAttribute("用户或密码错误")]
         UserNameOrPasswordWrong = 20102,
+
+        [DescriptionAttribute("用户或密码错误")]
+        ProjectNotExist = 20103,
     }
 }

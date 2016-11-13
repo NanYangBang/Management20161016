@@ -14,11 +14,18 @@ namespace NYB.DeviceManagementSystem.DAL
     
     public partial class Project
     {
+        public Project()
+        {
+            this.Manufacturer = new HashSet<Manufacturer>();
+        }
+    
         public string ID { get; set; }
         public string Name { get; set; }
         public string Note { get; set; }
         public System.DateTime CreateDate { get; set; }
         public string CreateUserID { get; set; }
         public bool IsValid { get; set; }
+    
+        public virtual ICollection<Manufacturer> Manufacturer { get; set; }
     }
 }

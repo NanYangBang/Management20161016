@@ -29,5 +29,6 @@ namespace NYB.DeviceManagementSystem.DAL
         public DbSet<User> User { get; set; }
         public DbSet<Log> Log { get; set; }
         public DbSet<DeviceType> DeviceType { get; set; }
+        public DbSet<Manufacturer> Manufacturer { get; set; }
     }
 }

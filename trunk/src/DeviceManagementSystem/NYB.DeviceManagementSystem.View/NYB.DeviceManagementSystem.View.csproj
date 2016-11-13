@@ -187,6 +187,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BasicInfoManagerController.cs" />
+    <Compile Include="Controllers\DeviceTypeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProjectManagerController.cs" />
     <Compile Include="Controllers\SystemManagerController.cs" />
@@ -380,6 +381,11 @@
     <Content Include="Views\BasicInfoManager\NavLeft.cshtml" />
     <Content Include="Views\BasicInfoManager\SupplierManager.cshtml" />
     <Content Include="Views\User\UpdateUser.cshtml" />
+    <Content Include="Views\DeviceType\Index.cshtml" />
+    <Content Include="Views\DeviceType\PartialView\DeviceTypeDetailView.cshtml" />
+    <Content Include="Views\DeviceType\Create.cshtml" />
+    <Content Include="Views\DeviceType\Details.cshtml" />
+    <Content Include="Views\DeviceType\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NYB.DeviceManagementSystem.BLL\NYB.DeviceManagementSystem.BLL.csproj">

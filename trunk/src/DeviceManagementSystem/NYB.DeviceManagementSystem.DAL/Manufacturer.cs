@@ -12,16 +12,17 @@ namespace NYB.DeviceManagementSystem.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class DeviceType
+    public partial class Manufacturer
     {
         public string ID { get; set; }
         public string Name { get; set; }
+        public string Address { get; set; }
+        public string Contact { get; set; }
+        public string Mobile { get; set; }
+        public string Phone { get; set; }
         public string ProjectID { get; set; }
         public bool IsValid { get; set; }
-        public System.DateTime CreateDate { get; set; }
-        public string CreateUserID { get; set; }
-        public string Note { get; set; }
     
-        public virtual User User { get; set; }
+        public virtual Project Project { get; set; }
     }
 }
