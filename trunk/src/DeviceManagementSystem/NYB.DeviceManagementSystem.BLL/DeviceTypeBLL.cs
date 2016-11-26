@@ -158,6 +158,11 @@ namespace NYB.DeviceManagementSystem.BLL
                     return new CResult<bool>(false, ErrorCode.DataNoExist);
                 }
 
+                if (context.Device.Any(t => t.DeviceTypeID == entity.ID))
+                {
+                    return new CResult<bool>(false, ErrorCode.DeviceTypeConatinDevice);
+                }
+
                 entity.IsValid = false;
 
                 return context.Save();

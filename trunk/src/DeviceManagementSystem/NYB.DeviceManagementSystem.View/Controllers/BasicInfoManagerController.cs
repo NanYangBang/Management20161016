@@ -16,15 +16,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index", "DeviceTypeManager");
         }
-
-        public ActionResult SupplierManager()
-        {
-            return View();
-        }
-
-        
-
     }
 }

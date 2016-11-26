@@ -88,5 +88,14 @@ namespace NYB.DeviceManagementSystem.Common
 
         [DescriptionAttribute("用户或密码错误")]
         ProjectNotExist = 20103,
+
+        [DescriptionAttribute("设备类型下存在关联设备，不可删除")]
+        DeviceTypeConatinDevice = 20104,
+
+        [DescriptionAttribute("供应商下存在关联设备，不可删除")]
+        SupplierConatinDevice = 20105,
+
+        [DescriptionAttribute("生产厂商下存在关联设备，不可删除")]
+        ManufactureConatinDevice = 20106,
     }
 }

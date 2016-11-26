@@ -25,7 +25,10 @@ namespace NYB.DeviceManagementSystem.BLL
                 if (string.IsNullOrWhiteSpace(searchInfo) == false)
                 {
                     searchInfo = searchInfo.Trim().ToUpper();
-                    filter = filter.And(t => t.Name.ToUpper().Contains(searchInfo));
+                    filter = filter.And(t => t.Name.ToUpper().Contains(searchInfo)
+                        || t.DeviceType.Name.Contains(searchInfo)
+                        || (string.IsNullOrEmpty(t.SupplierID) == false && t.Supplier.Name.ToUpper().Contains(searchInfo))
+                        || (string.IsNullOrEmpty(t.ManufacturerID) == false && t.Manufacturer.Name.ToUpper().Contains(searchInfo)));
                 }
 
                 var temp = context.Device.Where(filter).Page(out totalCount, pageIndex, pageSize, orderby, ascending, true);
@@ -44,10 +47,10 @@ namespace NYB.DeviceManagementSystem.BLL
                     DeviceTypeName = t.DeviceType.Name,
                     MaintainDate = t.MaintainDate,
                     ManufacturerID = t.ManufacturerID,
-                    ManufacturerName = t.Manufacturer == null ? "" : t.Manufacturer.Name,
+                    ManufacturerName = string.IsNullOrEmpty(t.ManufacturerID) ? "" : t.Manufacturer.Name,
                     ProductDate = t.ProductDate,
                     SupplierID = t.SupplierID,
-                    SupplierName = t.Supplier == null ? "" : t.Supplier.Name
+                    SupplierName = string.IsNullOrEmpty(t.SupplierID) == false ? "" : t.Supplier.Name
                 }).ToList();
 
                 return new CResult<List<WebDevice>>(result);
@@ -146,10 +149,10 @@ namespace NYB.DeviceManagementSystem.BLL
                     DeviceTypeName = entity.DeviceType.Name,
                     MaintainDate = entity.MaintainDate,
                     ManufacturerID = entity.ManufacturerID,
-                    ManufacturerName = entity.Manufacturer == null ? "" : entity.Manufacturer.Name,
+                    ManufacturerName = string.IsNullOrEmpty(entity.ManufacturerID) ? "" : entity.Manufacturer.Name,
                     ProductDate = entity.ProductDate,
                     SupplierID = entity.SupplierID,
-                    SupplierName = entity.Supplier == null ? "" : entity.Supplier.Name
+                    SupplierName = string.IsNullOrEmpty(entity.SupplierID) == false ? "" : entity.Supplier.Name
                 };
 
                 return new CResult<WebDevice>(model);
@@ -164,7 +167,7 @@ namespace NYB.DeviceManagementSystem.BLL
             }
             using (var context = new DeviceMgmtEntities())
             {
-                var entity = context.DeviceType.FirstOrDefault(t => t.ID == DeviceID && t.IsValid);
+                var entity = context.Device.FirstOrDefault(t => t.ID == DeviceID && t.IsValid);
                 if (entity == null)
                 {
                     return new CResult<bool>(false, ErrorCode.DataNoExist);
@@ -175,5 +178,20 @@ namespace NYB.DeviceManagementSystem.BLL
                 return context.Save();
             }
         }
+
+        public CResult<bool> IsDeviceNameExist(string deviceName, string projectID)
+        {
+            if (string.IsNullOrEmpty(deviceName) || string.IsNullOrEmpty(projectID))
+            {
+                return new CResult<bool>(false, ErrorCode.ParameterError);
+            }
+
+            using (var context = new DeviceMgmtEntities())
+            {
+                var isExist = context.DeviceType.Any(t => t.Name == deviceName && t.ProjectID == projectID && t.IsValid);
+                return new CResult<bool>(isExist);
+            }
+        }
+
     }
 }

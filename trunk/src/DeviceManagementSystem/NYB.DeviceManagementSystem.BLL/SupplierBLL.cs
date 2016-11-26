@@ -169,10 +169,15 @@ namespace NYB.DeviceManagementSystem.BLL
             }
             using (var context = new DeviceMgmtEntities())
             {
-                var entity = context.DeviceType.FirstOrDefault(t => t.ID == SupplierID && t.IsValid);
+                var entity = context.Supplier.FirstOrDefault(t => t.ID == SupplierID && t.IsValid);
                 if (entity == null)
                 {
                     return new CResult<bool>(false, ErrorCode.DataNoExist);
+                }
+
+                if (context.Device.Any(t => t.SupplierID == entity.ID))
+                {
+                    return new CResult<bool>(false, ErrorCode.SupplierConatinDevice);
                 }
 
                 entity.IsValid = false;

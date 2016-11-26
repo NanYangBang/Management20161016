@@ -187,7 +187,9 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BasicInfoManagerController.cs" />
-    <Compile Include="Controllers\DeviceTypeController.cs" />
+    <Compile Include="Controllers\ManufactureManagerController.cs" />
+    <Compile Include="Controllers\SupplierManagerController.cs" />
+    <Compile Include="Controllers\DeviceTypeManagerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProjectManagerController.cs" />
     <Compile Include="Controllers\SystemManagerController.cs" />
@@ -415,17 +417,26 @@
     <Content Include="Views\ProjectManager\AddProject.cshtml" />
     <Content Include="Views\ProjectManager\PartialView\AddUpdatePartialView.cshtml" />
     <Content Include="Views\ProjectManager\UpdateProject.cshtml" />
-    <Content Include="Views\BasicInfoManager\Index.cshtml" />
     <Content Include="Views\BasicInfoManager\NavLeft.cshtml" />
-    <Content Include="Views\BasicInfoManager\SupplierManager.cshtml" />
     <Content Include="Views\User\UpdateUser.cshtml" />
-    <Content Include="Views\DeviceType\Index.cshtml" />
-    <Content Include="Views\DeviceType\PartialView\DeviceTypeDetailView.cshtml" />
-    <Content Include="Views\DeviceType\Create.cshtml" />
-    <Content Include="Views\DeviceType\Details.cshtml" />
-    <Content Include="Views\DeviceType\Edit.cshtml" />
-    <Content Include="Views\DeviceType\BasicInfoTypeTree.cshtml" />
-    <Content Include="Views\DeviceType\NavLeft.cshtml" />
+    <Content Include="Views\DeviceTypeManager\Index.cshtml" />
+    <Content Include="Views\DeviceTypeManager\PartialView\DeviceTypeDetailView.cshtml" />
+    <Content Include="Views\DeviceTypeManager\Create.cshtml" />
+    <Content Include="Views\DeviceTypeManager\Details.cshtml" />
+    <Content Include="Views\DeviceTypeManager\Edit.cshtml" />
+    <Content Include="Views\DeviceTypeManager\NavLeft.cshtml" />
+    <Content Include="Views\ManufactureManager\Create.cshtml" />
+    <Content Include="Views\ManufactureManager\Details.cshtml" />
+    <Content Include="Views\ManufactureManager\Edit.cshtml" />
+    <Content Include="Views\ManufactureManager\Index.cshtml" />
+    <Content Include="Views\ManufactureManager\NavLeft.cshtml" />
+    <Content Include="Views\ManufactureManager\PartialView\ManufactureDetailView.cshtml" />
+    <Content Include="Views\SupplierManager\Create.cshtml" />
+    <Content Include="Views\SupplierManager\Details.cshtml" />
+    <Content Include="Views\SupplierManager\Edit.cshtml" />
+    <Content Include="Views\SupplierManager\Index.cshtml" />
+    <Content Include="Views\SupplierManager\NavLeft.cshtml" />
+    <Content Include="Views\SupplierManager\PartialView\SupplierDetailView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NYB.DeviceManagementSystem.BLL\NYB.DeviceManagementSystem.BLL.csproj">
