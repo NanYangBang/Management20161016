@@ -6,8 +6,8 @@
 @using NYB.DeviceManagementSystem.Common
 @using NYB.DeviceManagementSystem.ViewModel
 @model PagedList<NYB.DeviceManagementSystem.ViewModel.WebDeviceType>
-
-<div actionname="设备类型管理">
+@Styles.Render("~/Content/User/User.css")
+<div actionname="基础信息管理">
     <form method="get" class="userSearchForm">
         <input type="text" name="userName" id="seacheName" value="" />
         <input style="line-height:0px" type="submit" class="" id="btnSearch" value="搜索" />

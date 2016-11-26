@@ -1,8 +1,11 @@
-﻿using System;
+﻿using NYB.DeviceManagementSystem.BLL;
+using NYB.DeviceManagementSystem.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Webdiyer.WebControls.Mvc;
 
 namespace NYB.DeviceManagementSystem.View.Controllers
 {
@@ -20,5 +23,8 @@ namespace NYB.DeviceManagementSystem.View.Controllers
         {
             return View();
         }
+
+        
+
     }
 }

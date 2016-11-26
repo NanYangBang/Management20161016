@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "NavLeft";
+    Layout = "~/Views/Shared/NavLeftTemplate.cshtml";
+    //Layout = "~/Views/Shared/NavLeft.cshtml";
+}
+<h2>基础信息类别</h2>
+<ul>
+    <li>
+        <a href="@Url.Action("Index", "DeviceType")">设备类别管理</a>
+    </li>
+    <li>
+        <a href="@Url.Action("SupplierManager", "BasicInfoManager")">供应商管理</a>
+    </li>
+</ul>

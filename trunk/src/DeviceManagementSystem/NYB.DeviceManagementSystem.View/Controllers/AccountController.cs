@@ -26,6 +26,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
         [HttpPost]
         public ActionResult LogOn(string LoginName, string Pwd)
         {
+            //new DatabaseInitHelper().InitDB();
             var errorInfo = "用戶名或密码错误";
             if (ModelState.IsValid)
             {
