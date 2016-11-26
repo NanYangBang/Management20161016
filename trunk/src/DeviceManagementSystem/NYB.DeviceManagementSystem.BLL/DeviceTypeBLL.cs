@@ -45,6 +45,25 @@ namespace NYB.DeviceManagementSystem.BLL
             }
         }
 
+        public CResult<Dictionary<string, string>> GetDeviceTypeDir(string projectID)
+        {
+            using (DeviceMgmtEntities context = new DeviceMgmtEntities())
+            {
+                Expression<Func<DeviceType, bool>> filter = t => t.ProjectID == projectID && t.IsValid == true;
+
+                var temp = context.DeviceType.Where(filter);
+
+                var result = temp.Select(t => new
+                {
+                    ID = t.ID,
+                    Name = t.Name,
+                }).ToList().OrderBy(t => t.Name).ToDictionary(t => t.ID, r => r.Name);
+
+                return new CResult<Dictionary<string, string>>(result);
+            }
+        }
+
+
         public CResult<bool> InsertDeviceType(WebDeviceType model)
         {
             if (string.IsNullOrEmpty(model.ProjectID))

@@ -49,6 +49,24 @@ namespace NYB.DeviceManagementSystem.BLL
             }
         }
 
+        public CResult<Dictionary<string, string>> GetSupplierDir(string projectID)
+        {
+            using (DeviceMgmtEntities context = new DeviceMgmtEntities())
+            {
+                Expression<Func<Supplier, bool>> filter = t => t.ProjectID == projectID && t.IsValid == true;
+
+                var temp = context.Supplier.Where(filter);
+
+                var result = temp.Select(t => new
+                {
+                    ID = t.ID,
+                    Name = t.Name,
+                }).ToList().OrderBy(t => t.Name).ToDictionary(t => t.ID, r => r.Name);
+
+                return new CResult<Dictionary<string, string>>(result);
+            }
+        }
+
         public CResult<bool> InsertSupplier(WebSupplier model)
         {
             if (string.IsNullOrEmpty(model.ProjectID))
