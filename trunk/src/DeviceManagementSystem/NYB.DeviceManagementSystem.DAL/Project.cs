@@ -17,6 +17,7 @@ namespace NYB.DeviceManagementSystem.DAL
         public Project()
         {
             this.Manufacturer = new HashSet<Manufacturer>();
+            this.Supplier = new HashSet<Supplier>();
         }
     
         public string ID { get; set; }
@@ -27,5 +28,6 @@ namespace NYB.DeviceManagementSystem.DAL
         public bool IsValid { get; set; }
     
         public virtual ICollection<Manufacturer> Manufacturer { get; set; }
+        public virtual ICollection<Supplier> Supplier { get; set; }
     }
 }

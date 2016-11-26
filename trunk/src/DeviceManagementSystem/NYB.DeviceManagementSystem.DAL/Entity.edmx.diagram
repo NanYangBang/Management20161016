@@ -13,6 +13,10 @@
         <AssociationConnector Association="DeviceMgmtModel.FK_DeviceType_User" />
         <EntityTypeShape EntityType="DeviceMgmtModel.Manufacturer" Width="1.5" PointX="3" PointY="9.25" />
         <AssociationConnector Association="DeviceMgmtModel.FK_Manufacturer_Project" />
+        <AssociationConnector Association="DeviceMgmtModel.FK_Manufacturer_User" />
+        <EntityTypeShape EntityType="DeviceMgmtModel.Supplier" Width="1.5" PointX="8" PointY="1" />
+        <AssociationConnector Association="DeviceMgmtModel.FK_Supplier_Project" />
+        <AssociationConnector Association="DeviceMgmtModel.FK_Supplier_User" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

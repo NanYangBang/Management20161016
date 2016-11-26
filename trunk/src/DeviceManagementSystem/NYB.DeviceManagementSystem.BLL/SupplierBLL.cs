@@ -14,13 +14,13 @@ using System.Web.Security;
 
 namespace NYB.DeviceManagementSystem.BLL
 {
-    public class DeviceTypeBLL
+    public class SupplierBLL
     {
-        public CResult<List<WebDeviceType>> GetDeviceTypeList(out int totalCount, string projectID, string searchInfo, int pageIndex = 1, int pageSize = 10, string orderby = null, bool ascending = false)
+        public CResult<List<WebSupplier>> GetSupplierList(out int totalCount, string projectID, string searchInfo, int pageIndex = 1, int pageSize = 10, string orderby = null, bool ascending = false)
         {
             using (DeviceMgmtEntities context = new DeviceMgmtEntities())
             {
-                Expression<Func<DeviceType, bool>> filter = t => t.ProjectID == projectID && t.IsValid == true;
+                Expression<Func<Supplier, bool>> filter = t => t.ProjectID == projectID && t.IsValid == true;
 
                 if (string.IsNullOrWhiteSpace(searchInfo) == false)
                 {
@@ -28,24 +28,28 @@ namespace NYB.DeviceManagementSystem.BLL
                     filter = filter.And(t => t.Name.ToUpper().Contains(searchInfo));
                 }
 
-                var temp = context.DeviceType.Where(filter).Page(out totalCount, pageIndex, pageSize, orderby, ascending, true);
+                var temp = context.Supplier.Where(filter).Page(out totalCount, pageIndex, pageSize, orderby, ascending, true);
 
-                var result = temp.Select(t => new WebDeviceType()
+                var result = temp.Select(t => new WebSupplier()
                 {
-                    CreateDate = t.CreateDate,
                     ID = t.ID,
                     Name = t.Name,
+                    Address = t.Address,
+                    Contact = t.Contact,
+                    Mobile = t.Mobile,
+                    Phone = t.Phone,
                     Note = t.Note,
-                    CreateUserName = t.User.Name,
+                    CreateDate = t.CreateDate,
                     CreateUserID = t.CreateUserID,
+                    CreateUserName = t.User.Name,
                     ProjectID = t.ProjectID
                 }).ToList();
 
-                return new CResult<List<WebDeviceType>>(result);
+                return new CResult<List<WebSupplier>>(result);
             }
         }
 
-        public CResult<bool> InsertDeviceType(WebDeviceType model)
+        public CResult<bool> InsertSupplier(WebSupplier model)
         {
             if (string.IsNullOrEmpty(model.ProjectID))
             {
@@ -59,7 +63,7 @@ namespace NYB.DeviceManagementSystem.BLL
                     return new CResult<bool>(false, ErrorCode.ProjectNotExist);
                 }
 
-                var entity = new DeviceType();
+                var entity = new Supplier();
                 entity.CreateDate = DateTime.Now;
                 entity.CreateUserID = model.CreateUserID;
                 entity.ID = Guid.NewGuid().ToString();
@@ -67,14 +71,18 @@ namespace NYB.DeviceManagementSystem.BLL
                 entity.IsValid = true;
                 entity.Note = model.Note;
                 entity.ProjectID = model.ProjectID;
+                entity.Address = model.Address;
+                entity.Contact = model.Contact;
+                entity.Mobile = model.Mobile;
+                entity.Phone = model.Phone;
 
-                context.DeviceType.Add(entity);
+                context.Supplier.Add(entity);
 
                 return context.Save();
             }
         }
 
-        public CResult<bool> UpdateDeviceType(WebDeviceType model)
+        public CResult<bool> UpdateSupplier(WebSupplier model)
         {
             if (string.IsNullOrEmpty(model.ID))
             {
@@ -83,7 +91,7 @@ namespace NYB.DeviceManagementSystem.BLL
 
             using (var context = new DeviceMgmtEntities())
             {
-                var entity = context.DeviceType.FirstOrDefault(t => t.ID == model.ID && t.IsValid);
+                var entity = context.Supplier.FirstOrDefault(t => t.ID == model.ID && t.IsValid);
                 if (entity == null)
                 {
                     return new CResult<bool>(false, ErrorCode.DataNoExist);
@@ -91,49 +99,59 @@ namespace NYB.DeviceManagementSystem.BLL
 
                 entity.Name = model.Name;
                 entity.Note = model.Note;
+                entity.Address = model.Address;
+                entity.Contact = model.Contact;
+                entity.Mobile = model.Mobile;
+                entity.Phone = model.Phone;
 
                 context.Entry(entity).State = EntityState.Modified;
                 return context.Save();
             }
         }
 
-        public CResult<WebDeviceType> GetDeviceTypeByID(string deviceTypeID)
+        public CResult<WebSupplier> GetSupplierByID(string SupplierID)
         {
-            if (string.IsNullOrEmpty(deviceTypeID))
+            if (string.IsNullOrEmpty(SupplierID))
             {
-                return new CResult<WebDeviceType>(null, ErrorCode.ParameterError);
+                return new CResult<WebSupplier>(null, ErrorCode.ParameterError);
             }
 
             using (var context = new DeviceMgmtEntities())
             {
-                var entity = context.DeviceType.FirstOrDefault(t => t.ID == deviceTypeID && t.IsValid);
+                var entity = context.Supplier.FirstOrDefault(t => t.ID == SupplierID && t.IsValid);
                 if (entity == null)
                 {
-                    return new CResult<WebDeviceType>(null, ErrorCode.DataNoExist);
+                    return new CResult<WebSupplier>(null, ErrorCode.DataNoExist);
                 }
 
-                var model = new WebDeviceType()
+                var model = new WebSupplier()
                 {
-                    CreateDate = entity.CreateDate,
                     ID = entity.ID,
                     Name = entity.Name,
-                    ProjectID = entity.ProjectID,
-                    Note = entity.Note
+                    Address = entity.Address,
+                    Contact = entity.Contact,
+                    Mobile = entity.Mobile,
+                    Phone = entity.Phone,
+                    Note = entity.Note,
+                    CreateDate = entity.CreateDate,
+                    CreateUserID = entity.CreateUserID,
+                    CreateUserName = entity.User.Name,
+                    ProjectID = entity.ProjectID
                 };
 
-                return new CResult<WebDeviceType>(model);
+                return new CResult<WebSupplier>(model);
             }
         }
 
-        public CResult<bool> DeleteDeviceType(string deviceTypeID)
+        public CResult<bool> DeleteSupplier(string SupplierID)
         {
-            if (string.IsNullOrEmpty(deviceTypeID))
+            if (string.IsNullOrEmpty(SupplierID))
             {
                 return new CResult<bool>(false, ErrorCode.ParameterError);
             }
             using (var context = new DeviceMgmtEntities())
             {
-                var entity = context.DeviceType.FirstOrDefault(t => t.ID == deviceTypeID && t.IsValid);
+                var entity = context.DeviceType.FirstOrDefault(t => t.ID == SupplierID && t.IsValid);
                 if (entity == null)
                 {
                     return new CResult<bool>(false, ErrorCode.DataNoExist);

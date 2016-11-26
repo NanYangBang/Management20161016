@@ -12,7 +12,7 @@ namespace NYB.DeviceManagementSystem.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class Manufacturer
+    public partial class Supplier
     {
         public string ID { get; set; }
         public string Name { get; set; }
