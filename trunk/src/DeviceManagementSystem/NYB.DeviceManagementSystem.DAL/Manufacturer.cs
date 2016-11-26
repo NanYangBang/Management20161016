@@ -14,6 +14,11 @@ namespace NYB.DeviceManagementSystem.DAL
     
     public partial class Manufacturer
     {
+        public Manufacturer()
+        {
+            this.Device = new HashSet<Device>();
+        }
+    
         public string ID { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
@@ -28,5 +33,6 @@ namespace NYB.DeviceManagementSystem.DAL
     
         public virtual Project Project { get; set; }
         public virtual User User { get; set; }
+        public virtual ICollection<Device> Device { get; set; }
     }
 }

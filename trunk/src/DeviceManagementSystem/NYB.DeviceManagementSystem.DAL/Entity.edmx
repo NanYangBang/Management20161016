@@ -5,6 +5,23 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="DeviceMgmtModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Device">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="nchar" MaxLength="36" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Note" Type="nvarchar" MaxLength="100" />
+          <Property Name="DeviceTypeID" Type="nchar" MaxLength="36" Nullable="false" />
+          <Property Name="ManufacturerID" Type="nchar" MaxLength="36" />
+          <Property Name="SupplierID" Type="nchar" MaxLength="36" />
+          <Property Name="ProductDate" Type="datetime" />
+          <Property Name="MaintainDate" Type="datetime" />
+          <Property Name="ProjectID" Type="nchar" MaxLength="36" Nullable="false" />
+          <Property Name="IsValid" Type="bit" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="CreateUserID" Type="nchar" MaxLength="36" Nullable="false" />
+        </EntityType>
         <EntityType Name="DeviceType">
           <Key>
             <PropertyRef Name="ID" />
@@ -89,6 +106,54 @@
           <Property Name="IsValid" Type="bit" Nullable="false" />
           <Property Name="IsSuperAdminCreate" Type="bit" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Device_DeviceType">
+          <End Role="DeviceType" Type="Self.DeviceType" Multiplicity="1" />
+          <End Role="Device" Type="Self.Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeviceType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Device">
+              <PropertyRef Name="DeviceTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Device_Manufacturer">
+          <End Role="Manufacturer" Type="Self.Manufacturer" Multiplicity="0..1" />
+          <End Role="Device" Type="Self.Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Manufacturer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Device">
+              <PropertyRef Name="ManufacturerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Device_Supplier">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="Device" Type="Self.Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Device">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Device_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Device" Type="Self.Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Device">
+              <PropertyRef Name="CreateUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DeviceType_User">
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="DeviceType" Type="Self.DeviceType" Multiplicity="*" />
@@ -166,12 +231,29 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="DeviceMgmtModelStoreContainer">
+          <EntitySet Name="Device" EntityType="Self.Device" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DeviceType" EntityType="Self.DeviceType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Manufacturer" EntityType="Self.Manufacturer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Device_DeviceType" Association="Self.FK_Device_DeviceType">
+            <End Role="DeviceType" EntitySet="DeviceType" />
+            <End Role="Device" EntitySet="Device" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Device_Manufacturer" Association="Self.FK_Device_Manufacturer">
+            <End Role="Manufacturer" EntitySet="Manufacturer" />
+            <End Role="Device" EntitySet="Device" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Device_Supplier" Association="Self.FK_Device_Supplier">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="Device" EntitySet="Device" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Device_User" Association="Self.FK_Device_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Device" EntitySet="Device" />
+          </AssociationSet>
           <AssociationSet Name="FK_DeviceType_User" Association="Self.FK_DeviceType_User">
             <End Role="User" EntitySet="User" />
             <End Role="DeviceType" EntitySet="DeviceType" />
@@ -232,6 +314,23 @@
             <End Role="User" EntitySet="User" />
             <End Role="Supplier" EntitySet="Supplier" />
           </AssociationSet>
+          <EntitySet Name="Device" EntityType="DeviceMgmtModel.Device" />
+          <AssociationSet Name="FK_Device_DeviceType" Association="DeviceMgmtModel.FK_Device_DeviceType">
+            <End Role="DeviceType" EntitySet="DeviceType" />
+            <End Role="Device" EntitySet="Device" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Device_Manufacturer" Association="DeviceMgmtModel.FK_Device_Manufacturer">
+            <End Role="Manufacturer" EntitySet="Manufacturer" />
+            <End Role="Device" EntitySet="Device" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Device_Supplier" Association="DeviceMgmtModel.FK_Device_Supplier">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="Device" EntitySet="Device" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Device_User" Association="DeviceMgmtModel.FK_Device_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Device" EntitySet="Device" />
+          </AssociationSet>
         </EntityContainer>
         <EnumType Name="TestEnum" />
         <EntityType Name="Project">
@@ -267,6 +366,7 @@
           <NavigationProperty Name="DeviceType" Relationship="DeviceMgmtModel.FK_DeviceType_User" FromRole="User" ToRole="DeviceType" />
           <NavigationProperty Name="Manufacturer" Relationship="DeviceMgmtModel.FK_Manufacturer_User" FromRole="User" ToRole="Manufacturer" />
           <NavigationProperty Name="Supplier" Relationship="DeviceMgmtModel.FK_Supplier_User" FromRole="User" ToRole="Supplier" />
+          <NavigationProperty Name="Device" Relationship="DeviceMgmtModel.FK_Device_User" FromRole="User" ToRole="Device" />
         </EntityType>
         <EntityType Name="Log">
           <Key>
@@ -305,6 +405,7 @@
           <Property Name="CreateUserID" Type="String" MaxLength="36" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="User" Relationship="DeviceMgmtModel.FK_DeviceType_User" FromRole="DeviceType" ToRole="User" />
           <Property Name="Note" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Device" Relationship="DeviceMgmtModel.FK_Device_DeviceType" FromRole="DeviceType" ToRole="Device" />
         </EntityType>
         <Association Name="FK_DeviceType_User">
           <End Type="DeviceMgmtModel.User" Role="User" Multiplicity="0..1" />
@@ -335,6 +436,7 @@
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="CreateUserID" Type="String" MaxLength="36" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="User" Relationship="DeviceMgmtModel.FK_Manufacturer_User" FromRole="Manufacturer" ToRole="User" />
+          <NavigationProperty Name="Device" Relationship="DeviceMgmtModel.FK_Device_Manufacturer" FromRole="Manufacturer" ToRole="Device" />
         </EntityType>
         <Association Name="FK_Manufacturer_Project">
           <End Type="DeviceMgmtModel.Project" Role="Project" Multiplicity="1">
@@ -379,6 +481,7 @@
           <Property Name="CreateUserID" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="Project" Relationship="DeviceMgmtModel.FK_Supplier_Project" FromRole="Supplier" ToRole="Project" />
           <NavigationProperty Name="User" Relationship="DeviceMgmtModel.FK_Supplier_User" FromRole="Supplier" ToRole="User" />
+          <NavigationProperty Name="Device" Relationship="DeviceMgmtModel.FK_Device_Supplier" FromRole="Supplier" ToRole="Device" />
         </EntityType>
         <Association Name="FK_Supplier_Project">
           <End Type="DeviceMgmtModel.Project" Role="Project" Multiplicity="1">
@@ -402,6 +505,75 @@
               <PropertyRef Name="UserID" />
             </Principal>
             <Dependent Role="Supplier">
+              <PropertyRef Name="CreateUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Device">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Note" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DeviceTypeID" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="true" />
+          <Property Name="ManufacturerID" Type="String" MaxLength="36" FixedLength="true" Unicode="true" />
+          <Property Name="SupplierID" Type="String" MaxLength="36" FixedLength="true" Unicode="true" />
+          <Property Name="ProductDate" Type="DateTime" Precision="3" />
+          <Property Name="MaintainDate" Type="DateTime" Precision="3" />
+          <Property Name="ProjectID" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="true" />
+          <Property Name="IsValid" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateUserID" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="DeviceType" Relationship="DeviceMgmtModel.FK_Device_DeviceType" FromRole="Device" ToRole="DeviceType" />
+          <NavigationProperty Name="Manufacturer" Relationship="DeviceMgmtModel.FK_Device_Manufacturer" FromRole="Device" ToRole="Manufacturer" />
+          <NavigationProperty Name="Supplier" Relationship="DeviceMgmtModel.FK_Device_Supplier" FromRole="Device" ToRole="Supplier" />
+          <NavigationProperty Name="User" Relationship="DeviceMgmtModel.FK_Device_User" FromRole="Device" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Device_DeviceType">
+          <End Type="DeviceMgmtModel.DeviceType" Role="DeviceType" Multiplicity="1" />
+          <End Type="DeviceMgmtModel.Device" Role="Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeviceType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Device">
+              <PropertyRef Name="DeviceTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Device_Manufacturer">
+          <End Type="DeviceMgmtModel.Manufacturer" Role="Manufacturer" Multiplicity="0..1" />
+          <End Type="DeviceMgmtModel.Device" Role="Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Manufacturer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Device">
+              <PropertyRef Name="ManufacturerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Device_Supplier">
+          <End Type="DeviceMgmtModel.Supplier" Role="Supplier" Multiplicity="0..1" />
+          <End Type="DeviceMgmtModel.Device" Role="Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Device">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Device_User">
+          <End Type="DeviceMgmtModel.User" Role="User" Multiplicity="1" />
+          <End Type="DeviceMgmtModel.Device" Role="Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Device">
               <PropertyRef Name="CreateUserID" />
             </Dependent>
           </ReferentialConstraint>
@@ -497,6 +669,24 @@
                 <ScalarProperty Name="Mobile" ColumnName="Mobile" />
                 <ScalarProperty Name="Contact" ColumnName="Contact" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Device">
+            <EntityTypeMapping TypeName="DeviceMgmtModel.Device">
+              <MappingFragment StoreEntitySet="Device">
+                <ScalarProperty Name="CreateUserID" ColumnName="CreateUserID" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="IsValid" ColumnName="IsValid" />
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="MaintainDate" ColumnName="MaintainDate" />
+                <ScalarProperty Name="ProductDate" ColumnName="ProductDate" />
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+                <ScalarProperty Name="ManufacturerID" ColumnName="ManufacturerID" />
+                <ScalarProperty Name="DeviceTypeID" ColumnName="DeviceTypeID" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>

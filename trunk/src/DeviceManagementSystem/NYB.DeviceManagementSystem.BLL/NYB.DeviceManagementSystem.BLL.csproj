@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DatabaseInitHelper.cs" />
+    <Compile Include="DeviceBLL.cs" />
     <Compile Include="SupplierBLL.cs" />
     <Compile Include="ManufacturerBLL.cs" />
     <Compile Include="LoggerBLL.cs" />
