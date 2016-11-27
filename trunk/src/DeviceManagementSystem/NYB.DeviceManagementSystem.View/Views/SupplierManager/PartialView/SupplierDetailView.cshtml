@@ -1,0 +1,110 @@
+﻿@using NYB.DeviceManagementSystem.ViewModel;
+@using NYB.DeviceManagementSystem.Common;
+@model NYB.DeviceManagementSystem.ViewModel.WebSupplier
+@{
+    string returnUrl = ViewBag.ReturnUrl;
+    object readonlyValues = null;
+    bool isDetails = false;
+    if (ViewBag.Action == "Details")
+    {
+        isDetails = true;
+        readonlyValues = new { @readonly = "readonly" };
+    }
+}
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<link rel="Stylesheet" href="@Url.Content("~/Content/Common/OperateTable.css")" />
+
+<div actionname="设备类型管理" class="operationParent">
+    <form method="post">
+        @(Html.Hidden("returnUrl", returnUrl))
+        <div class="common-details-panel">
+            <h2><b>6</b>设备类型信息</h2>
+            @Html.HiddenFor(model => model.ID)
+            <fieldset>
+                <table class="operateTable">
+                    <tr>
+                        <td>
+                            <b>@Html.LabelFor(model => model.Name)</b>
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.Name, readonlyValues)
+                            @Html.ValidationMessageFor(model => model.Name)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>@Html.LabelFor(model => model.Note)</b>
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.Note, readonlyValues)
+                            @Html.ValidationMessageFor(model => model.Note)
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
+        </div>
+        <div class="common-details-operation-panel">
+            <p class="UpdatePile-btn">
+                @if (isDetails == false)
+                {
+                    <input type="submit" id="btnSave" value="保存" class="blue-button" />
+                }
+                <a class="link-after-button" href="@ViewBag.ReturnUrl">返回</a>
+            </p>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    window.Resource = {
+        UrlAdd: '@Url.Action("Create")',
+        UrlEdit: '@Url.Action("Edit")',
+        ReturnUrl: '@returnUrl',
+        UrlAction: '@ViewBag.Action'
+    }
+
+    $(document).ready(function () {
+        SaveEvent();
+    })
+
+    function SaveEvent() {
+        $('form').submit(function (e) {
+            e.preventDefault();
+            var returnUrl = $('[name="returnUrl"]');
+
+            var param = {};
+            var ID = $('[name="ID"]').val();
+            var Name = $('[name="Name"]').val();
+            var Note = $('[name="Note"]').val();
+
+            param.ID = ID;
+            param.Name = Name;
+            param.Note = Note;
+
+            if ($('span.errorMessage').length == 0 && $('.field-validation-error').length == 0) {
+                if (Resource.UrlAction == 'Create') {
+                    AjaxEvent(Resource.UrlAdd, param);
+                } else {
+                    AjaxEvent(Resource.UrlEdit, param);
+                }
+            }
+        });
+        $('select').change(function () {
+            $(this).parent().find('.errorMessage').remove();
+        })
+    }
+
+    function AjaxEvent(url, param) {
+        $.post(url, param, function (data) {
+            //var result = Json.parse(data);
+            if (data.Code == '0') {
+                window.location.href = Resource.ReturnUrl;
+            } else {
+                window.alert(data.Msg);
+            }
+        });
+    }
+
+
+
+</script>

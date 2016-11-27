@@ -18,6 +18,9 @@ namespace NYB.DeviceManagementSystem.DAL
         {
             this.Log = new HashSet<Log>();
             this.DeviceType = new HashSet<DeviceType>();
+            this.Manufacturer = new HashSet<Manufacturer>();
+            this.Supplier = new HashSet<Supplier>();
+            this.Device = new HashSet<Device>();
         }
     
         public string UserID { get; set; }
@@ -35,5 +38,8 @@ namespace NYB.DeviceManagementSystem.DAL
     
         public virtual ICollection<Log> Log { get; set; }
         public virtual ICollection<DeviceType> DeviceType { get; set; }
+        public virtual ICollection<Manufacturer> Manufacturer { get; set; }
+        public virtual ICollection<Supplier> Supplier { get; set; }
+        public virtual ICollection<Device> Device { get; set; }
     }
 }

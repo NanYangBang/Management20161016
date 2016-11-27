@@ -10,7 +10,7 @@ using Webdiyer.WebControls.Mvc;
 
 namespace NYB.DeviceManagementSystem.View.Controllers
 {
-    public class DeviceTypeController : Controller
+    public class DeviceTypeManagerController : Controller
     {
         public ActionResult Index(string searchInfo, int pageIndex = 1, int pageSize = 10, string orderBy = "", bool ascending = false)
         {

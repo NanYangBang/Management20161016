@@ -40,6 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="WebDevice.cs" />
+    <Compile Include="WebSupplier.cs" />
+    <Compile Include="WebManufacturer.cs" />
     <Compile Include="WebDeviceType.cs" />
     <Compile Include="WebLog.cs" />
     <Compile Include="WebProject.cs" />
