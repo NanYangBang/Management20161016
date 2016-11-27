@@ -187,6 +187,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BasicInfoManagerController.cs" />
+    <Compile Include="Controllers\DeviceController.cs" />
     <Compile Include="Controllers\ManufactureManagerController.cs" />
     <Compile Include="Controllers\SupplierManagerController.cs" />
     <Compile Include="Controllers\DeviceTypeManagerController.cs" />
@@ -319,6 +320,7 @@
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\base.js" />
     <Content Include="Scripts\common.js" />
+    <Content Include="Scripts\Device\CreateEditPartial.js" />
     <Content Include="Scripts\excanvas.js" />
     <Content Include="Scripts\excanvas.min.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
@@ -357,7 +359,7 @@
     <Content Include="Scripts\MicrosoftMvcValidation.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\ProjectManger\AddUpdatePartial.js" />
-    <Content Include="Scripts\ProjectManger\Index.js" />
+    <Content Include="Scripts\Common\Index.js" />
     <Content Include="Scripts\Silverlight.js" />
     <Content Include="Scripts\swfobject.js" />
     <Content Include="Scripts\User\AddUpdatePartial.js" />
@@ -437,6 +439,11 @@
     <Content Include="Views\SupplierManager\Index.cshtml" />
     <Content Include="Views\SupplierManager\NavLeft.cshtml" />
     <Content Include="Views\SupplierManager\PartialView\SupplierDetailView.cshtml" />
+    <Content Include="Views\Device\Index.cshtml" />
+    <Content Include="Views\Device\NavLeft.cshtml" />
+    <Content Include="Views\Device\CreateDevice.cshtml" />
+    <Content Include="Views\Device\EditDevice.cshtml" />
+    <Content Include="Views\Device\PartialView\CreateEditPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NYB.DeviceManagementSystem.BLL\NYB.DeviceManagementSystem.BLL.csproj">

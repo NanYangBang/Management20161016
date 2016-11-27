@@ -17,17 +17,31 @@ namespace NYB.DeviceManagementSystem.ViewModel
         [MaxLength(30)]
         public string Name { get; set; }
 
+        [DisplayName("备注")]
         public string Note { get; set; }
 
+        [DisplayName("设备类型")]
         public string DeviceTypeID { get; set; }
+        [DisplayName("生产厂商")]
         public string ManufacturerID { get; set; }
+
+        [DisplayName("供应商")]
         public string SupplierID { get; set; }
 
+        [DisplayName("生产日期")]
         public Nullable<System.DateTime> ProductDate { get; set; }
+
+        [DisplayName("保养日期")]
         public Nullable<System.DateTime> MaintainDate { get; set; }
 
+        [DisplayName("设备类型名称")]
         public string DeviceTypeName { get; set; }
+
+        [DisplayName("生产厂商名称")]
         public string ManufacturerName { get; set; }
+
+        [DisplayName("供应商名称")]
         public string SupplierName { get; set; }
+
     }
 }

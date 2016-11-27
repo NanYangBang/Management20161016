@@ -63,7 +63,6 @@ namespace NYB.DeviceManagementSystem.BLL
             }
         }
 
-
         public CResult<bool> InsertDeviceType(WebDeviceType model)
         {
             if (string.IsNullOrEmpty(model.ProjectID))
