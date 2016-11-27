@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="WebDevice.cs" />
+    <Compile Include="WebRepairRecord.cs" />
     <Compile Include="WebSupplier.cs" />
     <Compile Include="WebManufacturer.cs" />
     <Compile Include="WebDeviceType.cs" />
