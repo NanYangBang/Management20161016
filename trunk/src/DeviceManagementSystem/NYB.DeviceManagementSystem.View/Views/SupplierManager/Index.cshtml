@@ -9,7 +9,7 @@
 @Styles.Render("~/Content/User/User.css")
 <div actionname="基础信息管理">
     <form method="get" class="userSearchForm">
-        <input type="text" name="userName" id="seacheName" value="" />
+        <input type="text" name="searchInfo" id="searchInfo" value="" />
         <input style="line-height:0px" type="submit" class="" id="btnSearch" value="搜索" />
     </form>
     <table class="table-common" id="pileInfo">
@@ -19,13 +19,19 @@
                     名称
                 </th>
                 <th>
+                    联系人
+                </th>
+                <th>
+                    手机
+                </th>
+                <th>
+                    电话
+                </th>
+                <th>
+                    地址
+                </th>
+                <th>
                     备注
-                </th>
-                <th>
-                    创建人
-                </th>
-                <th>
-                    创建时间
                 </th>
                 <th class="operation-column">
                     操作
@@ -34,26 +40,32 @@
         </thead>
         <tbody>
             @{
-                foreach (var deviceType in Model)
+                foreach (var supplier in Model)
                 {
                     <tr pileid="">
                         <td>
-                            @deviceType.Name
+                            @supplier.Name
                         </td>
                         <td>
-                            @deviceType.Note
+                            @supplier.Contact
                         </td>
                         <td>
-                            @deviceType.CreateUserName
+                            @supplier.Mobile
                         </td>
                         <td>
-                            @deviceType.CreateDate
+                            @supplier.Phone
                         </td>
                         <td>
-                            @{var routeValues = new { deviceTypeID = deviceType.ID, returnUrl = Request.Url.AbsoluteUri, _ = DateTime.Now.Ticks };}
+                            @supplier.Address
+                        </td>
+                        <td>
+                            @supplier.Note
+                        </td>
+                        <td>
+                            @{var routeValues = new { supplierID = supplier.ID, returnUrl = Request.Url.AbsoluteUri, _ = DateTime.Now.Ticks };}
                             @Html.ActionLink("修改", "Edit", routeValues)
                             @Html.ActionLink("查看", "Details", routeValues)
-                            <a href="#" onclick="DeleteDeviceType('@deviceType.ID')" name="DeleteDeviceType">刪除</a>
+                            <a href="#" onclick="DeleteSupplier('@supplier.ID')" name="DeleteSupplier">刪除</a>
                         </td>
                     </tr>
                 }
@@ -64,7 +76,7 @@
     <div class="btn-opreate">
         @Html.Partial("DisplayTemplates/PagerView", Model)
         <p>
-            <input type="button" class="blue-button" id="addDeviceType" value="添加" />
+            <input type="button" class="blue-button" id="addSupplier" value="添加" />
         </p>
     </div>
 </div>
@@ -75,14 +87,14 @@
     }
 
     $(document).ready(function () {
-        $('#addDeviceType').click(function () {
+        $('#addSupplier').click(function () {
             window.location = window.UrlResource.UrlAddAction;
         })
     })
 
-    function DeleteDeviceType(t) {
+    function DeleteSupplier(t) {
         if (window.confirm("是否删除？")) {
-            $.post('@Url.Action("Delete")', { deviceTypeID: t }, function (result) {
+            $.post('@Url.Action("Delete")', { supplierID: t }, function (result) {
                 if (result.Code == 0) {
                     window.location.reload();
                 } else {

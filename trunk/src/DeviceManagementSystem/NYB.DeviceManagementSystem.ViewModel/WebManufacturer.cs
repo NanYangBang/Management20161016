@@ -17,10 +17,19 @@ namespace NYB.DeviceManagementSystem.ViewModel
         [MaxLength(30)]
         public string Name { get; set; }
 
+        [DisplayName("地址")]
         public string Address { get; set; }
+
+        [DisplayName("联系人")]
         public string Contact { get; set; }
+
+        [DisplayName("手机")]
         public string Mobile { get; set; }
+
+        [DisplayName("电话")]
         public string Phone { get; set; }
+
+        [DisplayName("备注")]
         public string Note { get; set; }
     }
 }
