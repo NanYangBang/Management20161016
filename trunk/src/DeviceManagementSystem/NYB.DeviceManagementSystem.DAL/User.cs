@@ -16,11 +16,12 @@ namespace NYB.DeviceManagementSystem.DAL
     {
         public User()
         {
-            this.Log = new HashSet<Log>();
-            this.DeviceType = new HashSet<DeviceType>();
-            this.Manufacturer = new HashSet<Manufacturer>();
-            this.Supplier = new HashSet<Supplier>();
             this.Device = new HashSet<Device>();
+            this.DeviceType = new HashSet<DeviceType>();
+            this.Log = new HashSet<Log>();
+            this.Manufacturer = new HashSet<Manufacturer>();
+            this.RepairRecord = new HashSet<RepairRecord>();
+            this.Supplier = new HashSet<Supplier>();
         }
     
         public string UserID { get; set; }
@@ -36,10 +37,11 @@ namespace NYB.DeviceManagementSystem.DAL
         public bool IsValid { get; set; }
         public bool IsSuperAdminCreate { get; set; }
     
-        public virtual ICollection<Log> Log { get; set; }
-        public virtual ICollection<DeviceType> DeviceType { get; set; }
-        public virtual ICollection<Manufacturer> Manufacturer { get; set; }
-        public virtual ICollection<Supplier> Supplier { get; set; }
         public virtual ICollection<Device> Device { get; set; }
+        public virtual ICollection<DeviceType> DeviceType { get; set; }
+        public virtual ICollection<Log> Log { get; set; }
+        public virtual ICollection<Manufacturer> Manufacturer { get; set; }
+        public virtual ICollection<RepairRecord> RepairRecord { get; set; }
+        public virtual ICollection<Supplier> Supplier { get; set; }
     }
 }

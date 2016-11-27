@@ -21,13 +21,13 @@ namespace NYB.DeviceManagementSystem.DAL
     
         public string ID { get; set; }
         public string Name { get; set; }
+        public string Note { get; set; }
         public string ProjectID { get; set; }
         public bool IsValid { get; set; }
         public System.DateTime CreateDate { get; set; }
         public string CreateUserID { get; set; }
-        public string Note { get; set; }
     
-        public virtual User User { get; set; }
         public virtual ICollection<Device> Device { get; set; }
+        public virtual User User { get; set; }
     }
 }

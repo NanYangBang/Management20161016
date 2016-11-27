@@ -31,8 +31,8 @@ namespace NYB.DeviceManagementSystem.DAL
         public System.DateTime CreateDate { get; set; }
         public string CreateUserID { get; set; }
     
+        public virtual ICollection<Device> Device { get; set; }
         public virtual Project Project { get; set; }
         public virtual User User { get; set; }
-        public virtual ICollection<Device> Device { get; set; }
     }
 }

@@ -25,12 +25,13 @@ namespace NYB.DeviceManagementSystem.DAL
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<Project> Project { get; set; }
-        public DbSet<User> User { get; set; }
-        public DbSet<Log> Log { get; set; }
-        public DbSet<DeviceType> DeviceType { get; set; }
-        public DbSet<Manufacturer> Manufacturer { get; set; }
-        public DbSet<Supplier> Supplier { get; set; }
         public DbSet<Device> Device { get; set; }
+        public DbSet<DeviceType> DeviceType { get; set; }
+        public DbSet<Log> Log { get; set; }
+        public DbSet<Manufacturer> Manufacturer { get; set; }
+        public DbSet<Project> Project { get; set; }
+        public DbSet<RepairRecord> RepairRecord { get; set; }
+        public DbSet<Supplier> Supplier { get; set; }
+        public DbSet<User> User { get; set; }
     }
 }

@@ -97,5 +97,8 @@ namespace NYB.DeviceManagementSystem.Common
 
         [DescriptionAttribute("生产厂商下存在关联设备，不可删除")]
         ManufactureConatinDevice = 20106,
+
+        [DescriptionAttribute("生产厂商下存在关联设备，不可删除")]
+        DeviceNotExist = 20107,
     }
 }
