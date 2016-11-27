@@ -188,6 +188,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BasicInfoManagerController.cs" />
     <Compile Include="Controllers\DeviceTypeController.cs" />
+    <Compile Include="Controllers\EquipmentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProjectManagerController.cs" />
     <Compile Include="Controllers\SystemManagerController.cs" />
