@@ -18,6 +18,7 @@ namespace NYB.DeviceManagementSystem.DAL
         {
             this.Manufacturer = new HashSet<Manufacturer>();
             this.Supplier = new HashSet<Supplier>();
+            this.MaintainRecord = new HashSet<MaintainRecord>();
         }
     
         public string ID { get; set; }
@@ -29,5 +30,6 @@ namespace NYB.DeviceManagementSystem.DAL
     
         public virtual ICollection<Manufacturer> Manufacturer { get; set; }
         public virtual ICollection<Supplier> Supplier { get; set; }
+        public virtual ICollection<MaintainRecord> MaintainRecord { get; set; }
     }
 }

@@ -25,6 +25,11 @@
         <AssociationConnector Association="DeviceMgmtModel.FK_Supplier_Project" />
         <AssociationConnector Association="DeviceMgmtModel.FK_RepairRecord_User" />
         <AssociationConnector Association="DeviceMgmtModel.FK_Supplier_User" />
+        <EntityTypeShape EntityType="DeviceMgmtModel.Attachment" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="DeviceMgmtModel.MaintainRecord" Width="1.5" PointX="10.875" PointY="9.5" />
+        <AssociationConnector Association="DeviceMgmtModel.FK_MaintainRecord_Device" />
+        <AssociationConnector Association="DeviceMgmtModel.FK_MaintainRecord_Project" />
+        <AssociationConnector Association="DeviceMgmtModel.FK_MaintainRecord_User" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -17,6 +17,7 @@ namespace NYB.DeviceManagementSystem.DAL
         public Device()
         {
             this.RepairRecord = new HashSet<RepairRecord>();
+            this.MaintainRecord = new HashSet<MaintainRecord>();
         }
     
         public string ID { get; set; }
@@ -37,5 +38,6 @@ namespace NYB.DeviceManagementSystem.DAL
         public virtual Supplier Supplier { get; set; }
         public virtual User User { get; set; }
         public virtual ICollection<RepairRecord> RepairRecord { get; set; }
+        public virtual ICollection<MaintainRecord> MaintainRecord { get; set; }
     }
 }
