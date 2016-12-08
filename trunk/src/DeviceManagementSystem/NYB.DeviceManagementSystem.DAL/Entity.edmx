@@ -5,6 +5,16 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="DeviceMgmtModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Attachment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="nchar" MaxLength="36" Nullable="false" />
+          <Property Name="DisplayName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="FilePath" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="RelationID" Type="nchar" MaxLength="36" />
+          <Property Name="Note" Type="nvarchar" MaxLength="2000" />
+        </EntityType>
         <EntityType Name="Device">
           <Key>
             <PropertyRef Name="ID" />
@@ -45,6 +55,20 @@
           <Property Name="LogContent" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="ProjectID" Type="nchar" MaxLength="36" Nullable="false" />
           <Property Name="OperatDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MaintainRecord">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="nchar" MaxLength="36" Nullable="false" />
+          <Property Name="DeviceID" Type="nchar" MaxLength="36" Nullable="false" />
+          <Property Name="MaintainDate" Type="datetime" Nullable="false" />
+          <Property Name="Operator" Type="nvarchar" MaxLength="30" />
+          <Property Name="Note" Type="nvarchar" MaxLength="2000" />
+          <Property Name="ProjectID" Type="nchar" MaxLength="36" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="CreateUserID" Type="nchar" MaxLength="36" Nullable="false" />
+          <Property Name="IsValid" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Manufacturer">
           <Key>
@@ -192,6 +216,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_MaintainRecord_Device">
+          <End Role="Device" Type="Self.Device" Multiplicity="1" />
+          <End Role="MaintainRecord" Type="Self.MaintainRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Device">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MaintainRecord">
+              <PropertyRef Name="DeviceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MaintainRecord_Project">
+          <End Role="Project" Type="Self.Project" Multiplicity="1" />
+          <End Role="MaintainRecord" Type="Self.MaintainRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MaintainRecord">
+              <PropertyRef Name="ProjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MaintainRecord_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="MaintainRecord" Type="Self.MaintainRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="MaintainRecord">
+              <PropertyRef Name="CreateUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Manufacturer_Project">
           <End Role="Project" Type="Self.Project" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -269,9 +329,11 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="DeviceMgmtModelStoreContainer">
+          <EntitySet Name="Attachment" EntityType="Self.Attachment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Device" EntityType="Self.Device" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DeviceType" EntityType="Self.DeviceType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MaintainRecord" EntityType="Self.MaintainRecord" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Manufacturer" EntityType="Self.Manufacturer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RepairRecord" EntityType="Self.RepairRecord" Schema="dbo" store:Type="Tables" />
@@ -300,6 +362,18 @@
           <AssociationSet Name="FK_Log_User" Association="Self.FK_Log_User">
             <End Role="User" EntitySet="User" />
             <End Role="Log" EntitySet="Log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MaintainRecord_Device" Association="Self.FK_MaintainRecord_Device">
+            <End Role="Device" EntitySet="Device" />
+            <End Role="MaintainRecord" EntitySet="MaintainRecord" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MaintainRecord_Project" Association="Self.FK_MaintainRecord_Project">
+            <End Role="Project" EntitySet="Project" />
+            <End Role="MaintainRecord" EntitySet="MaintainRecord" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MaintainRecord_User" Association="Self.FK_MaintainRecord_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="MaintainRecord" EntitySet="MaintainRecord" />
           </AssociationSet>
           <AssociationSet Name="FK_Manufacturer_Project" Association="Self.FK_Manufacturer_Project">
             <End Role="Project" EntitySet="Project" />
@@ -387,6 +461,20 @@
             <End Role="User" EntitySet="User" />
             <End Role="Supplier" EntitySet="Supplier" />
           </AssociationSet>
+          <EntitySet Name="Attachment" EntityType="DeviceMgmtModel.Attachment" />
+          <EntitySet Name="MaintainRecord" EntityType="DeviceMgmtModel.MaintainRecord" />
+          <AssociationSet Name="FK_MaintainRecord_Device" Association="DeviceMgmtModel.FK_MaintainRecord_Device">
+            <End Role="Device" EntitySet="Device" />
+            <End Role="MaintainRecord" EntitySet="MaintainRecord" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MaintainRecord_Project" Association="DeviceMgmtModel.FK_MaintainRecord_Project">
+            <End Role="Project" EntitySet="Project" />
+            <End Role="MaintainRecord" EntitySet="MaintainRecord" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MaintainRecord_User" Association="DeviceMgmtModel.FK_MaintainRecord_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="MaintainRecord" EntitySet="MaintainRecord" />
+          </AssociationSet>
         </EntityContainer>
         <EnumType Name="TestEnum" />
         <EntityType Name="Device">
@@ -410,6 +498,7 @@
           <NavigationProperty Name="Supplier" Relationship="DeviceMgmtModel.FK_Device_Supplier" FromRole="Device" ToRole="Supplier" />
           <NavigationProperty Name="User" Relationship="DeviceMgmtModel.FK_Device_User" FromRole="Device" ToRole="User" />
           <NavigationProperty Name="RepairRecord" Relationship="DeviceMgmtModel.FK_RepairRecord_Device" FromRole="Device" ToRole="RepairRecord" />
+          <NavigationProperty Name="MaintainRecord" Relationship="DeviceMgmtModel.FK_MaintainRecord_Device" FromRole="Device" ToRole="MaintainRecord" />
         </EntityType>
         <EntityType Name="DeviceType">
           <Key>
@@ -469,6 +558,7 @@
           <Property Name="IsValid" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Manufacturer" Relationship="DeviceMgmtModel.FK_Manufacturer_Project" FromRole="Project" ToRole="Manufacturer" />
           <NavigationProperty Name="Supplier" Relationship="DeviceMgmtModel.FK_Supplier_Project" FromRole="Project" ToRole="Supplier" />
+          <NavigationProperty Name="MaintainRecord" Relationship="DeviceMgmtModel.FK_MaintainRecord_Project" FromRole="Project" ToRole="MaintainRecord" />
         </EntityType>
         <EntityType Name="RepairRecord">
           <Key>
@@ -527,6 +617,7 @@
           <NavigationProperty Name="Manufacturer" Relationship="DeviceMgmtModel.FK_Manufacturer_User" FromRole="User" ToRole="Manufacturer" />
           <NavigationProperty Name="RepairRecord" Relationship="DeviceMgmtModel.FK_RepairRecord_User" FromRole="User" ToRole="RepairRecord" />
           <NavigationProperty Name="Supplier" Relationship="DeviceMgmtModel.FK_Supplier_User" FromRole="User" ToRole="Supplier" />
+          <NavigationProperty Name="MaintainRecord" Relationship="DeviceMgmtModel.FK_MaintainRecord_User" FromRole="User" ToRole="MaintainRecord" />
         </EntityType>
         <Association Name="FK_Device_DeviceType">
           <End Type="DeviceMgmtModel.DeviceType" Role="DeviceType" Multiplicity="1" />
@@ -676,6 +767,69 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Attachment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="true" />
+          <Property Name="DisplayName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="FilePath" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="RelationID" Type="String" MaxLength="36" FixedLength="true" Unicode="true" />
+          <Property Name="Note" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="MaintainRecord">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="true" />
+          <Property Name="DeviceID" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="true" />
+          <Property Name="MaintainDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Operator" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Note" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="ProjectID" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateUserID" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="true" />
+          <Property Name="IsValid" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Device" Relationship="DeviceMgmtModel.FK_MaintainRecord_Device" FromRole="MaintainRecord" ToRole="Device" />
+          <NavigationProperty Name="Project" Relationship="DeviceMgmtModel.FK_MaintainRecord_Project" FromRole="MaintainRecord" ToRole="Project" />
+          <NavigationProperty Name="User" Relationship="DeviceMgmtModel.FK_MaintainRecord_User" FromRole="MaintainRecord" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_MaintainRecord_Device">
+          <End Type="DeviceMgmtModel.Device" Role="Device" Multiplicity="1" />
+          <End Type="DeviceMgmtModel.MaintainRecord" Role="MaintainRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Device">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MaintainRecord">
+              <PropertyRef Name="DeviceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MaintainRecord_Project">
+          <End Type="DeviceMgmtModel.Project" Role="Project" Multiplicity="1" />
+          <End Type="DeviceMgmtModel.MaintainRecord" Role="MaintainRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MaintainRecord">
+              <PropertyRef Name="ProjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MaintainRecord_User">
+          <End Type="DeviceMgmtModel.User" Role="User" Multiplicity="1" />
+          <End Type="DeviceMgmtModel.MaintainRecord" Role="MaintainRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="MaintainRecord">
+              <PropertyRef Name="CreateUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -802,6 +956,32 @@
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Attachment">
+            <EntityTypeMapping TypeName="DeviceMgmtModel.Attachment">
+              <MappingFragment StoreEntitySet="Attachment">
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="RelationID" ColumnName="RelationID" />
+                <ScalarProperty Name="FilePath" ColumnName="FilePath" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MaintainRecord">
+            <EntityTypeMapping TypeName="DeviceMgmtModel.MaintainRecord">
+              <MappingFragment StoreEntitySet="MaintainRecord">
+                <ScalarProperty Name="IsValid" ColumnName="IsValid" />
+                <ScalarProperty Name="CreateUserID" ColumnName="CreateUserID" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Operator" ColumnName="Operator" />
+                <ScalarProperty Name="MaintainDate" ColumnName="MaintainDate" />
+                <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

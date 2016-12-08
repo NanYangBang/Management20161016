@@ -40,7 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="WebAttachment.cs" />
     <Compile Include="WebDevice.cs" />
+    <Compile Include="WebMaintainRecord.cs" />
     <Compile Include="WebRepairRecord.cs" />
     <Compile Include="WebSupplier.cs" />
     <Compile Include="WebManufacturer.cs" />

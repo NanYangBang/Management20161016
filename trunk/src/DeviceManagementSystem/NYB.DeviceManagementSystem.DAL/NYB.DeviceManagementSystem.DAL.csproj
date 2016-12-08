@@ -47,6 +47,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attachment.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Device.cs">
       <DependentUpon>Entity.tt</DependentUpon>
     </Compile>
@@ -71,6 +74,9 @@
     <Compile Include="Helper\ContextHelper.cs" />
     <Compile Include="Helper\PredicateExtension.cs" />
     <Compile Include="Log.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MaintainRecord.cs">
       <DependentUpon>Entity.tt</DependentUpon>
     </Compile>
     <Compile Include="Manufacturer.cs">
