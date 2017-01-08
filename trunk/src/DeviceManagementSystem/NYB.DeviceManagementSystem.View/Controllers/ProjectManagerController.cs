@@ -15,7 +15,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
         //
         // GET: /ProjectManager/
 
-        public ActionResult Index(string searchInfo, int pageIndex = 1, int pageSize = 1, string orderBy = "", bool ascending = false)
+        public ActionResult Index(string searchInfo, int pageIndex = 1, int pageSize = 10, string orderBy = "", bool ascending = false)
         {
             List<WebProject> userList = new List<WebProject>();
             int totalCount = 0;
@@ -42,9 +42,8 @@ namespace NYB.DeviceManagementSystem.View.Controllers
         public ActionResult AddProject(WebProject webProject)
         {
             ProjectBLL projectBLL = new ProjectBLL();
-
+            webProject.CreateUserID = this.GetCurrentUserID();
             CResult<bool> cResult = projectBLL.InsertProject(webProject);
-
             return JsonContentHelper.GetJsonContent(cResult);
         }
 

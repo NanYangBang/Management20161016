@@ -15,7 +15,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
         //
         // GET: /User/
 
-        public ActionResult Index(string searchInfo, int pageIndex = 1, int pageSize = 10, string orderBy = "", bool ascending = false)
+        public ActionResult Index(string searchInfo="", int pageIndex = 1, int pageSize = 10, string orderBy = "", bool ascending = false)
         {
             UserBLL userBLL = new UserBLL();
             int totalCount = 0;

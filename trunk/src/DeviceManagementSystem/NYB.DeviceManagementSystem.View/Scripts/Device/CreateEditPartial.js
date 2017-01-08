@@ -6,6 +6,7 @@ function SaveEvent() {
 
         var param = {};
         var WebUser = {};
+        var ID = $('[Name="ID"]').val();
         var Name = $('[Name="Name"]').val();
         var DeviceTypeID = $('[name="DeviceTypeID"]').val();
         var ManufacturerID = $('[name="ManufacturerID"]').val();
@@ -21,6 +22,7 @@ function SaveEvent() {
         param.ProductDate = ProductDate;
         param.MaintainDate = MaintainDate;
         param.Node = Node;
+        param.ID = ID;
 
         if ($('span.errorMessage').length == 0 && $('.field-validation-error').length == 0) {
             if (Resource.UrlAction == 'Add') {

@@ -67,7 +67,7 @@
                         </td>
                         <td>
                             @{var routeValues = new { deviceTypeID = device.ID, returnUrl = Request.Url.AbsoluteUri, _ = DateTime.Now.Ticks };}
-                            @Html.ActionLink("修改", "Edit", routeValues)
+                            @Html.ActionLink("修改", "EditDevice", routeValues)         
                             @Html.ActionLink("查看", "Details", routeValues)
                             <a href="#" onclick="DeleteDeviceType('@device.ID')" nam name="DeleteDeviceType">刪除</a>
                         </td>
@@ -91,5 +91,6 @@
     $(document).ready(function () {
         AddRection();
         SortAlertRecord();
+       
     })
 </script>

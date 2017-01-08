@@ -34,12 +34,12 @@ namespace NYB.DeviceManagementSystem.View.Controllers
                 var result = userBLL.VerifyPassword(LoginName, Pwd);
                 if (result.Code == 0)
                 {
+                    Response.Cookies.Add(new HttpCookie("CurrentUserName", result.Data.UserName));
+                    Response.Cookies.Add(new HttpCookie("CurrentProjectIDStr", result.Data.ProjectID));
+                    Response.Cookies.Add(new HttpCookie("CurrentUserID", result.Data.ID));
+                    //
                     if (result.Data.Role != null)
                     {
-                        Response.Cookies.Add(new HttpCookie("CurrentUserID", result.Data.ID));
-                        Response.Cookies.Add(new HttpCookie("CurrentUserName", result.Data.UserName));
-                        Response.Cookies.Add(new HttpCookie("CurrentProjectID", result.Data.ProjectID));
-
                         FormsAuthentication.SetAuthCookie(LoginName, false);
 
                         errorInfo = result.Msg;
@@ -50,7 +50,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
                         }
                         else
                         {
-                            return RedirectToAction("Index", "SystemManager");
+                            return RedirectToAction("Index", "User");
                         }
                     }
                 }

@@ -10,7 +10,7 @@ namespace System.Web.Mvc
     {
         public static string GetCurrentProjectID(this Controller controller)
         {
-            return controller.Request.Cookies["CurrentProjectID"].Value;
+            return controller.Request.Cookies["CurrentProjectIDStr"].Value;
         }
 
         public static string GetCurrentUserID(this Controller controller)

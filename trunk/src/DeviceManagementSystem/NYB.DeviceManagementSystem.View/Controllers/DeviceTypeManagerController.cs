@@ -66,6 +66,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             {
                 webDeviceType.ProjectID = this.GetCurrentProjectID();
                 webDeviceType.CreateUserID = this.GetCurrentUserID();
+                webDeviceType.ProjectID = this.GetCurrentProjectID();
 
                 var result = new DeviceTypeBLL().InsertDeviceType(webDeviceType);
                 return JsonContentHelper.GetJsonContent(result);

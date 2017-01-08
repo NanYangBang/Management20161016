@@ -51,25 +51,67 @@ namespace NYB.DeviceManagementSystem.View.Controllers
         [HttpPost]
         public ActionResult CreateDevice(WebDevice webDevice)
         {
+            webDevice.CreateUserID = this.GetCurrentUserID();
+            webDevice.ProjectID = this.GetCurrentProjectID();
             DeviceBLL deviceBLL = new DeviceBLL();
             var cResult = deviceBLL.InsertDevice(webDevice);
             return JsonContentHelper.GetJsonContent(cResult);
         }
 
-        public ActionResult EditDevice(string returnUrl)
+        [HttpGet]
+        public ActionResult EditDevice(string deviceTypeID, string returnUrl)
         {
             DeviceBLL deviceBLL = new DeviceBLL();
-            var result = deviceBLL.GetDeviceByID(this.GetCurrentProjectID());
+            var result = deviceBLL.GetDeviceByID(deviceTypeID);
             WebDevice webDevice = null;
             if (result.Code == 0)
             {
                 webDevice = result.Data;
             }
+            ManufacturerBLL manufacturBLL = new ManufacturerBLL();
+            SupplierBLL supplierBLL = new SupplierBLL();
+
+            DeviceTypeBLL deviceTypeBll = new DeviceTypeBLL();
+            var deviceType = deviceTypeBll.GetDeviceTypeDir(this.GetCurrentProjectID());
+
+            ViewBag.ManufacturList = manufacturBLL.GetManufacturerDir(this.GetCurrentProjectID()).Data;
+            ViewBag.SupperList = supplierBLL.GetSupplierDir(this.GetCurrentProjectID()).Data;
+            ViewBag.DeviceType = deviceType.Data;
             ViewBag.Action = "Update";
             ViewBag.ReturnUrl = returnUrl;
             return View(webDevice);
         }
 
+        [HttpPost]
+        public ActionResult EditDevice(WebDevice webDevice)
+        {
+            DeviceBLL deviceBLL = new DeviceBLL();
+            var cResult = deviceBLL.UpdateDevice(webDevice);
+            return JsonContentHelper.GetJsonContent(cResult);
+        }
+
+        public ActionResult Detail(string deviceTypeID, string returnUrl)
+        {
+            DeviceBLL deviceBLL = new DeviceBLL();
+            var result = deviceBLL.GetDeviceByID(deviceTypeID);
+            WebDevice webDevice = null;
+            if (result.Code == 0)
+            {
+                webDevice = result.Data;
+            }
+            ManufacturerBLL manufacturBLL = new ManufacturerBLL();
+            SupplierBLL supplierBLL = new SupplierBLL();
+
+            DeviceTypeBLL deviceTypeBll = new DeviceTypeBLL();
+            var deviceType = deviceTypeBll.GetDeviceTypeDir(this.GetCurrentProjectID());
+
+            ViewBag.ManufacturList = manufacturBLL.GetManufacturerDir(this.GetCurrentProjectID()).Data;
+            ViewBag.SupperList = supplierBLL.GetSupplierDir(this.GetCurrentProjectID()).Data;
+            ViewBag.DeviceType = deviceType.Data;
+            ViewBag.Action = "Detail";
+            ViewBag.ReturnUrl = returnUrl;
+            return View(webDevice);
+        }
 
 
     }

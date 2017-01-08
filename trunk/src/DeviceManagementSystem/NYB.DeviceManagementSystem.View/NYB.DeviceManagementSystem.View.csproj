@@ -444,6 +444,7 @@
     <Content Include="Views\Device\CreateDevice.cshtml" />
     <Content Include="Views\Device\EditDevice.cshtml" />
     <Content Include="Views\Device\PartialView\CreateEditPartialView.cshtml" />
+    <Content Include="Views\Device\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NYB.DeviceManagementSystem.BLL\NYB.DeviceManagementSystem.BLL.csproj">

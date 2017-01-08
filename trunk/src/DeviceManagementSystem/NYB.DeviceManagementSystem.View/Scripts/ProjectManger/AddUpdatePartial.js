@@ -19,7 +19,7 @@ function SaveEvent() {
 
         param.ID = ID;
         param.Name = Name;
-        param['WebUser.LogoName'] = LogoName;
+        param['WebUser.LoginName'] = LoginName;
         param['WebUser.UserName'] = UserName;
         param['WebUser.Pwd'] = Pwd;
         param['WebUser.TelPhone'] = TelPhone;
