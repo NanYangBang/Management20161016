@@ -99,7 +99,7 @@ select {
     min-width: 1200px;
     background: transparent url(images/body-bg.png) repeat-x 0 -108px;
     position: relative;
-    z-index: 2;
+    z-index: 1;
 }
 
     .nav-top ul.main-view a:hover {
@@ -121,14 +121,14 @@ select {
 }
 
     .nav-left ul li {
-        border-bottom:solid 2px #E1E1E1;
+        border-bottom: solid 2px #E1E1E1;
     }
 
         .nav-left ul li a {
             text-decoration: none;
-            height: 30px;
+            height: 40px;
             display: block;
-            line-height: 30px;
+            line-height: 40px;
             padding-left: 10px;
             font-size: 16px;
             color: black;
@@ -155,7 +155,6 @@ select {
     position: relative;
     height: 500px;
     padding-bottom: 50px;
-
     /*visibility: hidden;*/
 }
 
@@ -164,7 +163,7 @@ select {
     height: 100%;
     /*left: 0;*/
     overflow: auto;
-    margin-top:10px;
+    margin-top: 10px;
 }
 
 .footer {
@@ -331,7 +330,7 @@ select {
 /*内容样式*/
 ul.view-path {
     padding: 10px 20px 8px 10px;
-    background-color: #F7F7F7;
+    background-color: #e2e2e2;
 }
 
     ul.view-path li {

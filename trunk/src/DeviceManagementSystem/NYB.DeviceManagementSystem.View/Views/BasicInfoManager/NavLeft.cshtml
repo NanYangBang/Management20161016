@@ -7,27 +7,23 @@
 <ul id="leftUl">
     @if (ControllerName == "DeviceTypeManager")
     {
-        <li style="background:blue">
+        <li leftname="设备类别管理">
             <a href="@Url.Action("Index", "DeviceTypeManager")">设备类别管理</a>
         </li>
     }
     else
     {
-        <li>
+        <li leftname="设备类别管理">
             <a href="@Url.Action("Index", "DeviceTypeManager")">设备类别管理</a>
         </li>
     }
 
-    <li>
+    <li leftname="供应商管理">
         <a href="@Url.Action("Index", "SupplierManager")">供应商管理</a>
     </li>
-    <li>
+    <li leftname="生产厂商管理">
         <a href="@Url.Action("Index", "ManufactureManager")">生产厂商管理</a>
     </li>
 </ul>
 
-<script>
-    $(document).ready(function () {
-        
-    })
-</script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/Common/Left.js")"></script>

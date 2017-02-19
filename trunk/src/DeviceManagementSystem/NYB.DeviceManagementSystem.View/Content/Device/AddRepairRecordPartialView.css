@@ -1,0 +1,20 @@
+﻿
+body #ui-datepicker-div .ui-datepicker-year, body .ui-datepicker-month {
+    color: #7D7676;
+    font-weight: lighter;
+}
+
+.btnDel {
+    cursor: pointer;
+    float: right;
+    margin-top: -15px;
+}
+
+.cancel {
+    height: 16px;
+    width: 40px;
+}
+
+    .cancel > a {
+        float: right;
+    }

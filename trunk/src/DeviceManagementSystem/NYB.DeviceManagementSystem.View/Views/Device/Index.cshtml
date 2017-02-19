@@ -3,8 +3,9 @@
 @using NYB.DeviceManagementSystem.ViewModel
 @model PagedList<NYB.DeviceManagementSystem.ViewModel.WebDevice>
 @Styles.Render("~/Content/User/User.css")
+@*<script type="text/javascript" src="@Url.Content("~/Scripts/common.js")"></script>*@
 <script type="text/javascript" src="@Url.Content("~/Scripts/Common/Index.js")"></script>
-<div actionname="设备管理">
+<div leftname="设备信息" actionname="设备管理">
     <form method="get" class="userSearchForm">
         <input type="text" name="userName" id="seacheName" value="" />
         <input style="line-height:0px" type="submit" class="" id="btnSearch" value="搜索" />
@@ -34,7 +35,7 @@
                 <th>
                     保养日期
                 </th>
-                <th class="operation-column">
+                <th style="width:300px;" class="operation-column">
                     操作
                 </th>
             </tr>
@@ -60,16 +61,27 @@
                             @device.SupplierName
                         </td>
                         <td>
-                            @device.ProductDate
+                            @(!device.ProductDate.HasValue ? "" : device.ProductDate.Value.ToString("yyyy-MM-dd"))
                         </td>
                         <td>
-                            @device.MaintainDate
+                            @(!device.MaintainDate.HasValue ? "" : device.MaintainDate.Value.ToString("yyyy-MM-dd"))
                         </td>
-                        <td>
+                        <td class="opreateTd">
                             @{var routeValues = new { deviceTypeID = device.ID, returnUrl = Request.Url.AbsoluteUri, _ = DateTime.Now.Ticks };}
-                            @Html.ActionLink("修改", "EditDevice", routeValues)         
-                            @Html.ActionLink("查看", "Details", routeValues)
-                            <a href="#" onclick="DeleteDeviceType('@device.ID')" nam name="DeleteDeviceType">刪除</a>
+                            @{var addRepairObj = new { deviceID = device.ID, returnUrl = Request.Url.AbsoluteUri, deviceName = device.Name, _ = DateTime.Now.Ticks }; }
+                            @*@Html.ActionLink("修改", "EditDevice", routeValues)*@
+                            <a title="修改设备信息" href="@(Url.Action("EditDevice", "Device", routeValues))"><img src="@Url.Content("~/Images/edit.png")" /></a>
+                            @*@Html.ActionLink("查看", "Details", routeValues)*@
+                            @*<a title="查看设备信息" href="@(Url.Action("Details", "Device", routeValues))"><img src="@Url.Content("~/Images/look.png")" /></a>*@
+                            <a href="#" title="删除设备信息" onclick="DeleteDeviceType('@device.ID')" name="DeleteDeviceType"><img src="@Url.Content("~/Images/del.png")" /></a>
+                            @*@Html.ActionLink("生成维修记录", "AddRepairRecord", addRepairObj)*@
+                            <a title="生成维修记录" href="@(Url.Action("AddRepairRecord", "Device", routeValues))"><img src="@Url.Content("~/Images/repairimg.png")" /></a>
+                            @*@Html.ActionLink("查看维修记录", "RepairRecordList", addRepairObj)*@
+                            <a title="查看维修记录" href="@(Url.Action("RepairRecordList", "Device", routeValues))"><img src="@Url.Content("~/Images/lookrepair.png")" /></a>
+                            @*@Html.ActionLink("生成保养记录", "AddMainTainRecord", addRepairObj)*@
+                            <a title="生成保养记录" href="@(Url.Action("AddMainTainRecord", "Device", routeValues))"><img src="@Url.Content("~/Images/maintainimg.png")" /></a>
+                            @*@Html.ActionLink("查看保养记录", "MaintainRecordList", addRepairObj)*@
+                            <a title="查看保养记录" href="@(Url.Action("MaintainRecordList", "Device", routeValues))"><img src="@Url.Content("~/Images/lockmarintain.png")" /></a>
                         </td>
                     </tr>
                 }
@@ -91,6 +103,6 @@
     $(document).ready(function () {
         AddRection();
         SortAlertRecord();
-       
+
     })
 </script>

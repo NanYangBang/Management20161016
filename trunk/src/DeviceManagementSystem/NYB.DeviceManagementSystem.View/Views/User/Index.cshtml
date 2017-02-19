@@ -69,10 +69,12 @@
                         </td>
                         <td>
                             @{var routeValues = new { userID = user.ID, returnUrl = Request.Url.AbsoluteUri, _ = DateTime.Now.Ticks };}
-                            @Html.ActionLink("修改", "UpdateUser", routeValues)
-                            @Html.ActionLink("查看", "ViewUser", routeValues)
+                            @*@Html.ActionLink("修改", "UpdateUser", routeValues)*@
+                            <a title="修改" href="@(Url.Action("UpdateUser", "User", routeValues))"><img src="@Url.Content("~/Images/edit.png")" /></a>
+                            @*@Html.ActionLink("查看", "ViewUser", routeValues)*@
+                            <a title="查看" href="@(Url.Action("ViewUser", "User", routeValues))"><img src="@Url.Content("~/Images/look.png")" /></a>
                             @*@Html.ActionLink("删除", "DeleteUser", routeValues, new { name = "DeleteUser" })*@
-                            <a href="#" onclick="DeleteUser('@user.ID')" name="DeleteUSer">刪除</a>
+                            <a href="#" onclick="DeleteUser('@user.ID')" name="DeleteUSer"><img src="@Url.Content("~/Images/del.png")" /></a>
                         </td>
                     </tr>
                 }

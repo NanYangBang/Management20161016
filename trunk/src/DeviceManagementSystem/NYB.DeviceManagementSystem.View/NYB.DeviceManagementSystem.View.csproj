@@ -189,6 +189,7 @@
     <Compile Include="Controllers\BasicInfoManagerController.cs" />
     <Compile Include="Controllers\DeviceController.cs" />
     <Compile Include="Controllers\ManufactureManagerController.cs" />
+    <Compile Include="Controllers\RepairRecordController.cs" />
     <Compile Include="Controllers\SupplierManagerController.cs" />
     <Compile Include="Controllers\DeviceTypeManagerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -220,6 +221,7 @@
     <Content Include="Content\Common\images\nav-left-handler.png" />
     <Content Include="Content\Common\images\preview-logo.png" />
     <Content Include="Content\Common\images\step-number.png" />
+    <Content Include="Content\Device\AddRepairRecordPartialView.css" />
     <Content Include="Content\Plugin\jQuery-UI-Timepicker\images\calendar.png" />
     <Content Include="Content\Plugin\jQuery-UI-Timepicker\images\clock.png" />
     <Content Include="Content\Plugin\jQuery-UI-Timepicker\jquery-ui-timepicker.css" />
@@ -255,9 +257,13 @@
     <Content Include="Content\Plugin\jQueryTreeView\images\treeview-red-line.gif" />
     <Content Include="Content\Plugin\jQueryTreeView\images\treeview-red.gif" />
     <Content Include="Content\Plugin\jQueryTreeView\jquery.treeview.css" />
-    <Content Include="Content\Plugin\jQueryUploadify\flash\uploadify.swf" />
+    <EmbeddedResource Include="Content\Plugin\jQueryUploadify\flash\uploadify.swf" />
     <Content Include="Content\Plugin\jQueryUploadify\images\uploadify-cancel.png" />
     <Content Include="Content\Plugin\jQueryUploadify\jquery.uploadify.css" />
+    <Content Include="Content\ssi-uploader\bootstrap.min.css" />
+    <Content Include="Content\ssi-uploader\images\sprite.png" />
+    <Content Include="Content\ssi-uploader\ssi-uploader.min.css" />
+    <Content Include="Content\ssi-uploader\style.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -317,9 +323,22 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="ConnectionStrings.config" />
+    <Content Include="Content\ssi-uploader\images\Thumbs.db" />
+    <Content Include="Content\ssi-uploader\ssi-uploader.min.css.map" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
+    <Content Include="Images\del.png" />
+    <Content Include="Images\download16.png" />
+    <Content Include="Images\edit.png" />
+    <Content Include="Images\lockmarintain.png" />
+    <Content Include="Images\look.png" />
+    <Content Include="Images\lookrepair.png" />
+    <Content Include="Images\maintainimg.png" />
+    <Content Include="Images\repairimg.png" />
     <Content Include="Scripts\base.js" />
     <Content Include="Scripts\common.js" />
+    <Content Include="Scripts\Common\Left.js" />
+    <Content Include="Scripts\Device\AddEditMaintainRecord.js" />
+    <Content Include="Scripts\Device\AddRepairRecord.js" />
     <Content Include="Scripts\Device\CreateEditPartial.js" />
     <Content Include="Scripts\excanvas.js" />
     <Content Include="Scripts\excanvas.min.js" />
@@ -361,6 +380,10 @@
     <Content Include="Scripts\ProjectManger\AddUpdatePartial.js" />
     <Content Include="Scripts\Common\Index.js" />
     <Content Include="Scripts\Silverlight.js" />
+    <Content Include="Scripts\ssi-uploader\bootstrap.min.js" />
+    <Content Include="Scripts\ssi-uploader\jquery-2.1.1.min.js" />
+    <Content Include="Scripts\ssi-uploader\ssi-uploader.js" />
+    <Content Include="Scripts\ssi-uploader\ssi-uploader.min.js" />
     <Content Include="Scripts\swfobject.js" />
     <Content Include="Scripts\User\AddUpdatePartial.js" />
     <Content Include="Scripts\User\Index.js" />
@@ -396,7 +419,9 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Shared\Footer.cshtml" />
     <Content Include="Views\Shared\Header.cshtml" />
     <Content Include="Views\Shared\NavLeft.cshtml" />
@@ -445,6 +470,14 @@
     <Content Include="Views\Device\EditDevice.cshtml" />
     <Content Include="Views\Device\PartialView\CreateEditPartialView.cshtml" />
     <Content Include="Views\Device\Detail.cshtml" />
+    <Content Include="Views\Device\PartialView\AddMainTainRecord.cshtml" />
+    <Content Include="Views\Device\RepairRecord\AddRepairRecord.cshtml" />
+    <Content Include="Views\Device\RepairRecord\PartialView\AddRepairRecordPartialView.cshtml" />
+    <Content Include="Views\Device\RepairRecord\RepairRecordList.cshtml" />
+    <Content Include="Views\Device\MaintainRecord\AddMainTainRecord.cshtml" />
+    <Content Include="Views\Device\MaintainRecord\PartialView\AddEditMaintainRecordView.cshtml" />
+    <Content Include="Scripts\ssi-uploader\ssi-uploader.min.js.map" />
+    <Content Include="Views\Device\MaintainRecord\MaintainRecordList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NYB.DeviceManagementSystem.BLL\NYB.DeviceManagementSystem.BLL.csproj">

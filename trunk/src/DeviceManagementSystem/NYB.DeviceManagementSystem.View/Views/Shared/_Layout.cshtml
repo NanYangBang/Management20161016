@@ -13,7 +13,8 @@
         };
     </script>
     @Scripts.Render("~/Scripts/jquery.js")
-    @Scripts.Render("~/Scripts/common.js")
+    @*@Scripts.Render("~/Scripts/common.js")*@
+    <script type="text/javascript" src="@Url.Content("~/Scripts/common.js")"></script>
     @Scripts.Render("~/Scripts/base.js");
     <script type="text/javascript" src="@Url.Content("~/Scripts/jQuery.query.js")"></script>
 </head>
@@ -22,9 +23,9 @@
         <div class="page-container">
             @Html.Partial("Header")
             @Html.Partial("NavTop")
-            @*<ul class="view-path">
-                正在载入...
-            </ul>*@
+            <ul class="view-path">
+                @*正在载入...*@
+            </ul>
             <div class="content">
                 @Html.Partial("NavLeft")
                 <div class="sub-content">
@@ -45,27 +46,34 @@
         };*@
 
         $(document).ready(function () {
-            //InitializeFrameSize();
-            //select_list();
-            //HighlightNavTopItem('@ViewBag.FunctionID');
-            //FindMarkAndGenerateNavigateElements();
-            //BindAllDisabledButton();
-            //AddEditorLeavingPrompt();
-            //actionname();
             HighLeight();
-
-
         });
-        
+
         function HighLeight() {
             var actionname = $('.sub-content div').first().attr('actionname');
             var navTop = $('.nav-top ul li[actionname="' + actionname + '"]');
-            navTop.find('a').css('background-color','white').css('color','black');
-            
+            navTop.find('a').css('background-color', 'white').css('color', 'black');
+
             var otherAction = $('.nav-top ul li[actionname!="' + actionname + '"]');
             otherAction.find('a').css('color', 'white');
         }
-        
+
+        function GetViewStatus() {
+            if (typeof (Resource) != 'undefined') {
+                if (Resource.hasOwnProperty('IsView')) {
+                    if (Resource.IsView == 'True') {
+                        $('form input[type="text"]').attr('readonly', 'readonly');
+                        $('form input[type="button"]').remove();
+                        $('form select').attr('readonly', 'readonly');
+                        $('form input[type="submit"]').remove();
+                        $('.ui-datepicker-trigger').remove();
+                        $('.btnDel').remove();
+                        $('#ssi-upload').remove();
+                    }
+                }
+            }
+        }
+
     </script>
 
 </body>

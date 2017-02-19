@@ -4,18 +4,16 @@
     //Layout = "~/Views/Shared/NavLeft.cshtml";
     string ControllerName = ViewContext.RouteData.Values["controller"] as string;
 }
+
 <ul id="leftUl">
-    <li>
+    <li leftname="设备信息">
         <a href="@Url.Action("Index", "Device")">设备信息</a>
     </li>
-    <li>
-        <a href="@Url.Action("Index", "ManufactureManager")">维修记录信息</a>
+    <li leftname="维修记录信息">
+        <a href="@Url.Action("RepairRecordList", "Device")">维修记录信息</a>
     </li>
-    <li>
-        <a href="@Url.Action("Index", "ManufactureManager")">保养记录信息</a>
+    <li leftname="保养记录信息">
+        <a href="@Url.Action("MaintainRecordList", "Device")">保养记录信息</a>
     </li>
 </ul>
-
-<script>
-    
-</script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/Common/Left.js")"></script>

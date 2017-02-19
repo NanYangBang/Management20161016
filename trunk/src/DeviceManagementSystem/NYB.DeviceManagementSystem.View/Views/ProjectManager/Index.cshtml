@@ -65,7 +65,8 @@
                         </td>
                         <td>
                             @{var routeValues = new { projectID = project.ID, returnUrl = Request.Url.AbsoluteUri, _ = DateTime.Now.Ticks };}
-                            @Html.ActionLink("修改", "UpdateProject", routeValues)
+                            @*@Html.ActionLink("修改", "UpdateProject", routeValues)*@
+                            <a title="修改" href="@(Url.Action("UpdateProject", "ProjectManager", routeValues))"><img src="@Url.Content("~/Images/edit.png")" /></a>
                         </td>
                     </tr>
                 }
