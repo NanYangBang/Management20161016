@@ -1,0 +1,106 @@
+﻿@{
+    ViewBag.Title = "AddRepairRecordPartialView";
+}
+@model NYB.DeviceManagementSystem.ViewModel.WebRepairRecord
+@{
+    ViewBag.Title = "";
+    string isView = ViewBag.IsView;
+    isView = string.IsNullOrWhiteSpace(isView) ? "" : isView.ToString();
+    string returnUrl = ViewBag.ReturnUrl;
+}
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<link rel="Stylesheet" href="@Url.Content("~/Content/Common/OperateTable.css")" />
+<script src="@Url.Content("~/Scripts/Device/AddRepairRecord.js")"></script>
+<script src="@Url.Content("~/Scripts/jquery-ui.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery-ui-timepicker-addon.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.ui.datepicker-zh-CN.js")" type="text/javascript"></script>
+
+<div leftname="@(ViewBag.LeftName)" actionname="设备管理">
+    <form method="post">
+        @(Html.Hidden("returnUrl", returnUrl))
+        <div class="common-details-panel">
+            <h2><b>6</b>添加维修记录</h2>
+            <input type="hidden" name="DeviceID" value="@(ViewBag.DeviceID)" />
+            <input type="hidden" name="RepairRecordID" value="@(ViewBag.RepairRecordID)" />
+            <fieldset>
+                <table class="operateTable">
+                    <tr>
+                        <td>
+                            <b>设备名称</b>
+                        </td>
+                        <td>
+                            <input type="text" name="DeviceName" value="@(ViewBag.DeviceName)" />
+                        </td>
+                        <td>
+                            <b><em>*</em>维修人</b>
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.Operator)
+                            @Html.ValidationMessageFor(model => model.Operator)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b><em>*</em>维修日期</b>
+                        </td>
+                        <td name="time">
+                            @Html.TextBoxFor(model => model.RepairDate)
+                            @Html.ValidationMessageFor(model => model.RepairDate)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>备注</b>
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.Note)
+                            @Html.ValidationMessageFor(model => model.Note)
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
+        </div>
+        <div class="common-details-operation-panel">
+            <p class="UpdatePile-btn">
+                <input type="submit" id="btnSave" value="保存" class="blue-button" />
+                <a class="link-after-button" href="@ViewBag.ReturnUrl">返回</a>
+            </p>
+        </div>
+    </form>
+</div>
+<link href="@Url.Content("~/Content/Plugin/jQuery-UI/jquery-ui-1.8.16.custom.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/Plugin/jQuery-UI-Timepicker/jquery-ui-timepicker.css")" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    window.Resource = {
+        UrlAdd: '@Url.Action("AddRepairRecord", "Device")',
+        UrlEdit:'@(Url.Action("EditRepairRecord", "Device"))',
+        ReturnUrl: '@returnUrl',
+        Action:'@(ViewBag.OperateAction)',
+        UrlImage: '@Url.Content("~/Content/Plugin/jQuery-UI-Timepicker/images/calendar.png")',
+        IsView: '@(isView)'
+    }
+
+    $(document).ready(function () {
+        SaveEvent();
+        BindDatePick();
+        GetViewStatus();
+    })
+
+    function BindDatePick() {
+        var path = Resource.UrlImage;
+        $('td[name="time"] input').datepicker({
+            showButtonPanel: true,
+            yearRange: 'c-10:c+2',
+            showOn: "button", buttonImageOnly: true,
+            numberOfMonths: 1,
+            changeMonth: true,
+            changeYear: true,
+            buttonImage: path
+        });
+        BindDatePickerTriggerEvent();
+    }
+
+</script>

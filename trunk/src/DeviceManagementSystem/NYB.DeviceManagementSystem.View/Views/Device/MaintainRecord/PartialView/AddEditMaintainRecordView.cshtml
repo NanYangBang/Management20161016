@@ -1,0 +1,140 @@
+﻿@model NYB.DeviceManagementSystem.ViewModel.WebMaintainRecord
+
+@{
+    ViewBag.Title = "AddRepairRecordPartialView";
+    string isView = ViewBag.IsView;
+    isView = string.IsNullOrWhiteSpace(isView) ? "" : isView.ToString();
+    string returnUrl = ViewBag.ReturnUrl;
+}
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<link rel="Stylesheet" href="@Url.Content("~/Content/Common/OperateTable.css")" />
+<link rel="Stylesheet" href="@Url.Content("~/Content/Device/AddRepairRecordPartialView.css")" />
+<script src="@Url.Content("~/Scripts/jquery-ui.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery-ui-timepicker-addon.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.ui.datepicker-zh-CN.js")" type="text/javascript"></script>
+<link rel="stylesheet" href="@Url.Content("~/Content/ssi-uploader/bootstrap.min.css")" />
+<link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/ssi-uploader/ssi-uploader.min.css")" />
+<link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/ssi-uploader/style.css")" />
+
+<div leftname="@(ViewBag.LeftName)" actionname="设备管理">
+    <form method="post">
+        @*@(Html.Hidden("returnUrl", returnUrl))*@
+        <input type="hidden" name="returnUrl" id="returnUrl" value="@(returnUrl)" />
+        <div class="common-details-panel">
+            <h2 style="margin:0px">6</b>添加维修记录</h2>
+            <input type="hidden" name="DeviceID" value="@(ViewBag.DeviceID)" />
+            <input type="hidden" name="MaintainRecordID" value="@(Model.ID)" />
+            <fieldset>
+                <table class="operateTable">
+                    <tr>
+                        <td>
+                            <b>设备名称</b>
+                        </td>
+                        <td>
+                            <input type="text" name="DeviceName" value="@(ViewBag.DeviceName)" />
+                        </td>
+                        <td>
+                            <b><em>*</em>保养人</b>
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.Operator)
+                            @Html.ValidationMessageFor(model => model.Operator)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b><em>*</em>保养日期</b>
+                        </td>
+                        <td name="time">
+                            @Html.TextBoxFor(model => model.MaintainDate)
+                            @Html.ValidationMessageFor(model => model.MaintainDate)
+                        </td>
+                        <td>
+                            <b>备注</b>
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.Note)
+                            @Html.ValidationMessageFor(model => model.Note)
+                        </td>
+                    </tr>
+                </table>
+                <div class="row" style="margin:0px;">
+                    <div class="col-md-12">
+                        <h3>保养记录附件（支持jpg、gif、txt、png和pdf格式文件）</h3>
+                        <input type="file" multiple id="ssi-upload" />
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="common-details-operation-panel">
+            <p class="UpdatePile-btn">
+                <input type="submit" id="btnSave" value="保存" class="blue-button" />
+                <a class="link-after-button" href="@ViewBag.ReturnUrl">返回</a>
+            </p>
+        </div>
+    </form>
+</div>
+<ul id="markerFile">
+    @foreach (var item in Model.Attachments)
+    {
+        <li filepath="@(item.FilePath)" filename="@(item.DisplayName)" fileid="@(item.ID)"></li>
+    }
+</ul>
+<div id="pictureView" style="z-index:100;visibility:hidden">
+
+</div>
+
+<link href="@Url.Content("~/Content/Plugin/jQuery-UI/jquery-ui-1.8.16.custom.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/Plugin/jQuery-UI-Timepicker/jquery-ui-timepicker.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/ssi-uploader/ssi-uploader.js")" type="text/javascript"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.uploadify.js")"></script>
+<link href="@Url.Content("~/Content/Plugin/jQueryUploadify/jquery.uploadify.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/Device/AddEditMaintainRecord.js")"></script>
+
+<script type="text/javascript">
+    window.Resource = {
+        UrlAdd: '@Url.Action("AddMainTainRecord", "Device")',
+        UrlEdit: '@(Url.Action("EditMaintainRecord", "Device"))',
+        Auth: '@(Request.Cookies[FormsAuthentication.FormsCookieName] == null ? string.Empty : Request.Cookies[FormsAuthentication.FormsCookieName].Value)',
+        ReturnUrl: '@returnUrl',
+        IsAddRecord: '@(ViewBag.IsAddRecord)',
+        Action: '@(ViewBag.OperateAction)',
+        UrlAddFile: '@(Url.Action("AddMaintainRecordFile", "Device"))',
+        UrlEditFile: '@(Url.Action("AddMaintainRecordFile", "Device"))',
+        UrlImage: '@Url.Content("~/Content/Plugin/jQuery-UI-Timepicker/images/calendar.png")',
+        UrlCancelImage: '@Url.Content("~/Content/Plugin/jQueryUploadify/images/uploadify-cancel.png")',
+        UrlSwf: '@Url.Content("~/Content/Plugin/jQueryUploadify/flash/uploadify.swf")',
+        delID: [],
+        UrlViewPicture: '@(Url.Action("ViewPicture", "Device"))',
+        LocalUrl: '@(Request.Url.Host)',
+        ImgDownLoad: '@(Url.Content("~/Images/download16.png"))',
+        UrlDownLoad: '@(Url.Action("DownloadFile", "Device"))',
+        IsView: '@(isView)'
+    }
+
+    $(document).ready(function () {
+        BindDatePick();
+        uploadProof();
+        loadUplodify();
+        GetViewStatus();
+        //$('#ssi-upload').ssi_uploader({ url: '@Url.Action("AddMainTainRecord", "Device")', data: {"name":"myDragon"}, maxFileSize: 6, allowed: ['jpg', 'gif', 'txt', 'png', 'pdf'] });
+    })
+
+    function BindDatePick() {
+        var path = Resource.UrlImage;
+        $('td[name="time"] input').datepicker({
+            showButtonPanel: true,
+            yearRange: 'c-10:c+2',
+            showOn: "button", buttonImageOnly: true,
+            numberOfMonths: 1,
+            changeMonth: true,
+            changeYear: true,
+            buttonImage: path
+        });
+        BindDatePickerTriggerEvent();
+    }
+
+</script>

@@ -1,0 +1,84 @@
+﻿@using Webdiyer.WebControls.Mvc
+@using NYB.DeviceManagementSystem.Common
+@using NYB.DeviceManagementSystem.ViewModel
+@model PagedList<NYB.DeviceManagementSystem.ViewModel.WebMaintainRecord>
+@Styles.Render("~/Content/User/User.css")
+<script type="text/javascript" src="@Url.Content("~/Scripts/Common/Index.js")"></script>
+<div leftname="保养记录信息" actionname="设备管理">
+    <form method="get" class="userSearchForm">
+        <input type="text" name="userName" id="seacheName" value="" />
+        <input style="line-height:0px" type="submit" class="" id="btnSearch" value="搜索" />
+    </form>
+    <table class="table-common" id="pileInfo">
+        <thead>
+            <tr>
+                <th>
+                    设备名称
+                </th>
+                <th>
+                    保养人
+                </th>
+                <th>
+                    保养日期
+                </th>
+                <th>
+                    备注
+                </th>
+                <th>
+                    操作
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var device in Model)
+                {
+                    <tr pileid="">
+                        <td>
+                            @device.DeviceName
+                        </td>
+                        <td>
+                            @device.Operator
+                        </td>
+                        <td>
+                            @device.MaintainDate
+                        </td>
+                        <td>
+                            @device.Note
+                        </td>
+                        <td>
+                            @{var routeValues = new { maintainRecordID = device.ID, deviceName = device.DeviceName, returnUrl = Request.Url.AbsoluteUri, _ = DateTime.Now.Ticks };}
+                            @*@Html.ActionLink("修改", "EditMaintainRecord", routeValues)*@
+                            <a title="修改" href="@(Url.Action("EditMaintainRecord", "Device", routeValues))"><img src="@Url.Content("~/Images/edit.png")" /></a>
+                            @*<a href="#" onclick="DeleteDeviceRepairRecord('@device.ID')" name="DeleteDeviceType">刪除</a>*@
+                            <a href="#" title="删除" onclick="DeleteDeviceRepairRecord('@device.ID')" name="DeleteDeviceType"><img src="@Url.Content("~/Images/del.png")" /></a>
+                            <a title="查看" href="@(Url.Action("ViewMaintainRecord", "Device", routeValues))"><img src="@Url.Content("~/Images/look.png")" /></a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+    @Html.Partial("DisplayTemplates/PagerView", Model)
+</div>
+<script type="text/javascript">
+    window.UrlResource = {
+        UrlAddAction: '@Url.Action("CreateDevice", "Device", new { returnUrl = Request.Url.AbsoluteUri })'
+    }
+
+    $(document).ready(function () {
+        SortAlertRecord();
+    })
+
+    function DeleteDeviceRepairRecord(t) {
+        if (window.confirm("是否删除？")) {
+            $.post('@Url.Action("DelRepairRecord")', { repairRecordID: t }, function (result) {
+                if (result.Code == 0) {
+                    window.location.reload();
+                } else {
+                    alert(result.Msg);
+                }
+            })
+        }
+    }
+</script>
