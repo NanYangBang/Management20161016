@@ -18,9 +18,11 @@ namespace NYB.DeviceManagementSystem.ViewModel
         public string DeviceName { get; set; }
 
         [DisplayName("维修人")]
+        [Required]
         public string Operator { get; set; }
 
         [DisplayName("维修日期")]
+        [Required]
         public DateTime RepairDate { get; set; }
 
         [DisplayName("备注")]

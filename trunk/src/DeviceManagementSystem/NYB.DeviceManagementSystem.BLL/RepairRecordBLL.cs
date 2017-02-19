@@ -16,11 +16,47 @@ namespace NYB.DeviceManagementSystem.BLL
 {
     public class RepairRecordBLL
     {
-        public CResult<List<WebRepairRecord>> GetRepairRecordList(out int totalCount, string projectID, string searchInfo, int pageIndex = 1, int pageSize = 10, string orderby = null, bool ascending = false)
+        public CResult<List<WebRepairRecord>> GetRepairRecordList(string deviceID, out int totalCount, string projectID, string searchInfo, int pageIndex = 1, int pageSize = 10, string orderby = null, bool ascending = false)
         {
             using (DeviceMgmtEntities context = new DeviceMgmtEntities())
             {
                 Expression<Func<RepairRecord, bool>> filter = t => t.ProjectID == projectID && t.IsValid == true;
+
+                if (string.IsNullOrWhiteSpace(searchInfo) == false)
+                {
+                    searchInfo = searchInfo.Trim().ToUpper();
+                    filter = filter.And(t => t.Note.ToUpper().Contains(searchInfo));
+                }
+                if (!string.IsNullOrWhiteSpace(deviceID))
+                {
+                    filter = filter.And(t => t.DeviceID == deviceID);
+                }
+
+                var temp = context.RepairRecord.Where(filter).Page(out totalCount, pageIndex, pageSize, orderby, ascending, true);
+
+                var result = temp.Select(t => new WebRepairRecord()
+                {
+                    ID = t.ID,
+                    Note = t.Note,
+                    DeviceID = t.DeviceID,
+                    DeviceName = t.Device.Name,
+                    Operator = t.Operator,
+                    RepairDate = t.RepairDate,
+                    CreateDate = t.CreateDate,
+                    CreateUserID = t.CreateUserID,
+                    CreateUserName = t.User.Name,
+                    ProjectID = t.ProjectID
+                }).ToList();
+
+                return new CResult<List<WebRepairRecord>>(result);
+            }
+        }
+
+        public CResult<List<WebRepairRecord>> GetRepairRecordListByDeviceID(string deviceID, out int totalCount, string searchInfo, int pageIndex = 1, int pageSize = 10, string orderby = null, bool ascending = false)
+        {
+            using (DeviceMgmtEntities context = new DeviceMgmtEntities())
+            {
+                Expression<Func<RepairRecord, bool>> filter = t => t.DeviceID == deviceID && t.IsValid == true;
 
                 if (string.IsNullOrWhiteSpace(searchInfo) == false)
                 {
