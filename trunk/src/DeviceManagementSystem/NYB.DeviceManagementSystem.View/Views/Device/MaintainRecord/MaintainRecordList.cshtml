@@ -3,6 +3,10 @@
 @using NYB.DeviceManagementSystem.ViewModel
 @model PagedList<NYB.DeviceManagementSystem.ViewModel.WebMaintainRecord>
 @Styles.Render("~/Content/User/User.css")
+@{
+    string returnUrl = ViewBag.ReturnUrl;
+}
+
 <script type="text/javascript" src="@Url.Content("~/Scripts/Common/Index.js")"></script>
 <div leftname="保养记录信息" actionname="设备管理">
     <form method="get" class="userSearchForm">
@@ -60,7 +64,17 @@
         </tbody>
     </table>
     @Html.Partial("DisplayTemplates/PagerView", Model)
+    @if (!string.IsNullOrWhiteSpace(returnUrl))
+    {
+        <div class="btn-opreate">
+            @Html.Partial("DisplayTemplates/PagerView", Model)
+            <p>
+                <a href="@(returnUrl)">此页面从设备定位过来，点击返回设备页面</a>
+            </p>
+        </div>
+    }
 </div>
+
 <script type="text/javascript">
     window.UrlResource = {
         UrlAddAction: '@Url.Action("CreateDevice", "Device", new { returnUrl = Request.Url.AbsoluteUri })'

@@ -114,8 +114,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             ViewBag.ReturnUrl = returnUrl;
             return View(webDevice);
         }
-
-
+        
         [HttpGet]
         public ActionResult AddRepairRecord(string deviceID, string deviceName, string returnUrl)
         {
@@ -142,6 +141,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
         public ActionResult RepairRecordList(string deviceID = "", string returnUrl = "", string searchInfo = "", int pageIndex = 1, int pageSize = 10, string orderBy = "", bool ascending = false)
         {
             RepairRecordBLL repairRecord = new RepairRecordBLL();
+            ViewBag.ReturnUrl = returnUrl;
             int totalCount = 0;
             var cResult = repairRecord.GetRepairRecordList(deviceID, out totalCount, this.GetCurrentProjectID(), searchInfo, pageIndex, pageSize, orderBy, ascending);
 
@@ -277,6 +277,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
         public ActionResult MaintainRecordList(string deviceID = "", string returnUrl = "", string searchInfo = "", int pageIndex = 1, int pageSize = 10, string orderBy = ""
             , bool ascending = false)
         {
+            ViewBag.ReturnUrl = returnUrl;
             MaintainRecordBLL maintainRecord = new MaintainRecordBLL();
             int totalCount = 0;
             var cResult = maintainRecord.GetMaintainRecordList(out totalCount, this.GetCurrentProjectID(), searchInfo, deviceID, pageIndex, pageSize, orderBy, ascending);
