@@ -13,13 +13,7 @@ namespace NYB.DeviceManagementSystem.Common.Helper
 {
     public class ExcelHelper
     {
-        public string ExportExcel(string fileName, List<string> columnNames)
-        {
-            return null;
-        }
-
-        //Datatable导出Excel
-        private static void GridToExcelByNPOI(DataTable dt, string strExcelFileName)
+        private static bool DataTableToExcel(DataTable dt, string strExcelFileName)
         {
             try
             {
@@ -92,9 +86,13 @@ namespace NYB.DeviceManagementSystem.Common.Helper
                 workbook.Write(file);
                 file.Flush();
                 file.Close();
+
+                return true;
             }
             catch (Exception ex)
             {
+                return false;
+
                 //ILog log = LogManager.GetLogger("Exception Log");
                 //log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
             }
@@ -105,16 +103,12 @@ namespace NYB.DeviceManagementSystem.Common.Helper
 
         }
 
-        public static DataTable XlSToDataTable(string strFilePath, string strTableName, int iSheetIndex)
+        public static DataTable ExcelToDataTable(string strFilePath, int iSheetIndex)
         {
 
             string strExtName = Path.GetExtension(strFilePath);
 
             DataTable dt = new DataTable();
-            if (!string.IsNullOrEmpty(strTableName))
-            {
-                dt.TableName = strTableName;
-            }
 
             if (strExtName.Equals(".xls") || strExtName.Equals(".xlsx"))
             {
