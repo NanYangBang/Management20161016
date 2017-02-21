@@ -90,7 +90,7 @@ namespace NYB.DeviceManagementSystem.BLL
                 foreach (var fileData in files)
                 {
                     var fileName = string.Format("{0}{1}", Guid.NewGuid().ToString(), Path.GetExtension(fileData.FileName));
-                    var filePath = SaveFile(fileData, SystemInfo.UploadFolder, fileName);
+                    var filePath = FileHelper.SaveFile(fileData, SystemInfo.UploadFolder, fileName);
                     if (string.IsNullOrEmpty(filePath) == false)
                     {
                         attachments.Add(new Attachment()
@@ -106,7 +106,7 @@ namespace NYB.DeviceManagementSystem.BLL
                     {
                         foreach (var item in attachments)
                         {
-                            DelFile(item.FilePath);
+                            FileHelper.DelFile(item.FilePath);
                         }
 
                         return new CResult<bool>(false, ErrorCode.SaveFileFailed);
@@ -126,7 +126,7 @@ namespace NYB.DeviceManagementSystem.BLL
                 {
                     foreach (var item in attachments)
                     {
-                        DelFile(item.FilePath);
+                        FileHelper.DelFile(item.FilePath);
                     }
 
                     return new CResult<bool>(false, ErrorCode.SaveDbChangesFailed);
@@ -182,7 +182,7 @@ namespace NYB.DeviceManagementSystem.BLL
             using (var context = new DeviceMgmtEntities())
             {
                 var fileName = string.Format("{0}{1}", Guid.NewGuid().ToString(), Path.GetExtension(file.FileName));
-                var filePath = SaveFile(file, SystemInfo.UploadFolder, fileName);
+                var filePath = FileHelper.SaveFile(file, SystemInfo.UploadFolder, fileName);
                 if (string.IsNullOrEmpty(filePath) == false)
                 {
                     var fileMode = new Attachment()
@@ -206,7 +206,7 @@ namespace NYB.DeviceManagementSystem.BLL
                 }
                 else
                 {
-                    DelFile(filePath);
+                    FileHelper.DelFile(filePath);
                 }
                 return new CResult<bool>(true);
             }
@@ -236,14 +236,14 @@ namespace NYB.DeviceManagementSystem.BLL
                 foreach (var item in needDelete)
                 {
                     context.Attachment.Remove(item);
-                    DelFile(item.FilePath);
+                    FileHelper.DelFile(item.FilePath);
                 }
 
                 var attachments = new List<Attachment>();
                 foreach (var fileData in files)
                 {
                     var fileName = string.Format("{0}{1}", Guid.NewGuid().ToString(), Path.GetExtension(fileData.FileName));
-                    var filePath = SaveFile(fileData, SystemInfo.UploadFolder, fileName);
+                    var filePath = FileHelper.SaveFile(fileData, SystemInfo.UploadFolder, fileName);
                     if (string.IsNullOrEmpty(filePath) == false)
                     {
                         attachments.Add(new Attachment()
@@ -259,7 +259,7 @@ namespace NYB.DeviceManagementSystem.BLL
                     {
                         foreach (var item in attachments)
                         {
-                            DelFile(item.FilePath);
+                            FileHelper.DelFile(item.FilePath);
                         }
 
                         return new CResult<bool>(false, ErrorCode.SaveFileFailed);
@@ -279,7 +279,7 @@ namespace NYB.DeviceManagementSystem.BLL
                 {
                     foreach (var item in attachments)
                     {
-                        DelFile(item.FilePath);
+                        FileHelper.DelFile(item.FilePath);
                     }
 
                     return new CResult<bool>(false, ErrorCode.SaveDbChangesFailed);
@@ -312,7 +312,7 @@ namespace NYB.DeviceManagementSystem.BLL
                     foreach (var item in needDelete)
                     {
                         context.Attachment.Remove(item);
-                        DelFile(item.FilePath);
+                        FileHelper.DelFile(item.FilePath);
                     }
                 }
                 if (context.SaveChanges() > 0)
@@ -389,61 +389,10 @@ namespace NYB.DeviceManagementSystem.BLL
                 var attachments = context.Attachment.Where(a => a.RelationID == entity.ID).ToList();
                 foreach (var attachment in attachments)
                 {
-                    DelFile(attachment.FilePath);
+                    FileHelper.DelFile(attachment.FilePath);
                 }
 
                 return context.Save();
-            }
-        }
-
-        public static string SaveFile(HttpPostedFileBase fileData, string relativePath, string fileName)
-        {
-            if (fileData == null || string.IsNullOrWhiteSpace(relativePath) || string.IsNullOrWhiteSpace(fileName))
-            {
-                return string.Empty;
-            }
-
-            var appPath = SystemInfo.BaseDirectory;
-            var absolutePath = Path.Combine(appPath, relativePath);
-            var absoluteFullPath = Path.Combine(absolutePath, fileName);
-            try
-            {
-                if (!Directory.Exists(absolutePath))
-                {
-                    Directory.CreateDirectory(absolutePath);
-                }
-                if (File.Exists(absoluteFullPath))
-                {
-                    File.Delete(absoluteFullPath);
-                }
-                fileData.SaveAs(absoluteFullPath);
-                return Path.Combine(relativePath, fileName);
-            }
-            catch (Exception ex)
-            {
-                //Logger.Write(ex);
-                return string.Empty;
-            }
-        }
-
-        public static void DelFile(string relativeFullPath)
-        {
-            if (string.IsNullOrWhiteSpace(relativeFullPath))
-            {
-                return;
-            }
-
-            try
-            {
-                var absoluteFullPath = Path.Combine(SystemInfo.BaseDirectory, relativeFullPath);
-                if (File.Exists(absoluteFullPath))
-                {
-                    File.Delete(absoluteFullPath);
-                }
-            }
-            catch (Exception ex)
-            {
-                //Logger.Write(ex);
             }
         }
     }

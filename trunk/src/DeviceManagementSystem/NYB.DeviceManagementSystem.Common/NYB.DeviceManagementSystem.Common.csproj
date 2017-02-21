@@ -60,6 +60,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -75,6 +76,7 @@
     <Compile Include="ErrorCode\ErrorCode.cs" />
     <Compile Include="ErrorCode\ErrorCodeExtension.cs" />
     <Compile Include="Helper\ExcelHelper.cs" />
+    <Compile Include="Helper\FileHelper.cs" />
     <Compile Include="Helper\GetEnum.cs" />
     <Compile Include="Logger\LogHelper.cs" />
     <Compile Include="Logger\LogMessage.cs" />

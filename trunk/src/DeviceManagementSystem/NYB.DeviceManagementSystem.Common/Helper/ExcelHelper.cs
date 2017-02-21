@@ -13,7 +13,7 @@ namespace NYB.DeviceManagementSystem.Common.Helper
 {
     public class ExcelHelper
     {
-        private static bool DataTableToExcel(DataTable dt, string strExcelFileName)
+        public static bool DataTableToExcel(DataTable dt, string strExcelFileName)
         {
             try
             {

@@ -11,6 +11,8 @@ using NYB.DeviceManagementSystem.DAL;
 using System.Linq.Expressions;
 using System.Data;
 using System.Web.Security;
+using System.Web;
+using System.IO;
 
 namespace NYB.DeviceManagementSystem.BLL
 {
@@ -193,5 +195,69 @@ namespace NYB.DeviceManagementSystem.BLL
             }
         }
 
+        public CResult<bool> ImportDeviceFromExcel(HttpPostedFileBase file, string projectID, string operatorUserID)
+        {
+            var fileName = string.Format("{0}{1}", Guid.NewGuid().ToString(), Path.GetExtension(file.FileName));
+            var filePath = FileHelper.SaveFile(file, SystemInfo.TempFileFolder, fileName);
+            if (string.IsNullOrEmpty(filePath))
+            {
+                return new CResult<bool>(false, ErrorCode.SystemError);
+            }
+
+            var dataTable = ExcelHelper.ExcelToDataTable(filePath, 0);
+
+            foreach (DataRow row in dataTable.Rows)
+            {
+
+            }
+
+
+            return null;
+        }
+
+        public CResult<string> ExportDeviceToExcel(string projectID, string searchInfo)
+        {
+            int totalCount;
+
+            var result = GetDeviceList(out totalCount, projectID, searchInfo, 1, -1);
+            if (result.Code > 0)
+            {
+                return new CResult<string>("", result.Code);
+            }
+
+            var list = result.Data;
+
+            var dataTable = new DataTable();
+            dataTable.Columns.Add("");
+            dataTable.Columns.Add("");
+            dataTable.Columns.Add("");
+
+            foreach (var item in list)
+            {
+                var row = dataTable.NewRow();
+                int i = 0;
+
+                row[i++] = "";
+                row[i++] = "";
+                row[i++] = "";
+
+                dataTable.Rows.Add(row);
+            }
+
+            var fileName = string.Format("{0}{1}", Guid.NewGuid().ToString(), ".xlsx");
+            var relativePath = Path.Combine(SystemInfo.TempFileFolder, fileName);
+            var absolutePath = Path.Combine(SystemInfo.BaseDirectory, relativePath);
+
+            var isSuccess = ExcelHelper.DataTableToExcel(dataTable, absolutePath);
+
+            if (isSuccess)
+            {
+                return new CResult<string>(relativePath);
+            }
+            else
+            {
+                return new CResult<string>("", ErrorCode.SystemError);
+            }
+        }
     }
 }
