@@ -75,7 +75,7 @@ namespace NYB.DeviceManagementSystem.BLL
                 project.IsValid = true;
 
                 var webUser = webProject.WebUser;
-                webUser.CreateUserID = webProject.WebUser.CreateUserID;
+                webUser.CreateUserID = webProject.CreateUserID;
                 MembershipCreateStatus status;
                 var currentUser = Membership.CreateUser(webUser.LoginName, webUser.Pwd, webUser.Email, null, null, true, null, out status);
 

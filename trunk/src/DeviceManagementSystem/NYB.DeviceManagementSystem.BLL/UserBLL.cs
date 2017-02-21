@@ -10,7 +10,6 @@ using NYB.DeviceManagementSystem.ViewModel;
 using NYB.DeviceManagementSystem.DAL;
 using System.Linq.Expressions;
 using System.Web.Security;
-using NYB.DeviceManagementSystem.Common;
 using System.Data;
 using System.Data.Entity.Validation;
 
@@ -127,7 +126,7 @@ namespace NYB.DeviceManagementSystem.BLL
 
             using (DeviceMgmtEntities context = new DeviceMgmtEntities())
             {
-                if (context.Project.Any(t => t.ID == webUser.ProjectID) == false)
+                if (context.Project.Any(t => t.ID == webUser.ProjectID && t.IsValid == true) == false)
                 {
                     return new CResult<bool>(false, ErrorCode.DataNoExist);
                 }
@@ -250,7 +249,7 @@ namespace NYB.DeviceManagementSystem.BLL
             var flag = user.ChangePassword(oldPassword, newPassword);
             using (var context = new DeviceMgmtEntities())
             {
-                var entity = context.User.FirstOrDefault(t => t.LoginName == loginName);
+                var entity = context.User.FirstOrDefault(t => t.LoginName == loginName && t.IsValid);
                 LoggerBLL.AddLog(context, operatorUserID, entity.ProjectID, OperatTypeEnum.修改, _businessModel, "用户名：" + loginName);
                 context.SaveChanges();
             }
