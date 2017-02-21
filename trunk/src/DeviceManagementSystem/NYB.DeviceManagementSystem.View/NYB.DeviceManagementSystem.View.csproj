@@ -185,6 +185,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AboutUsController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BasicInfoManagerController.cs" />
     <Compile Include="Controllers\DeviceController.cs" />
@@ -329,6 +330,7 @@
     <Content Include="Images\del.png" />
     <Content Include="Images\download16.png" />
     <Content Include="Images\edit.png" />
+    <Content Include="Images\index_20.jpg" />
     <Content Include="Images\lockmarintain.png" />
     <Content Include="Images\look.png" />
     <Content Include="Images\lookrepair.png" />
@@ -478,6 +480,7 @@
     <Content Include="Views\Device\MaintainRecord\PartialView\AddEditMaintainRecordView.cshtml" />
     <Content Include="Scripts\ssi-uploader\ssi-uploader.min.js.map" />
     <Content Include="Views\Device\MaintainRecord\MaintainRecordList.cshtml" />
+    <Content Include="Views\AboutUs\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NYB.DeviceManagementSystem.BLL\NYB.DeviceManagementSystem.BLL.csproj">
