@@ -73,6 +73,11 @@ namespace NYB.DeviceManagementSystem.BLL
                     return new CResult<bool>(false, ErrorCode.ProjectNotExist);
                 }
 
+                if (context.Device.Any(t => t.Name.ToUpper() == model.Name.ToUpper() && t.ProjectID == model.ProjectID && t.IsValid))
+                {
+                    return new CResult<bool>(false, ErrorCode.DeviceNameIsExist);
+                }
+
                 var entity = new Device();
                 entity.CreateDate = DateTime.Now;
                 entity.CreateUserID = model.CreateUserID;
@@ -106,6 +111,11 @@ namespace NYB.DeviceManagementSystem.BLL
                 if (entity == null)
                 {
                     return new CResult<bool>(false, ErrorCode.DataNoExist);
+                }
+
+                if (context.Device.Any(t => t.Name.ToUpper() == model.Name.ToUpper() && t.ProjectID == model.ProjectID && t.IsValid && t.ID != model.ID))
+                {
+                    return new CResult<bool>(false, ErrorCode.DeviceNameIsExist);
                 }
 
                 entity.Name = model.Name;
@@ -190,7 +200,7 @@ namespace NYB.DeviceManagementSystem.BLL
 
             using (var context = new DeviceMgmtEntities())
             {
-                var isExist = context.DeviceType.Any(t => t.Name == deviceName && t.ProjectID == projectID && t.IsValid);
+                var isExist = context.DeviceType.Any(t => t.Name.ToUpper() == deviceName.ToUpper() && t.ProjectID == projectID && t.IsValid);
                 return new CResult<bool>(isExist);
             }
         }
@@ -214,8 +224,6 @@ namespace NYB.DeviceManagementSystem.BLL
             {
                 return new CResult<bool>(false, ErrorCode.FileContainNoData);
             }
-
-            var currentTime = DateTime.Now;
 
             var webDeviceList = new List<WebDevice>();
             foreach (DataRow row in dataTable.Rows)
@@ -245,6 +253,7 @@ namespace NYB.DeviceManagementSystem.BLL
             var deviceTypeNameList = webDeviceList.Select(t => t.DeviceTypeName).ToList();
             var supplierNameList = webDeviceList.Select(t => t.SupplierName).ToList();
             var manufacturerNameList = webDeviceList.Select(t => t.ManufacturerName).ToList();
+            var deviceNameList = webDeviceList.Select(t => t.Name).ToList();
 
             using (var context = new DeviceMgmtEntities())
             {
@@ -258,9 +267,53 @@ namespace NYB.DeviceManagementSystem.BLL
                     return new CResult<bool>(false, ErrorCode.UserNotExist);
                 }
 
-            }
+                if (context.Device.Any(t => t.ProjectID == projectID && t.IsValid && deviceNameList.Contains(t.Name)))
+                {
+                    return new CResult<bool>(false, ErrorCode.DeviceTypeNameIsExist);
+                }
 
-            return null;
+                var deviceTypeList = context.DeviceType.Where(t => t.IsValid && deviceTypeNameList.Contains(t.Name)).Select(t => new { t.ID, t.Name }).ToList();
+                if (deviceTypeList.Count < deviceTypeNameList.Count)
+                {
+                    return new CResult<bool>(false, ErrorCode.DeviceTypeNotExist);
+                }
+
+                var supplierList = context.Supplier.Where(t => t.IsValid && supplierNameList.Contains(t.Name)).Select(t => new { t.ID, t.Name }).ToList();
+                if (supplierList.Count < supplierNameList.Count)
+                {
+                    return new CResult<bool>(false, ErrorCode.SupplierNotExist);
+                }
+
+                var manufacturerList = context.Manufacturer.Where(t => t.IsValid && manufacturerNameList.Contains(t.Name)).Select(t => new { t.ID, t.Name }).ToList();
+                if (manufacturerList.Count < manufacturerNameList.Count)
+                {
+                    return new CResult<bool>(false, ErrorCode.ManufacturerNotExist);
+                }
+
+                var currentTime = DateTime.Now;
+                foreach (var webDevice in webDeviceList)
+                {
+                    var device = new Device()
+                    {
+                        CreateDate = currentTime,
+                        CreateUserID = operatorUserID,
+                        DeviceTypeID = deviceTypeList.FirstOrDefault(t => t.Name == webDevice.DeviceTypeName).ID,
+                        ID = Guid.NewGuid().ToString(),
+                        IsValid = true,
+                        MaintainDate = webDevice.MaintainDate,
+                        ManufacturerID = manufacturerList.FirstOrDefault(t => t.Name == webDevice.ManufacturerName).ID,
+                        Name = webDevice.Name,
+                        Note = webDevice.Note,
+                        ProductDate = webDevice.ProductDate,
+                        ProjectID = projectID,
+                        SupplierID = supplierList.FirstOrDefault(t => t.Name == webDevice.SupplierName).ID,
+                    };
+
+                    context.Device.Add(device);
+                }
+
+                return context.Save();
+            }
         }
 
         public CResult<string> ExportDeviceToExcel(string projectID, string searchInfo)

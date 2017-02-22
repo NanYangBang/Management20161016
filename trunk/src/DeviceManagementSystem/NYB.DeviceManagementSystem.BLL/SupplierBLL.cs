@@ -81,6 +81,11 @@ namespace NYB.DeviceManagementSystem.BLL
                     return new CResult<bool>(false, ErrorCode.ProjectNotExist);
                 }
 
+                if (context.Supplier.Any(t => t.Name.ToUpper() == model.Name.ToUpper() && t.ProjectID == model.ProjectID && t.IsValid))
+                {
+                    return new CResult<bool>(false, ErrorCode.SupplierNameIsExist);
+                }
+
                 var entity = new Supplier();
                 entity.CreateDate = DateTime.Now;
                 entity.CreateUserID = model.CreateUserID;
@@ -112,7 +117,12 @@ namespace NYB.DeviceManagementSystem.BLL
                 var entity = context.Supplier.FirstOrDefault(t => t.ID == model.ID && t.IsValid);
                 if (entity == null)
                 {
-                    return new CResult<bool>(false, ErrorCode.DataNoExist);
+                    return new CResult<bool>(false, ErrorCode.SupplierNotExist);
+                }
+
+                if (context.Supplier.Any(t => t.Name.ToUpper() == model.Name.ToUpper() && t.ProjectID == model.ProjectID && t.IsValid && t.ID == model.ID))
+                {
+                    return new CResult<bool>(false, ErrorCode.SupplierNameIsExist);
                 }
 
                 entity.Name = model.Name;
@@ -139,7 +149,7 @@ namespace NYB.DeviceManagementSystem.BLL
                 var entity = context.Supplier.FirstOrDefault(t => t.ID == SupplierID && t.IsValid);
                 if (entity == null)
                 {
-                    return new CResult<WebSupplier>(null, ErrorCode.DataNoExist);
+                    return new CResult<WebSupplier>(null, ErrorCode.SupplierNotExist);
                 }
 
                 var model = new WebSupplier()
@@ -172,10 +182,10 @@ namespace NYB.DeviceManagementSystem.BLL
                 var entity = context.Supplier.FirstOrDefault(t => t.ID == SupplierID && t.IsValid);
                 if (entity == null)
                 {
-                    return new CResult<bool>(false, ErrorCode.DataNoExist);
+                    return new CResult<bool>(false, ErrorCode.SupplierNotExist);
                 }
 
-                if (context.Device.Any(t => t.SupplierID == entity.ID))
+                if (context.Device.Any(t => t.SupplierID == entity.ID && t.IsValid))
                 {
                     return new CResult<bool>(false, ErrorCode.SupplierConatinDevice);
                 }

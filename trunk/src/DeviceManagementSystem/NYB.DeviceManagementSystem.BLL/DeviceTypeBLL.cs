@@ -77,6 +77,11 @@ namespace NYB.DeviceManagementSystem.BLL
                     return new CResult<bool>(false, ErrorCode.ProjectNotExist);
                 }
 
+                if (context.DeviceType.Any(t => t.Name.ToUpper() == model.Name.ToUpper() && t.ProjectID == model.ProjectID && t.IsValid))
+                {
+                    return new CResult<bool>(false, ErrorCode.DeviceTypeNameIsExist);
+                }
+
                 var entity = new DeviceType();
                 entity.CreateDate = DateTime.Now;
                 entity.CreateUserID = model.CreateUserID;
@@ -104,7 +109,12 @@ namespace NYB.DeviceManagementSystem.BLL
                 var entity = context.DeviceType.FirstOrDefault(t => t.ID == model.ID && t.IsValid);
                 if (entity == null)
                 {
-                    return new CResult<bool>(false, ErrorCode.DataNoExist);
+                    return new CResult<bool>(false, ErrorCode.DeviceTypeNotExist);
+                }
+
+                if (context.DeviceType.Any(t => t.Name.ToUpper() == model.Name.ToUpper() && t.ProjectID == model.ProjectID && t.IsValid && t.ID == model.ID))
+                {
+                    return new CResult<bool>(false, ErrorCode.DeviceTypeNameIsExist);
                 }
 
                 entity.Name = model.Name;
@@ -127,7 +137,7 @@ namespace NYB.DeviceManagementSystem.BLL
                 var entity = context.DeviceType.FirstOrDefault(t => t.ID == deviceTypeID && t.IsValid);
                 if (entity == null)
                 {
-                    return new CResult<WebDeviceType>(null, ErrorCode.DataNoExist);
+                    return new CResult<WebDeviceType>(null, ErrorCode.DeviceTypeNotExist);
                 }
 
                 var model = new WebDeviceType()
@@ -154,10 +164,10 @@ namespace NYB.DeviceManagementSystem.BLL
                 var entity = context.DeviceType.FirstOrDefault(t => t.ID == deviceTypeID && t.IsValid);
                 if (entity == null)
                 {
-                    return new CResult<bool>(false, ErrorCode.DataNoExist);
+                    return new CResult<bool>(false, ErrorCode.DeviceTypeNotExist);
                 }
 
-                if (context.Device.Any(t => t.DeviceTypeID == entity.ID))
+                if (context.Device.Any(t => t.DeviceTypeID == entity.ID && t.IsValid))
                 {
                     return new CResult<bool>(false, ErrorCode.DeviceTypeConatinDevice);
                 }

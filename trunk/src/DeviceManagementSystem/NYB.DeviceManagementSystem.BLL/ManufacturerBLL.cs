@@ -81,6 +81,11 @@ namespace NYB.DeviceManagementSystem.BLL
                     return new CResult<bool>(false, ErrorCode.ProjectNotExist);
                 }
 
+                if (context.Manufacturer.Any(t => t.Name.ToUpper() == model.Name.ToUpper() && t.ProjectID == model.ProjectID && t.IsValid))
+                {
+                    return new CResult<bool>(false, ErrorCode.ManufacturerNameIsExist);
+                }
+
                 var entity = new Manufacturer();
                 entity.CreateDate = DateTime.Now;
                 entity.CreateUserID = model.CreateUserID;
@@ -112,7 +117,12 @@ namespace NYB.DeviceManagementSystem.BLL
                 var entity = context.Manufacturer.FirstOrDefault(t => t.ID == model.ID && t.IsValid);
                 if (entity == null)
                 {
-                    return new CResult<bool>(false, ErrorCode.DataNoExist);
+                    return new CResult<bool>(false, ErrorCode.ManufacturerNotExist);
+                }
+
+                if (context.Manufacturer.Any(t => t.Name.ToUpper() == model.Name.ToUpper() && t.ProjectID == model.ProjectID && t.IsValid && t.ID != model.ID))
+                {
+                    return new CResult<bool>(false, ErrorCode.ManufacturerNameIsExist);
                 }
 
                 entity.Name = model.Name;
@@ -139,7 +149,7 @@ namespace NYB.DeviceManagementSystem.BLL
                 var entity = context.Manufacturer.FirstOrDefault(t => t.ID == manufacturerID && t.IsValid);
                 if (entity == null)
                 {
-                    return new CResult<WebManufacturer>(null, ErrorCode.DataNoExist);
+                    return new CResult<WebManufacturer>(null, ErrorCode.ManufacturerNotExist);
                 }
 
                 var model = new WebManufacturer()
@@ -172,10 +182,10 @@ namespace NYB.DeviceManagementSystem.BLL
                 var entity = context.Manufacturer.FirstOrDefault(t => t.ID == manufacturerID && t.IsValid);
                 if (entity == null)
                 {
-                    return new CResult<bool>(false, ErrorCode.DataNoExist);
+                    return new CResult<bool>(false, ErrorCode.ManufacturerNotExist);
                 }
 
-                if (context.Device.Any(t => t.ManufacturerID == entity.ID))
+                if (context.Device.Any(t => t.ManufacturerID == entity.ID && t.IsValid))
                 {
                     return new CResult<bool>(false, ErrorCode.ManufactureConatinDevice);
                 }
