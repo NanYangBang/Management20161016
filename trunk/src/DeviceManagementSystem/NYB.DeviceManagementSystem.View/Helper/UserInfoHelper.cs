@@ -10,12 +10,24 @@ namespace System.Web.Mvc
     {
         public static string GetCurrentProjectID(this Controller controller)
         {
-            return controller.Request.Cookies["CurrentProjectIDStr"].Value;
+            var projectID = controller.Request.Cookies["CurrentProjectIDStr"].Value;
+            if (string.IsNullOrEmpty(projectID))
+            {
+                throw new Exception("CurrentProjectIDStr is empty , maybe cookie id disable ");
+            }
+
+            return projectID;
         }
 
         public static string GetCurrentUserID(this Controller controller)
         {
-            return controller.Request.Cookies["CurrentUserID"].Value;
+            var userID = controller.Request.Cookies["CurrentUserID"].Value;
+            if (string.IsNullOrEmpty(userID))
+            {
+                throw new Exception("CurrentUserID is empty , maybe cookie id disable ");
+            }
+
+            return userID;
         }
     }
 }

@@ -10,7 +10,13 @@ namespace NYB.DeviceManagementSystem.Common.Helper
 {
     public class FileHelper
     {
-
+        /// <summary>
+        /// 返回相对路径
+        /// </summary>
+        /// <param name="fileData"></param>
+        /// <param name="relativePath"></param>
+        /// <param name="fileName"></param>
+        /// <returns>相对路径</returns>
         public static string SaveFile(HttpPostedFileBase fileData, string relativePath, string fileName)
         {
             if (fileData == null || string.IsNullOrWhiteSpace(relativePath) || string.IsNullOrWhiteSpace(fileName))

@@ -1,6 +1,7 @@
 ﻿using NPOI.HSSF.UserModel;
 using NPOI.SS.Formula.Eval;
 using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -13,10 +14,11 @@ namespace NYB.DeviceManagementSystem.Common.Helper
 {
     public class ExcelHelper
     {
-        public static bool DataTableToExcel(DataTable dt, string strExcelFileName)
+        public static bool DataTableToExcel(DataTable dt, string relativeFileName)
         {
             try
             {
+
                 HSSFWorkbook workbook = new HSSFWorkbook();
                 ISheet sheet = workbook.CreateSheet("Sheet1");
 
@@ -82,7 +84,14 @@ namespace NYB.DeviceManagementSystem.Common.Helper
                 }
 
                 //写Excel
-                FileStream file = new FileStream(strExcelFileName, FileMode.OpenOrCreate);
+                var absolutePath = Path.Combine(SystemInfo.BaseDirectory, relativeFileName);
+                var dir = Path.GetDirectoryName(absolutePath);
+                if (!Directory.Exists(dir))
+                {
+                    Directory.CreateDirectory(dir);
+                }
+
+                FileStream file = new FileStream(absolutePath, FileMode.OpenOrCreate);
                 workbook.Write(file);
                 file.Flush();
                 file.Close();
@@ -103,16 +112,22 @@ namespace NYB.DeviceManagementSystem.Common.Helper
 
         }
 
-        public static DataTable ExcelToDataTable(string strFilePath, int iSheetIndex)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="relativePath">相对路径</param>
+        /// <param name="iSheetIndex"></param>
+        /// <returns></returns>
+        public static DataTable ExcelToDataTable(string relativePath, int iSheetIndex)
         {
-
-            string strExtName = Path.GetExtension(strFilePath);
+            string strExtName = Path.GetExtension(relativePath);
+            var absolutePath = Path.Combine(SystemInfo.BaseDirectory, relativePath);
 
             DataTable dt = new DataTable();
 
             if (strExtName.Equals(".xls") || strExtName.Equals(".xlsx"))
             {
-                using (FileStream file = new FileStream(strFilePath, FileMode.Open, FileAccess.Read))
+                using (FileStream file = new FileStream(absolutePath, FileMode.Open, FileAccess.Read))
                 {
                     HSSFWorkbook workbook = new HSSFWorkbook(file);
                     ISheet sheet = workbook.GetSheetAt(iSheetIndex);

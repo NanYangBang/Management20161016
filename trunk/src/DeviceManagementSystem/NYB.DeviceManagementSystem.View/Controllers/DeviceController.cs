@@ -28,6 +28,8 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             }
             var pageList = new PagedList<WebDevice>(device, pageIndex, pageSize);
 
+            var fileUrl = deviceBLL.ExportDeviceToExcel(this.GetCurrentProjectID(), searchInfo);
+
             return View(pageList);
         }
 
@@ -114,7 +116,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             ViewBag.ReturnUrl = returnUrl;
             return View(webDevice);
         }
-        
+
         [HttpGet]
         public ActionResult AddRepairRecord(string deviceID, string deviceName, string returnUrl)
         {

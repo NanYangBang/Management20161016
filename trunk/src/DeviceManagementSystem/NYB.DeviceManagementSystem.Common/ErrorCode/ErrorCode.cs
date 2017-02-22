@@ -100,5 +100,14 @@ namespace NYB.DeviceManagementSystem.Common
 
         [DescriptionAttribute("生产厂商下存在关联设备，不可删除")]
         DeviceNotExist = 20107,
+
+        [DescriptionAttribute("文件中没有数据")]
+        FileContainNoData = 20108,
+
+        /// <summary>
+        /// 用户不存在
+        /// </summary>
+        [DescriptionAttribute("用户不存在")]
+        UserNotExist = 20109,
     }
 }
