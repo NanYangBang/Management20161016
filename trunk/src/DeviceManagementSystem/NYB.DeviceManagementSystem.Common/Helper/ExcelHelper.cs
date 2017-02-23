@@ -229,6 +229,15 @@ namespace NYB.DeviceManagementSystem.Common.Helper
                 }
             }
 
+            try
+            {
+                File.Delete(absolutePath);
+            }
+            catch (Exception)
+            {
+                Logger.LogHelper.Error("删除文件失败");
+            }
+
             return dt;
         }
     }

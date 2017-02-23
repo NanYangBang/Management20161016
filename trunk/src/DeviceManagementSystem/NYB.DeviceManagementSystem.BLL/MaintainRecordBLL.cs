@@ -181,8 +181,9 @@ namespace NYB.DeviceManagementSystem.BLL
         {
             using (var context = new DeviceMgmtEntities())
             {
+                var date = DateTime.Now.ToString("yyyy-MM-dd");
                 var fileName = string.Format("{0}{1}", Guid.NewGuid().ToString(), Path.GetExtension(file.FileName));
-                var filePath = FileHelper.SaveFile(file, SystemInfo.UploadFolder, fileName);
+                var filePath = FileHelper.SaveFile(file, Path.Combine(SystemInfo.UploadFolder, date), fileName);
                 if (string.IsNullOrEmpty(filePath) == false)
                 {
                     var fileMode = new Attachment()
