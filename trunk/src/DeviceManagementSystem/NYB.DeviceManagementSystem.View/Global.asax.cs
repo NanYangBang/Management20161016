@@ -77,6 +77,11 @@ namespace NYB.DeviceManagementSystem.View
 
         private static void DelTempFile()
         {
+            for (int i = 0; i < 1000000; i++)
+            {
+                NYB.DeviceManagementSystem.Common.Logger.LogHelper.Info(i.ToString());
+            }
+
             NYB.DeviceManagementSystem.Common.Logger.LogHelper.Info("删除temp文件夹");
 
             var needDeletePath = Path.Combine(SystemInfo.BaseDirectory, SystemInfo.TempFileFolder);
