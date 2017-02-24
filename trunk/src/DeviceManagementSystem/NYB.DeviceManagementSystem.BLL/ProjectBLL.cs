@@ -11,6 +11,7 @@ using NYB.DeviceManagementSystem.DAL;
 using System.Linq.Expressions;
 using System.Data;
 using System.Web.Security;
+using System.Reflection;
 
 namespace NYB.DeviceManagementSystem.BLL
 {
@@ -18,6 +19,8 @@ namespace NYB.DeviceManagementSystem.BLL
     {
         public CResult<List<WebProject>> GetProjectList(out int totalCount, string searchInfo, int pageIndex = 1, int pageSize = 10, string orderby = null, bool ascending = false)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+
             using (DeviceMgmtEntities context = new DeviceMgmtEntities())
             {
                 Expression<Func<Project, bool>> filter = t => t.IsValid == true;
@@ -58,12 +61,17 @@ namespace NYB.DeviceManagementSystem.BLL
                     project.WebUser = user;
                 }
 
+                LogHelper.Info("result", result);
+
                 return new CResult<List<WebProject>>(result);
             }
         }
 
         public CResult<bool> InsertProject(WebProject webProject)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("webProject", webProject);
+
             using (var context = new DeviceMgmtEntities())
             {
                 var project = new Project();
@@ -123,6 +131,9 @@ namespace NYB.DeviceManagementSystem.BLL
         }
         public CResult<bool> UpdateProjectInfo(WebProject webProject)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("webProject", webProject);
+
             using (var context = new DeviceMgmtEntities())
             {
                 var project = context.Project.FirstOrDefault(t => t.ID == webProject.ID);
@@ -154,6 +165,9 @@ namespace NYB.DeviceManagementSystem.BLL
 
         public CResult<WebProject> GetProjectInfoByID(string projectID)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("projectID", projectID);
+
             using (var context = new DeviceMgmtEntities())
             {
                 var project = context.Project.FirstOrDefault(t => t.ID == projectID);
@@ -184,12 +198,17 @@ namespace NYB.DeviceManagementSystem.BLL
 
                 webProject.WebUser = webUser;
 
+                LogHelper.Info("result", webProject);
+
                 return new CResult<WebProject>(webProject);
             }
         }
 
         public CResult<bool> DeleteProject(string projectID)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("projectID", projectID);
+
             using (var context = new DeviceMgmtEntities())
             {
                 var project = context.Project.FirstOrDefault(t => t.ID == projectID);

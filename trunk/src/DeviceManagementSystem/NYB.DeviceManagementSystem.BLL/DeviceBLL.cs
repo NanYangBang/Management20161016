@@ -13,6 +13,7 @@ using System.Data;
 using System.Web.Security;
 using System.Web;
 using System.IO;
+using System.Reflection;
 
 namespace NYB.DeviceManagementSystem.BLL
 {
@@ -55,12 +56,17 @@ namespace NYB.DeviceManagementSystem.BLL
                     SupplierName = string.IsNullOrEmpty(t.SupplierID) == false ? "" : t.Supplier.Name
                 }).ToList();
 
+                LogHelper.Info("result", result);
+
                 return new CResult<List<WebDevice>>(result);
             }
         }
 
         public CResult<bool> InsertDevice(WebDevice model)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("model", model);
+
             if (string.IsNullOrEmpty(model.ProjectID))
             {
                 return new CResult<bool>(false, ErrorCode.ParameterError);
@@ -100,6 +106,9 @@ namespace NYB.DeviceManagementSystem.BLL
 
         public CResult<bool> UpdateDevice(WebDevice model)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("model", model);
+
             if (string.IsNullOrEmpty(model.ID))
             {
                 return new CResult<bool>(false, ErrorCode.ParameterError);
@@ -134,6 +143,9 @@ namespace NYB.DeviceManagementSystem.BLL
 
         public CResult<WebDevice> GetDeviceByID(string DeviceID)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("DeviceID", DeviceID);
+
             if (string.IsNullOrEmpty(DeviceID))
             {
                 return new CResult<WebDevice>(null, ErrorCode.ParameterError);
@@ -167,12 +179,17 @@ namespace NYB.DeviceManagementSystem.BLL
                     SupplierName = string.IsNullOrEmpty(entity.SupplierID) == false ? "" : entity.Supplier.Name
                 };
 
+                LogHelper.Info("result", model);
+
                 return new CResult<WebDevice>(model);
             }
         }
 
         public CResult<bool> DeleteDevice(string DeviceID)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("DeviceID", DeviceID);
+
             if (string.IsNullOrEmpty(DeviceID))
             {
                 return new CResult<bool>(false, ErrorCode.ParameterError);
@@ -207,6 +224,8 @@ namespace NYB.DeviceManagementSystem.BLL
 
         public CResult<bool> ImportDeviceFromExcel(HttpPostedFileBase file, string projectID, string operatorUserID)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+
             if (string.IsNullOrEmpty(projectID) || string.IsNullOrEmpty(operatorUserID))
             {
                 return new CResult<bool>(false, ErrorCode.ParameterError);
@@ -312,12 +331,16 @@ namespace NYB.DeviceManagementSystem.BLL
                     context.Device.Add(device);
                 }
 
+                LogHelper.Info("importList",webDeviceList);
+
                 return context.Save();
             }
         }
 
         public CResult<string> ExportDeviceToExcel(string projectID, string searchInfo)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+
             int totalCount;
 
             var result = GetDeviceList(out totalCount, projectID, searchInfo, 1, -1);

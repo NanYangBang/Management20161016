@@ -12,6 +12,7 @@ using System.Linq.Expressions;
 using System.Web.Security;
 using System.Data;
 using System.Data.Entity.Validation;
+using System.Reflection;
 
 namespace NYB.DeviceManagementSystem.BLL
 {
@@ -20,6 +21,8 @@ namespace NYB.DeviceManagementSystem.BLL
         private BusinessModelEnum _businessModel = BusinessModelEnum.用户;
         public CResult<List<WebUser>> GetUserList(out int totalCount, string projectID, string userID, string searchInfo, int pageIndex = 1, int pageSize = 10, string orderby = null, bool ascending = false)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+
             totalCount = 0;
             if (string.IsNullOrWhiteSpace(projectID))
             {
@@ -61,6 +64,9 @@ namespace NYB.DeviceManagementSystem.BLL
 
         public CResult<WebUser> GetUserInfoByUserID(string userID)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("userID", userID);
+
             using (var context = new DeviceMgmtEntities())
             {
                 var entity = context.User.FirstOrDefault(t => t.IsValid && t.UserID == userID);
@@ -76,6 +82,8 @@ namespace NYB.DeviceManagementSystem.BLL
                         UserName = entity.Name,
                     };
 
+                    LogHelper.Info("result", webUser);
+
                     return new CResult<WebUser>(webUser);
                 }
                 else
@@ -87,6 +95,9 @@ namespace NYB.DeviceManagementSystem.BLL
 
         public CResult<WebUser> GetUserInfoByUserName(string userName)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("userName", userName);
+
             if (string.IsNullOrWhiteSpace(userName))
             {
                 return new CResult<WebUser>(null, ErrorCode.ParameterError);
@@ -108,6 +119,8 @@ namespace NYB.DeviceManagementSystem.BLL
                         UserName = entity.Name,
                     };
 
+                    LogHelper.Info("result", webUser);
+
                     return new CResult<WebUser>(webUser);
                 }
                 else
@@ -119,6 +132,10 @@ namespace NYB.DeviceManagementSystem.BLL
 
         public CResult<bool> AddUser(WebUser webUser, bool isSuperAdminCreate)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("webUser", webUser);
+            LogHelper.Info("isSuperAdminCreate", isSuperAdminCreate);
+
             if (Roles.RoleExists(webUser.Role) == false)
             {
                 return new CResult<bool>(false, ErrorCode.AddUserFault);
@@ -181,6 +198,9 @@ namespace NYB.DeviceManagementSystem.BLL
         }
         public CResult<bool> DeleteUserByID(string userID, string operatorUserID)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("userID", userID);
+
             if (string.IsNullOrWhiteSpace(userID) || string.IsNullOrWhiteSpace(operatorUserID))
             {
                 return new Common.CResult<bool>(false, ErrorCode.ParameterError);
@@ -212,6 +232,9 @@ namespace NYB.DeviceManagementSystem.BLL
 
         public CResult<bool> UpdateUser(WebUser webUser)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("webUser", webUser);
+
             using (var context = new DeviceMgmtEntities())
             {
                 var entity = context.User.FirstOrDefault(t => t.UserID == webUser.ID);
@@ -235,6 +258,8 @@ namespace NYB.DeviceManagementSystem.BLL
 
         public CResult<bool> ChangePassword(string oldPassword, string newPassword, string loginName, string operatorUserID)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+
             if (string.IsNullOrWhiteSpace(newPassword) || string.IsNullOrWhiteSpace(loginName))
             {
                 return new CResult<bool>(false, ErrorCode.ParameterError);
@@ -266,6 +291,8 @@ namespace NYB.DeviceManagementSystem.BLL
 
         public CResult<WebUser> VerifyPassword(string userName, string password)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+
             var isExist = Membership.ValidateUser(userName, password);
             if (isExist == false)
             {
@@ -311,6 +338,8 @@ namespace NYB.DeviceManagementSystem.BLL
 
                     webUser.ProjectID = project.ID;
                 }
+
+                LogHelper.Info("result", webUser);
 
                 return new CResult<WebUser>(webUser);
             }

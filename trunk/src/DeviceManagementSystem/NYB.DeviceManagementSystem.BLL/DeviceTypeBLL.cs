@@ -11,6 +11,7 @@ using NYB.DeviceManagementSystem.DAL;
 using System.Linq.Expressions;
 using System.Data;
 using System.Web.Security;
+using System.Reflection;
 
 namespace NYB.DeviceManagementSystem.BLL
 {
@@ -18,6 +19,8 @@ namespace NYB.DeviceManagementSystem.BLL
     {
         public CResult<List<WebDeviceType>> GetDeviceTypeList(out int totalCount, string projectID, string searchInfo, int pageIndex = 1, int pageSize = 10, string orderby = null, bool ascending = false)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+
             using (DeviceMgmtEntities context = new DeviceMgmtEntities())
             {
                 Expression<Func<DeviceType, bool>> filter = t => t.ProjectID == projectID && t.IsValid == true;
@@ -41,12 +44,17 @@ namespace NYB.DeviceManagementSystem.BLL
                     ProjectID = t.ProjectID
                 }).ToList();
 
+                LogHelper.Info("result", result);
+
                 return new CResult<List<WebDeviceType>>(result);
             }
         }
 
         public CResult<Dictionary<string, string>> GetDeviceTypeDir(string projectID)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("projectID", projectID);
+
             using (DeviceMgmtEntities context = new DeviceMgmtEntities())
             {
                 Expression<Func<DeviceType, bool>> filter = t => t.ProjectID == projectID && t.IsValid == true;
@@ -59,12 +67,17 @@ namespace NYB.DeviceManagementSystem.BLL
                     Name = t.Name,
                 }).ToList().OrderBy(t => t.Name).ToDictionary(t => t.ID, r => r.Name);
 
+                LogHelper.Info("result", result);
+
                 return new CResult<Dictionary<string, string>>(result);
             }
         }
 
         public CResult<bool> InsertDeviceType(WebDeviceType model)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("model", model);
+
             if (string.IsNullOrEmpty(model.ProjectID))
             {
                 return new CResult<bool>(false, ErrorCode.ParameterError);
@@ -99,6 +112,9 @@ namespace NYB.DeviceManagementSystem.BLL
 
         public CResult<bool> UpdateDeviceType(WebDeviceType model)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("model", model);
+
             if (string.IsNullOrEmpty(model.ID))
             {
                 return new CResult<bool>(false, ErrorCode.ParameterError);
@@ -127,6 +143,9 @@ namespace NYB.DeviceManagementSystem.BLL
 
         public CResult<WebDeviceType> GetDeviceTypeByID(string deviceTypeID)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("deviceTypeID", deviceTypeID);
+
             if (string.IsNullOrEmpty(deviceTypeID))
             {
                 return new CResult<WebDeviceType>(null, ErrorCode.ParameterError);
@@ -149,12 +168,17 @@ namespace NYB.DeviceManagementSystem.BLL
                     Note = entity.Note
                 };
 
+                LogHelper.Info("result", model);
+
                 return new CResult<WebDeviceType>(model);
             }
         }
 
         public CResult<bool> DeleteDeviceType(string deviceTypeID)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("deviceTypeID", deviceTypeID);
+
             if (string.IsNullOrEmpty(deviceTypeID))
             {
                 return new CResult<bool>(false, ErrorCode.ParameterError);
