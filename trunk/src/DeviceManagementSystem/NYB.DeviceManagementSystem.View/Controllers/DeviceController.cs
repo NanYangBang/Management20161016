@@ -28,8 +28,6 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             }
             var pageList = new PagedList<WebDevice>(device, pageIndex, pageSize);
 
-            var fileUrl = deviceBLL.ExportDeviceToExcel(this.GetCurrentProjectID(), searchInfo);
-
             return View(pageList);
         }
 
