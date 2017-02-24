@@ -77,6 +77,8 @@ namespace NYB.DeviceManagementSystem.View
 
         private static void DelTempFile()
         {
+            //var bll = new NYB.DeviceManagementSystem.BLL.MaintainRecordBLL();
+            //bll.DeleteMaintainRecord("fdsaf");
             //var test = new NYB.DeviceManagementSystem.ViewModel.WebDevice();
             //var list = new List<NYB.DeviceManagementSystem.ViewModel.WebDevice>();
             //list.Add(test);

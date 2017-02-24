@@ -13,6 +13,7 @@ using System.Data;
 using System.Web.Security;
 using System.Web;
 using System.IO;
+using System.Reflection;
 
 namespace NYB.DeviceManagementSystem.BLL
 {
@@ -20,20 +21,22 @@ namespace NYB.DeviceManagementSystem.BLL
     {
         public CResult<List<WebMaintainRecord>> GetMaintainRecordList(out int totalCount, string projectID, string searchInfo, string deviceID = "", int pageIndex = 1, int pageSize = 10, string orderby = null, bool ascending = false)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+
+            Expression<Func<MaintainRecord, bool>> filter = t => t.ProjectID == projectID && t.IsValid == true;
+
+            if (string.IsNullOrWhiteSpace(searchInfo) == false)
+            {
+                searchInfo = searchInfo.Trim().ToUpper();
+                filter = filter.And(t => t.Note.ToUpper().Contains(searchInfo));
+            }
+            if (!string.IsNullOrWhiteSpace(deviceID))
+            {
+                filter = filter.And(t => t.DeviceID == deviceID);
+            }
+
             using (DeviceMgmtEntities context = new DeviceMgmtEntities())
             {
-                Expression<Func<MaintainRecord, bool>> filter = t => t.ProjectID == projectID && t.IsValid == true;
-
-                if (string.IsNullOrWhiteSpace(searchInfo) == false)
-                {
-                    searchInfo = searchInfo.Trim().ToUpper();
-                    filter = filter.And(t => t.Note.ToUpper().Contains(searchInfo));
-                }
-                if (!string.IsNullOrWhiteSpace(deviceID))
-                {
-                    filter = filter.And(t => t.DeviceID == deviceID);
-                }
-
                 var temp = context.MaintainRecord.Where(filter).Page(out totalCount, pageIndex, pageSize, orderby, ascending, true);
 
                 var result = temp.Select(entity => new WebMaintainRecord()
@@ -50,12 +53,17 @@ namespace NYB.DeviceManagementSystem.BLL
                     ProjectID = entity.ProjectID,
                 }).ToList();
 
+                LogHelper.Info("result", result);
+
                 return new CResult<List<WebMaintainRecord>>(result);
             }
         }
 
         public CResult<bool> InsertMaintainRecord(WebMaintainRecord model, List<HttpPostedFileBase> files)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("model", model);
+
             if (string.IsNullOrEmpty(model.ProjectID))
             {
                 return new CResult<bool>(false, ErrorCode.ParameterError);
@@ -136,6 +144,9 @@ namespace NYB.DeviceManagementSystem.BLL
 
         public CResult<string> InsertMaintainRecord(WebMaintainRecord model)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("model", model);
+
             if (string.IsNullOrEmpty(model.ProjectID))
             {
                 return new CResult<string>("", ErrorCode.ParameterError);
@@ -179,6 +190,9 @@ namespace NYB.DeviceManagementSystem.BLL
 
         public CResult<bool> AddmaintainRecordFile(HttpPostedFileBase file, string maintainRecordID)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("maintainRecordID", maintainRecordID);
+
             using (var context = new DeviceMgmtEntities())
             {
                 var date = DateTime.Now.ToString("yyyy-MM-dd");
@@ -215,6 +229,10 @@ namespace NYB.DeviceManagementSystem.BLL
 
         public CResult<bool> UpdateMaintainRecord(WebMaintainRecord model, List<HttpPostedFileBase> files, List<string> deleteFiles)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("model", model);
+            LogHelper.Info("deleteFiles", deleteFiles);
+
             if (string.IsNullOrEmpty(model.ID))
             {
                 return new CResult<bool>(false, ErrorCode.ParameterError);
@@ -290,6 +308,10 @@ namespace NYB.DeviceManagementSystem.BLL
 
         public CResult<string> UpdateMaintainRecord(WebMaintainRecord model, List<string> deleteFiles)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("model", model);
+            LogHelper.Info("deleteFiles", deleteFiles);
+
             if (string.IsNullOrEmpty(model.ID))
             {
                 return new CResult<string>("", ErrorCode.ParameterError);
@@ -329,6 +351,9 @@ namespace NYB.DeviceManagementSystem.BLL
 
         public CResult<WebMaintainRecord> GetMaintainRecordByID(string maintainRecordID)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("maintainRecordID", maintainRecordID);
+
             if (string.IsNullOrEmpty(maintainRecordID))
             {
                 return new CResult<WebMaintainRecord>(null, ErrorCode.ParameterError);
@@ -368,12 +393,17 @@ namespace NYB.DeviceManagementSystem.BLL
                     });
                 }
 
+                LogHelper.Info("result", model);
+
                 return new CResult<WebMaintainRecord>(model);
             }
         }
 
         public CResult<bool> DeleteMaintainRecord(string maintainRecordID)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("maintainRecordID", maintainRecordID);
+
             if (string.IsNullOrEmpty(maintainRecordID))
             {
                 return new CResult<bool>(false, ErrorCode.ParameterError);

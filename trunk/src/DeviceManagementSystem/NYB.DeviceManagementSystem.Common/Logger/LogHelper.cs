@@ -28,13 +28,13 @@ namespace NYB.DeviceManagementSystem.Common.Logger
             }
         }
 
-        public static void Info<T>(T entity)
+        public static void Info<T>(string name, T entity)
         {
             if (_log.IsInfoEnabled)
             {
                 var info = JsonHelper.JsonSerializer(entity);
 
-                _log.Info(info);
+                _log.Info(string.Format("{0}:{1}", name, info));
             }
         }
 
