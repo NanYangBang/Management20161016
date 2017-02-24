@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using log4net;
 using System.IO;
+using NYB.DeviceManagementSystem.Common.Helper;
 
 namespace NYB.DeviceManagementSystem.Common.Logger
 {
@@ -24,6 +25,16 @@ namespace NYB.DeviceManagementSystem.Common.Logger
             if (_log.IsInfoEnabled)
             {
                 _log.Info(message);
+            }
+        }
+
+        public static void Info<T>(T entity)
+        {
+            if (_log.IsInfoEnabled)
+            {
+                var info = JsonHelper.JsonSerializer(entity);
+
+                _log.Info(info);
             }
         }
 
