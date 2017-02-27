@@ -5,16 +5,15 @@
 @using NYB.DeviceManagementSystem.Common
 @using NYB.DeviceManagementSystem.ViewModel
 @model PagedList<NYB.DeviceManagementSystem.ViewModel.WebUser>
-
 <script type="text/javascript" src="@Url.Content("~/Scripts/User/Index.js")"></script>
 
-@Styles.Render("~/Content/User/User.css");
+@Styles.Render("~/Content/User/User.css")
 <div actionname="系统管理">
-    <form method="get" class="userSearchForm">
+    <form method="get" id="searchForm" class="userSearchForm">
         <select name="project">
             <option value="1">项目管理部</option>
         </select>
-        <input type="text" name="userName" id="seacheName" value="" />
+        <input type="text" name="searchInfo" id="seacheName" value="@(ViewBag.SearchInfo)" />
         <input style="line-height:0px" type="submit" class="" id="btnSearch" value="搜索" />
     </form>
     <table class="table-common" id="pileInfo">
@@ -45,7 +44,7 @@
         </thead>
         <tbody>
             @{
-                //string randomUrl = String.Format("{0}://{1}:{2}{3}", Request.Url.Scheme, Request.Url.Host, Request.Url.Port, ViewBag.RandomUrl);
+
                 foreach (var user in Model)
                 {
                     <tr pileid="">
@@ -99,6 +98,7 @@
     $(document).ready(function () {
         AddUpdateEvent();
         SortAlertRecord();
+        SearchInfoFocus('请输入用户名、登录名');
     })
 
     function DeleteUser(t) {

@@ -217,33 +217,37 @@ select {
                 margin-right: 4px;
                 color: White;
                 text-decoration: none;
+                font-family: SimSun,Arial;
             }
 
                 .header-message ul li a:hover {
                     text-decoration: underline;
                 }
 
-    .header-message p {
-        margin-top: 5px;
-        text-align: center;
-        color: #fff;
-    }
+body .header-message p {
+    margin-top: 5px;
+    text-align: center;
+    color: #fff;
+    font-weight: normal;
+    font-size: 14px;
+    font-family: SimSun,Arial;
+}
 
-    .header-message .last-border {
-        border: none;
-    }
-    /*变换颜色*/
-    .header-message ul li a.disappeared-color {
-        color: #255C77;
-    }
+.header-message .last-border {
+    border: none;
+}
+/*变换颜色*/
+.header-message ul li a.disappeared-color {
+    color: #255C77;
+}
 
-    .header-message ul li a.flash-color {
-        color: #FFD766;
-    }
+.header-message ul li a.flash-color {
+    color: #FFD766;
+}
 
-    .header-message ul li a.remind-flash-color {
-        color: #84BBD6;
-    }
+.header-message ul li a.remind-flash-color {
+    color: #84BBD6;
+}
 /*导航条*/
 .nav-top ul.main-view {
     text-align: center;

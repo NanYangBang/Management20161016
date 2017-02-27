@@ -27,7 +27,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
                 device = cResult.Data;
             }
             var pageList = new PagedList<WebDevice>(device, pageIndex, pageSize);
-
+            ViewBag.SearchInfo = searchInfo;
             return View(pageList);
         }
 
@@ -114,7 +114,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             ViewBag.ReturnUrl = returnUrl;
             return View(webDevice);
         }
-        
+
         [HttpGet]
         public ActionResult AddRepairRecord(string deviceID, string deviceName, string returnUrl)
         {
@@ -150,6 +150,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             {
                 webRepairRecordList = cResult.Data;
             }
+            ViewBag.SearchInfo = searchInfo;
             var pageList = new PagedList<WebRepairRecord>(webRepairRecordList, pageIndex, pageSize, totalCount);
             return View("RepairRecord/RepairRecordList", pageList);
         }
@@ -288,6 +289,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
                 webRepairRecordList = cResult.Data;
             }
             var pageList = new PagedList<WebMaintainRecord>(webRepairRecordList, pageIndex, pageSize, totalCount);
+            ViewBag.SearchInfo = searchInfo;
             return View("MaintainRecord/MaintainRecordList", pageList);
         }
 

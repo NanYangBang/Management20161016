@@ -321,6 +321,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Content\Common\OperateTable.css" />
     <Content Include="Content\User\User.css" />
+    <Content Include="Content\Viewer\viewer.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="ConnectionStrings.config" />
@@ -332,6 +333,8 @@
     <Content Include="Images\edit.png" />
     <Content Include="Images\index_20.jpg" />
     <Content Include="Images\lockmarintain.png" />
+    <Content Include="Images\logo.swf" />
+    <Content Include="Images\logo_01.png" />
     <Content Include="Images\look.png" />
     <Content Include="Images\lookrepair.png" />
     <Content Include="Images\maintainimg.png" />
@@ -389,6 +392,8 @@
     <Content Include="Scripts\swfobject.js" />
     <Content Include="Scripts\User\AddUpdatePartial.js" />
     <Content Include="Scripts\User\Index.js" />
+    <Content Include="Scripts\Viewer\viewer-jquery.min.js" />
+    <Content Include="Scripts\Viewer\viewer.min.js" />
     <Content Include="UploadFile\Logo\current-logo.png" />
     <Content Include="UploadFile\Logo\default-logo.png" />
     <Content Include="UploadFile\Logo\preview-logo.png" />

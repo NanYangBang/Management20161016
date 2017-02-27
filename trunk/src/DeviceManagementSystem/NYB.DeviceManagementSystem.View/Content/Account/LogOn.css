@@ -1,67 +1,74 @@
-﻿body
-{
-	background: transparent url(images/LogOnBodyBackground.jpg) no-repeat center;
+﻿body {
+    background: transparent url(images/LogOnBodyBackground.jpg) no-repeat center;
 }
-#RememberMe
-{
+
+#RememberMe {
 }
-input[type="password"], input[type="text"]
-{
-	width: 170px;
-	padding: 5px 0;
+
+input[type="password"], input[type="text"] {
+    width: 170px;
+    padding: 5px 0;
 }
-input[type="password"]
-{
-	padding: 4px 0 3px;
+
+input[type="password"] {
+    padding: 4px 0 3px;
 }
-.logon-panel
-{
-	background: url(images/LogOnBackground.png);
-	width: 530px;
-	height: 354px;
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	margin-left: -265px;
-	margin-top: -177px;
+
+.logon-panel {
+    background: url(images/LogOnBackground.png);
+    width: 530px;
+    height: 354px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -265px;
+    margin-top: -177px;
 }
-.logon-panel .logon-controls
-{
-	position: absolute;
-	left: 195px;
-	top: 157px;
-}
-.logon-panel .logon-controls input[type="submit"]
-{
-	height: 26px;
-	line-height: 26px;
-	margin: 0;
-}
-.logon-panel .logon-controls dt
-{
-	margin-top: 10px;
-}
-.logon-panel .logon-controls dd
-{
-	vertical-align: middle;
-}
-.logon-panel .logon-controls input[type="checkbox"]
-{
-}
-.logon-panel .logon-controls input
-{
-}
-.prompt
-{
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	margin-left: -70px; /*195-265*/
-	margin-top: 114px; /*291-177*/
-	z-index: 2;
+
+    .logon-panel .logon-controls {
+        position: absolute;
+        left: 195px;
+        top: 157px;
+    }
+
+        .logon-panel .logon-controls input[type="submit"] {
+            height: 26px;
+            line-height: 26px;
+            margin: 0;
+        }
+
+        .logon-panel .logon-controls dt {
+            margin-top: 10px;
+        }
+
+        .logon-panel .logon-controls dd {
+            vertical-align: middle;
+        }
+
+        .logon-panel .logon-controls input[type="checkbox"] {
+        }
+
+        .logon-panel .logon-controls input {
+        }
+
+.prompt {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -70px; /*195-265*/
+    margin-top: 114px; /*291-177*/
+    z-index: 2;
 }
 
 .logon-panel fieldset {
-    border:none;
+    border: none;
 }
+
+.projectTitle {
+    margin-top: 50px;
+    font-size: 30px;
+    text-align: right;
+    padding-right: 60px;
+}
+
 

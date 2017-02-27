@@ -15,15 +15,16 @@
     margin-right: 10px;
 }
 
-[name="userName"] {
-    height: 26px;
-    line-height: 28px;
-}
-
 #btnSearch {
     width: 100px;
     height: 30px;
     margin-top: -10px;
     margin-left: 10px;
     line-height: 30px;
+}
+
+#searchForm input[type="text"] {
+    width:200px;
+    height: 26px;
+    line-height: 28px;
 }

@@ -18,3 +18,9 @@ body #ui-datepicker-div .ui-datepicker-year, body .ui-datepicker-month {
     .cancel > a {
         float: right;
     }
+
+body li a, body b, body h2, body h3 {
+    font-family: SimSun,Arial;
+}
+
+

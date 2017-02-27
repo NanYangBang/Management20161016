@@ -7,10 +7,11 @@
 @using NYB.DeviceManagementSystem.ViewModel
 @model PagedList<NYB.DeviceManagementSystem.ViewModel.WebProject>
 <script type="text/javascript" src="@Url.Content("~/Scripts/Common/Index.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/User/Index.js")"></script>
 @Styles.Render("~/Content/User/User.css");
 <div actionname="项目管理">
-    <form method="get" class="userSearchForm">
-        <input type="text" name="userName" id="seacheName" value="" />
+    <form id="searchForm" method="get" class="userSearchForm">
+        <input type="text" name="searchInfo" id="seacheName" value="@(ViewBag.SearchInfo)" />
         <input style="line-height:0px" type="submit" class="" id="btnSearch" value="搜索" />
     </form>
     <table class="table-common" id="pileInfo">
@@ -91,5 +92,6 @@
     $(document).ready(function () {
         AddRection();
         SortAlertRecord();
+        SearchInfoFocus('请输入项目名称');
     })
 </script>

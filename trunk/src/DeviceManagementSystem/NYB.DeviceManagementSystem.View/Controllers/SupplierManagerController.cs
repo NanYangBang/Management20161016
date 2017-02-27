@@ -25,6 +25,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
                     list = cResult.Data;
                 }
                 var pageList = new PagedList<WebSupplier>(list, pageIndex, pageSize);
+                ViewBag.SearchInfo = searchInfo;
                 return View(pageList);
             }
             catch (Exception)

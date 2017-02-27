@@ -6,11 +6,11 @@
 @{
     string returnUrl = ViewBag.ReturnUrl;
 }
-
+<script type="text/javascript" src="@Url.Content("~/Scripts/User/Index.js")"></script>
 <script type="text/javascript" src="@Url.Content("~/Scripts/Common/Index.js")"></script>
 <div leftname="保养记录信息" actionname="设备管理">
-    <form method="get" class="userSearchForm">
-        <input type="text" name="userName" id="seacheName" value="" />
+    <form method="get" id="searchForm" class="userSearchForm">
+        <input type="text" name="searchInfo" id="seacheName" value="@(ViewBag.SearchInfo)" />
         <input style="line-height:0px" type="submit" class="" id="btnSearch" value="搜索" />
     </form>
     <table class="table-common" id="pileInfo">
@@ -82,6 +82,7 @@
 
     $(document).ready(function () {
         SortAlertRecord();
+        SearchInfoFocus('请输入设备名称、保养人');
     })
 
     function DeleteDeviceRepairRecord(t) {

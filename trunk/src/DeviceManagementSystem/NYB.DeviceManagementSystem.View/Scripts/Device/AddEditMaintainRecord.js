@@ -40,7 +40,7 @@ function loadUplodify() {
             var fileID = $(li).attr('fileID');
             var viewPicturePath = String.format("{0}?fileName={1}&filePath={2}", Resource.UrlViewPicture, fileName, filePath);
             var target = String.format("{0}?fileName={1}&filePath={2}", Resource.UrlDownLoad, fileName, filePath);
-            $('.uploadifyQueue').append(String.format('<div class="uploadifyQueueItem"><div class="cancel"><div id="{3}" style="cursor:pointer" fileName="{1}" filePath="{5}" class="btndownload"><a href="{0}" target="_top"><img src="{6}" /></a></div><div id="{3}" style="cursor:pointer" class="btnDel"><img src="{2}" /></div></div><span class="fileName"><a href="#" target="_blank" filePath="{5}" id="DownLoadFile"  class="upload_fileName" >{1}</a></span></div>', target, fileName, Resource.UrlCancelImage, fileID, viewPicturePath, filePath, Resource.ImgDownLoad));
+            $('.uploadifyQueue').append(String.format('<div class="uploadifyQueueItem"><div class="cancel"><div id="{3}" style="cursor:pointer" fileName="{1}" filePath="{5}" class="btndownload"><a href="{0}" target="_top"><img src="{6}" /></a></div><div id="{3}" style="cursor:pointer" class="btnDel"><img src="{2}" /></div></div><span class="fileName"><a href="#" target="_blank" filePath="{5}" id="DownLoadFile" fileName="{1}"  class="upload_fileName" >{1}</a></span></div>', target, fileName, Resource.UrlCancelImage, fileID, viewPicturePath, filePath, Resource.ImgDownLoad));
         })
     }
 
@@ -50,11 +50,12 @@ function loadUplodify() {
         //var pagecontainer = $('.warp');
         //picktureDiv.css('width', '100%').css('height', '100%').css('background-color', '#ccc').css('visibility', 'visible');
         e.preventDefault();
-        var filePath = $(this).attr('filePath');
-        $.get(Resource.UrlViewPicture, { filePath: filePath }, function () {
+        var fileName = $(this).attr('fileName');
+        //$.get(Resource.UrlViewPicture, { filePath: filePath }, function () {
 
-        })
+        //})
 
+        $('#jq22 li img[fileName=' + '"' + fileName + '"' + ']').trigger('click');
     });
 
     //$(document).on('click', '.btndownload', function (e) {

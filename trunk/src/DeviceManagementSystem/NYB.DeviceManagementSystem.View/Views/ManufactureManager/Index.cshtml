@@ -7,9 +7,10 @@
 @using NYB.DeviceManagementSystem.ViewModel
 @model PagedList<NYB.DeviceManagementSystem.ViewModel.WebManufacturer>
 @Styles.Render("~/Content/User/User.css")
+<script type="text/javascript" src="@Url.Content("~/Scripts/User/Index.js")"></script>
 <div leftname="生产厂商管理" actionname="基础信息管理">
-    <form method="get" class="userSearchForm">
-        <input type="text" name="searchInfo" id="searchInfo" value="" />
+    <form id="searchForm" method="get" class="userSearchForm">
+        <input type="text" name="searchInfo" id="searchInfo" value="@(ViewBag.SearchInfo)" />
         <input style="line-height:0px" type="submit" class="" id="btnSearch" value="搜索" />
     </form>
     <table class="table-common" id="pileInfo">
@@ -92,6 +93,7 @@
         $('#addManufacturer').click(function () {
             window.location = window.UrlResource.UrlAddAction;
         })
+        SearchInfoFocus('请输入名称、联系人');
     })
 
     function DeleteManufacturer(t) {
