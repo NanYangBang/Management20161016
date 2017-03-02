@@ -38,7 +38,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
         {
             ViewBag.ReturnUrl = returnUrl;
             ViewBag.Action = "Details";
-
+            ViewBag.IsView = "True";
             try
             {
                 var result = new ManufacturerBLL().GetManufacturerByID(manufacturerID);
@@ -111,11 +111,11 @@ namespace NYB.DeviceManagementSystem.View.Controllers
         }
 
         [HttpPost]
-        public ActionResult Delete(string manufacturerID)
+        public ActionResult Delete(string id)
         {
             try
             {
-                var result = new ManufacturerBLL().DeleteManufacturer(manufacturerID);
+                var result = new ManufacturerBLL().DeleteManufacturer(id);
                 return JsonContentHelper.GetJsonContent(result);
             }
             catch

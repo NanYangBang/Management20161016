@@ -7,6 +7,18 @@ function AddUpdateEvent() {
 
 }
 
+function DataDel(id, url) {
+    if (window.confirm("是否删除？")) {
+        $.post(url, { id: id }, function (result) {
+            if (result.Code == 0) {
+                window.location.reload();
+            } else {
+                alert(result.Msg);
+            }
+        })
+    }
+}
+
 function SearchInfoFocus(prompt) {
     var domeSearInfoText = $('#searchForm input[type="text"]');
 

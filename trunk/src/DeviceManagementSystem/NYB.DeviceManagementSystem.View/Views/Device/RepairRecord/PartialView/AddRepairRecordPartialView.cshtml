@@ -87,6 +87,7 @@
         SaveEvent();
         BindDatePick();
         GetViewStatus();
+        $('[name="DeviceName"]').attr('readonly','readonly');
     })
 
     function BindDatePick() {
@@ -101,6 +102,7 @@
             buttonImage: path
         });
         BindDatePickerTriggerEvent();
+        $('td[name="time"] input').attr('readonly', 'readonly');
     }
 
 </script>

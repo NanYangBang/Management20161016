@@ -124,6 +124,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             ViewBag.OperateAction = "Add";
             ViewBag.LeftName = "设备信息";
             WebRepairRecord webRepairRecord = new WebRepairRecord();
+            webRepairRecord.RepairDate = DateTime.Now.Date;
             return View("RepairRecord/AddRepairRecord", webRepairRecord);
         }
 
@@ -217,6 +218,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             ViewBag.IsAddRecord = "True";
             ViewBag.LeftName = "设备信息";
             WebMaintainRecord webMaintainRecord = new WebMaintainRecord();
+            webMaintainRecord.MaintainDate = DateTime.Now.Date;
             return View("MaintainRecord/AddMainTainRecord", webMaintainRecord);
         }
 
@@ -310,6 +312,20 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             var absolutePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, filePath);
             fileName = Url.Encode(fileName).Replace("+", "%20");
             return File(absolutePath, "application/object", fileName);
+        }
+
+        [HttpPost]
+        public ActionResult Delete(string id)
+        {
+            try
+            {
+                var result = new DeviceBLL().DeleteDevice(id);
+                return JsonContentHelper.GetJsonContent(result);
+            }
+            catch
+            {
+                return View();
+            }
         }
 
     }

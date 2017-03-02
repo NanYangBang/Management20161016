@@ -17,9 +17,9 @@
     <table class="table-common" id="pileInfo">
         <thead>
             <tr>
-                <th class="checkbox-column">
+                @*<th class="checkbox-column">
                     <input type="checkbox" id="checkedAll_id" class="checkedAll" />
-                </th>
+                </th>*@
                 <th>
                     <a href="" sortby="UserName">项目名称</a>
                 </th>
@@ -46,9 +46,9 @@
                 foreach (var project in Model)
                 {
                     <tr pileid="">
-                        <td>
+                        @*<td>
                             <input type="checkbox" id="checkbox_id" />
-                        </td>
+                        </td>*@
                         <td>
                             @project.Name
                         </td>
@@ -66,8 +66,8 @@
                         </td>
                         <td>
                             @{var routeValues = new { projectID = project.ID, returnUrl = Request.Url.AbsoluteUri, _ = DateTime.Now.Ticks };}
-                            @*@Html.ActionLink("修改", "UpdateProject", routeValues)*@
                             <a title="修改" href="@(Url.Action("UpdateProject", "ProjectManager", routeValues))"><img src="@Url.Content("~/Images/edit.png")" /></a>
+                            <a href="#" title="删除" onclick="DataDel('@project.ID','@(Url.Action("Delete"))')" name="DeleteDeviceType"><img src="@Url.Content("~/Images/del.png")" /></a>
                         </td>
                     </tr>
                 }
@@ -79,7 +79,7 @@
         @Html.Partial("DisplayTemplates/PagerView", Model)
         <p>
             <input type="button" class="blue-button" id="addButton" value="添加" />
-            <input type="button" id="btnDelete" value="删除" />
+            @*<input type="button" id="btnDelete" value="删除" />*@
         </p>
     </div>
 </div>

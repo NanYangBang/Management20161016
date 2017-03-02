@@ -72,5 +72,19 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             return JsonContentHelper.GetJsonContent(cResult);
         }
 
+        [HttpPost]
+        public ActionResult Delete(string id)
+        {
+            try
+            {
+                var result = new ProjectBLL().DeleteProject(id);
+                return JsonContentHelper.GetJsonContent(result);
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
     }
 }

@@ -68,7 +68,7 @@
                             <a title="修改" href="@(Url.Action("Edit", "ManufactureManager", routeValues))"><img src="@Url.Content("~/Images/edit.png")" /></a>
                             @*@Html.ActionLink("查看", "Details", routeValues)*@
                             <a title="查看" href="@(Url.Action("Details", "ManufactureManager", routeValues))"><img src="@Url.Content("~/Images/look.png")" /></a>
-                            <a href="#" onclick="DeleteManufacturer('@manufacturer.ID')" name="DeleteManufacturer"><img src="@Url.Content("~/Images/del.png")" /></a>
+                            <a href="#" onclick="DataDel('@manufacturer.ID','@(Url.Action("Delete"))')" name="DeleteManufacturer"><img src="@Url.Content("~/Images/del.png")" /></a>
                         </td>
                     </tr>
                 }
@@ -96,15 +96,4 @@
         SearchInfoFocus('请输入名称、联系人');
     })
 
-    function DeleteManufacturer(t) {
-        if (window.confirm("是否删除？")) {
-            $.post('@Url.Action("Delete")', { manufacturerID: t }, function (result) {
-                if (result.Code == 0) {
-                    window.location.reload();
-                } else {
-                    alert(result.Msg);
-                }
-            })
-        }
-    }
 </script>

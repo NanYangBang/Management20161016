@@ -85,6 +85,7 @@ namespace NYB.DeviceManagementSystem.ViewModel
         /// 电子邮件
         /// </summary>
         [Display(Name = "电子邮件")]
+        [RegularExpression(@"\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", ErrorMessage = "电子邮件格式不正确")]
         public string Email
         {
             get { return _email; }

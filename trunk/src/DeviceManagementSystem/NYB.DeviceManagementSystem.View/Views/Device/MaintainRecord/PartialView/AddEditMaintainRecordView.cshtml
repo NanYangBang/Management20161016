@@ -131,6 +131,8 @@
         var viewer = new Viewer(document.getElementById('jq22'), {
             url: 'data-original'
         });
+
+        $('[name="DeviceName"]').attr('readonly', 'readonly');
     })
 
     function BindDatePick() {
@@ -145,6 +147,7 @@
             buttonImage: path
         });
         BindDatePickerTriggerEvent();
+        $('td[name="time"] input').attr('readonly', 'readonly');
     }
 
 </script>

@@ -95,11 +95,11 @@ namespace NYB.DeviceManagementSystem.View.Controllers
         }
 
         [HttpPost]
-        public ActionResult DeleteUser(string userID)
+        public ActionResult DeleteUser(string id)
         {
             var userBLL = new UserBLL();
             var currentUserID = Request.Cookies["CurrentUserID"].Value;
-            var result = userBLL.DeleteUserByID(userID, currentUserID);
+            var result = userBLL.DeleteUserByID(id, currentUserID);
             return JsonContentHelper.GetJsonContent(result);
         }
     }

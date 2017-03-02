@@ -190,7 +190,6 @@
     <Compile Include="Controllers\BasicInfoManagerController.cs" />
     <Compile Include="Controllers\DeviceController.cs" />
     <Compile Include="Controllers\ManufactureManagerController.cs" />
-    <Compile Include="Controllers\RepairRecordController.cs" />
     <Compile Include="Controllers\SupplierManagerController.cs" />
     <Compile Include="Controllers\DeviceTypeManagerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />

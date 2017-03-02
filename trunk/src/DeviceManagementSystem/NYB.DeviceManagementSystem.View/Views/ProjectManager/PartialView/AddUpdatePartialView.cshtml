@@ -4,6 +4,8 @@
 @{
     ViewBag.Title = "AddUpdatePartialView";
     string returnUrl = ViewBag.ReturnUrl;
+    string isView = ViewBag.IsView;
+    isView = string.IsNullOrWhiteSpace(isView) ? "" : isView.ToString();
 }
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 
@@ -11,7 +13,7 @@
 <script src="@Url.Content("~/Scripts/ProjectManger/AddUpdatePartial.js")"></script>
 <link rel="Stylesheet" href="@Url.Content("~/Content/Common/OperateTable.css")" />
 
-<div actionname="项目管理 " class="operationParent">
+<div actionname="项目管理" class="operationParent">
     <form action="AddUser" method="post">
         @(Html.Hidden("returnUrl", returnUrl))
         <div class="common-details-panel">
@@ -21,7 +23,7 @@
                 <table class="operateTable">
                     <tr>
                         <td>
-                            <b>项目名称</b>
+                            <b><em>*</em>项目名称</b>
                         </td>
                         <td>
                             @Html.TextBoxFor(model => model.Name)
@@ -73,7 +75,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <b><em>*</em>电子邮件</b>
+                            <b>电子邮件</b>
                         </td>
                         <td>
                             @Html.TextBoxFor(model => model.WebUser.Email)
@@ -105,7 +107,8 @@
         UrlAdd: '@Url.Action("AddProject", "ProjectManager")',
         UrlEdit: '@Url.Action("UpdateProject", "ProjectManager")',
         ReturnUrl: '@returnUrl',
-        UrlAction: '@ViewBag.Action'
+        UrlAction: '@ViewBag.Action',
+        IsView: '@(isView)'
     }
 
     $(document).ready(function () {

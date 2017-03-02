@@ -13,15 +13,15 @@ namespace NYB.DeviceManagementSystem.ViewModel
         public string ID { get; set; }
 
         [DisplayName("名称")]
-        [Required]
+        [Required(ErrorMessage="名称必填")]
         [MaxLength(30)]
         public string Name { get; set; }
-
 
         [DisplayName("地址")]
         public string Address { get; set; }
 
         [DisplayName("联系人")]
+        [Required(ErrorMessage="联系人必填")]
         public string Contact { get; set; }
 
         [DisplayName("手机")]

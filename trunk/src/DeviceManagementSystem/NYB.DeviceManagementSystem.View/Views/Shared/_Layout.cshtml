@@ -50,10 +50,12 @@
         function HighLeight() {
             var actionname = $('.sub-content div').first().attr('actionname');
             var navTop = $('.nav-top ul li[actionname="' + actionname + '"]');
-            navTop.find('a').css('background-color', 'white').css('color', 'black');
 
             var otherAction = $('.nav-top ul li[actionname!="' + actionname + '"]');
             otherAction.find('a').css('color', 'white');
+
+            navTop.find('a').css('background-color', 'white').css('color', 'black');
+
         }
 
         function GetViewStatus() {

@@ -38,7 +38,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
         {
             ViewBag.ReturnUrl = returnUrl;
             ViewBag.Action = "Details";
-
+            ViewBag.IsView = "True";
             try
             {
                 var result = new DeviceTypeBLL().GetDeviceTypeByID(deviceTypeID);
@@ -112,11 +112,11 @@ namespace NYB.DeviceManagementSystem.View.Controllers
         }
 
         [HttpPost]
-        public ActionResult Delete(string deviceTypeID)
+        public ActionResult Delete(string id)
         {
             try
             {
-                var result = new DeviceTypeBLL().DeleteDeviceType(deviceTypeID);
+                var result = new DeviceTypeBLL().DeleteDeviceType(id);
                 return JsonContentHelper.GetJsonContent(result);
             }
             catch

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +22,7 @@ namespace NYB.DeviceManagementSystem.ViewModel
 
         private string _name = string.Empty;
 
+        [Required(ErrorMessage = "项目名称必填")]
         public string Name
         {
             get { return _name; }

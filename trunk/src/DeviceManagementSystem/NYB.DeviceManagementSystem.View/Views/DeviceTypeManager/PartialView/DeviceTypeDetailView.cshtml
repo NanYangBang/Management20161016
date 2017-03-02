@@ -10,6 +10,8 @@
         isDetails = true;
         readonlyValues = new { @readonly = "readonly" };
     }
+    string isView = ViewBag.IsView;
+    isView = string.IsNullOrWhiteSpace(isView) ? "" : isView.ToString();
 }
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
@@ -25,7 +27,7 @@
                 <table class="operateTable">
                     <tr>
                         <td>
-                            <b>@Html.LabelFor(model => model.Name)</b>
+                            <b><em>*</em> @Html.LabelFor(model => model.Name)</b>
                         </td>
                         <td>
                             @Html.TextBoxFor(model => model.Name, readonlyValues)
@@ -60,7 +62,8 @@
         UrlAdd: '@Url.Action("Create")',
         UrlEdit: '@Url.Action("Edit")',
         ReturnUrl: '@returnUrl',
-        UrlAction: '@ViewBag.Action'
+        UrlAction: '@ViewBag.Action',
+        IsView: '@(isView)'
     }
 
     $(document).ready(function () {
