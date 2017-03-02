@@ -13,6 +13,7 @@ using System.Data;
 using System.Web.Security;
 using System.Web;
 using System.IO;
+using System.Reflection;
 
 namespace NYB.DeviceManagementSystem.BLL
 {
@@ -20,20 +21,22 @@ namespace NYB.DeviceManagementSystem.BLL
     {
         public CResult<List<WebMaintainRecord>> GetMaintainRecordList(out int totalCount, string projectID, string searchInfo, string deviceID = "", int pageIndex = 1, int pageSize = 10, string orderby = null, bool ascending = false)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+
+            Expression<Func<MaintainRecord, bool>> filter = t => t.ProjectID == projectID && t.IsValid == true;
+
+            if (string.IsNullOrWhiteSpace(searchInfo) == false)
+            {
+                searchInfo = searchInfo.Trim().ToUpper();
+                filter = filter.And(t => t.Note.ToUpper().Contains(searchInfo));
+            }
+            if (!string.IsNullOrWhiteSpace(deviceID))
+            {
+                filter = filter.And(t => t.DeviceID == deviceID);
+            }
+
             using (DeviceMgmtEntities context = new DeviceMgmtEntities())
             {
-                Expression<Func<MaintainRecord, bool>> filter = t => t.ProjectID == projectID && t.IsValid == true;
-
-                if (string.IsNullOrWhiteSpace(searchInfo) == false)
-                {
-                    searchInfo = searchInfo.Trim().ToUpper();
-                    filter = filter.And(t => t.Note.ToUpper().Contains(searchInfo));
-                }
-                if (!string.IsNullOrWhiteSpace(deviceID))
-                {
-                    filter = filter.And(t => t.DeviceID == deviceID);
-                }
-
                 var temp = context.MaintainRecord.Where(filter).Page(out totalCount, pageIndex, pageSize, orderby, ascending, true);
 
                 var result = temp.Select(entity => new WebMaintainRecord()
@@ -50,12 +53,17 @@ namespace NYB.DeviceManagementSystem.BLL
                     ProjectID = entity.ProjectID,
                 }).ToList();
 
+                LogHelper.Info("result", result);
+
                 return new CResult<List<WebMaintainRecord>>(result);
             }
         }
 
         public CResult<bool> InsertMaintainRecord(WebMaintainRecord model, List<HttpPostedFileBase> files)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("model", model);
+
             if (string.IsNullOrEmpty(model.ProjectID))
             {
                 return new CResult<bool>(false, ErrorCode.ParameterError);
@@ -90,7 +98,7 @@ namespace NYB.DeviceManagementSystem.BLL
                 foreach (var fileData in files)
                 {
                     var fileName = string.Format("{0}{1}", Guid.NewGuid().ToString(), Path.GetExtension(fileData.FileName));
-                    var filePath = SaveFile(fileData, SystemInfo.UploadFolder, fileName);
+                    var filePath = FileHelper.SaveFile(fileData, SystemInfo.UploadFolder, fileName);
                     if (string.IsNullOrEmpty(filePath) == false)
                     {
                         attachments.Add(new Attachment()
@@ -106,7 +114,7 @@ namespace NYB.DeviceManagementSystem.BLL
                     {
                         foreach (var item in attachments)
                         {
-                            DelFile(item.FilePath);
+                            FileHelper.DelFile(item.FilePath);
                         }
 
                         return new CResult<bool>(false, ErrorCode.SaveFileFailed);
@@ -126,7 +134,7 @@ namespace NYB.DeviceManagementSystem.BLL
                 {
                     foreach (var item in attachments)
                     {
-                        DelFile(item.FilePath);
+                        FileHelper.DelFile(item.FilePath);
                     }
 
                     return new CResult<bool>(false, ErrorCode.SaveDbChangesFailed);
@@ -136,6 +144,9 @@ namespace NYB.DeviceManagementSystem.BLL
 
         public CResult<string> InsertMaintainRecord(WebMaintainRecord model)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("model", model);
+
             if (string.IsNullOrEmpty(model.ProjectID))
             {
                 return new CResult<string>("", ErrorCode.ParameterError);
@@ -179,10 +190,14 @@ namespace NYB.DeviceManagementSystem.BLL
 
         public CResult<bool> AddmaintainRecordFile(HttpPostedFileBase file, string maintainRecordID)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("maintainRecordID", maintainRecordID);
+
             using (var context = new DeviceMgmtEntities())
             {
+                var date = DateTime.Now.ToString("yyyy-MM-dd");
                 var fileName = string.Format("{0}{1}", Guid.NewGuid().ToString(), Path.GetExtension(file.FileName));
-                var filePath = SaveFile(file, SystemInfo.UploadFolder, fileName);
+                var filePath = FileHelper.SaveFile(file, Path.Combine(SystemInfo.UploadFolder, date), fileName);
                 if (string.IsNullOrEmpty(filePath) == false)
                 {
                     var fileMode = new Attachment()
@@ -206,7 +221,7 @@ namespace NYB.DeviceManagementSystem.BLL
                 }
                 else
                 {
-                    DelFile(filePath);
+                    FileHelper.DelFile(filePath);
                 }
                 return new CResult<bool>(true);
             }
@@ -214,6 +229,10 @@ namespace NYB.DeviceManagementSystem.BLL
 
         public CResult<bool> UpdateMaintainRecord(WebMaintainRecord model, List<HttpPostedFileBase> files, List<string> deleteFiles)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("model", model);
+            LogHelper.Info("deleteFiles", deleteFiles);
+
             if (string.IsNullOrEmpty(model.ID))
             {
                 return new CResult<bool>(false, ErrorCode.ParameterError);
@@ -236,14 +255,14 @@ namespace NYB.DeviceManagementSystem.BLL
                 foreach (var item in needDelete)
                 {
                     context.Attachment.Remove(item);
-                    DelFile(item.FilePath);
+                    FileHelper.DelFile(item.FilePath);
                 }
 
                 var attachments = new List<Attachment>();
                 foreach (var fileData in files)
                 {
                     var fileName = string.Format("{0}{1}", Guid.NewGuid().ToString(), Path.GetExtension(fileData.FileName));
-                    var filePath = SaveFile(fileData, SystemInfo.UploadFolder, fileName);
+                    var filePath = FileHelper.SaveFile(fileData, SystemInfo.UploadFolder, fileName);
                     if (string.IsNullOrEmpty(filePath) == false)
                     {
                         attachments.Add(new Attachment()
@@ -259,7 +278,7 @@ namespace NYB.DeviceManagementSystem.BLL
                     {
                         foreach (var item in attachments)
                         {
-                            DelFile(item.FilePath);
+                            FileHelper.DelFile(item.FilePath);
                         }
 
                         return new CResult<bool>(false, ErrorCode.SaveFileFailed);
@@ -279,7 +298,7 @@ namespace NYB.DeviceManagementSystem.BLL
                 {
                     foreach (var item in attachments)
                     {
-                        DelFile(item.FilePath);
+                        FileHelper.DelFile(item.FilePath);
                     }
 
                     return new CResult<bool>(false, ErrorCode.SaveDbChangesFailed);
@@ -289,6 +308,10 @@ namespace NYB.DeviceManagementSystem.BLL
 
         public CResult<string> UpdateMaintainRecord(WebMaintainRecord model, List<string> deleteFiles)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("model", model);
+            LogHelper.Info("deleteFiles", deleteFiles);
+
             if (string.IsNullOrEmpty(model.ID))
             {
                 return new CResult<string>("", ErrorCode.ParameterError);
@@ -312,7 +335,7 @@ namespace NYB.DeviceManagementSystem.BLL
                     foreach (var item in needDelete)
                     {
                         context.Attachment.Remove(item);
-                        DelFile(item.FilePath);
+                        FileHelper.DelFile(item.FilePath);
                     }
                 }
                 if (context.SaveChanges() > 0)
@@ -328,6 +351,9 @@ namespace NYB.DeviceManagementSystem.BLL
 
         public CResult<WebMaintainRecord> GetMaintainRecordByID(string maintainRecordID)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("maintainRecordID", maintainRecordID);
+
             if (string.IsNullOrEmpty(maintainRecordID))
             {
                 return new CResult<WebMaintainRecord>(null, ErrorCode.ParameterError);
@@ -367,12 +393,17 @@ namespace NYB.DeviceManagementSystem.BLL
                     });
                 }
 
+                LogHelper.Info("result", model);
+
                 return new CResult<WebMaintainRecord>(model);
             }
         }
 
         public CResult<bool> DeleteMaintainRecord(string maintainRecordID)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("maintainRecordID", maintainRecordID);
+
             if (string.IsNullOrEmpty(maintainRecordID))
             {
                 return new CResult<bool>(false, ErrorCode.ParameterError);
@@ -389,61 +420,10 @@ namespace NYB.DeviceManagementSystem.BLL
                 var attachments = context.Attachment.Where(a => a.RelationID == entity.ID).ToList();
                 foreach (var attachment in attachments)
                 {
-                    DelFile(attachment.FilePath);
+                    FileHelper.DelFile(attachment.FilePath);
                 }
 
                 return context.Save();
-            }
-        }
-
-        public static string SaveFile(HttpPostedFileBase fileData, string relativePath, string fileName)
-        {
-            if (fileData == null || string.IsNullOrWhiteSpace(relativePath) || string.IsNullOrWhiteSpace(fileName))
-            {
-                return string.Empty;
-            }
-
-            var appPath = SystemInfo.BaseDirectory;
-            var absolutePath = Path.Combine(appPath, relativePath);
-            var absoluteFullPath = Path.Combine(absolutePath, fileName);
-            try
-            {
-                if (!Directory.Exists(absolutePath))
-                {
-                    Directory.CreateDirectory(absolutePath);
-                }
-                if (File.Exists(absoluteFullPath))
-                {
-                    File.Delete(absoluteFullPath);
-                }
-                fileData.SaveAs(absoluteFullPath);
-                return Path.Combine(relativePath, fileName);
-            }
-            catch (Exception ex)
-            {
-                //Logger.Write(ex);
-                return string.Empty;
-            }
-        }
-
-        public static void DelFile(string relativeFullPath)
-        {
-            if (string.IsNullOrWhiteSpace(relativeFullPath))
-            {
-                return;
-            }
-
-            try
-            {
-                var absoluteFullPath = Path.Combine(SystemInfo.BaseDirectory, relativeFullPath);
-                if (File.Exists(absoluteFullPath))
-                {
-                    File.Delete(absoluteFullPath);
-                }
-            }
-            catch (Exception ex)
-            {
-                //Logger.Write(ex);
             }
         }
     }

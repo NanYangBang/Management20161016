@@ -11,6 +11,9 @@ using NYB.DeviceManagementSystem.DAL;
 using System.Linq.Expressions;
 using System.Data;
 using System.Web.Security;
+using System.Web;
+using System.IO;
+using System.Reflection;
 
 namespace NYB.DeviceManagementSystem.BLL
 {
@@ -53,12 +56,17 @@ namespace NYB.DeviceManagementSystem.BLL
                     SupplierName = string.IsNullOrEmpty(t.SupplierID) == false ? "" : t.Supplier.Name
                 }).ToList();
 
+                LogHelper.Info("result", result);
+
                 return new CResult<List<WebDevice>>(result);
             }
         }
 
         public CResult<bool> InsertDevice(WebDevice model)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("model", model);
+
             if (string.IsNullOrEmpty(model.ProjectID))
             {
                 return new CResult<bool>(false, ErrorCode.ParameterError);
@@ -69,6 +77,11 @@ namespace NYB.DeviceManagementSystem.BLL
                 if (context.Project.Any(t => t.IsValid && t.ID == model.ProjectID) == false)
                 {
                     return new CResult<bool>(false, ErrorCode.ProjectNotExist);
+                }
+
+                if (context.Device.Any(t => t.Name.ToUpper() == model.Name.ToUpper() && t.ProjectID == model.ProjectID && t.IsValid))
+                {
+                    return new CResult<bool>(false, ErrorCode.DeviceNameIsExist);
                 }
 
                 var entity = new Device();
@@ -93,6 +106,9 @@ namespace NYB.DeviceManagementSystem.BLL
 
         public CResult<bool> UpdateDevice(WebDevice model)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("model", model);
+
             if (string.IsNullOrEmpty(model.ID))
             {
                 return new CResult<bool>(false, ErrorCode.ParameterError);
@@ -104,6 +120,11 @@ namespace NYB.DeviceManagementSystem.BLL
                 if (entity == null)
                 {
                     return new CResult<bool>(false, ErrorCode.DataNoExist);
+                }
+
+                if (context.Device.Any(t => t.Name.ToUpper() == model.Name.ToUpper() && t.ProjectID == model.ProjectID && t.IsValid && t.ID != model.ID))
+                {
+                    return new CResult<bool>(false, ErrorCode.DeviceNameIsExist);
                 }
 
                 entity.Name = model.Name;
@@ -122,6 +143,9 @@ namespace NYB.DeviceManagementSystem.BLL
 
         public CResult<WebDevice> GetDeviceByID(string DeviceID)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("DeviceID", DeviceID);
+
             if (string.IsNullOrEmpty(DeviceID))
             {
                 return new CResult<WebDevice>(null, ErrorCode.ParameterError);
@@ -155,12 +179,17 @@ namespace NYB.DeviceManagementSystem.BLL
                     SupplierName = string.IsNullOrEmpty(entity.SupplierID) == false ? "" : entity.Supplier.Name
                 };
 
+                LogHelper.Info("result", model);
+
                 return new CResult<WebDevice>(model);
             }
         }
 
         public CResult<bool> DeleteDevice(string DeviceID)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("DeviceID", DeviceID);
+
             if (string.IsNullOrEmpty(DeviceID))
             {
                 return new CResult<bool>(false, ErrorCode.ParameterError);
@@ -188,10 +217,178 @@ namespace NYB.DeviceManagementSystem.BLL
 
             using (var context = new DeviceMgmtEntities())
             {
-                var isExist = context.DeviceType.Any(t => t.Name == deviceName && t.ProjectID == projectID && t.IsValid);
+                var isExist = context.DeviceType.Any(t => t.Name.ToUpper() == deviceName.ToUpper() && t.ProjectID == projectID && t.IsValid);
                 return new CResult<bool>(isExist);
             }
         }
 
+        public CResult<bool> ImportDeviceFromExcel(HttpPostedFileBase file, string projectID, string operatorUserID)
+        {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+
+            if (string.IsNullOrEmpty(projectID) || string.IsNullOrEmpty(operatorUserID))
+            {
+                return new CResult<bool>(false, ErrorCode.ParameterError);
+            }
+
+            var fileName = string.Format("{0}{1}", Guid.NewGuid().ToString(), Path.GetExtension(file.FileName));
+            var filePath = FileHelper.SaveFile(file, SystemInfo.TempFileFolder, fileName);
+            if (string.IsNullOrEmpty(filePath))
+            {
+                return new CResult<bool>(false, ErrorCode.SystemError);
+            }
+
+            var dataTable = ExcelHelper.ExcelToDataTable(filePath, 0);
+            if (dataTable.Rows.Count == 0)
+            {
+                return new CResult<bool>(false, ErrorCode.FileContainNoData);
+            }
+
+            var webDeviceList = new List<WebDevice>();
+            foreach (DataRow row in dataTable.Rows)
+            {
+                int i = 0;
+                var webDevice = new WebDevice();
+                webDevice.Name = row[i++].ToString();
+                webDevice.DeviceTypeName = row[i++].ToString();
+                webDevice.SupplierName = row[i++].ToString();
+                webDevice.ManufacturerName = row[i++].ToString();
+
+                DateTime tempTime;
+                if (DateTime.TryParse(row[i++].ToString(), out tempTime))
+                {
+                    webDevice.ProductDate = tempTime;
+                }
+
+                if (DateTime.TryParse(row[i++].ToString(), out tempTime))
+                {
+                    webDevice.MaintainDate = tempTime;
+                }
+                webDevice.Note = row[i++].ToString();
+
+                webDeviceList.Add(webDevice);
+            }
+
+            var deviceTypeNameList = webDeviceList.Select(t => t.DeviceTypeName).ToList();
+            var supplierNameList = webDeviceList.Select(t => t.SupplierName).ToList();
+            var manufacturerNameList = webDeviceList.Select(t => t.ManufacturerName).ToList();
+            var deviceNameList = webDeviceList.Select(t => t.Name).ToList();
+
+            using (var context = new DeviceMgmtEntities())
+            {
+                if (context.Project.Any(t => t.IsValid && t.ID == projectID) == false)
+                {
+                    return new CResult<bool>(false, ErrorCode.ProjectNotExist);
+                }
+
+                if (context.User.Any(t => t.IsValid && t.UserID == operatorUserID) == false)
+                {
+                    return new CResult<bool>(false, ErrorCode.UserNotExist);
+                }
+
+                if (context.Device.Any(t => t.ProjectID == projectID && t.IsValid && deviceNameList.Contains(t.Name)))
+                {
+                    return new CResult<bool>(false, ErrorCode.DeviceTypeNameIsExist);
+                }
+
+                var deviceTypeList = context.DeviceType.Where(t => t.IsValid && deviceTypeNameList.Contains(t.Name)).Select(t => new { t.ID, t.Name }).ToList();
+                if (deviceTypeList.Count < deviceTypeNameList.Count)
+                {
+                    return new CResult<bool>(false, ErrorCode.DeviceTypeNotExist);
+                }
+
+                var supplierList = context.Supplier.Where(t => t.IsValid && supplierNameList.Contains(t.Name)).Select(t => new { t.ID, t.Name }).ToList();
+                if (supplierList.Count < supplierNameList.Count)
+                {
+                    return new CResult<bool>(false, ErrorCode.SupplierNotExist);
+                }
+
+                var manufacturerList = context.Manufacturer.Where(t => t.IsValid && manufacturerNameList.Contains(t.Name)).Select(t => new { t.ID, t.Name }).ToList();
+                if (manufacturerList.Count < manufacturerNameList.Count)
+                {
+                    return new CResult<bool>(false, ErrorCode.ManufacturerNotExist);
+                }
+
+                var currentTime = DateTime.Now;
+                foreach (var webDevice in webDeviceList)
+                {
+                    var device = new Device()
+                    {
+                        CreateDate = currentTime,
+                        CreateUserID = operatorUserID,
+                        DeviceTypeID = deviceTypeList.FirstOrDefault(t => t.Name == webDevice.DeviceTypeName).ID,
+                        ID = Guid.NewGuid().ToString(),
+                        IsValid = true,
+                        MaintainDate = webDevice.MaintainDate,
+                        ManufacturerID = manufacturerList.FirstOrDefault(t => t.Name == webDevice.ManufacturerName).ID,
+                        Name = webDevice.Name,
+                        Note = webDevice.Note,
+                        ProductDate = webDevice.ProductDate,
+                        ProjectID = projectID,
+                        SupplierID = supplierList.FirstOrDefault(t => t.Name == webDevice.SupplierName).ID,
+                    };
+
+                    context.Device.Add(device);
+                }
+
+                LogHelper.Info("importList",webDeviceList);
+
+                return context.Save();
+            }
+        }
+
+        public CResult<string> ExportDeviceToExcel(string projectID, string searchInfo)
+        {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+
+            int totalCount;
+
+            var result = GetDeviceList(out totalCount, projectID, searchInfo, 1, -1);
+            if (result.Code > 0)
+            {
+                return new CResult<string>("", result.Code);
+            }
+
+            var list = result.Data;
+
+            var dataTable = new DataTable();
+            dataTable.Columns.Add("名称");
+            dataTable.Columns.Add("设备类型");
+            dataTable.Columns.Add("供应商");
+            dataTable.Columns.Add("生产厂商");
+            dataTable.Columns.Add("生产日期", typeof(DateTime));
+            dataTable.Columns.Add("保养日期", typeof(DateTime));
+            dataTable.Columns.Add("备注");
+
+            foreach (var item in list)
+            {
+                var row = dataTable.NewRow();
+                int i = 0;
+
+                row[i++] = item.Name;
+                row[i++] = item.DeviceTypeName;
+                row[i++] = item.SupplierName;
+                row[i++] = item.ManufacturerName;
+                row[i++] = item.ProductDate;
+                row[i++] = item.MaintainDate;
+                row[i++] = item.Note;
+
+                dataTable.Rows.Add(row);
+            }
+
+            var fileName = string.Format("{0}{1}", Guid.NewGuid().ToString(), ".xlsx");
+            var relativePath = Path.Combine(SystemInfo.TempFileFolder, fileName);
+
+            var isSuccess = ExcelHelper.DataTableToExcel(dataTable, relativePath);
+
+            if (isSuccess)
+            {
+                return new CResult<string>(relativePath);
+            }
+            else
+            {
+                return new CResult<string>("", ErrorCode.SystemError);
+            }
+        }
     }
 }

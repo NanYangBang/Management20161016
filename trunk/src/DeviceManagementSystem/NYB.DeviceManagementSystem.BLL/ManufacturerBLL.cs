@@ -11,6 +11,7 @@ using NYB.DeviceManagementSystem.DAL;
 using System.Linq.Expressions;
 using System.Data;
 using System.Web.Security;
+using System.Reflection;
 
 namespace NYB.DeviceManagementSystem.BLL
 {
@@ -18,6 +19,8 @@ namespace NYB.DeviceManagementSystem.BLL
     {
         public CResult<List<WebManufacturer>> GetManufacturerList(out int totalCount, string projectID, string searchInfo, int pageIndex = 1, int pageSize = 10, string orderby = null, bool ascending = false)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+
             using (DeviceMgmtEntities context = new DeviceMgmtEntities())
             {
                 Expression<Func<Manufacturer, bool>> filter = t => t.ProjectID == projectID && t.IsValid == true;
@@ -45,12 +48,17 @@ namespace NYB.DeviceManagementSystem.BLL
                     ProjectID = t.ProjectID
                 }).ToList();
 
+                LogHelper.Info("result", result);
+
                 return new CResult<List<WebManufacturer>>(result);
             }
         }
 
         public CResult<Dictionary<string, string>> GetManufacturerDir(string projectID)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("projectID", projectID);
+
             using (DeviceMgmtEntities context = new DeviceMgmtEntities())
             {
                 Expression<Func<Manufacturer, bool>> filter = t => t.ProjectID == projectID && t.IsValid == true;
@@ -63,12 +71,17 @@ namespace NYB.DeviceManagementSystem.BLL
                     Name = t.Name,
                 }).ToList().OrderBy(t => t.Name).ToDictionary(t => t.ID, r => r.Name);
 
+                LogHelper.Info("result", result);
+
                 return new CResult<Dictionary<string, string>>(result);
             }
         }
 
         public CResult<bool> InsertManufacturer(WebManufacturer model)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("model", model);
+
             if (string.IsNullOrEmpty(model.ProjectID))
             {
                 return new CResult<bool>(false, ErrorCode.ParameterError);
@@ -79,6 +92,11 @@ namespace NYB.DeviceManagementSystem.BLL
                 if (context.Project.Any(t => t.IsValid && t.ID == model.ProjectID) == false)
                 {
                     return new CResult<bool>(false, ErrorCode.ProjectNotExist);
+                }
+
+                if (context.Manufacturer.Any(t => t.Name.ToUpper() == model.Name.ToUpper() && t.ProjectID == model.ProjectID && t.IsValid))
+                {
+                    return new CResult<bool>(false, ErrorCode.ManufacturerNameIsExist);
                 }
 
                 var entity = new Manufacturer();
@@ -102,6 +120,9 @@ namespace NYB.DeviceManagementSystem.BLL
 
         public CResult<bool> UpdateManufacturer(WebManufacturer model)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("model", model);
+
             if (string.IsNullOrEmpty(model.ID))
             {
                 return new CResult<bool>(false, ErrorCode.ParameterError);
@@ -112,7 +133,12 @@ namespace NYB.DeviceManagementSystem.BLL
                 var entity = context.Manufacturer.FirstOrDefault(t => t.ID == model.ID && t.IsValid);
                 if (entity == null)
                 {
-                    return new CResult<bool>(false, ErrorCode.DataNoExist);
+                    return new CResult<bool>(false, ErrorCode.ManufacturerNotExist);
+                }
+
+                if (context.Manufacturer.Any(t => t.Name.ToUpper() == model.Name.ToUpper() && t.ProjectID == model.ProjectID && t.IsValid && t.ID != model.ID))
+                {
+                    return new CResult<bool>(false, ErrorCode.ManufacturerNameIsExist);
                 }
 
                 entity.Name = model.Name;
@@ -129,6 +155,9 @@ namespace NYB.DeviceManagementSystem.BLL
 
         public CResult<WebManufacturer> GetManufacturerByID(string manufacturerID)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("manufacturerID", manufacturerID);
+
             if (string.IsNullOrEmpty(manufacturerID))
             {
                 return new CResult<WebManufacturer>(null, ErrorCode.ParameterError);
@@ -139,7 +168,7 @@ namespace NYB.DeviceManagementSystem.BLL
                 var entity = context.Manufacturer.FirstOrDefault(t => t.ID == manufacturerID && t.IsValid);
                 if (entity == null)
                 {
-                    return new CResult<WebManufacturer>(null, ErrorCode.DataNoExist);
+                    return new CResult<WebManufacturer>(null, ErrorCode.ManufacturerNotExist);
                 }
 
                 var model = new WebManufacturer()
@@ -157,12 +186,17 @@ namespace NYB.DeviceManagementSystem.BLL
                     ProjectID = entity.ProjectID
                 };
 
+                LogHelper.Info("result", model);
+
                 return new CResult<WebManufacturer>(model);
             }
         }
 
         public CResult<bool> DeleteManufacturer(string manufacturerID)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("manufacturerID", manufacturerID);
+
             if (string.IsNullOrEmpty(manufacturerID))
             {
                 return new CResult<bool>(false, ErrorCode.ParameterError);
@@ -172,10 +206,10 @@ namespace NYB.DeviceManagementSystem.BLL
                 var entity = context.Manufacturer.FirstOrDefault(t => t.ID == manufacturerID && t.IsValid);
                 if (entity == null)
                 {
-                    return new CResult<bool>(false, ErrorCode.DataNoExist);
+                    return new CResult<bool>(false, ErrorCode.ManufacturerNotExist);
                 }
 
-                if (context.Device.Any(t => t.ManufacturerID == entity.ID))
+                if (context.Device.Any(t => t.ManufacturerID == entity.ID && t.IsValid))
                 {
                     return new CResult<bool>(false, ErrorCode.ManufactureConatinDevice);
                 }

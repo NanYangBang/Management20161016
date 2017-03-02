@@ -62,7 +62,7 @@
                             @project.Note
                         </td>
                         <td>
-                            @project.WebUser.UserName
+                            @project.WebUser.LoginName
                         </td>
                         <td>
                             @{var routeValues = new { projectID = project.ID, returnUrl = Request.Url.AbsoluteUri, _ = DateTime.Now.Ticks };}

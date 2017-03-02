@@ -11,6 +11,7 @@ using NYB.DeviceManagementSystem.DAL;
 using System.Linq.Expressions;
 using System.Data;
 using System.Web.Security;
+using System.Reflection;
 
 namespace NYB.DeviceManagementSystem.BLL
 {
@@ -18,6 +19,8 @@ namespace NYB.DeviceManagementSystem.BLL
     {
         public CResult<List<WebSupplier>> GetSupplierList(out int totalCount, string projectID, string searchInfo, int pageIndex = 1, int pageSize = 10, string orderby = null, bool ascending = false)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+
             using (DeviceMgmtEntities context = new DeviceMgmtEntities())
             {
                 Expression<Func<Supplier, bool>> filter = t => t.ProjectID == projectID && t.IsValid == true;
@@ -45,12 +48,17 @@ namespace NYB.DeviceManagementSystem.BLL
                     ProjectID = t.ProjectID
                 }).ToList();
 
+                LogHelper.Info("result", result);
+
                 return new CResult<List<WebSupplier>>(result);
             }
         }
 
         public CResult<Dictionary<string, string>> GetSupplierDir(string projectID)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("projectID", projectID);
+
             using (DeviceMgmtEntities context = new DeviceMgmtEntities())
             {
                 Expression<Func<Supplier, bool>> filter = t => t.ProjectID == projectID && t.IsValid == true;
@@ -63,12 +71,17 @@ namespace NYB.DeviceManagementSystem.BLL
                     Name = t.Name,
                 }).ToList().OrderBy(t => t.Name).ToDictionary(t => t.ID, r => r.Name);
 
+                LogHelper.Info("result", result);
+
                 return new CResult<Dictionary<string, string>>(result);
             }
         }
 
         public CResult<bool> InsertSupplier(WebSupplier model)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("model", model);
+
             if (string.IsNullOrEmpty(model.ProjectID))
             {
                 return new CResult<bool>(false, ErrorCode.ParameterError);
@@ -79,6 +92,11 @@ namespace NYB.DeviceManagementSystem.BLL
                 if (context.Project.Any(t => t.IsValid && t.ID == model.ProjectID) == false)
                 {
                     return new CResult<bool>(false, ErrorCode.ProjectNotExist);
+                }
+
+                if (context.Supplier.Any(t => t.Name.ToUpper() == model.Name.ToUpper() && t.ProjectID == model.ProjectID && t.IsValid))
+                {
+                    return new CResult<bool>(false, ErrorCode.SupplierNameIsExist);
                 }
 
                 var entity = new Supplier();
@@ -102,6 +120,9 @@ namespace NYB.DeviceManagementSystem.BLL
 
         public CResult<bool> UpdateSupplier(WebSupplier model)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("model", model);
+
             if (string.IsNullOrEmpty(model.ID))
             {
                 return new CResult<bool>(false, ErrorCode.ParameterError);
@@ -112,7 +133,12 @@ namespace NYB.DeviceManagementSystem.BLL
                 var entity = context.Supplier.FirstOrDefault(t => t.ID == model.ID && t.IsValid);
                 if (entity == null)
                 {
-                    return new CResult<bool>(false, ErrorCode.DataNoExist);
+                    return new CResult<bool>(false, ErrorCode.SupplierNotExist);
+                }
+
+                if (context.Supplier.Any(t => t.Name.ToUpper() == model.Name.ToUpper() && t.ProjectID == model.ProjectID && t.IsValid && t.ID == model.ID))
+                {
+                    return new CResult<bool>(false, ErrorCode.SupplierNameIsExist);
                 }
 
                 entity.Name = model.Name;
@@ -129,6 +155,9 @@ namespace NYB.DeviceManagementSystem.BLL
 
         public CResult<WebSupplier> GetSupplierByID(string SupplierID)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("SupplierID", SupplierID);
+
             if (string.IsNullOrEmpty(SupplierID))
             {
                 return new CResult<WebSupplier>(null, ErrorCode.ParameterError);
@@ -139,7 +168,7 @@ namespace NYB.DeviceManagementSystem.BLL
                 var entity = context.Supplier.FirstOrDefault(t => t.ID == SupplierID && t.IsValid);
                 if (entity == null)
                 {
-                    return new CResult<WebSupplier>(null, ErrorCode.DataNoExist);
+                    return new CResult<WebSupplier>(null, ErrorCode.SupplierNotExist);
                 }
 
                 var model = new WebSupplier()
@@ -157,12 +186,17 @@ namespace NYB.DeviceManagementSystem.BLL
                     ProjectID = entity.ProjectID
                 };
 
+                LogHelper.Info("result", model);
+
                 return new CResult<WebSupplier>(model);
             }
         }
 
         public CResult<bool> DeleteSupplier(string SupplierID)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("SupplierID", SupplierID);
+
             if (string.IsNullOrEmpty(SupplierID))
             {
                 return new CResult<bool>(false, ErrorCode.ParameterError);
@@ -172,10 +206,10 @@ namespace NYB.DeviceManagementSystem.BLL
                 var entity = context.Supplier.FirstOrDefault(t => t.ID == SupplierID && t.IsValid);
                 if (entity == null)
                 {
-                    return new CResult<bool>(false, ErrorCode.DataNoExist);
+                    return new CResult<bool>(false, ErrorCode.SupplierNotExist);
                 }
 
-                if (context.Device.Any(t => t.SupplierID == entity.ID))
+                if (context.Device.Any(t => t.SupplierID == entity.ID && t.IsValid))
                 {
                     return new CResult<bool>(false, ErrorCode.SupplierConatinDevice);
                 }

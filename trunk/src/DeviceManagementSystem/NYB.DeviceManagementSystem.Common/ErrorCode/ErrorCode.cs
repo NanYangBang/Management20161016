@@ -100,5 +100,56 @@ namespace NYB.DeviceManagementSystem.Common
 
         [DescriptionAttribute("生产厂商下存在关联设备，不可删除")]
         DeviceNotExist = 20107,
+
+        [DescriptionAttribute("文件中没有数据")]
+        FileContainNoData = 20108,
+
+        /// <summary>
+        /// 用户不存在
+        /// </summary>
+        [DescriptionAttribute("用户不存在")]
+        UserNotExist = 20109,
+
+        /// <summary>
+        /// 设备名称不允许重复
+        /// </summary>
+        [DescriptionAttribute("设备名称不允许重复")]
+        DeviceNameIsExist = 20110,
+
+        /// <summary>
+        /// 设备类型名称不允许重复
+        /// </summary>
+        [DescriptionAttribute("设备类型名称不允许重复")]
+        DeviceTypeNameIsExist = 20111,
+
+        /// <summary>
+        /// 生产厂商名称不允许重复
+        /// </summary>
+        [DescriptionAttribute("生产厂商名称不允许重复")]
+        ManufacturerNameIsExist = 20112,
+
+        /// <summary>
+        /// 供应商名称不允许重复
+        /// </summary>
+        [DescriptionAttribute("供应商名称不允许重复")]
+        SupplierNameIsExist = 20113,
+
+        /// <summary>
+        /// 设备类型不存在
+        /// </summary>
+        [DescriptionAttribute("设备类型不存在")]
+        DeviceTypeNotExist = 20114,
+
+        /// <summary>
+        /// 生产厂商不存在
+        /// </summary>
+        [DescriptionAttribute("生产厂商不存在")]
+        ManufacturerNotExist = 20115,
+
+        /// <summary>
+        /// 供应商不存在
+        /// </summary>
+        [DescriptionAttribute("供应商不存在")]
+        SupplierNotExist = 20116,
     }
 }

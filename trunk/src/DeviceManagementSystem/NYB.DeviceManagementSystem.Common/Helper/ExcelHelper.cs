@@ -1,6 +1,7 @@
 ﻿using NPOI.HSSF.UserModel;
 using NPOI.SS.Formula.Eval;
 using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -13,16 +14,11 @@ namespace NYB.DeviceManagementSystem.Common.Helper
 {
     public class ExcelHelper
     {
-        public string ExportExcel(string fileName, List<string> columnNames)
-        {
-            return null;
-        }
-
-        //Datatable导出Excel
-        private static void GridToExcelByNPOI(DataTable dt, string strExcelFileName)
+        public static bool DataTableToExcel(DataTable dt, string relativeFileName)
         {
             try
             {
+
                 HSSFWorkbook workbook = new HSSFWorkbook();
                 ISheet sheet = workbook.CreateSheet("Sheet1");
 
@@ -88,13 +84,24 @@ namespace NYB.DeviceManagementSystem.Common.Helper
                 }
 
                 //写Excel
-                FileStream file = new FileStream(strExcelFileName, FileMode.OpenOrCreate);
+                var absolutePath = Path.Combine(SystemInfo.BaseDirectory, relativeFileName);
+                var dir = Path.GetDirectoryName(absolutePath);
+                if (!Directory.Exists(dir))
+                {
+                    Directory.CreateDirectory(dir);
+                }
+
+                FileStream file = new FileStream(absolutePath, FileMode.OpenOrCreate);
                 workbook.Write(file);
                 file.Flush();
                 file.Close();
+
+                return true;
             }
             catch (Exception ex)
             {
+                return false;
+
                 //ILog log = LogManager.GetLogger("Exception Log");
                 //log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
             }
@@ -105,20 +112,22 @@ namespace NYB.DeviceManagementSystem.Common.Helper
 
         }
 
-        public static DataTable XlSToDataTable(string strFilePath, string strTableName, int iSheetIndex)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="relativePath">相对路径</param>
+        /// <param name="iSheetIndex"></param>
+        /// <returns></returns>
+        public static DataTable ExcelToDataTable(string relativePath, int iSheetIndex)
         {
-
-            string strExtName = Path.GetExtension(strFilePath);
+            string strExtName = Path.GetExtension(relativePath);
+            var absolutePath = Path.Combine(SystemInfo.BaseDirectory, relativePath);
 
             DataTable dt = new DataTable();
-            if (!string.IsNullOrEmpty(strTableName))
-            {
-                dt.TableName = strTableName;
-            }
 
             if (strExtName.Equals(".xls") || strExtName.Equals(".xlsx"))
             {
-                using (FileStream file = new FileStream(strFilePath, FileMode.Open, FileAccess.Read))
+                using (FileStream file = new FileStream(absolutePath, FileMode.Open, FileAccess.Read))
                 {
                     HSSFWorkbook workbook = new HSSFWorkbook(file);
                     ISheet sheet = workbook.GetSheetAt(iSheetIndex);
@@ -218,6 +227,15 @@ namespace NYB.DeviceManagementSystem.Common.Helper
                         dt.Rows.Add(dr);
                     }
                 }
+            }
+
+            try
+            {
+                File.Delete(absolutePath);
+            }
+            catch (Exception)
+            {
+                Logger.LogHelper.Error("删除文件失败");
             }
 
             return dt;

@@ -1,5 +1,7 @@
-﻿using System;
+﻿using NYB.DeviceManagementSystem.Common;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Web;
@@ -75,7 +77,26 @@ namespace NYB.DeviceManagementSystem.View
 
         private static void DelTempFile()
         {
+            //var bll = new NYB.DeviceManagementSystem.BLL.MaintainRecordBLL();
+            //bll.DeleteMaintainRecord("fdsaf");
+            //var test = new NYB.DeviceManagementSystem.ViewModel.WebDevice();
+            //var list = new List<NYB.DeviceManagementSystem.ViewModel.WebDevice>();
+            //list.Add(test);
+            //list.Add(test);
+            //NYB.DeviceManagementSystem.Common.Logger.LogHelper.Info(list);
 
+            NYB.DeviceManagementSystem.Common.Logger.LogHelper.Info("删除temp文件夹");
+
+            var needDeletePath = Path.Combine(SystemInfo.BaseDirectory, SystemInfo.TempFileFolder);
+            if (Directory.Exists(needDeletePath) == false)
+            {
+                return;
+            }
+            var files = Directory.GetFiles(needDeletePath);
+            foreach (var item in files)
+            {
+                File.Delete(item);
+            }
         }
 
         protected void Application_End(object sender, EventArgs e)

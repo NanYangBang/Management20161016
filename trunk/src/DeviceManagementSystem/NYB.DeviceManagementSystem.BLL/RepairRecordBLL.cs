@@ -11,6 +11,7 @@ using NYB.DeviceManagementSystem.DAL;
 using System.Linq.Expressions;
 using System.Data;
 using System.Web.Security;
+using System.Reflection;
 
 namespace NYB.DeviceManagementSystem.BLL
 {
@@ -18,6 +19,10 @@ namespace NYB.DeviceManagementSystem.BLL
     {
         public CResult<List<WebRepairRecord>> GetRepairRecordList(string deviceID, out int totalCount, string projectID, string searchInfo, int pageIndex = 1, int pageSize = 10, string orderby = null, bool ascending = false)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("deviceID", deviceID);
+            LogHelper.Info("projectID", projectID);
+
             using (DeviceMgmtEntities context = new DeviceMgmtEntities())
             {
                 Expression<Func<RepairRecord, bool>> filter = t => t.ProjectID == projectID && t.IsValid == true;
@@ -48,12 +53,17 @@ namespace NYB.DeviceManagementSystem.BLL
                     ProjectID = t.ProjectID
                 }).ToList();
 
+                LogHelper.Info("result", result);
+
                 return new CResult<List<WebRepairRecord>>(result);
             }
         }
 
         public CResult<List<WebRepairRecord>> GetRepairRecordListByDeviceID(string deviceID, out int totalCount, string searchInfo, int pageIndex = 1, int pageSize = 10, string orderby = null, bool ascending = false)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("deviceID", deviceID);
+
             using (DeviceMgmtEntities context = new DeviceMgmtEntities())
             {
                 Expression<Func<RepairRecord, bool>> filter = t => t.DeviceID == deviceID && t.IsValid == true;
@@ -80,12 +90,17 @@ namespace NYB.DeviceManagementSystem.BLL
                     ProjectID = t.ProjectID
                 }).ToList();
 
+                LogHelper.Info("result", result);
+
                 return new CResult<List<WebRepairRecord>>(result);
             }
         }
 
         public CResult<bool> InsertRepairRecord(WebRepairRecord model)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("model", model);
+
             if (string.IsNullOrEmpty(model.ProjectID))
             {
                 return new CResult<bool>(false, ErrorCode.ParameterError);
@@ -122,6 +137,9 @@ namespace NYB.DeviceManagementSystem.BLL
 
         public CResult<bool> UpdateRepairRecord(WebRepairRecord model)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("model", model);
+
             if (string.IsNullOrEmpty(model.ID))
             {
                 return new CResult<bool>(false, ErrorCode.ParameterError);
@@ -147,6 +165,9 @@ namespace NYB.DeviceManagementSystem.BLL
 
         public CResult<WebRepairRecord> GetRepairRecordByID(string repairRecordID)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("repairRecordID", repairRecordID);
+
             if (string.IsNullOrEmpty(repairRecordID))
             {
                 return new CResult<WebRepairRecord>(null, ErrorCode.ParameterError);
@@ -174,12 +195,17 @@ namespace NYB.DeviceManagementSystem.BLL
                     ProjectID = entity.ProjectID
                 };
 
+                LogHelper.Info("result", model);
+
                 return new CResult<WebRepairRecord>(model);
             }
         }
 
         public CResult<bool> DeleteRepairRecord(string repairRecordID)
         {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("repairRecordID", repairRecordID);
+
             if (string.IsNullOrEmpty(repairRecordID))
             {
                 return new CResult<bool>(false, ErrorCode.ParameterError);
