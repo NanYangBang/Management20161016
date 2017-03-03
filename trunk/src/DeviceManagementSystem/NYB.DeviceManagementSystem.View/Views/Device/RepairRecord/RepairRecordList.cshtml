@@ -6,10 +6,20 @@
 @{
     string returnUrl = ViewBag.ReturnUrl;
 }
+<link href="@Url.Content("~/Content/Plugin/jQuery-UI/jquery-ui-1.8.16.custom.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/Plugin/jQuery-UI-Timepicker/jquery-ui-timepicker.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/jquery-ui.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery-ui-timepicker-addon.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.ui.datepicker-zh-CN.js")" type="text/javascript"></script>
 <script type="text/javascript" src="@Url.Content("~/Scripts/User/Index.js")"></script>
 <script type="text/javascript" src="@Url.Content("~/Scripts/Common/Index.js")"></script>
 <div leftname="维修记录信息" actionname="设备管理">
+
     <form method="get" id="searchForm" class="userSearchForm">
+        <label>开始时间</label>
+        <input name="startTime" txttype="time" class="time" type="text" value="@(ViewBag.StartTime)" />
+        <label>结束时间</label>
+        <input name="endTime" txttype="time" class="time" type="text" value="@(ViewBag.EndTime)" />
         <input type="text" name="searchInfo" id="seacheName" value="@( ViewBag.SearchInfo)" />
         <input style="line-height:0px" type="submit" class="" id="btnSearch" value="搜索" />
     </form>
@@ -56,7 +66,7 @@
                             @*@Html.ActionLink("修改", "EditRepairRecord", routeValues)*@
                             <a title="修改" href="@(Url.Action("EditRepairRecord", "Device", routeValues))"><img src="@Url.Content("~/Images/edit.png")" /></a>
                             @*<a href="#" onclick="DeleteDeviceRepairRecord('@device.ID')" name="DeleteDeviceType">刪除</a>*@
-                            <a href="#" title="删除设备信息" onclick="DeleteDeviceRepairRecord('@device.ID')" name="DeleteDeviceType"><img src="@Url.Content("~/Images/del.png")" /></a>
+                            <a href="#" title="删除" onclick="DeleteDeviceRepairRecord('@device.ID')" name="DeleteDeviceType"><img src="@Url.Content("~/Images/del.png")" /></a>
                             <a title="查看" href="@(Url.Action("ViewRepairRecord", "Device", routeValues))"><img src="@Url.Content("~/Images/look.png")" /></a>
                         </td>
                     </tr>
@@ -78,12 +88,14 @@
 </div>
 <script type="text/javascript">
     window.UrlResource = {
-        UrlAddAction: '@Url.Action("CreateDevice", "Device", new { returnUrl = Request.Url.AbsoluteUri })'
+        UrlAddAction: '@Url.Action("CreateDevice", "Device", new { returnUrl = Request.Url.AbsoluteUri })',
+        UrlImage: '@Url.Content("~/Content/Plugin/jQuery-UI-Timepicker/images/calendar.png")'
     }
 
     $(document).ready(function () {
         SortAlertRecord();
         SearchInfoFocus('请输入设备名称、维修人');
+        BindDatePick();
     })
 
     function DeleteDeviceRepairRecord(t) {
@@ -96,5 +108,20 @@
                 }
             })
         }
+    }
+
+    function BindDatePick() {
+        var path = UrlResource.UrlImage;
+        $('.time').datepicker({
+            showButtonPanel: true,
+            yearRange: 'c-10:c+2',
+            showOn: "button", buttonImageOnly: true,
+            numberOfMonths: 1,
+            changeMonth: true,
+            changeYear: true,
+            buttonImage: path
+        });
+        BindDatePickerTriggerEvent();
+        $('.time').attr('readonly', 'readonly');
     }
 </script>

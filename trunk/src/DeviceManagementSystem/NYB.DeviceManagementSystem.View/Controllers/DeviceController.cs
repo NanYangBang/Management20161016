@@ -8,6 +8,7 @@ using Webdiyer.WebControls.Mvc;
 using NYB.DeviceManagementSystem.BLL;
 using System.IO;
 using System.Diagnostics;
+using NYB.DeviceManagementSystem.Common;
 
 namespace NYB.DeviceManagementSystem.View.Controllers
 {
@@ -139,10 +140,12 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             return JsonContentHelper.GetJsonContent(cResult);
         }
 
-        public ActionResult RepairRecordList(string deviceID = "", string returnUrl = "", string searchInfo = "", int pageIndex = 1, int pageSize = 10, string orderBy = "", bool ascending = false)
+        public ActionResult RepairRecordList(DateTime? startTime, DateTime? endTime, string deviceID = "", string returnUrl = "", string searchInfo = "", int pageIndex = 1, int pageSize = 10, string orderBy = "", bool ascending = false)
         {
             RepairRecordBLL repairRecord = new RepairRecordBLL();
             ViewBag.ReturnUrl = returnUrl;
+            ViewBag.StartTime = startTime;
+            ViewBag.EndTime = endTime;
             int totalCount = 0;
             var cResult = repairRecord.GetRepairRecordList(deviceID, out totalCount, this.GetCurrentProjectID(), searchInfo, pageIndex, pageSize, orderBy, ascending);
 
@@ -277,11 +280,13 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             return JsonContentHelper.GetJsonContent(cResult);
         }
 
-        public ActionResult MaintainRecordList(string deviceID = "", string returnUrl = "", string searchInfo = "", int pageIndex = 1, int pageSize = 10, string orderBy = ""
+        public ActionResult MaintainRecordList(DateTime? startTime, DateTime? endTime, string deviceID = "", string returnUrl = "", string searchInfo = "", int pageIndex = 1, int pageSize = 10, string orderBy = ""
             , bool ascending = false)
         {
             ViewBag.ReturnUrl = returnUrl;
             MaintainRecordBLL maintainRecord = new MaintainRecordBLL();
+            ViewBag.StartTime = startTime;
+            ViewBag.EndTime = endTime;
             int totalCount = 0;
             var cResult = maintainRecord.GetMaintainRecordList(out totalCount, this.GetCurrentProjectID(), searchInfo, deviceID, pageIndex, pageSize, orderBy, ascending);
 
@@ -326,6 +331,34 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             {
                 return View();
             }
+        }
+
+        [HttpPost]
+        public ActionResult DeleteMaintainRecord(string id)
+        {
+            try
+            {
+                var result = new MaintainRecordBLL().DeleteMaintainRecord(id);
+                return JsonContentHelper.GetJsonContent(result);
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult ImportExcel(HttpPostedFileBase fileData)
+        {
+            var result = new DeviceBLL().ImportDeviceFromExcel(fileData, this.GetCurrentProjectID(), this.GetCurrentUserID());
+            return JsonContentHelper.GetJsonContent(result);
+        }
+
+        public ActionResult ExportExcel(string searchInfo)
+        {
+            var result = new DeviceBLL().ExportDeviceToExcel(this.GetCurrentProjectID(), searchInfo);
+            return JsonContentHelper.GetJsonContent(result);
+
         }
 
     }

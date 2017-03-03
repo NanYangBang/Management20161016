@@ -20,7 +20,7 @@ function DataDel(id, url) {
 }
 
 function SearchInfoFocus(prompt) {
-    var domeSearInfoText = $('#searchForm input[type="text"]');
+    var domeSearInfoText = $('#searchForm input[type="text"][txtType!="time"]');
 
     var firstVal = domeSearInfoText.val();
     if (firstVal == '') {
@@ -46,6 +46,13 @@ function SearchInfoFocus(prompt) {
             domeSearInfoText.css('color', '#ccc');
         }
     })
+
+    $('#btnSearch').click(function (e) {
+        if (domeSearInfoText.val() == prompt) {
+            //                e.preventDefault();
+            domeSearInfoText.val('');
+        }
+    });
 
 }
 

@@ -74,7 +74,7 @@ THE SOFTWARE.
     width: 1px;
 }
 
-body .uploadifyButton {
+.sub-content .uploadifyButton {
     width: 80px;
     line-height: 24px;
     height: 30px;
