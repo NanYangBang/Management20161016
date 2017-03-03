@@ -19,7 +19,7 @@ namespace NYB.DeviceManagementSystem.BLL
 {
     public class MaintainRecordBLL
     {
-        public CResult<List<WebMaintainRecord>> GetMaintainRecordList(out int totalCount, string projectID, string searchInfo, string deviceID = "", int pageIndex = 1, int pageSize = 10, string orderby = null, bool ascending = false)
+        public CResult<List<WebMaintainRecord>> GetMaintainRecordList(out int totalCount, string projectID, string searchInfo, DateTime? startTime = null, DateTime? endTime = null, string deviceID = "", int pageIndex = 1, int pageSize = 10, string orderby = null, bool ascending = false)
         {
             LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
 
@@ -33,6 +33,15 @@ namespace NYB.DeviceManagementSystem.BLL
             if (!string.IsNullOrWhiteSpace(deviceID))
             {
                 filter = filter.And(t => t.DeviceID == deviceID);
+            }
+
+            if (startTime.HasValue)
+            {
+                filter = filter.And(t => t.CreateDate >= startTime);
+            }
+            if (endTime.HasValue)
+            {
+                filter = filter.And(t => t.CreateDate <= endTime);
             }
 
             using (DeviceMgmtEntities context = new DeviceMgmtEntities())
