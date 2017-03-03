@@ -17,7 +17,7 @@ namespace NYB.DeviceManagementSystem.BLL
 {
     public class RepairRecordBLL
     {
-        public CResult<List<WebRepairRecord>> GetRepairRecordList(string deviceID, out int totalCount, string projectID, string searchInfo, int pageIndex = 1, int pageSize = 10, string orderby = null, bool ascending = false)
+        public CResult<List<WebRepairRecord>> GetRepairRecordList(string deviceID, out int totalCount, string projectID, string searchInfo, DateTime? startTime = null, DateTime? endTime = null, int pageIndex = 1, int pageSize = 10, string orderby = null, bool ascending = false)
         {
             LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
             LogHelper.Info("deviceID", deviceID);
@@ -35,6 +35,15 @@ namespace NYB.DeviceManagementSystem.BLL
                 if (!string.IsNullOrWhiteSpace(deviceID))
                 {
                     filter = filter.And(t => t.DeviceID == deviceID);
+                }
+
+                if (startTime.HasValue)
+                {
+                    filter = filter.And(t => t.CreateDate >= startTime);
+                }
+                if (endTime.HasValue)
+                {
+                    filter = filter.And(t => t.CreateDate <= endTime);
                 }
 
                 var temp = context.RepairRecord.Where(filter).Page(out totalCount, pageIndex, pageSize, orderby, ascending, true);
