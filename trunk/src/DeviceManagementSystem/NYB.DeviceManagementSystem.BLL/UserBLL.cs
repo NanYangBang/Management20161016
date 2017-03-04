@@ -34,7 +34,7 @@ namespace NYB.DeviceManagementSystem.BLL
             if (string.IsNullOrWhiteSpace(searchInfo) == false)
             {
                 searchInfo = searchInfo.Trim().ToUpper();
-                filter = filter.And(t => t.Name.ToUpper().Contains(searchInfo));
+                filter = filter.And(t => t.Name.ToUpper().Contains(searchInfo) || t.LoginName.ToUpper().Contains(searchInfo));
             }
 
             using (DeviceMgmtEntities context = new DeviceMgmtEntities())

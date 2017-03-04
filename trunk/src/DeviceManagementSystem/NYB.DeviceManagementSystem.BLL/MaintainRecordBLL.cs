@@ -28,7 +28,8 @@ namespace NYB.DeviceManagementSystem.BLL
             if (string.IsNullOrWhiteSpace(searchInfo) == false)
             {
                 searchInfo = searchInfo.Trim().ToUpper();
-                filter = filter.And(t => t.Note.ToUpper().Contains(searchInfo));
+                filter = filter.And(t => t.Operator.ToUpper().Contains(searchInfo) || t.Device.Name.Contains(searchInfo));
+                //filter = filter.And(t => t.Note.ToUpper().Contains(searchInfo));
             }
             if (!string.IsNullOrWhiteSpace(deviceID))
             {
