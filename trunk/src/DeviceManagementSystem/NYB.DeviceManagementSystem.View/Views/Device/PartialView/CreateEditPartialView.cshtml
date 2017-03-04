@@ -60,16 +60,14 @@
                                     <option id="firstOption" value="@dic.Key">@dic.Value</option>
                                 }
                             </select>
-
                         </td>
-                    </tr>
-                    <tr>
+
                         <td>
-                            <b>供应商</b>
+                            <b><em>*</em>供应商</b>
                         </td>
                         <td>
                             @*@Html.TextBoxFor(model => model.SupplierID)
-                                @Html.ValidationMessageFor(model => model.SupplierID)*@
+            @Html.ValidationMessageFor(model => model.SupplierID)*@
                             <select value="" name="SupplierID">
                                 @foreach (KeyValuePair<string, string> dic in (Dictionary<string, string>)ViewBag.SupperList)
                                 {
@@ -78,6 +76,7 @@
                             </select>
                         </td>
                     </tr>
+
                     <tr>
                         <td>
                             <b>生产日期</b>
@@ -86,8 +85,7 @@
                             @Html.TextBoxFor(model => model.ProductDate)
                             @Html.ValidationMessageFor(model => model.ProductDate)
                         </td>
-                    </tr>
-                    <tr>
+
                         <td>
                             <b>保养日期</b>
                         </td>
@@ -96,12 +94,13 @@
                             @Html.ValidationMessageFor(model => model.MaintainDate)
                         </td>
                     </tr>
+
                     <tr>
                         <td>
                             <b>备注</b>
                         </td>
                         <td>
-                            @Html.TextBoxFor(model => model.Note)
+                            @Html.TextAreaFor(model => model.Note)
                             @Html.ValidationMessageFor(model => model.Note)
                         </td>
                     </tr>
