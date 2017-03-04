@@ -29,6 +29,7 @@ input[type="password"] {
         position: absolute;
         left: 195px;
         top: 157px;
+        width: 300px;
     }
 
         .logon-panel .logon-controls input[type="submit"] {
@@ -38,18 +39,31 @@ input[type="password"] {
         }
 
         .logon-panel .logon-controls dt {
-            margin-top: 10px;
+            display: inline-block;
+            text-align: right;
+            width: 40px;
         }
 
-        .logon-panel .logon-controls dd {
-            vertical-align: middle;
-        }
+#subLogin {
+    margin-top: 10px;
+}
 
-        .logon-panel .logon-controls input[type="checkbox"] {
-        }
+.logon-panel .logon-controls dd {
+    vertical-align: middle;
+    display: inline-block;
+    width: 240px;
+    margin-right: -10px;
+    -ms-margin-start: 10px;
+    -moz-margin-start: 10px;
+    -webkit-margin-start: 10px;
+    -o-margin-start: 10px;
+}
 
-        .logon-panel .logon-controls input {
-        }
+.logon-panel .logon-controls input[type="checkbox"] {
+}
+
+.logon-panel .logon-controls input {
+}
 
 .prompt {
     position: absolute;
@@ -70,5 +84,3 @@ input[type="password"] {
     text-align: right;
     padding-right: 60px;
 }
-
-

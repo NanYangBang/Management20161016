@@ -16,7 +16,7 @@
             <script src="@Url.Content("~/Scripts/base.js")" type="text/javascript"></script>
         }
     }
-    
+
     <script src="@Url.Content("~/Scripts/jquery.js")" type="text/javascript"></script>
 
 </head>
@@ -41,8 +41,10 @@
                     </dt>
                     <dd>
                         <span class="inline-block">@Html.TextBoxFor(m => m.LoginName, new { tabIndex = 1 })</span>
+                        
                         @*<span class="inline-block">@Html.CheckBoxFor(m => m.RememberMe) @Html.LabelFor(m => m.RememberMe)</span>*@
                     </dd>
+                    <dt></dt>
                     <dd>
                         @Html.ValidationMessageFor(m => m.LoginName)
                     </dd>
@@ -51,10 +53,14 @@
                     </dt>
                     <dd>
                         @Html.PasswordFor(m => m.Pwd, new { tabIndex = 2 })
-                        <input class="blue-button" type="submit" value="登录" tabindex="3" />
                     </dd>
+                    <dt></dt>
                     <dd>
                         @Html.ValidationMessageFor(m => m.Pwd)
+                    </dd>
+                    <dt></dt>
+                    <dd>
+                        <input id="subLogin" class="blue-button" type="submit" value="登录" tabindex="3" />
                     </dd>
                 </dl>
             </fieldset>
