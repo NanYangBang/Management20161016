@@ -147,7 +147,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             ViewBag.StartTime = startTime;
             ViewBag.EndTime = endTime;
             int totalCount = 0;
-            var cResult = repairRecord.GetRepairRecordList(deviceID, out totalCount, this.GetCurrentProjectID(), searchInfo, null, null, pageIndex, pageSize, orderBy, ascending);
+            var cResult = repairRecord.GetRepairRecordList(deviceID, out totalCount, this.GetCurrentProjectID(), searchInfo, startTime, endTime, pageIndex, pageSize, orderBy, ascending);
 
             List<WebRepairRecord> webRepairRecordList = new List<WebRepairRecord>();
             if (cResult.Code == 0)
@@ -288,7 +288,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             ViewBag.StartTime = startTime;
             ViewBag.EndTime = endTime;
             int totalCount = 0;
-            var cResult = maintainRecord.GetMaintainRecordList(out totalCount, this.GetCurrentProjectID(), searchInfo, null, null, deviceID, pageIndex, pageSize, orderBy, ascending);
+            var cResult = maintainRecord.GetMaintainRecordList(out totalCount, this.GetCurrentProjectID(), searchInfo, startTime, endTime, deviceID, pageIndex, pageSize, orderBy, ascending);
 
             List<WebMaintainRecord> webRepairRecordList = new List<WebMaintainRecord>();
             if (cResult.Code == 0)
