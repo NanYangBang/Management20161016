@@ -148,6 +148,12 @@ namespace NYB.DeviceManagementSystem.BLL
                     return new CResult<bool>(false, ErrorCode.DataNoExist);
                 }
 
+                var userLoginName = webUser.LoginName.ToUpper();
+                if (context.User.Any(u => u.LoginName.ToUpper() == userLoginName && u.IsValid))
+                {
+                    return new CResult<bool>(false, ErrorCode.LoginNameIsExist);
+                }
+
                 MembershipCreateStatus status;
                 var currentUser = Membership.CreateUser(webUser.LoginName, webUser.Pwd, webUser.Email, null, null, true, null, out status);
 
@@ -194,7 +200,7 @@ namespace NYB.DeviceManagementSystem.BLL
                 }
             }
 
-            return new CResult<bool>(false);
+            return new CResult<bool>(false, ErrorCode.ParameterError);
         }
         public CResult<bool> DeleteUserByID(string userID, string operatorUserID)
         {
@@ -345,26 +351,27 @@ namespace NYB.DeviceManagementSystem.BLL
             }
         }
 
-        //public CResult<bool> IsUserNameExist(string userLoginName)
-        //{
-        //    if (string.IsNullOrWhiteSpace(userLoginName))
-        //    {
-        //        return new CResult<bool>(false, ErrorCode.ParameterError);
-        //    }
+        public CResult<bool> IsUserNameExist(string userLoginName)
+        {
+            if (string.IsNullOrWhiteSpace(userLoginName))
+            {
+                return new CResult<bool>(false, ErrorCode.ParameterError);
+            }
 
-        //    userLoginName = userLoginName.Trim();
+            userLoginName = userLoginName.Trim();
 
-        //    using (var context = new DeviceMgmtEntities())
-        //    {
-        //        if (context.User.Any(u => u.LoginName == userLoginName && u.IsValid))
-        //        {
-        //            return new CResult<bool>(true);
-        //        }
-        //        else
-        //        {
-        //            return new CResult<bool>(false);
-        //        }
-        //    }
-        //}
+            using (var context = new DeviceMgmtEntities())
+            {
+                userLoginName = userLoginName.ToUpper();
+                if (context.User.Any(u => u.LoginName.ToUpper() == userLoginName && u.IsValid))
+                {
+                    return new CResult<bool>(true);
+                }
+                else
+                {
+                    return new CResult<bool>(false);
+                }
+            }
+        }
     }
 }
