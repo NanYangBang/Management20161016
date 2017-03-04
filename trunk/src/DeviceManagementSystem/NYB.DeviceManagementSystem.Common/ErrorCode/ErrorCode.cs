@@ -151,5 +151,11 @@ namespace NYB.DeviceManagementSystem.Common
         /// </summary>
         [DescriptionAttribute("供应商不存在")]
         SupplierNotExist = 20116,
+
+        /// <summary>
+        /// 项目名称不允许重复
+        /// </summary>
+        [DescriptionAttribute("项目名称不允许重复")]
+        ProjectNameIsExist = 20117,
     }
 }

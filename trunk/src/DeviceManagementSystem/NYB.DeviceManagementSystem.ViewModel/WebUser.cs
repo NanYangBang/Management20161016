@@ -44,6 +44,19 @@ namespace NYB.DeviceManagementSystem.ViewModel
             set { _pwd = value; }
         }
 
+        private string _confirmPwd = string.Empty;
+        /// <summary>
+        /// 确认密码
+        /// </summary>
+        [Required(ErrorMessage = "密码必填")]
+        [Compare("Pwd", ErrorMessage = "密码必须一致")]
+        [Display(Name = "确认密码")]
+        public string ConfirmPwd
+        {
+            get { return _confirmPwd; }
+            set { _confirmPwd = value; }
+        }
+
         private string _loginName = string.Empty;
 
         /// <summary>
@@ -62,7 +75,7 @@ namespace NYB.DeviceManagementSystem.ViewModel
         /// <summary>
         /// 地址
         /// </summary>
-        [StringLength(100, ErrorMessage = "最大长度为100")]     
+        [StringLength(100, ErrorMessage = "最大长度为100")]
         public string Address
         {
             get { return _address; }
