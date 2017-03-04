@@ -6,6 +6,12 @@
     string returnUrl = ViewBag.ReturnUrl;
     string isView = ViewBag.IsView;
     isView = string.IsNullOrWhiteSpace(isView) ? "" : isView.ToString();
+    bool isAdd = ViewBag.Action == "Add";
+    object readonlyValue = null;
+    if (isAdd == false)
+    {
+        readonlyValue = new { @readonly = "readonly" };
+    }
 }
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 
@@ -30,7 +36,7 @@
                             @Html.ValidationMessageFor(model => model.Name)
                         </td>
                         <td>
-                            <b><em>*</em>用户姓名</b>
+                            <b><em>*</em>联系人姓名</b>
                         </td>
                         <td>
                             @Html.TextBoxFor(model => model.WebUser.UserName)
@@ -42,20 +48,9 @@
                             <b><em>*</em>登录名</b>
                         </td>
                         <td>
-                            @Html.TextBoxFor(model => model.WebUser.LoginName)
+                            @Html.TextBoxFor(model => model.WebUser.LoginName, readonlyValue)
                             @Html.ValidationMessageFor(model => model.WebUser.LoginName)
                         </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <b>密码</b>
-                        </td>
-                        <td>
-                            @Html.TextBoxFor(model => model.WebUser.Pwd)
-                            @Html.ValidationMessageFor(model => model.WebUser.Pwd)
-                        </td>
-                    </tr>
-                    <tr>
                         <td>
                             <b><em>*</em>电话</b>
                         </td>
@@ -64,6 +59,26 @@
                             @Html.ValidationMessageFor(model => model.WebUser.TelPhone)
                         </td>
                     </tr>
+                    @if (isAdd)
+                    {
+                        <tr>
+                            <td>
+                                <b><em>*</em>密码</b>
+                            </td>
+                            <td>
+                                @Html.PasswordFor(model => model.WebUser.Pwd)
+                                @Html.ValidationMessageFor(model => model.WebUser.Pwd)
+                            </td>
+                            <td>
+                                <b><em>*</em>@Html.LabelFor(model => model.WebUser.ConfirmPwd)</b>
+                            </td>
+                            <td>
+                                @Html.PasswordFor(model => model.WebUser.ConfirmPwd)
+                                @Html.ValidationMessageFor(model => model.WebUser.ConfirmPwd)
+                            </td>
+                        </tr>
+                    }
+
                     <tr>
                         <td>
                             <b>地址</b>
@@ -72,8 +87,6 @@
                             @Html.TextBoxFor(model => model.WebUser.Address)
                             @Html.ValidationMessageFor(model => model.WebUser.Address)
                         </td>
-                    </tr>
-                    <tr>
                         <td>
                             <b>电子邮件</b>
                         </td>
@@ -87,7 +100,7 @@
                             <b>备注</b>
                         </td>
                         <td>
-                            @Html.TextBoxFor(model => model.Note)
+                            @Html.TextAreaFor(model => model.Note)
                             @Html.ValidationMessageFor(model => model.Note)
                         </td>
                     </tr>

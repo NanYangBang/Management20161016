@@ -74,6 +74,11 @@ namespace NYB.DeviceManagementSystem.BLL
 
             using (var context = new DeviceMgmtEntities())
             {
+                if (context.Project.Any(t => t.Name.ToUpper() == webProject.Name.ToUpper() && t.IsValid))
+                {
+                    return new CResult<bool>(false, ErrorCode.ProjectNameIsExist);
+                }
+
                 var project = new Project();
                 project.CreateDate = DateTime.Now;
                 project.CreateUserID = webProject.CreateUserID;
@@ -140,6 +145,11 @@ namespace NYB.DeviceManagementSystem.BLL
                 if (project == null)
                 {
                     return new CResult<bool>(false, ErrorCode.DataNoExist);
+                }
+
+                if (context.Project.Any(t => t.Name.ToUpper() == webProject.Name.ToUpper() && t.IsValid && t.ID != webProject.ID))
+                {
+                    return new CResult<bool>(false, ErrorCode.ProjectNameIsExist);
                 }
 
                 project.Name = webProject.Name;

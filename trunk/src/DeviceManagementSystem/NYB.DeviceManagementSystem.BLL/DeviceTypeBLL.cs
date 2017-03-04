@@ -128,7 +128,7 @@ namespace NYB.DeviceManagementSystem.BLL
                     return new CResult<bool>(false, ErrorCode.DeviceTypeNotExist);
                 }
 
-                if (context.DeviceType.Any(t => t.Name.ToUpper() == model.Name.ToUpper() && t.ProjectID == model.ProjectID && t.IsValid && t.ID == model.ID))
+                if (context.DeviceType.Any(t => t.Name.ToUpper() == model.Name.ToUpper() && t.ProjectID == model.ProjectID && t.IsValid && t.ID != model.ID))
                 {
                     return new CResult<bool>(false, ErrorCode.DeviceTypeNameIsExist);
                 }

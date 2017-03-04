@@ -136,7 +136,7 @@ namespace NYB.DeviceManagementSystem.BLL
                     return new CResult<bool>(false, ErrorCode.SupplierNotExist);
                 }
 
-                if (context.Supplier.Any(t => t.Name.ToUpper() == model.Name.ToUpper() && t.ProjectID == model.ProjectID && t.IsValid && t.ID == model.ID))
+                if (context.Supplier.Any(t => t.Name.ToUpper() == model.Name.ToUpper() && t.ProjectID == model.ProjectID && t.IsValid && t.ID != model.ID))
                 {
                     return new CResult<bool>(false, ErrorCode.SupplierNameIsExist);
                 }
