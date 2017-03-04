@@ -24,6 +24,7 @@ namespace NYB.DeviceManagementSystem.ViewModel
         /// </summary>
         [Required(ErrorMessage = "用户名必填")]
         [Display(Name = "用户名")]
+        [StringLength(20, ErrorMessage = "最大长度为20")]
         public string UserName
         {
             get { return _userName; }
@@ -50,6 +51,7 @@ namespace NYB.DeviceManagementSystem.ViewModel
         /// </summary>
         [Required(ErrorMessage = "登录名必填")]
         [Display(Name = "登录名")]
+        [StringLength(20, ErrorMessage = "最大长度为20")]
         public string LoginName
         {
             get { return _loginName; }
@@ -60,12 +62,14 @@ namespace NYB.DeviceManagementSystem.ViewModel
         /// <summary>
         /// 地址
         /// </summary>
+        [StringLength(100, ErrorMessage = "最大长度为100")]     
         public string Address
         {
             get { return _address; }
             set { _address = value; }
         }
 
+        [StringLength(20, ErrorMessage = "最大长度为20")]
         public string Moblie { get; set; }
 
         private string _telPhone = string.Empty;
@@ -74,6 +78,7 @@ namespace NYB.DeviceManagementSystem.ViewModel
         /// 联系电话
         /// </summary>
         [Display(Name = "联系电话")]
+        [StringLength(20, ErrorMessage = "最大长度为20")]
         public string TelPhone
         {
             get { return _telPhone; }
@@ -86,6 +91,7 @@ namespace NYB.DeviceManagementSystem.ViewModel
         /// </summary>
         [Display(Name = "电子邮件")]
         [RegularExpression(@"\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", ErrorMessage = "电子邮件格式不正确")]
+        [StringLength(50, ErrorMessage = "最大长度为50")]
         public string Email
         {
             get { return _email; }

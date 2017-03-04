@@ -28,7 +28,7 @@ namespace NYB.DeviceManagementSystem.BLL
                 if (string.IsNullOrWhiteSpace(searchInfo) == false)
                 {
                     searchInfo = searchInfo.Trim().ToUpper();
-                    filter = filter.And(t => t.Name.ToUpper().Contains(searchInfo));
+                    filter = filter.And(t => t.Name.ToUpper().Contains(searchInfo) || t.User.LoginName.ToUpper().Contains(searchInfo));
                 }
 
                 var temp = context.DeviceType.Where(filter).Page(out totalCount, pageIndex, pageSize, orderby, ascending, true);
@@ -39,7 +39,7 @@ namespace NYB.DeviceManagementSystem.BLL
                     ID = t.ID,
                     Name = t.Name,
                     Note = t.Note,
-                    CreateUserName = t.User.Name,
+                    CreateUserName = t.User.LoginName,
                     CreateUserID = t.CreateUserID,
                     ProjectID = t.ProjectID
                 }).ToList();

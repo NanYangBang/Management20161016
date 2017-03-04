@@ -23,12 +23,14 @@ namespace NYB.DeviceManagementSystem.ViewModel
         public string DeviceName { get; set; }
 
         [DisplayName("保养人")]
+        [StringLength(30, ErrorMessage = "最大长度为30")]
         public string Operator { get; set; }
 
         [DisplayName("保养日期")]
         public DateTime MaintainDate { get; set; }
 
         [DisplayName("备注")]
+        [StringLength(2000, ErrorMessage = "最大长度为2000")]
         public string Note { get; set; }
 
         public List<WebAttachment> Attachments { get; set; }

@@ -19,6 +19,7 @@ namespace NYB.DeviceManagementSystem.ViewModel
 
         [DisplayName("维修人")]
         [Required]
+        [StringLength(30, ErrorMessage = "最大长度为30")]
         public string Operator { get; set; }
 
         [DisplayName("维修日期")]
@@ -26,6 +27,7 @@ namespace NYB.DeviceManagementSystem.ViewModel
         public DateTime RepairDate { get; set; }
 
         [DisplayName("备注")]
+        [StringLength(2000, ErrorMessage = "最大长度为2000")]
         public string Note { get; set; }
     }
 }

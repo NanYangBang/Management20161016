@@ -136,8 +136,8 @@
     $(document).ready(function () {
         AddRection();
         SortAlertRecord();
-        SearchInfoFocus('请输入设备名称');
-        
+        SearchInfoFocus('请输入设备名称、设备类型、生产厂商或供应商');
+
         uploadProof();
         ExportExcel();
         BindDatePick();
@@ -218,7 +218,7 @@
                                 if (data.Code > 0) {
                                     alert(data.Msg);
                                 } else {
-                                    button.attr('href', String.format("{0}?filePath={1}&fileName={2}", window.UrlResource.UrlDownLoad, data.Data,'设备信息'));
+                                    button.attr('href', String.format("{0}?filePath={1}&fileName={2}", window.UrlResource.UrlDownLoad, data.Data,'设备信息.xls'));
                                 }
                             }
                         }
