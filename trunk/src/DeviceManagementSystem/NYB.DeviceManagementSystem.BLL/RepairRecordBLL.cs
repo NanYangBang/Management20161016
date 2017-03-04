@@ -39,11 +39,11 @@ namespace NYB.DeviceManagementSystem.BLL
 
                 if (startTime.HasValue)
                 {
-                    filter = filter.And(t => t.CreateDate >= startTime);
+                    filter = filter.And(t => t.RepairDate >= startTime);
                 }
                 if (endTime.HasValue)
                 {
-                    filter = filter.And(t => t.CreateDate <= endTime);
+                    filter = filter.And(t => t.RepairDate <= endTime);
                 }
 
                 var temp = context.RepairRecord.Where(filter).Page(out totalCount, pageIndex, pageSize, orderby, ascending, true);
