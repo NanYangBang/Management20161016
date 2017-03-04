@@ -14,23 +14,28 @@ namespace NYB.DeviceManagementSystem.ViewModel
 
         [DisplayName("名称")]
         [Required(ErrorMessage="名称必填")]
-        [MaxLength(30)]
+        [StringLength(30, ErrorMessage = "最大长度为30")]
         public string Name { get; set; }
 
         [DisplayName("地址")]
+        [StringLength(100, ErrorMessage = "最大长度为100")]
         public string Address { get; set; }
 
         [DisplayName("联系人")]
         [Required(ErrorMessage="联系人必填")]
+        [StringLength(30, ErrorMessage = "最大长度为30")]
         public string Contact { get; set; }
 
         [DisplayName("手机")]
+        [StringLength(20, ErrorMessage = "最大长度为20")]
         public string Mobile { get; set; }
 
         [DisplayName("电话")]
+        [StringLength(20, ErrorMessage = "最大长度为20")]
         public string Phone { get; set; }
 
         [DisplayName("备注")]
+        [StringLength(100, ErrorMessage = "最大长度为100")]
         public string Note { get; set; }
     }
 }
