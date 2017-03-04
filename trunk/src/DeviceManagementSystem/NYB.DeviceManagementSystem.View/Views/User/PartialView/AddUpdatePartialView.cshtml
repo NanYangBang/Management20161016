@@ -7,6 +7,11 @@
     bool isUpdate = ViewBag.IsUpdate;
     bool isErr = ViewBag.IsErr;
     string ErrMsg = ViewBag.ErrMsg;
+    object readonlyValue = null;
+    if (isUpdate)
+    {
+        readonlyValue = new { @readonly = "readonly" };
+    }
 }
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 
@@ -24,10 +29,11 @@
                 <table class="operateTable">
                     <tr>
                         <td>
-                            <b>项目名称</b>
+                            <b><em>*</em>登录名</b>
                         </td>
                         <td>
-                            @Html.DisplayFor(t => t.ProjectID)
+                            @Html.TextBoxFor(model => model.LoginName, readonlyValue)
+                            @Html.ValidationMessageFor(model => model.LoginName)
                         </td>
                         <td>
                             <b><em>*</em>用户名</b>
@@ -37,22 +43,26 @@
                             @Html.ValidationMessageFor(model => model.UserName)
                         </td>
                     </tr>
-                    <tr>
-                        <td>
-                            <b><em>*</em>登录名</b>
-                        </td>
-                        <td>
-                            @Html.TextBoxFor(model => model.LoginName, new { @visiable = isUpdate ? "false" : "true" })
-                            @Html.ValidationMessageFor(model => model.LoginName)
-                        </td>
-                        <td>
-                            <b><em>*</em>密码</b>
-                        </td>
-                        <td>
-                            @Html.TextBoxFor(model => model.Pwd)
-                            @Html.ValidationMessageFor(model => model.Pwd)
-                        </td>
-                    </tr>
+                    @if (isUpdate == false)
+                    {
+                        <tr>
+                            <td>
+                                <b><em>*</em>@Html.LabelFor(model => model.Pwd)</b>
+                            </td>
+                            <td>
+                                @Html.PasswordFor(model => model.Pwd)
+                                @Html.ValidationMessageFor(model => model.Pwd)
+                            </td>
+                            <td>
+                                <b><em>*</em>@Html.LabelFor(model => model.ConfirmPwd)</b>
+                            </td>
+                            <td>
+                                @Html.PasswordFor(model => model.ConfirmPwd)
+                                @Html.ValidationMessageFor(model => model.ConfirmPwd)
+                            </td>
+                        </tr>
+                    }
+
                     <tr>
                         <td>
                             <b>地址</b>
