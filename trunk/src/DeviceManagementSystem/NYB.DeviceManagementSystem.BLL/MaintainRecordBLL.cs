@@ -37,11 +37,11 @@ namespace NYB.DeviceManagementSystem.BLL
 
             if (startTime.HasValue)
             {
-                filter = filter.And(t => t.CreateDate >= startTime);
+                filter = filter.And(t => t.MaintainDate >= startTime);
             }
             if (endTime.HasValue)
             {
-                filter = filter.And(t => t.CreateDate <= endTime);
+                filter = filter.And(t => t.MaintainDate <= endTime);
             }
 
             using (DeviceMgmtEntities context = new DeviceMgmtEntities())
