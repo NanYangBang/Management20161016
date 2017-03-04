@@ -67,7 +67,7 @@
                         </td>
                         <td>
                             @*@Html.TextBoxFor(model => model.SupplierID)
-            @Html.ValidationMessageFor(model => model.SupplierID)*@
+                                @Html.ValidationMessageFor(model => model.SupplierID)*@
                             <select value="" name="SupplierID">
                                 @foreach (KeyValuePair<string, string> dic in (Dictionary<string, string>)ViewBag.SupperList)
                                 {
@@ -85,7 +85,6 @@
                             @Html.TextBoxFor(model => model.ProductDate)
                             @Html.ValidationMessageFor(model => model.ProductDate)
                         </td>
-
                         <td>
                             <b>保养日期</b>
                         </td>
@@ -94,12 +93,11 @@
                             @Html.ValidationMessageFor(model => model.MaintainDate)
                         </td>
                     </tr>
-
                     <tr>
                         <td>
                             <b>备注</b>
                         </td>
-                        <td>
+                        <td wt="570" ht="80" class="lengthTd">
                             @Html.TextAreaFor(model => model.Note)
                             @Html.ValidationMessageFor(model => model.Note)
                         </td>
@@ -129,6 +127,7 @@
     $(document).ready(function () {
         SaveEvent();
         BindDatePick();
+        AddTxtAre();
     })
 
     function BindDatePick() {
@@ -143,7 +142,7 @@
             buttonImage: path
         });
         BindDatePickerTriggerEvent();
-        $('td[name="time"] input').attr('readonly','readonly');
+        $('td[name="time"] input').attr('readonly', 'readonly');
     }
 
 </script>

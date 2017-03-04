@@ -87,3 +87,9 @@
     .common-details-panel table td {
         width: auto;
     }
+
+
+.operateTable .lengthTd {
+    position:absolute;
+    
+}
