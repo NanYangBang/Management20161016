@@ -86,5 +86,23 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult ResetPassword(string userID, string returnUrl)
+        {
+            ViewBag.ReturnUrl = returnUrl;
+
+            var webUser = new WebUser();
+            webUser.ID = userID;
+            return View(webUser);
+        }
+
+        [HttpPost]
+        public ActionResult ResetPasswordPost(string userID, string newPassword)
+        {
+            var result = new UserBLL().ResetPassword(newPassword, userID, this.GetCurrentUserID());
+
+            return JsonContentHelper.GetJsonContent(result);
+        }
+
     }
 }

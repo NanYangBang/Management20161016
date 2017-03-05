@@ -388,12 +388,14 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\ProjectManger\AddUpdatePartial.js" />
     <Content Include="Scripts\Common\Index.js" />
+    <Content Include="Scripts\ProjectManger\ResetPassword.js" />
     <Content Include="Scripts\Silverlight.js" />
     <Content Include="Scripts\ssi-uploader\bootstrap.min.js" />
     <Content Include="Scripts\ssi-uploader\jquery-2.1.1.min.js" />
     <Content Include="Scripts\ssi-uploader\ssi-uploader.js" />
     <Content Include="Scripts\ssi-uploader\ssi-uploader.min.js" />
     <Content Include="Scripts\swfobject.js" />
+    <Content Include="Scripts\User\ResetPassword.js" />
     <Content Include="Scripts\User\AddUpdatePartial.js" />
     <Content Include="Scripts\User\Index.js" />
     <Content Include="Scripts\Viewer\viewer-jquery.min.js" />
@@ -490,6 +492,8 @@
     <Content Include="Scripts\ssi-uploader\ssi-uploader.min.js.map" />
     <Content Include="Views\Device\MaintainRecord\MaintainRecordList.cshtml" />
     <Content Include="Views\AboutUs\Index.cshtml" />
+    <Content Include="Views\User\ResetPassword.cshtml" />
+    <Content Include="Views\ProjectManager\ResetPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NYB.DeviceManagementSystem.BLL\NYB.DeviceManagementSystem.BLL.csproj">

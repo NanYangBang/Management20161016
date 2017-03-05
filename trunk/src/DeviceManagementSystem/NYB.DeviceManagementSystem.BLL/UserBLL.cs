@@ -262,36 +262,82 @@ namespace NYB.DeviceManagementSystem.BLL
             }
         }
 
-        public CResult<bool> ChangePassword(string oldPassword, string newPassword, string loginName, string operatorUserID)
+        public CResult<bool> ChangePassword(string oldPassword, string newPassword, string userID, string operatorUserID)
         {
             LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
 
-            if (string.IsNullOrWhiteSpace(newPassword) || string.IsNullOrWhiteSpace(loginName))
+            if (string.IsNullOrWhiteSpace(newPassword) || string.IsNullOrWhiteSpace(oldPassword))
             {
                 return new CResult<bool>(false, ErrorCode.ParameterError);
             }
 
-            var user = Membership.GetUser(loginName);
-            if (user == null)
-            {
-                return new CResult<bool>(false, ErrorCode.DataNoExist);
-            }
-
-            var flag = user.ChangePassword(oldPassword, newPassword);
             using (var context = new DeviceMgmtEntities())
             {
-                var entity = context.User.FirstOrDefault(t => t.LoginName == loginName && t.IsValid);
-                LoggerBLL.AddLog(context, operatorUserID, entity.ProjectID, OperatTypeEnum.修改, _businessModel, "用户名：" + loginName);
+                var entity = context.User.FirstOrDefault(t => t.UserID == userID && t.IsValid);
+                if (entity == null)
+                {
+                    return new CResult<bool>(false, ErrorCode.UserNotExist);
+                }
+
+                var user = Membership.GetUser(entity.LoginName);
+                if (user == null)
+                {
+                    return new CResult<bool>(false, ErrorCode.UserNotExist);
+                }
+
+                var flag = user.ChangePassword(oldPassword, newPassword);
+
+                LoggerBLL.AddLog(context, operatorUserID, entity.ProjectID, OperatTypeEnum.修改, _businessModel, "用户名：" + entity.LoginName);
                 context.SaveChanges();
+
+                if (flag)
+                {
+                    return new CResult<bool>(true);
+                }
+                else
+                {
+                    return new CResult<bool>(false, ErrorCode.SaveDbChangesFailed);
+                }
+            }
+        }
+
+        public CResult<bool> ResetPassword(string newPassword, string userID, string operatorUserID)
+        {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+
+            if (string.IsNullOrWhiteSpace(newPassword) || string.IsNullOrWhiteSpace(userID))
+            {
+                return new CResult<bool>(false, ErrorCode.ParameterError);
             }
 
-            if (flag)
+            using (var context = new DeviceMgmtEntities())
             {
-                return new CResult<bool>(true);
-            }
-            else
-            {
-                return new CResult<bool>(false, ErrorCode.SaveDbChangesFailed);
+                var entity = context.User.FirstOrDefault(t => t.UserID == userID && t.IsValid);
+                if (entity == null)
+                {
+                    return new CResult<bool>(false, ErrorCode.UserNotExist);
+                }
+
+                var user = Membership.GetUser(entity.LoginName);
+                if (user == null)
+                {
+                    return new CResult<bool>(false, ErrorCode.UserNotExist);
+                }
+
+                var randomPwd = user.ResetPassword();
+                var flag = user.ChangePassword(randomPwd, newPassword);
+
+                LoggerBLL.AddLog(context, operatorUserID, entity.ProjectID, OperatTypeEnum.修改, _businessModel, "用户名：" + userID);
+                context.SaveChanges();
+
+                if (flag)
+                {
+                    return new CResult<bool>(true);
+                }
+                else
+                {
+                    return new CResult<bool>(false, ErrorCode.SaveDbChangesFailed);
+                }
             }
         }
 

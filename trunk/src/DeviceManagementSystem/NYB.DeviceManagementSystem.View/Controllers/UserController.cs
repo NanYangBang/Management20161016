@@ -15,7 +15,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
         //
         // GET: /User/
 
-        public ActionResult Index(string searchInfo="", int pageIndex = 1, int pageSize = 10, string orderBy = "", bool ascending = false)
+        public ActionResult Index(string searchInfo = "", int pageIndex = 1, int pageSize = 10, string orderBy = "", bool ascending = false)
         {
             UserBLL userBLL = new UserBLL();
             int totalCount = 0;
@@ -100,6 +100,24 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             var userBLL = new UserBLL();
             var currentUserID = Request.Cookies["CurrentUserID"].Value;
             var result = userBLL.DeleteUserByID(id, currentUserID);
+            return JsonContentHelper.GetJsonContent(result);
+        }
+
+        [HttpGet]
+        public ActionResult ResetPassword(string userID, string returnUrl)
+        {
+            ViewBag.ReturnUrl = returnUrl;
+
+            var webUser = new WebUser();
+            webUser.ID = userID;
+            return View(webUser);
+        }
+
+        [HttpPost]
+        public ActionResult ResetPasswordPost(string userID, string newPassword)
+        {
+            var result = new UserBLL().ResetPassword(newPassword, userID, this.GetCurrentUserID());
+
             return JsonContentHelper.GetJsonContent(result);
         }
     }
