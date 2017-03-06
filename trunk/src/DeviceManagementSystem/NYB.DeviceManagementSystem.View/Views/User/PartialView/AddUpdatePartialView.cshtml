@@ -72,11 +72,27 @@
                             @Html.ValidationMessageFor(model => model.Address)
                         </td>
                         <td>
-                            <b>联系电话</b>
+                            <b>@Html.LabelFor(model => model.Email)</b>
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.Email)
+                            @Html.ValidationMessageFor(model => model.Email)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>@Html.LabelFor(model => model.TelPhone)</b>
                         </td>
                         <td>
                             @Html.TextBoxFor(model => model.TelPhone)
                             @Html.ValidationMessageFor(model => model.TelPhone)
+                        </td>
+                        <td>
+                            <b>@Html.LabelFor(model => model.Moblie)</b>
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.Moblie)
+                            @Html.ValidationMessageFor(model => model.Moblie)
                         </td>
                     </tr>
                     <tr>

@@ -83,6 +83,7 @@ namespace NYB.DeviceManagementSystem.ViewModel
         }
 
         [StringLength(20, ErrorMessage = "最大长度为20")]
+        [Display(Name = "手机")]
         public string Moblie { get; set; }
 
         private string _telPhone = string.Empty;

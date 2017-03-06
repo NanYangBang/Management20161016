@@ -255,6 +255,13 @@ namespace NYB.DeviceManagementSystem.BLL
                 entity.Telephone = webUser.TelPhone;
                 entity.Moblie = webUser.Moblie;
 
+                var role = Roles.GetRolesForUser(webUser.LoginName).FirstOrDefault();
+                if (role != webUser.Role)
+                {
+                    Roles.RemoveUserFromRole(webUser.LoginName, role);
+                    Roles.AddUserToRole(webUser.LoginName, webUser.Role);
+                }
+
                 context.Entry(entity).State = EntityState.Modified;
                 LoggerBLL.AddLog(context, webUser.CreateUserID, entity.ProjectID, OperatTypeEnum.修改, _businessModel, "用户名：" + entity.LoginName);
 
