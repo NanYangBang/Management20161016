@@ -24,7 +24,17 @@
 }
 
 #searchForm input[type="text"] {
-    width:270px;
+    width: 270px;
     height: 26px;
     line-height: 28px;
+}
+
+.table-common {
+    table-layout: fixed;
+}
+
+.lengHideTd {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
