@@ -743,7 +743,7 @@ select.normal {
     border: 30px solid #F1F1F1;
     border-width: 0 30px 20px;
     width: 740px;
-    height: 40px;
+    /*height: 40px;*/
     clear: both;
     background-color: #F1F1F1;
     margin: 0 auto;

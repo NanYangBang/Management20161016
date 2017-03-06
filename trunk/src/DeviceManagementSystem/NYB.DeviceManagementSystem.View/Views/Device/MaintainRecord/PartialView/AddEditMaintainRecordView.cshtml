@@ -55,11 +55,13 @@
                             @Html.TextBoxFor(model => model.MaintainDate)
                             @Html.ValidationMessageFor(model => model.MaintainDate)
                         </td>
+                    </tr>
+                    <tr>
                         <td>
                             <b>备注</b>
                         </td>
-                        <td>
-                            @Html.TextBoxFor(model => model.Note)
+                        <td wt="550" ht="80" class="lengthTd">
+                            @Html.TextAreaFor(model => model.Note)
                             @Html.ValidationMessageFor(model => model.Note)
                         </td>
                     </tr>
@@ -104,8 +106,8 @@
 
 <script type="text/javascript">
     window.Resource = {
-        UrlAdd: '@Url.Action("AddMainTainRecord", "Device")',
-        UrlEdit: '@(Url.Action("EditMaintainRecord", "Device"))',
+        UrlAdd: '@Url.Action("AddMainTainRecord", "Device", new { _ = DateTime.Now.Ticks })',
+        UrlEdit: '@(Url.Action("EditMaintainRecord", "Device", new { _ = DateTime.Now.Ticks }))',
         Auth: '@(Request.Cookies[FormsAuthentication.FormsCookieName] == null ? string.Empty : Request.Cookies[FormsAuthentication.FormsCookieName].Value)',
         ReturnUrl: '@returnUrl',
         IsAddRecord: '@(ViewBag.IsAddRecord)',
@@ -116,7 +118,7 @@
         UrlCancelImage: '@Url.Content("~/Content/Plugin/jQueryUploadify/images/uploadify-cancel.png")',
         UrlSwf: '@Url.Content("~/Content/Plugin/jQueryUploadify/flash/uploadify.swf")',
         delID: [],
-        UrlViewPicture: '@(Url.Action("ViewPicture", "Device"))',
+        UrlViewPicture: '@(Url.Action("ViewPicture", "Device", new { _ = DateTime.Now.Ticks }))',
         LocalUrl: '@(Request.Url.Host)',
         ImgDownLoad: '@(Url.Content("~/Images/download16.png"))',
         UrlDownLoad: '@(Url.Action("DownloadFile", "Device"))',
@@ -131,7 +133,7 @@
         var viewer = new Viewer(document.getElementById('jq22'), {
             url: 'data-original'
         });
-
+        AddTxtAre();
         $('[name="DeviceName"]').attr('readonly', 'readonly');
     })
 

@@ -16,7 +16,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
 
         public ActionResult Index()
         {
-            return RedirectToAction("Index", "DeviceTypeManager");
+            return RedirectToAction("Index", "DeviceTypeManager", new { _timepick = DateTime.Now.ToString("yyyyMMddhhmmssff") });
         }
     }
 }

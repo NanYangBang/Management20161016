@@ -99,7 +99,7 @@
                         <td>
                             <b>备注</b>
                         </td>
-                        <td>
+                        <td wt="570" ht="80" style="margin-top:5px" class="lengthTd">
                             @Html.TextAreaFor(model => model.Note)
                             @Html.ValidationMessageFor(model => model.Note)
                         </td>
@@ -117,8 +117,8 @@
 </div>
 <script type="text/javascript">
     window.Resource = {
-        UrlAdd: '@Url.Action("AddProject", "ProjectManager")',
-        UrlEdit: '@Url.Action("UpdateProject", "ProjectManager")',
+        UrlAdd: '@Url.Action("AddProject", "ProjectManager", new { _ = DateTime.Now.Ticks })',
+        UrlEdit: '@Url.Action("UpdateProject", "ProjectManager", new { _ = DateTime.Now.Ticks })',
         ReturnUrl: '@returnUrl',
         UrlAction: '@ViewBag.Action',
         IsView: '@(isView)'
@@ -126,6 +126,7 @@
 
     $(document).ready(function () {
         SaveEvent();
+        AddTxtAre();
     })
 
 </script>

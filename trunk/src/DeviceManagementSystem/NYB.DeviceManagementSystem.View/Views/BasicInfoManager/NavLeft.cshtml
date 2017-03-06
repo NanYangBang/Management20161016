@@ -8,21 +8,21 @@
     @if (ControllerName == "DeviceTypeManager")
     {
         <li leftname="设备类别管理">
-            <a href="@Url.Action("Index", "DeviceTypeManager")">设备类别管理</a>
+            <a href="@Url.Action("Index", "DeviceTypeManager", new { _timepick = DateTime.Now.ToString("yyyyMMddhhmmssff") })">设备类别管理</a>
         </li>
     }
     else
     {
         <li leftname="设备类别管理">
-            <a href="@Url.Action("Index", "DeviceTypeManager")">设备类别管理</a>
+            <a href="@Url.Action("Index", "DeviceTypeManager", new { _timepick = DateTime.Now.ToString("yyyyMMddhhmmssff") })">设备类别管理</a>
         </li>
     }
 
     <li leftname="供应商管理">
-        <a href="@Url.Action("Index", "SupplierManager")">供应商管理</a>
+        <a href="@Url.Action("Index", "SupplierManager", new { _timepick = DateTime.Now.ToString("yyyyMMddhhmmssff") })">供应商管理</a>
     </li>
     <li leftname="生产厂商管理">
-        <a href="@Url.Action("Index", "ManufactureManager")">生产厂商管理</a>
+        <a href="@Url.Action("Index", "ManufactureManager", new { _timepick = DateTime.Now.ToString("yyyyMMddhhmmssff") })">生产厂商管理</a>
     </li>
 </ul>
 

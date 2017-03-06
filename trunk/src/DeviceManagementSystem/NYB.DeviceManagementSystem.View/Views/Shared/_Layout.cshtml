@@ -19,7 +19,7 @@
     <script type="text/javascript" src="@Url.Content("~/Scripts/jQuery.query.js")"></script>
 </head>
 <body>
-    <div class="wrap">
+    <div class="wrap" style="overflow-y:auto">
         <div class="page-container">
             @Html.Partial("Header")
             @Html.Partial("NavTop")
@@ -45,6 +45,7 @@
 
         $(document).ready(function () {
             HighLeight();
+            //SetLeftNameHeight();
         });
 
         function HighLeight() {
@@ -72,6 +73,12 @@
                     }
                 }
             }
+        }
+
+        function SetLeftNameHeight() {
+            $('.nav-left').height($('.sub-content').height());
+
+
         }
 
     </script>

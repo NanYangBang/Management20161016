@@ -10,7 +10,7 @@ function SaveEvent() {
         var DeviceName = $('[Name="DeviceID"]').val();
         var Operator = $('[Name="Operator"]').val();
         var RepairDate = $('[Name="RepairDate"]').val();
-        var Note = $('[Name="Note"]').val();
+        var Note = $('textarea[Name="Note"]').val();
         var ID = $('[Name="RepairRecordID"]').val();
 
         param.DeviceID = DeviceID;

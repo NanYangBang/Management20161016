@@ -55,8 +55,8 @@
                         <td>
                             <b>备注</b>
                         </td>
-                        <td>
-                            @Html.TextBoxFor(model => model.Note)
+                        <td wt="580" ht="80" style="margin-top:5px" class="lengthTd">
+                            @Html.TextAreaFor(model => model.Note)
                             @Html.ValidationMessageFor(model => model.Note)
                         </td>
                     </tr>
@@ -75,8 +75,8 @@
 <link href="@Url.Content("~/Content/Plugin/jQuery-UI-Timepicker/jquery-ui-timepicker.css")" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
     window.Resource = {
-        UrlAdd: '@Url.Action("AddRepairRecord", "Device")',
-        UrlEdit:'@(Url.Action("EditRepairRecord", "Device"))',
+        UrlAdd: '@Url.Action("AddRepairRecord", "Device", new { _ = DateTime.Now.Ticks })',
+        UrlEdit:'@(Url.Action("EditRepairRecord", "Device", new { _ = DateTime.Now.Ticks }))',
         ReturnUrl: '@returnUrl',
         Action:'@(ViewBag.OperateAction)',
         UrlImage: '@Url.Content("~/Content/Plugin/jQuery-UI-Timepicker/images/calendar.png")',
@@ -87,7 +87,8 @@
         SaveEvent();
         BindDatePick();
         GetViewStatus();
-        $('[name="DeviceName"]').attr('readonly','readonly');
+        $('[name="DeviceName"]').attr('readonly', 'readonly');
+        AddTxtAre();
     })
 
     function BindDatePick() {

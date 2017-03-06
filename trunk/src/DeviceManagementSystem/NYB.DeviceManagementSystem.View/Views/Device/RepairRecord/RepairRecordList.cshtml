@@ -88,7 +88,7 @@
 </div>
 <script type="text/javascript">
     window.UrlResource = {
-        UrlAddAction: '@Url.Action("CreateDevice", "Device", new { returnUrl = Request.Url.AbsoluteUri })',
+        UrlAddAction: '@Url.Action("CreateDevice", "Device", new { returnUrl = Request.Url.AbsoluteUri, _ = DateTime.Now.Ticks })',
         UrlImage: '@Url.Content("~/Content/Plugin/jQuery-UI-Timepicker/images/calendar.png")'
     }
 

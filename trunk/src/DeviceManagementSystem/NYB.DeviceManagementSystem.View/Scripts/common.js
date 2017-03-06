@@ -617,7 +617,6 @@ function SortAlertRecord() {
     })
 }
 
-
 function AddTxtAre() {
     var textAreaTD = $('.lengthTd');
     var textareaMode = textAreaTD.find('textarea');

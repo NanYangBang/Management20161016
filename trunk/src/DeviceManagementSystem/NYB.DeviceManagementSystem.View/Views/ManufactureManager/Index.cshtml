@@ -86,7 +86,7 @@
 
 <script type="text/javascript">
     window.UrlResource = {
-        UrlAddAction: '@Url.Action("Create", new { returnUrl = Request.Url.AbsoluteUri })'
+        UrlAddAction: '@Url.Action("Create", new { returnUrl = Request.Url.AbsoluteUri, _ = DateTime.Now.Ticks })'
     }
 
     $(document).ready(function () {

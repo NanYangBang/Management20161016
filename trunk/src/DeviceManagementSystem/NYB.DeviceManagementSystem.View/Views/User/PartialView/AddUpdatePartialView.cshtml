@@ -108,8 +108,8 @@
 </div>
 <script type="text/javascript">
     window.Resource = {
-        UrlAdd: '@Url.Action("AddUser", "User")',
-        UrlEdit: '@Url.Action("UpdateUser", "User")',
+        UrlAdd: '@Url.Action("AddUser", "User", new { _ = DateTime.Now.Ticks })',
+        UrlEdit: '@Url.Action("UpdateUser", "User", new { _ = DateTime.Now.Ticks })',
         ReturnUrl: '@returnUrl',
         UrlAction: '@ViewBag.Action'
     }

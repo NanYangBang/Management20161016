@@ -7,13 +7,15 @@
 
 <ul id="leftUl">
     <li leftname="设备信息">
-        <a href="@Url.Action("Index", "Device")">设备信息</a>
+        <a href="@Url.Action("Index", "Device", new { _ = DateTime.Now.Ticks })">设备信息</a>
     </li>
     <li leftname="维修记录信息">
-        <a href="@Url.Action("RepairRecordList", "Device")">维修记录信息</a>
+        <a href="@Url.Action("RepairRecordList", "Device", new { _ = DateTime.Now.Ticks })">维修记录信息</a>
     </li>
     <li leftname="保养记录信息">
-        <a href="@Url.Action("MaintainRecordList", "Device")">保养记录信息</a>
+        <a href="@Url.Action("MaintainRecordList", "Device", new { _ = DateTime.Now.Ticks })">保养记录信息</a>
     </li>
 </ul>
 <script type="text/javascript" src="@Url.Content("~/Scripts/Common/Left.js")"></script>
+
+

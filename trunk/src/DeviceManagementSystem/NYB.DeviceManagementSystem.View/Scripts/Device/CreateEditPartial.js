@@ -13,7 +13,7 @@ function SaveEvent() {
         var SupplierID = $('[name="SupplierID"]').val();
         var ProductDate = $('[name="ProductDate"]').val();
         var MaintainDate = $('[name="MaintainDate"]').val();
-        var Node = $('[name="Note"]').val();
+        var Note = $('textarea[name="Note"]').val();
 
         param.Name = Name;
         param.DeviceTypeID = DeviceTypeID;
@@ -21,7 +21,7 @@ function SaveEvent() {
         param.SupplierID = SupplierID;
         param.ProductDate = ProductDate;
         param.MaintainDate = MaintainDate;
-        param.Node = Node;
+        param.Note = Note;
         param.ID = ID;
 
         if ($('span.errorMessage').length == 0 && $('.field-validation-error').length == 0) {

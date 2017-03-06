@@ -34,8 +34,8 @@ namespace NYB.DeviceManagementSystem.View.Controllers
                 var result = userBLL.VerifyPassword(LoginName, Pwd);
                 if (result.Code == 0)
                 {
-                    Response.Cookies.Add(new HttpCookie("CurrentUserName", result.Data.UserName));
                     Response.Cookies.Add(new HttpCookie("CurrentProjectIDStr", result.Data.ProjectID));
+                    Response.Cookies.Add(new HttpCookie("CurrentUserName", result.Data.UserName));
                     Response.Cookies.Add(new HttpCookie("CurrentUserID", result.Data.ID));
                     //
                     if (result.Data.Role != null)
@@ -46,11 +46,11 @@ namespace NYB.DeviceManagementSystem.View.Controllers
 
                         if (result.Data.Role == RoleType.超级管理员.ToString())
                         {
-                            return RedirectToAction("Index", "ProjectManager");
+                            return RedirectToAction("Index", "ProjectManager", new { _timepick = DateTime.Now.ToString("yyyyMMddhhmmssff") });
                         }
                         else
                         {
-                            return RedirectToAction("Index", "User");
+                            return RedirectToAction("Index", "User", new { _timepick = DateTime.Now.ToString("yyyyMMddhhmmssff") });
                         }
                     }
                 }

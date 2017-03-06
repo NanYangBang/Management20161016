@@ -26,8 +26,8 @@ namespace System.Web.Mvc
             {
                 throw new Exception("CurrentUserID is empty , maybe cookie id disable ");
             }
-
             return userID;
         }
+
     }
 }

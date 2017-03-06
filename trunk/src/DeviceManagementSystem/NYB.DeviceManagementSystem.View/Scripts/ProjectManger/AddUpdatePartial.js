@@ -8,7 +8,7 @@ function SaveEvent() {
         var WebUser = {};
         var ID = $('[name="ID"]').val();
         var Name = $('[name="Name"]').val();
-        var Note = $('[name="Note"]').val();
+        var Note = $('textarea[name="Note"]').val();
 
         var UserName = $('[name="WebUser.UserName"]').val();
         var LoginName = $('[name="WebUser.LoginName"]').val();

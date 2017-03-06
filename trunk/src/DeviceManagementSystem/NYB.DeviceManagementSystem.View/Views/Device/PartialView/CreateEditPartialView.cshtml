@@ -117,8 +117,8 @@
 <link href="@Url.Content("~/Content/Plugin/jQuery-UI-Timepicker/jquery-ui-timepicker.css")" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
     window.Resource = {
-        UrlAdd: '@Url.Action("CreateDevice", "Device")',
-        UrlEdit: '@Url.Action("EditDevice", "Device")',
+        UrlAdd: '@Url.Action("CreateDevice", "Device", new { _ = DateTime.Now.Ticks })',
+        UrlEdit: '@Url.Action("EditDevice", "Device", new { _ = DateTime.Now.Ticks })',
         ReturnUrl: '@returnUrl',
         UrlAction: '@ViewBag.Action',
         UrlImage: '@Url.Content("~/Content/Plugin/jQuery-UI-Timepicker/images/calendar.png")'

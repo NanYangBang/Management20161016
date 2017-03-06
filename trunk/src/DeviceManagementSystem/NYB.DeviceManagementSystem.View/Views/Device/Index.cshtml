@@ -4,11 +4,11 @@
 @model PagedList<NYB.DeviceManagementSystem.ViewModel.WebDevice>
 @Styles.Render("~/Content/User/User.css")
 
-<style type="text/css" >
+<style type="text/css">
     body .content .uploadifyButton {
         height: 24px;
         line-height: 22px;
-        margin-top:5px;
+        margin-top: 5px;
     }
 
     #btnExport {
@@ -123,14 +123,14 @@
 
 <script type="text/javascript">
     window.UrlResource = {
-        UrlAddAction: '@Url.Action("CreateDevice", "Device", new { returnUrl = Request.Url.AbsoluteUri })',
+        UrlAddAction: '@Url.Action("CreateDevice", "Device", new { returnUrl = Request.Url.AbsoluteUri, _ = DateTime.Now.Ticks })',
         Auth: '@(Request.Cookies[FormsAuthentication.FormsCookieName] == null ? string.Empty : Request.Cookies[FormsAuthentication.FormsCookieName].Value)',
-        ImportExcel: '@(Url.Action("ImportExcel", "Device"))',
+        ImportExcel: '@(Url.Action("ImportExcel", "Device", new { _ = DateTime.Now.Ticks }))',
         UrlImage: '@Url.Content("~/Content/Plugin/jQuery-UI-Timepicker/images/calendar.png")',
         UrlCancelImage: '@Url.Content("~/Content/Plugin/jQueryUploadify/images/uploadify-cancel.png")',
         UrlSwf: '@Url.Content("~/Content/Plugin/jQueryUploadify/flash/uploadify.swf")',
-        UrlExportExcel: '@Url.Action("ExportExcel")',
-        UrlDownLoad:'@Url.Action("DownloadFile")'
+        UrlExportExcel: '@Url.Action("ExportExcel", new { _ = DateTime.Now.Ticks })',
+        UrlDownLoad: '@Url.Action("DownloadFile", new { _ = DateTime.Now.Ticks })'
     }
 
     $(document).ready(function () {
@@ -188,7 +188,7 @@
         BindDatePickerTriggerEvent();
         $('.time').attr('readonly', 'readonly');
     }
-    
+
     function ExportExcel() {
         $("#btnExport").mousedown(function () {
             this.innerText = '请稍后,正在导出文件...'
@@ -218,7 +218,7 @@
                                 if (data.Code > 0) {
                                     alert(data.Msg);
                                 } else {
-                                    button.attr('href', String.format("{0}?filePath={1}&fileName={2}", window.UrlResource.UrlDownLoad, data.Data,'设备信息.xls'));
+                                    button.attr('href', String.format("{0}?filePath={1}&fileName={2}", window.UrlResource.UrlDownLoad, data.Data, '设备信息.xls'));
                                 }
                             }
                         }

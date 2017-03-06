@@ -15,7 +15,7 @@
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
 <link rel="Stylesheet" href="@Url.Content("~/Content/Common/OperateTable.css")" />
 
-<div leftname="供应商管理" actionname="设备类型管理" class="operationParent">
+<div leftname="供应商管理" actionname="基础信息管理" class="operationParent">
     <form method="post">
         @(Html.Hidden("returnUrl", returnUrl))
         <div class="common-details-panel">
@@ -72,8 +72,8 @@
                         <td>
                             <b>@Html.LabelFor(model => model.Note)</b>
                         </td>
-                        <td>
-                            @Html.TextBoxFor(model => model.Note, readonlyValues)
+                        <td wt="400" ht="30" style="margin-top:5px" class="lengthTd">
+                            @Html.TextAreaFor(model => model.Note, readonlyValues)
                             @Html.ValidationMessageFor(model => model.Note)
                         </td>
                     </tr>
@@ -93,14 +93,15 @@
 </div>
 <script type="text/javascript">
     window.Resource = {
-        UrlAdd: '@Url.Action("Create")',
-        UrlEdit: '@Url.Action("Edit")',
+        UrlAdd: '@Url.Action("Create", new { _ = DateTime.Now.Ticks })',
+        UrlEdit: '@Url.Action("Edit", new { _ = DateTime.Now.Ticks })',
         ReturnUrl: '@returnUrl',
         UrlAction: '@ViewBag.Action'
     }
 
     $(document).ready(function () {
         SaveEvent();
+        AddTxtAre();
     })
 
     function SaveEvent() {
@@ -111,7 +112,7 @@
             var param = {};
             param.ID = $('[name="ID"]').val();
             param.Name = $('[name="Name"]').val();
-            param.Note = $('[name="Note"]').val();
+            param.Note = $('textarea[name="Note"]').val();
             param.Contact = $('[name="Contact"]').val();
             param.Mobile = $('[name="Mobile"]').val();
             param.Phone = $('[name="Phone"]').val();

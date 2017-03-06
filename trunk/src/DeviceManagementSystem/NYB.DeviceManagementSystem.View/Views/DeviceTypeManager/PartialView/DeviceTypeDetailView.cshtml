@@ -38,8 +38,8 @@
                         <td>
                             <b>@Html.LabelFor(model => model.Note)</b>
                         </td>
-                        <td>
-                            @Html.TextBoxFor(model => model.Note, readonlyValues)
+                        <td wt="400" ht="30" style="margin-top:5px" class="lengthTd">
+                            @Html.TextAreaFor(model => model.Note, readonlyValues)
                             @Html.ValidationMessageFor(model => model.Note)
                         </td>
                     </tr>
@@ -59,15 +59,15 @@
 </div>
 <script type="text/javascript">
     window.Resource = {
-        UrlAdd: '@Url.Action("Create")',
-        UrlEdit: '@Url.Action("Edit")',
+        UrlAdd: '@Url.Action("Create", new { _ = DateTime.Now.Ticks })',
+        UrlEdit: '@Url.Action("Edit", new { _ = DateTime.Now.Ticks })',
         ReturnUrl: '@returnUrl',
         UrlAction: '@ViewBag.Action',
         IsView: '@(isView)'
     }
 
     $(document).ready(function () {
-        SaveEvent();
+        SaveEvent(); AddTxtAre();
     })
 
     function SaveEvent() {
@@ -78,7 +78,7 @@
             var param = {};
             var ID = $('[name="ID"]').val();
             var Name = $('[name="Name"]').val();
-            var Note = $('[name="Note"]').val();
+            var Note = $('textarea[name="Note"]').val();
 
             param.ID = ID;
             param.Name = Name;
