@@ -105,7 +105,14 @@
                                 {
                                     if (roleName != RoleType.超级管理员.ToString())
                                     {
-                                        <option id="firstOption" value="@roleName">@roleName</option>
+                                        if (roleName == @Model.Role)
+                                        {
+                                            <option id="firstOption" selected="selected" value="@roleName">@roleName</option>
+                                        }
+                                        else
+                                        {
+                                            <option id="firstOption" value="@roleName">@roleName</option>
+                                        }
                                     }
                                 }
                             </select>

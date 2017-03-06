@@ -82,6 +82,8 @@ namespace NYB.DeviceManagementSystem.BLL
                         UserName = entity.Name,
                     };
 
+                    webUser.Role = Roles.GetRolesForUser(webUser.LoginName).FirstOrDefault();
+
                     LogHelper.Info("result", webUser);
 
                     return new CResult<WebUser>(webUser);
@@ -118,6 +120,8 @@ namespace NYB.DeviceManagementSystem.BLL
                         Moblie = entity.Moblie,
                         UserName = entity.Name,
                     };
+
+                    webUser.Role = Roles.GetRolesForUser(webUser.LoginName).FirstOrDefault();
 
                     LogHelper.Info("result", webUser);
 
