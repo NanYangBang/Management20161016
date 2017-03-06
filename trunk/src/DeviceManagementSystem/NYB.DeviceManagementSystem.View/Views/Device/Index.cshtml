@@ -39,9 +39,6 @@
                     名称
                 </th>
                 <th>
-                    备注
-                </th>
-                <th>
                     设备类型
                 </th>
                 <th>
@@ -56,6 +53,9 @@
                 <th>
                     保养日期
                 </th>
+                <th>
+                    备注
+                </th>
                 <th style="width:300px;" class="operation-column">
                     操作
                 </th>
@@ -68,9 +68,6 @@
                     <tr pileid="">
                         <td>
                             @device.Name
-                        </td>
-                        <td title="@(@device.Note)" class="lengHideTd">
-                            @device.Note
                         </td>
                         <td>
                             @device.DeviceTypeName
@@ -86,6 +83,9 @@
                         </td>
                         <td>
                             @(!device.MaintainDate.HasValue ? "" : device.MaintainDate.Value.ToString("yyyy-MM-dd"))
+                        </td>
+                        <td title="@(@device.Note)" class="lengHideTd">
+                            @device.Note
                         </td>
                         <td class="opreateTd">
                             @{var routeValues = new { deviceTypeID = device.ID, deviceName = device.Name, returnUrl = Request.Url.AbsoluteUri, _ = DateTime.Now.Ticks };}
