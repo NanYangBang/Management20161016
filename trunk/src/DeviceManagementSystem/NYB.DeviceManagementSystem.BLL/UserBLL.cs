@@ -80,6 +80,7 @@ namespace NYB.DeviceManagementSystem.BLL
                         LoginName = entity.LoginName,
                         TelPhone = entity.Telephone,
                         UserName = entity.Name,
+                        Moblie = entity.Moblie,
                     };
 
                     webUser.Role = Roles.GetRolesForUser(webUser.LoginName).FirstOrDefault();

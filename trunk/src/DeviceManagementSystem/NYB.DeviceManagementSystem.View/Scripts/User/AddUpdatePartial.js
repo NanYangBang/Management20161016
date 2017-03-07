@@ -11,6 +11,8 @@ function SaveEvent() {
         var Address = $('[name="Address"]').val();
         var TelPhone = $('[name="TelPhone"]').val();
         var RoleName = $('[name="Role"]').val();
+        var Email = $('[name="Email"]').val();
+        var Moblie = $('[name="Moblie"]').val();
         var ID= $('[name="ID"]').val();
 
         param.ID = ID;
@@ -20,6 +22,8 @@ function SaveEvent() {
         param.Address = Address;
         param.TelPhone = TelPhone;
         param.Role = RoleName;
+        param.Email = Email;
+        param.Moblie = Moblie;
 
         if ($('span.errorMessage').length == 0 && $('.field-validation-error').length == 0) {
             if (Resource.UrlAction == 'Add') {
