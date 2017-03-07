@@ -48,7 +48,7 @@
                             @deviceType.CreateUserName
                         </td>
                         <td>
-                            @deviceType.CreateDate
+                            @deviceType.CreateDate.ToString("yyyy-MM-dd")
                         </td>
                         <td>
                             @{var routeValues = new { deviceTypeID = deviceType.ID, returnUrl = Request.Url.AbsoluteUri, _ = DateTime.Now.Ticks };}

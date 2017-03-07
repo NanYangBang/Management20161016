@@ -56,7 +56,7 @@
                             @device.Operator
                         </td>
                         <td>
-                            @device.MaintainDate
+                            @device.MaintainDate.ToString("yyyy-MM-dd")
                         </td>
                         <td title="@(@device.Note)" class="lengHideTd">
                             @device.Note
@@ -120,7 +120,7 @@
             changeMonth: true,
             changeYear: true,
             buttonImage: path
-        });
+        }).datepicker("option", "dateFormat", 'yy-mm-dd');;
         BindDatePickerTriggerEvent();
         $('.time').attr('readonly', 'readonly');
     }

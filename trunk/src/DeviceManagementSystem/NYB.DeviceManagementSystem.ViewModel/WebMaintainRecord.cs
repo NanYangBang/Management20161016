@@ -24,9 +24,11 @@ namespace NYB.DeviceManagementSystem.ViewModel
 
         [DisplayName("保养人")]
         [StringLength(30, ErrorMessage = "最大长度为30")]
+        [Required]
         public string Operator { get; set; }
 
         [DisplayName("保养日期")]
+        [Required]
         public DateTime MaintainDate { get; set; }
 
         [DisplayName("备注")]

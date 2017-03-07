@@ -184,7 +184,7 @@
             changeMonth: true,
             changeYear: true,
             buttonImage: path
-        });
+        }).datepicker("option", "dateFormat", 'yy-mm-dd');;
         BindDatePickerTriggerEvent();
         $('.time').attr('readonly', 'readonly');
     }

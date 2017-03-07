@@ -140,7 +140,7 @@
             changeMonth: true,
             changeYear: true,
             buttonImage: path
-        });
+        }).datepicker("option", "dateFormat", 'yy-mm-dd');;
         BindDatePickerTriggerEvent();
         $('td[name="time"] input').attr('readonly', 'readonly');
     }

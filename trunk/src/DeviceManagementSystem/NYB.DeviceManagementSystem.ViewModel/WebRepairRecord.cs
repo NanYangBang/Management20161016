@@ -13,7 +13,7 @@ namespace NYB.DeviceManagementSystem.ViewModel
         public string ID { get; set; }
 
         public string DeviceID { get; set; }
-        
+
         [DisplayName("设备名称")]
         public string DeviceName { get; set; }
 
@@ -24,6 +24,7 @@ namespace NYB.DeviceManagementSystem.ViewModel
 
         [DisplayName("维修日期")]
         [Required]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime RepairDate { get; set; }
 
         [DisplayName("备注")]
