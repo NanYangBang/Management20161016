@@ -85,6 +85,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
                 return View(new WebUser());
             }
         }
+
         [HttpPost]
         public ActionResult UpdateUser(WebUser webUser)
         {
@@ -120,5 +121,20 @@ namespace NYB.DeviceManagementSystem.View.Controllers
 
             return JsonContentHelper.GetJsonContent(result);
         }
+
+        [HttpPost]
+        public ActionResult ChnagePassword(string oldPassword, string newPassword)
+        {
+            var result = new UserBLL().ChangePassword(oldPassword, newPassword, this.GetCurrentUserID(), this.GetCurrentUserID());
+            return JsonContentHelper.GetJsonContent(result);
+        }
+
+        [HttpGet]
+        public ActionResult ChangePassWord()
+        {
+            var webUser = new WebUser();
+            return PartialView("PartialView/ChangePassWord", webUser);
+        }
+
     }
 }

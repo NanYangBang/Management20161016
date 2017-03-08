@@ -44,6 +44,19 @@ namespace NYB.DeviceManagementSystem.ViewModel
             set { _pwd = value; }
         }
 
+        private string _olmPwd = string.Empty;
+
+        /// <summary>
+        /// 密码
+        /// </summary>
+        [Required(ErrorMessage = "密码必填")]
+        [Display(Name = "密码")]
+        public string OldPwd
+        {
+            get { return _olmPwd; }
+            set { _olmPwd = value; }
+        }
+
         private string _confirmPwd = string.Empty;
         /// <summary>
         /// 确认密码

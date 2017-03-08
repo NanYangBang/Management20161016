@@ -46,7 +46,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             ViewBag.DeviceType = deviceType.Data;
             ViewBag.Action = "Add";
             ViewBag.ReturnUrl = returnUrl;
-
+            
             WebDevice webDevice = new WebDevice();
             return View(webDevice);
         }

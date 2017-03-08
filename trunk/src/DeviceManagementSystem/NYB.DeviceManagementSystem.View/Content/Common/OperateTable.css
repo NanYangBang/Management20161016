@@ -93,3 +93,7 @@
     position:absolute;
     
 }
+
+.err-prompt {
+    color:red;
+}

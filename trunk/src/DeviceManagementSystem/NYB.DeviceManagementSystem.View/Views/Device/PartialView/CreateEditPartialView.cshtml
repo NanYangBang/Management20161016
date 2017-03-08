@@ -40,7 +40,8 @@
                             <select value="" name="DeviceTypeID">
                                 @foreach (KeyValuePair<string, string> dic in (Dictionary<string, string>)ViewBag.DeviceType)
                                 {
-                                    <option id="firstOption" value="@dic.Key">@dic.Value</option>
+                                    <option @(dic.Key == Model.DeviceTypeID ? "selected" : "") id="firstOption" value="@dic.Key">@dic.Value</option>
+
                                 }
                             </select>
 
@@ -57,7 +58,7 @@
                             <select value="" name="ManufacturerID">
                                 @foreach (KeyValuePair<string, string> dic in (Dictionary<string, string>)ViewBag.ManufacturList)
                                 {
-                                    <option id="firstOption" value="@dic.Key">@dic.Value</option>
+                                    <option @(dic.Key == Model.ManufacturerID ? "selected" : "") id="firstOption" value="@dic.Key">@dic.Value</option>
                                 }
                             </select>
                         </td>
@@ -71,7 +72,7 @@
                             <select value="" name="SupplierID">
                                 @foreach (KeyValuePair<string, string> dic in (Dictionary<string, string>)ViewBag.SupperList)
                                 {
-                                    <option id="firstOption" value="@dic.Key">@dic.Value</option>
+                                    <option @(dic.Key == Model.SupplierID ? "selected" : "") id="firstOption" value="@dic.Key">@dic.Value</option>
                                 }
                             </select>
                         </td>
