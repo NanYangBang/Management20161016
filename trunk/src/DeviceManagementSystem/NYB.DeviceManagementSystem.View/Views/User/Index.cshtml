@@ -74,7 +74,7 @@
                             <a title="查看" href="@(Url.Action("ViewUser", "User", routeValues))"><img src="@Url.Content("~/Images/look.png")" /></a>
                             @*@Html.ActionLink("删除", "DeleteUser", routeValues, new { name = "DeleteUser" })*@
                             <a href="#" onclick="DataDel('@user.ID','@(Url.Action("DeleteUser"))')" name="DeleteUSer"><img src="@Url.Content("~/Images/del.png")" /></a>
-                            <a title="重置密码" href="@(Url.Action("ResetPassword", "User", routeValues))"><img src="@Url.Content("~/Images/edit.png")" /></a>
+                            <a title="重置密码" href="@(Url.Action("ResetPassword", "User", routeValues))"><img src="@Url.Content("~/Images/resetpassword.png")" /></a>
                         </td>
                     </tr>
                 }
