@@ -10,9 +10,9 @@
 @Styles.Render("~/Content/User/User.css")
 <div actionname="系统管理">
     <form method="get" id="searchForm" class="userSearchForm">
-        <select name="project">
+        @*<select name="project">
             <option value="1">项目管理部</option>
-        </select>
+        </select>*@
         <input type="text" name="searchInfo" id="seacheName" value="@(ViewBag.SearchInfo)" />
         <input style="line-height:0px" type="submit" class="" id="btnSearch" value="搜索" />
     </form>
