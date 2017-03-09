@@ -22,10 +22,16 @@ namespace NYB.DeviceManagementSystem.ViewModel
         [DisplayName("设备名称")]
         public string DeviceName { get; set; }
 
+        private string _operator = string.Empty;
+
         [DisplayName("保养人")]
         [StringLength(30, ErrorMessage = "最大长度为30")]
-        [Required]
-        public string Operator { get; set; }
+        [Required(ErrorMessage = "保养人必填")]
+        public string Operator
+        {
+            get { return _operator; }
+            set { _operator = value; }
+        }
 
         [DisplayName("保养日期")]
         [Required]

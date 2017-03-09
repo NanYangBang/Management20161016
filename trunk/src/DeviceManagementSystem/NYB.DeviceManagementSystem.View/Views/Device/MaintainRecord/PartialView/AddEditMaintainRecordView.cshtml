@@ -135,6 +135,12 @@
         });
         AddTxtAre();
         $('[name="DeviceName"]').attr('readonly', 'readonly');
+        if (Resource.Action == 'Add') {
+            $('#Operator').focus();
+            $('#Operator').val('\t');
+            $('#Operator').val('');
+            $('#Operator').keyup();
+        }
     })
 
     function BindDatePick() {
