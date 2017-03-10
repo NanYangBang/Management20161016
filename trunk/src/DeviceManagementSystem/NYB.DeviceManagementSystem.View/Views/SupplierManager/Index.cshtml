@@ -31,8 +31,11 @@
                 <th>
                     地址
                 </th>
-                <th>
+                @*<th>
                     备注
+                </th>*@
+                <th>
+                    创建时间
                 </th>
                 <th class="operation-column">
                     操作
@@ -59,8 +62,11 @@
                         <td>
                             @supplier.Address
                         </td>
-                        <td title="@(@supplier.Note)" class="lengHideTd">
+                        @*<td title="@(@supplier.Note)" class="lengHideTd">
                             @supplier.Note
+                        </td>*@
+                        <td>
+                            @supplier.CreateDate.ToString("yyyy-MM-dd HH:mm:ss")
                         </td>
                         <td>
                             @{var routeValues = new { supplierID = supplier.ID, returnUrl = Request.Url.AbsoluteUri, _ = DateTime.Now.Ticks };}

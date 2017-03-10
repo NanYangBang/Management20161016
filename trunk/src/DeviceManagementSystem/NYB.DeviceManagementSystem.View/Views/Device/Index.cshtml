@@ -47,16 +47,19 @@
                 <th>
                     供应商
                 </th>
-                <th>
+                <th style="width:90px">
                     生产日期
                 </th>
-                <th>
+                <th style="width:90px">
                     保养日期
                 </th>
                 <th>
-                    备注
+                    创建时间
                 </th>
-                <th style="width:300px;" class="operation-column">
+                @*<th>
+                    备注
+                </th>*@
+                <th style="width:250px;" class="operation-column">
                     操作
                 </th>
             </tr>
@@ -84,9 +87,12 @@
                         <td>
                             @(!device.MaintainDate.HasValue ? "" : device.MaintainDate.Value.ToString("yyyy-MM-dd"))
                         </td>
-                        <td title="@(@device.Note)" class="lengHideTd">
-                            @device.Note
+                        <td>
+                            @device.CreateDate.ToString("yyyy-MM-dd HH:mm:ss")
                         </td>
+                        @*<td title="@(@device.Note)" class="lengHideTd">
+                            @device.Note
+                        </td>*@
                         <td class="opreateTd">
                             @{var routeValues = new { deviceTypeID = device.ID, deviceName = device.Name, returnUrl = Request.Url.AbsoluteUri, _ = DateTime.Now.Ticks };}
                             @{var addRepairObj = new { deviceID = device.ID, returnUrl = Request.Url.AbsoluteUri, deviceName = device.Name, _ = DateTime.Now.Ticks }; }

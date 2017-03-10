@@ -19,9 +19,9 @@
     <table class="table-common" id="pileInfo">
         <thead>
             <tr>
-                <th class="checkbox-column">
+                @*<th class="checkbox-column">
                     <input type="checkbox" id="checkedAll_id" class="checkedAll" />
-                </th>
+                </th>*@
                 <th>
                     <a href="" sortby="UserName">用户名</a>
                 </th>
@@ -37,6 +37,9 @@
                 <th>
                     电子邮件
                 </th>
+                <th>
+                     创建时间
+                </th>
                 <th class="operation-column">
                     操作
                 </th>
@@ -48,9 +51,9 @@
                 foreach (var user in Model)
                 {
                     <tr pileid="">
-                        <td>
+                        @*<td>
                             <input type="checkbox" id="checkbox_id" />
-                        </td>
+                        </td>*@
                         <td>
                             @user.UserName
                         </td>
@@ -65,6 +68,9 @@
                         </td>
                         <td>
                             @user.Email
+                        </td>
+                        <td>
+                            @user.CreateDate.ToString("yyyy-MM-dd HH:mm:ss")
                         </td>
                         <td>
                             @{var routeValues = new { userID = user.ID, returnUrl = Request.Url.AbsoluteUri, _ = DateTime.Now.Ticks };}
