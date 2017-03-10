@@ -34,15 +34,9 @@
         </div>
     </div>
     @Html.Partial("Footer")
-    @*<script src="@Url.Content(String.Format("~/Scripts/common.js?preventCaching={0}", DateTime.Now.Ticks))" type="text/javascript"></script>*@
     @RenderSection("scripts", false)
 
     <script type="text/javascript">
-        @*ResourceUrl = {
-            ViewIndex: '@Html.Raw(Url.Action("ViewIndex", "WebMap"))',
-            HomePage: '@Html.Raw(Url.Action(String.Empty, String.Empty))',
-            CurrentControllerName: '@Request.RequestContext.RouteData.Values["controller"]'
-        };*@
 
         $(document).ready(function () {
             HighLeight();
@@ -78,8 +72,6 @@
 
         function SetLeftNameHeight() {
             $('.nav-left').height($('.sub-content').height());
-
-
         }
 
     </script>

@@ -623,9 +623,10 @@ function AddTxtAre() {
     textareaMode.height(textAreaTD.attr('ht'));
     textareaMode.width(textAreaTD.attr('wt'));
     var operateParent = textAreaTD.parents('tr');
-    
     textAreaTD.prev().height(textAreaTD.attr('ht'));
-    textAreaTD.parents('fieldset').css('margin-bottom', '20px')
 
 }
+
+
+
 

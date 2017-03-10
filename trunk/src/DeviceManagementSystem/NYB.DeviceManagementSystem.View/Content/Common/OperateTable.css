@@ -90,10 +90,13 @@
 
 
 .operateTable .lengthTd {
-    position:absolute;
-    
+    position: absolute;
 }
 
 .err-prompt {
-    color:red;
+    color: red;
+}
+
+.common-details-panel fieldset {
+    margin-bottom: 20px;
 }
