@@ -166,7 +166,7 @@
             fileTypeExts: '*.xls;*.xlsx;',
             fileSizeLimit: 10240,
             onQueueComplete: function () {
-                location.reload();
+                //location.reload();
             },
             onError: function (event, ID, fileObj, errorObj) {
                 alert("上传失败，请稍后再试！");
@@ -174,10 +174,14 @@
             onUploadError: function (file, data) {
             },
             onUploadSuccess: function (file, data, response) {
-
+                var result = JSON.parse(data);
+                if (result.Code == 0) {
+                    location.reload();
+                } else {
+                    alert(result.Msg);
+                }
             }
         });
-
     }
 
     function BindDatePick() {
