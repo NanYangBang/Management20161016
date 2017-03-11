@@ -94,7 +94,7 @@
                             <a title="修改设备信息" href="@(Url.Action("EditDevice", "Device", routeValues))"><img src="@Url.Content("~/Images/edit.png")" /></a>
                             @*@Html.ActionLink("查看", "Details", routeValues)*@
                             @*<a title="查看设备信息" href="@(Url.Action("Details", "Device", routeValues))"><img src="@Url.Content("~/Images/look.png")" /></a>*@
-                            <a href="#" title="删除设备信息" onclick="DataDel('@device.ID','@(Url.Action("Delete"))')" name="DeleteDeviceType"><img src="@Url.Content("~/Images/del.png")" /></a>
+                            <a href="#" title="删除设备信息" onclick="DataDel('@device.ID','@(Url.Action("Delete", new { _ = DateTime.Now.Ticks }))')" name="DeleteDeviceType"><img src="@Url.Content("~/Images/del.png")" /></a>
                             @*@Html.ActionLink("生成维修记录", "AddRepairRecord", addRepairObj)*@
                             <a title="生成维修记录" href="@(Url.Action("AddRepairRecord", "Device", addRepairObj))"><img src="@Url.Content("~/Images/repairimg.png")" /></a>
                             @*@Html.ActionLink("查看维修记录", "RepairRecordList", addRepairObj)*@

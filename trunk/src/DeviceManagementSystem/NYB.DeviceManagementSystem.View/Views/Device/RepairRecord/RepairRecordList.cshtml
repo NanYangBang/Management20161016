@@ -79,7 +79,6 @@
     @if (!string.IsNullOrWhiteSpace(returnUrl))
     {
         <div class="btn-opreate">
-            @Html.Partial("DisplayTemplates/PagerView", Model)
             <p>
                 <a href="@(returnUrl)">此页面从设备定位过来，点击返回设备页面</a>
             </p>

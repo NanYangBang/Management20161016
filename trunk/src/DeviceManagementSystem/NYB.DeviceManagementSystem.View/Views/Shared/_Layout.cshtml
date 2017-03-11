@@ -41,6 +41,14 @@
         $(document).ready(function () {
             HighLeight();
             //SetLeftNameHeight();
+
+            $('#_MvcPager_Ctrl0_pib').select(function () {
+                console.log($('#_MvcPager_Ctrl0_pib option[]'));
+            })
+            
+            $('.mvcPager input').remove();
+            $('#_MvcPager_Ctrl0_pib').remove();
+
         });
 
         function HighLeight() {

@@ -111,11 +111,11 @@ namespace NYB.DeviceManagementSystem.View.Controllers
         }
 
         [HttpPost]
-        public ActionResult Delete(string supplierID)
+        public ActionResult Delete(string id)
         {
             try
             {
-                var result = new SupplierBLL().DeleteSupplier(supplierID);
+                var result = new SupplierBLL().DeleteSupplier(id);
                 return JsonContentHelper.GetJsonContent(result);
             }
             catch

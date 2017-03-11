@@ -34,7 +34,7 @@
                 </th>
                 <th>
                     备注
-                </th>     
+                </th>
                 <th class="operation-column">
                     操作
                 </th>
@@ -67,7 +67,7 @@
                         <td>
                             @{var routeValues = new { projectID = project.ID, returnUrl = Request.Url.AbsoluteUri, _ = DateTime.Now.Ticks };}
                             <a title="修改" href="@(Url.Action("UpdateProject", "ProjectManager", routeValues))"><img src="@Url.Content("~/Images/edit.png")" /></a>
-                            <a href="#" title="删除" onclick="DataDel('@project.ID','@(Url.Action("Delete"))')" name="DeleteDeviceType"><img src="@Url.Content("~/Images/del.png")" /></a>
+                            <a href="#" title="删除" onclick="DataDel('@project.ID','@(Url.Action("Delete", new { _ = DateTime.Now.Ticks }))')" name="DeleteDeviceType"><img src="@Url.Content("~/Images/del.png")" /></a>
                             <a title="重置密码" href="@(Url.Action("ResetPassword", "ProjectManager", new { userID = project.WebUser.ID, returnUrl = Request.Url.AbsoluteUri, _ = DateTime.Now.Ticks }))"><img src="@Url.Content("~/Images/resetpassword.png")" /></a>
                         </td>
                     </tr>
@@ -84,7 +84,7 @@
         </p>
     </div>
 </div>
-    
+
 <script type="text/javascript">
     window.UrlResource = {
         UrlAddAction: '@Url.Action("AddProject", "ProjectManager", new { returnUrl = Request.Url.AbsoluteUri, _ = DateTime.Now.Ticks })'
