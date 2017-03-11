@@ -48,6 +48,12 @@ namespace NYB.DeviceManagementSystem.BLL
                     filter = filter.And(t => t.RepairDate <= endTime);
                 }
 
+                if (string.IsNullOrEmpty(orderby))
+                {
+                    orderby = "CreateDate";
+                    ascending = false;
+                }
+
                 var temp = context.RepairRecord.Where(filter).Page(out totalCount, pageIndex, pageSize, orderby, ascending, true);
 
                 var result = temp.Select(t => new WebRepairRecord()

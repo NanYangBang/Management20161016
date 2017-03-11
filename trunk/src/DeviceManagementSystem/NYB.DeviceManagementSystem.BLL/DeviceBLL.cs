@@ -34,6 +34,12 @@ namespace NYB.DeviceManagementSystem.BLL
                         || (string.IsNullOrEmpty(t.ManufacturerID) == false && t.Manufacturer.Name.ToUpper().Contains(searchInfo)));
                 }
 
+                if (string.IsNullOrEmpty(orderby))
+                {
+                    orderby = "CreateDate";
+                    ascending = false;
+                }
+
                 var temp = context.Device.Where(filter).Page(out totalCount, pageIndex, pageSize, orderby, ascending, true);
 
                 var result = temp.Select(t => new WebDevice()
@@ -122,7 +128,7 @@ namespace NYB.DeviceManagementSystem.BLL
                     return new CResult<bool>(false, ErrorCode.DataNoExist);
                 }
 
-                if (context.Device.Any(t => t.Name.ToUpper() == model.Name.ToUpper() && t.ProjectID == model.ProjectID && t.IsValid && t.ID != model.ID))
+                if (context.Device.Any(t => t.Name.ToUpper() == model.Name.ToUpper() && t.ProjectID == entity.ProjectID && t.IsValid && t.ID != model.ID))
                 {
                     return new CResult<bool>(false, ErrorCode.DeviceNameIsExist);
                 }

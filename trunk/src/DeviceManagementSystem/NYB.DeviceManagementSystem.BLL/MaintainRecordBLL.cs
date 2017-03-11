@@ -47,6 +47,12 @@ namespace NYB.DeviceManagementSystem.BLL
 
             using (DeviceMgmtEntities context = new DeviceMgmtEntities())
             {
+                if (string.IsNullOrEmpty(orderby))
+                {
+                    orderby = "CreateDate";
+                    ascending = false;
+                }
+
                 var temp = context.MaintainRecord.Where(filter).Page(out totalCount, pageIndex, pageSize, orderby, ascending, true);
 
                 var result = temp.Select(entity => new WebMaintainRecord()
