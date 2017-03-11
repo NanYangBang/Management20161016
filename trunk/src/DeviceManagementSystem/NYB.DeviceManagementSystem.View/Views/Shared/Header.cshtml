@@ -17,7 +17,7 @@
         <ul>
             <li><a target="_blank" href="http://www.ywcs.com.cn">官网</a></li>
             <li><a id="resetPasswordRef" href="@Url.Action("ChangePassword", "Account")">修改密码</a></li>
-            <li class="last-border">@Html.ActionLink("退出", "LogOff", "Account")</li>
+            <li class="last-border"><a href="@Url.Action("LogOff", "Account", new { _ = DateTime.Now.Ticks })">退出</a></li>
         </ul>
         <p>
             @if (Request.IsAuthenticated)
