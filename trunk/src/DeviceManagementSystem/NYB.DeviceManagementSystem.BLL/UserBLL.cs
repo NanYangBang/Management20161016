@@ -37,6 +37,12 @@ namespace NYB.DeviceManagementSystem.BLL
                 filter = filter.And(t => t.Name.ToUpper().Contains(searchInfo) || t.LoginName.ToUpper().Contains(searchInfo));
             }
 
+            if (string.IsNullOrEmpty(orderby))
+            {
+                orderby = "CreateDate";
+                ascending = false;
+            }
+
             using (DeviceMgmtEntities context = new DeviceMgmtEntities())
             {
                 var userList = context.User.Where(filter).Page(out totalCount, pageIndex, pageSize, orderby, ascending, true);
@@ -308,7 +314,7 @@ namespace NYB.DeviceManagementSystem.BLL
                 }
                 else
                 {
-                    return new CResult<bool>(false, ErrorCode.SaveDbChangesFailed);
+                    return new CResult<bool>(false, ErrorCode.ChangePasswordError);
                 }
             }
         }
@@ -348,7 +354,7 @@ namespace NYB.DeviceManagementSystem.BLL
                 }
                 else
                 {
-                    return new CResult<bool>(false, ErrorCode.SaveDbChangesFailed);
+                    return new CResult<bool>(false, ErrorCode.ChangePasswordError);
                 }
             }
         }

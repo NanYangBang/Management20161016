@@ -28,7 +28,13 @@ namespace NYB.DeviceManagementSystem.BLL
                 if (string.IsNullOrWhiteSpace(searchInfo) == false)
                 {
                     searchInfo = searchInfo.Trim().ToUpper();
-                    filter = filter.And(t =>t.Name.ToUpper().Contains(searchInfo));
+                    filter = filter.And(t => t.Name.ToUpper().Contains(searchInfo));
+                }
+
+                if (string.IsNullOrEmpty(orderby))
+                {
+                    orderby = "CreateDate";
+                    ascending = false;
                 }
 
                 var temp = context.Project.Where(filter).Page(out totalCount, pageIndex, pageSize, orderby, ascending, true);
@@ -130,6 +136,14 @@ namespace NYB.DeviceManagementSystem.BLL
                         return new CResult<bool>(false, ErrorCode.AddUserFault);
                     }
                 }
+                else if (status == MembershipCreateStatus.DuplicateUserName)
+                {
+                    return new CResult<bool>(false, ErrorCode.LoginNameIsExist);
+                }
+                else
+                {
+                    return new CResult<bool>(false, 1, status.ToString());
+                }
 
                 return new CResult<bool>(false, ErrorCode.SaveDbChangesFailed);
             }
@@ -228,6 +242,18 @@ namespace NYB.DeviceManagementSystem.BLL
                 }
 
                 project.IsValid = false;
+
+                var entity = context.User.FirstOrDefault(t => t.IsValid && t.IsSuperAdminCreate == true && t.ProjectID == project.ID);
+                if (entity != null)
+                {
+                    var deleteFlag = Membership.DeleteUser(entity.LoginName);
+                    if (deleteFlag == false)
+                    {
+                        return new CResult<bool>(false, ErrorCode.SaveDbChangesFailed);
+                    }
+
+                    entity.IsValid = false;
+                }
 
                 return context.Save();
             }

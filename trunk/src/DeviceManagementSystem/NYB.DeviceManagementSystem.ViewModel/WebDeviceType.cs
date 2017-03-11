@@ -12,7 +12,7 @@ namespace NYB.DeviceManagementSystem.ViewModel
     {
         public string ID { get; set; }
 
-        [DisplayName("设备名称")]
+        [DisplayName("名称")]
         [Required]
         [StringLength(30, ErrorMessage = "最大长度为30")]
         public string Name { get; set; }

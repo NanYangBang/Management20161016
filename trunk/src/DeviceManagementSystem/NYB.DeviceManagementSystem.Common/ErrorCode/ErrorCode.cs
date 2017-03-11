@@ -163,5 +163,11 @@ namespace NYB.DeviceManagementSystem.Common
         /// </summary>
         [DescriptionAttribute("登录名已存在")]
         LoginNameIsExist = 20118,
+
+        /// <summary>
+        /// 修改密码失败
+        /// </summary>
+        [DescriptionAttribute("修改密码失败")]
+        ChangePasswordError = 20119,
     }
 }

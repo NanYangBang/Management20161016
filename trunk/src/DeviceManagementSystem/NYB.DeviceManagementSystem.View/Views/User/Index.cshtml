@@ -21,12 +21,15 @@
             <tr>
                 @*<th class="checkbox-column">
                     <input type="checkbox" id="checkedAll_id" class="checkedAll" />
-                </th>*@
-                <th>
-                    <a href="" sortby="UserName">用户名</a>
-                </th>
+                </th>*@    
                 <th>
                     <a href="" sortby="LoginName">登录名</a>
+                </th>
+                <th>
+                    <a href="" sortby="UserName">姓名</a>
+                </th>
+                <th>
+                    角色
                 </th>
                 <th>
                     地址
@@ -55,10 +58,13 @@
                             <input type="checkbox" id="checkbox_id" />
                         </td>*@
                         <td>
+                            @user.LoginName
+                        </td>
+                        <td>
                             @user.UserName
                         </td>
                         <td>
-                            @user.LoginName
+                            @user.Role
                         </td>
                         <td>
                             @user.Address
@@ -77,7 +83,7 @@
                             @*@Html.ActionLink("修改", "UpdateUser", routeValues)*@
                             <a title="修改" href="@(Url.Action("UpdateUser", "User", routeValues))"><img src="@Url.Content("~/Images/edit.png")" /></a>
                             @*@Html.ActionLink("查看", "ViewUser", routeValues)*@
-                            <a title="查看" href="@(Url.Action("ViewUser", "User", routeValues))"><img src="@Url.Content("~/Images/look.png")" /></a>
+                        @*    <a title="查看" href="@(Url.Action("ViewUser", "User", routeValues))"><img src="@Url.Content("~/Images/look.png")" /></a>*@
                             @*@Html.ActionLink("删除", "DeleteUser", routeValues, new { name = "DeleteUser" })*@
                             <a href="#" onclick="DataDel('@user.ID','@(Url.Action("DeleteUser", new { _ = DateTime.Now.Ticks }))')" name="DeleteUSer"><img src="@Url.Content("~/Images/del.png")" /></a>
                             <a title="重置密码" href="@(Url.Action("ResetPassword", "User", routeValues))"><img src="@Url.Content("~/Images/resetpassword.png")" /></a>

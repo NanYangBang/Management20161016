@@ -53,7 +53,7 @@ namespace NYB.DeviceManagementSystem.BLL
                     ManufacturerName = string.IsNullOrEmpty(t.ManufacturerID) ? "" : t.Manufacturer.Name,
                     ProductDate = t.ProductDate,
                     SupplierID = t.SupplierID,
-                    SupplierName = string.IsNullOrEmpty(t.SupplierID) == false ? "" : t.Supplier.Name
+                    SupplierName = string.IsNullOrEmpty(t.SupplierID) ? "" : t.Supplier.Name
                 }).ToList();
 
                 LogHelper.Info("result", result);
@@ -331,7 +331,7 @@ namespace NYB.DeviceManagementSystem.BLL
                     context.Device.Add(device);
                 }
 
-                LogHelper.Info("importList",webDeviceList);
+                LogHelper.Info("importList", webDeviceList);
 
                 return context.Save();
             }

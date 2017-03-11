@@ -63,7 +63,33 @@ namespace NYB.DeviceManagementSystem.View.Controllers
 
         public ActionResult LogOff()
         {
+            // 避免缓存
+            Response.Cache.SetAllowResponseInBrowserHistory(false);
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetExpires(DateTime.UtcNow.AddMinutes(-1));
+            Response.Cache.SetNoStore();
+            Response.Cache.SetRevalidation(HttpCacheRevalidation.AllCaches);
+            Response.Expires = -1;
+            Response.ExpiresAbsolute = DateTime.Now.AddDays(-1);
+            Response.CacheControl = "no-cache";
+
             FormsAuthentication.SignOut();
+
+            Response.Cookies.Clear();
+
+            // 清除session
+            Session.RemoveAll();
+
+            // 用同名cookie覆盖原cookie
+            HttpCookie cookie1 = new HttpCookie(FormsAuthentication.FormsCookieName, "");
+            cookie1.Expires = DateTime.Now.AddYears(-1);
+            Response.Cookies.Add(cookie1);
+
+            // 用同名session cookie 覆盖原cookie
+            HttpCookie cookie2 = new HttpCookie("ASP.NET_SessionId", "");
+            cookie2.Expires = DateTime.Now.AddYears(-1);
+            Response.Cookies.Add(cookie2);
+ 
 
             return RedirectToAction("LogOn");
         }

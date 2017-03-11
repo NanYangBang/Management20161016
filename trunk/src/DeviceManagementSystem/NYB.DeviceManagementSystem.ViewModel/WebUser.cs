@@ -23,7 +23,7 @@ namespace NYB.DeviceManagementSystem.ViewModel
         /// 用户名
         /// </summary>
         [Required(ErrorMessage = "用户名必填")]
-        [Display(Name = "用户名")]
+        [Display(Name = "姓名")]
         [StringLength(20, ErrorMessage = "最大长度为20")]
         public string UserName
         {
