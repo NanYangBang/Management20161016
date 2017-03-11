@@ -112,8 +112,8 @@
         ReturnUrl: '@returnUrl',
         IsAddRecord: '@(ViewBag.IsAddRecord)',
         Action: '@(ViewBag.OperateAction)',
-        UrlAddFile: '@(Url.Action("AddMaintainRecordFile", "Device"))',
-        UrlEditFile: '@(Url.Action("AddMaintainRecordFile", "Device"))',
+        UrlAddFile: '@(Url.Action("AddMaintainRecordFile", "Device", new { _ = DateTime.Now.Ticks }))',
+        UrlEditFile: '@(Url.Action("AddMaintainRecordFile", "Device", new { _ = DateTime.Now.Ticks }))',
         UrlImage: '@Url.Content("~/Content/Plugin/jQuery-UI-Timepicker/images/calendar.png")',
         UrlCancelImage: '@Url.Content("~/Content/Plugin/jQueryUploadify/images/uploadify-cancel.png")',
         UrlSwf: '@Url.Content("~/Content/Plugin/jQueryUploadify/flash/uploadify.swf")',
@@ -142,7 +142,7 @@
             $('#Operator').keyup();
         }
     })
-    
+
     function BindDatePick() {
         var path = Resource.UrlImage;
         $('td[name="time"] input').datepicker({

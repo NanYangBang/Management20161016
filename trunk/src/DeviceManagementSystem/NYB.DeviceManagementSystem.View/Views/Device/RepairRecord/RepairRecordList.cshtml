@@ -105,7 +105,7 @@
 
     function DeleteDeviceRepairRecord(t) {
         if (window.confirm("是否删除？")) {
-            $.post('@Url.Action("DelRepairRecord")', { repairRecordID: t }, function (result) {
+            $.post('@Url.Action("DelRepairRecord", new { _ = DateTime.Now.Ticks })', { repairRecordID: t }, function (result) {
                 if (result.Code == 0) {
                     window.location.reload();
                 } else {

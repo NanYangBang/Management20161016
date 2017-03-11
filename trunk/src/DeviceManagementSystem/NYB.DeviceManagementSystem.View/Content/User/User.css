@@ -38,3 +38,13 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+.content #searchForm .time {
+    width:120px;
+}
+
+.content #searchForm {
+    min-width:850px;
+    overflow:hidden;
+    
+}
+
