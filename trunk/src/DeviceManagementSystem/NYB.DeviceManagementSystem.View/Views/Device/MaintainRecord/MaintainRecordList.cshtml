@@ -40,6 +40,9 @@
                     备注
                 </th>
                 <th>
+                    创建时间
+                </th>
+                <th>
                     操作
                 </th>
             </tr>
@@ -60,6 +63,9 @@
                         </td>
                         <td title="@(@device.Note)" class="lengHideTd">
                             @device.Note
+                        </td>
+                        <td>
+                            @device.CreateDate.ToString("yyyy-MM-dd HH:mm:ss")
                         </td>
                         <td>
                             @{var routeValues = new { maintainRecordID = device.ID, deviceName = device.DeviceName, returnUrl = Request.Url.AbsoluteUri, _ = DateTime.Now.Ticks };}

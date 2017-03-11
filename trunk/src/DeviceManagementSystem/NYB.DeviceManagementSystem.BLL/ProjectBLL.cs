@@ -28,7 +28,7 @@ namespace NYB.DeviceManagementSystem.BLL
                 if (string.IsNullOrWhiteSpace(searchInfo) == false)
                 {
                     searchInfo = searchInfo.Trim().ToUpper();
-                    filter = filter.And(t => t.Name.ToUpper().Contains(searchInfo));
+                    filter = filter.And(t =>t.Name.ToUpper().Contains(searchInfo));
                 }
 
                 var temp = context.Project.Where(filter).Page(out totalCount, pageIndex, pageSize, orderby, ascending, true);
