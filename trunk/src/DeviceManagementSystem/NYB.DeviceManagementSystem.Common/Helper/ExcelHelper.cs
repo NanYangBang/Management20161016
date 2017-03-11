@@ -42,6 +42,9 @@ namespace NYB.DeviceManagementSystem.Common.Helper
                     ICell cell = headerRow.CreateCell(icolIndex);
                     cell.SetCellValue(item.ColumnName);
                     cell.CellStyle = HeadercellStyle;
+
+                    sheet.AutoSizeColumn(icolIndex);
+
                     icolIndex++;
                 }
 
@@ -63,7 +66,7 @@ namespace NYB.DeviceManagementSystem.Common.Helper
 
                 //为避免日期格式被Excel自动替换，所以设定 format 为 『@』 表示一率当成text來看
                 IDataFormat datastyle = workbook.CreateDataFormat();
-                datetimeCellStyle.DataFormat = datastyle.GetFormat("yyyy年MM月dd日");
+                datetimeCellStyle.DataFormat = datastyle.GetFormat("yyyy/MM/dd");
                 datetimeCellStyle.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
                 datetimeCellStyle.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
                 datetimeCellStyle.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
