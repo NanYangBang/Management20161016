@@ -275,10 +275,16 @@ namespace NYB.DeviceManagementSystem.BLL
                 webDeviceList.Add(webDevice);
             }
 
-            var deviceTypeNameList = webDeviceList.Select(t => t.DeviceTypeName).ToList();
-            var supplierNameList = webDeviceList.Select(t => t.SupplierName).ToList();
-            var manufacturerNameList = webDeviceList.Select(t => t.ManufacturerName).ToList();
-            var deviceNameList = webDeviceList.Select(t => t.Name).ToList();
+            var deviceTypeNameList = webDeviceList.Select(t => t.DeviceTypeName).Distinct().ToList();
+            var supplierNameList = webDeviceList.Select(t => t.SupplierName).Distinct().ToList();
+            var manufacturerNameList = webDeviceList.Select(t => t.ManufacturerName).Distinct().ToList();
+            var deviceNameList = webDeviceList.Select(t => t.Name).Distinct().ToList();
+
+            if (deviceNameList.Count < webDeviceList.Count)
+            {
+                return new CResult<bool>(false, ErrorCode.DeviceNameIsExist);
+            }
+
 
             using (var context = new DeviceMgmtEntities())
             {
@@ -294,22 +300,22 @@ namespace NYB.DeviceManagementSystem.BLL
 
                 if (context.Device.Any(t => t.ProjectID == projectID && t.IsValid && deviceNameList.Contains(t.Name)))
                 {
-                    return new CResult<bool>(false, ErrorCode.DeviceTypeNameIsExist);
+                    return new CResult<bool>(false, ErrorCode.DeviceNameIsExist);
                 }
 
-                var deviceTypeList = context.DeviceType.Where(t => t.IsValid && deviceTypeNameList.Contains(t.Name)).Select(t => new { t.ID, t.Name }).ToList();
+                var deviceTypeList = context.DeviceType.Where(t => t.IsValid && t.ProjectID == projectID && deviceTypeNameList.Contains(t.Name)).Select(t => new { t.ID, t.Name }).ToList();
                 if (deviceTypeList.Count < deviceTypeNameList.Count)
                 {
                     return new CResult<bool>(false, ErrorCode.DeviceTypeNotExist);
                 }
 
-                var supplierList = context.Supplier.Where(t => t.IsValid && supplierNameList.Contains(t.Name)).Select(t => new { t.ID, t.Name }).ToList();
+                var supplierList = context.Supplier.Where(t => t.IsValid && t.ProjectID == projectID && supplierNameList.Contains(t.Name)).Select(t => new { t.ID, t.Name }).ToList();
                 if (supplierList.Count < supplierNameList.Count)
                 {
                     return new CResult<bool>(false, ErrorCode.SupplierNotExist);
                 }
 
-                var manufacturerList = context.Manufacturer.Where(t => t.IsValid && manufacturerNameList.Contains(t.Name)).Select(t => new { t.ID, t.Name }).ToList();
+                var manufacturerList = context.Manufacturer.Where(t => t.IsValid && t.ProjectID == projectID && manufacturerNameList.Contains(t.Name)).Select(t => new { t.ID, t.Name }).ToList();
                 if (manufacturerList.Count < manufacturerNameList.Count)
                 {
                     return new CResult<bool>(false, ErrorCode.ManufacturerNotExist);
