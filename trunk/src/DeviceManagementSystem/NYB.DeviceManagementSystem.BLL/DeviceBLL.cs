@@ -375,14 +375,28 @@ namespace NYB.DeviceManagementSystem.BLL
                 row[i++] = item.DeviceTypeName;
                 row[i++] = item.SupplierName;
                 row[i++] = item.ManufacturerName;
-                row[i++] = item.ProductDate;
-                row[i++] = item.MaintainDate;
+                if (item.ProductDate.HasValue)
+                {
+                    row[i++] = item.ProductDate;
+                }
+                else
+                {
+                    row[i++] = DBNull.Value;
+                }
+                if (item.MaintainDate.HasValue)
+                {
+                    row[i++] = item.MaintainDate;
+                }
+                else
+                {
+                    row[i++] = DBNull.Value;
+                }
                 row[i++] = item.Note;
 
                 dataTable.Rows.Add(row);
             }
 
-            var fileName = string.Format("{0}{1}", Guid.NewGuid().ToString(), ".xlsx");
+            var fileName = string.Format("{0}{1}", Guid.NewGuid().ToString(), ".xls");
             var relativePath = Path.Combine(SystemInfo.TempFileFolder, fileName);
 
             var isSuccess = ExcelHelper.DataTableToExcel(dataTable, relativePath);
