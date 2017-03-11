@@ -14,9 +14,9 @@ function uploadProof() {
         multi: true,
         //postData: { token: Resource.Auth },
         //checkExisting: false,
-        fileTypeDesc: '*.pdf;*.doc;*.docx;*.xls;*.xlsx;*.jpg;*.jpeg;*.bmp;*.png',
+        fileTypeDesc: '*.jpg;*.jpeg;*.png',
         //removeCompleted: true,
-        fileTypeExts: '*.pdf;*.doc;*.docx;*.xls;*.xlsx;*.jpg;*.jpeg;*.bmp;*.png',
+        fileTypeExts: '*.jpg;*.jpeg;*.png',
         fileSizeLimit: 10240,
         onQueueComplete: function () {
             window.location = Resource.ReturnUrl;
