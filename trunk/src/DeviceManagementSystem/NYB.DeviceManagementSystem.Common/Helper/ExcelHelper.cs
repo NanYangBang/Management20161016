@@ -64,12 +64,12 @@ namespace NYB.DeviceManagementSystem.Common.Helper
                 //为避免日期格式被Excel自动替换，所以设定 format 为 『@』 表示一率当成text來看
                 IDataFormat datastyle = workbook.CreateDataFormat();
                 datetimeCellStyle.DataFormat = datastyle.GetFormat("yyyy年MM月dd日");
-                //datetimeCellStyle.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
-                //datetimeCellStyle.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
-                //datetimeCellStyle.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
-                //datetimeCellStyle.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
+                datetimeCellStyle.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
+                datetimeCellStyle.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
+                datetimeCellStyle.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
+                datetimeCellStyle.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
 
-                //datetimeCellStyle.SetFont(cellfont);
+                datetimeCellStyle.SetFont(cellfont);
 
                 //建立内容行
                 int iRowIndex = 1;
