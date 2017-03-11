@@ -59,6 +59,18 @@ namespace NYB.DeviceManagementSystem.Common.Helper
                 cellfont.Boldweight = (short)FontBoldWeight.Normal;
                 cellStyle.SetFont(cellfont);
 
+                ICellStyle datetimeCellStyle = workbook.CreateCellStyle();
+
+                //为避免日期格式被Excel自动替换，所以设定 format 为 『@』 表示一率当成text來看
+                IDataFormat datastyle = workbook.CreateDataFormat();
+                datetimeCellStyle.DataFormat = datastyle.GetFormat("yyyy年MM月dd日");
+                //datetimeCellStyle.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
+                //datetimeCellStyle.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
+                //datetimeCellStyle.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
+                //datetimeCellStyle.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
+
+                //datetimeCellStyle.SetFont(cellfont);
+
                 //建立内容行
                 int iRowIndex = 1;
                 int iCellIndex = 0;
@@ -69,8 +81,26 @@ namespace NYB.DeviceManagementSystem.Common.Helper
                     {
 
                         ICell cell = DataRow.CreateCell(iCellIndex);
-                        cell.SetCellValue(Rowitem[Colitem].ToString());
-                        cell.CellStyle = cellStyle;
+                        if (Colitem.DataType == typeof(DateTime))
+                        {
+                            var value = Rowitem[Colitem];
+                            if (value.GetType() == typeof(DateTime))
+                            {
+                                cell.SetCellValue(Convert.ToDateTime(value));
+                            }
+                            else
+                            {
+                                cell.SetCellValue(value.ToString());
+                            }
+
+                            cell.CellStyle = datetimeCellStyle;
+                        }
+                        else
+                        {
+                            cell.SetCellValue(Rowitem[Colitem].ToString());
+                            cell.CellStyle = cellStyle;
+                        }
+
                         iCellIndex++;
                     }
                     iCellIndex = 0;
@@ -171,7 +201,7 @@ namespace NYB.DeviceManagementSystem.Common.Helper
                                         case CellType.Numeric:
                                             if (DateUtil.IsCellDateFormatted(item))
                                             {
-                                                dr[item.ColumnIndex] = item.DateCellValue.ToString("yyyy-MM-dd hh:MM:ss");
+                                                dr[item.ColumnIndex] = item.DateCellValue.ToString("yyyy-MM-dd HH:mm:ss");
                                             }
                                             else
                                             {
@@ -199,7 +229,7 @@ namespace NYB.DeviceManagementSystem.Common.Helper
                                 case CellType.Numeric:
                                     if (DateUtil.IsCellDateFormatted(item))
                                     {
-                                        dr[item.ColumnIndex] = item.DateCellValue.ToString("yyyy-MM-dd hh:MM:ss");
+                                        dr[item.ColumnIndex] = item.DateCellValue.ToString("yyyy-MM-dd HH:mm:ss");
                                     }
                                     else
                                     {
@@ -208,7 +238,7 @@ namespace NYB.DeviceManagementSystem.Common.Helper
                                     break;
                                 case CellType.String:
                                     string strValue = item.StringCellValue;
-                                    if (string.IsNullOrEmpty(strValue))
+                                    if (string.IsNullOrEmpty(strValue) == false)
                                     {
                                         dr[item.ColumnIndex] = strValue.ToString();
                                     }
