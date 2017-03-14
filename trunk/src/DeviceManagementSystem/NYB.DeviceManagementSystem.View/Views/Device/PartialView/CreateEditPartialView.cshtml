@@ -129,6 +129,7 @@
         SaveEvent();
         BindDatePick();
         AddTxtAre();
+
     })
 
     function BindDatePick() {
@@ -144,6 +145,13 @@
         }).datepicker("option", "dateFormat", 'yy-mm-dd');;
         BindDatePickerTriggerEvent();
         $('td[name="time"] input').attr('readonly', 'readonly');
+
+        if (Resource.UrlAction == 'Update') {
+            $('#ProductDate').val('@(Model.ProductDate)');
+            $('#MaintainDate').val('@Model.MaintainDate');
+        }
+        
+
     }
 
 </script>

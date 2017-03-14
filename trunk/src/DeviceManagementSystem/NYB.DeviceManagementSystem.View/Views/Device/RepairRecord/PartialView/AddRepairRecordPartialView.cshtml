@@ -104,6 +104,11 @@
         }).datepicker("option", "dateFormat", 'yy-mm-dd');;
         BindDatePickerTriggerEvent();
         $('td[name="time"] input').attr('readonly', 'readonly');
+
+        if (Resource.Action == 'Update') {
+            $('#RepairDate').val('@Model.RepairDate');
+        }
+
     }
 
 </script>

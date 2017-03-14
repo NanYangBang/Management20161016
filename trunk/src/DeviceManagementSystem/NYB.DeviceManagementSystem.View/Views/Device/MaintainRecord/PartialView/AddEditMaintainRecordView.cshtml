@@ -156,6 +156,11 @@
         }).datepicker("option", "dateFormat", 'yy-mm-dd');
         BindDatePickerTriggerEvent();
         $('td[name="time"] input').attr('readonly', 'readonly');
+
+        if (Resource.Action == 'Update') {
+            $('#MaintainDate').val('@Model.MaintainDate');
+        }
+
     }
 
 </script>
