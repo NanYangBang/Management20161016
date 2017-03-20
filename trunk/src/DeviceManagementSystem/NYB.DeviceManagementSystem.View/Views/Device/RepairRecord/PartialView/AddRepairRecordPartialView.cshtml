@@ -106,7 +106,7 @@
         $('td[name="time"] input').attr('readonly', 'readonly');
 
         if (Resource.Action == 'Update') {
-            $('#RepairDate').val('@Model.RepairDate');
+            $('#RepairDate').val('@Model.RepairDate.ToString("yyyy-MM-dd")');
         }
 
     }
