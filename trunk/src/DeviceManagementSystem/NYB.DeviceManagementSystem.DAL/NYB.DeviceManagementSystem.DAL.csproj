@@ -82,6 +82,9 @@
     <Compile Include="Manufacturer.cs">
       <DependentUpon>Entity.tt</DependentUpon>
     </Compile>
+    <Compile Include="OrderClient.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Project.cs">
       <DependentUpon>Entity.tt</DependentUpon>
     </Compile>

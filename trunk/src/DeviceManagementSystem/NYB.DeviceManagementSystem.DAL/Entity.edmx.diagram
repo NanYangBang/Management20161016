@@ -30,6 +30,7 @@
         <AssociationConnector Association="DeviceMgmtModel.FK_MaintainRecord_Device" />
         <AssociationConnector Association="DeviceMgmtModel.FK_MaintainRecord_Project" />
         <AssociationConnector Association="DeviceMgmtModel.FK_MaintainRecord_User" />
+        <EntityTypeShape EntityType="DeviceMgmtModel.OrderClient" Width="1.5" PointX="3.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

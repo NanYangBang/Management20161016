@@ -169,5 +169,11 @@ namespace NYB.DeviceManagementSystem.Common
         /// </summary>
         [DescriptionAttribute("修改密码失败")]
         ChangePasswordError = 20119,
+
+        /// <summary>
+        /// 客户名称不允许重复
+        /// </summary>
+        [DescriptionAttribute("客户名称不允许重复")]
+        OrderClientNameIsExist = 20117,
     }
 }

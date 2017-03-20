@@ -36,7 +36,8 @@ namespace NYB.DeviceManagementSystem.DAL
         public System.DateTime CreateDate { get; set; }
         public string CreateUserID { get; set; }
         public bool IsValid { get; set; }
-        public bool IsSuperAdminCreate { get; set; }
+        public int UserType { get; set; }
+        public string OrderClientID { get; set; }
     
         public virtual ICollection<Device> Device { get; set; }
         public virtual ICollection<DeviceType> DeviceType { get; set; }

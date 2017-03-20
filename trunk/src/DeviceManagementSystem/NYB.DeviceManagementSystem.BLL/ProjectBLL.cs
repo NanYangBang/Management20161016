@@ -100,7 +100,7 @@ namespace NYB.DeviceManagementSystem.BLL
 
                 if (status == MembershipCreateStatus.Success)
                 {
-                    Roles.AddUserToRole(currentUser.UserName, RoleType.管理员.ToString());
+                    Roles.AddUserToRole(currentUser.UserName, RoleType.项目管理员.ToString());
 
                     var entity = new User()
                     {
@@ -114,7 +114,7 @@ namespace NYB.DeviceManagementSystem.BLL
                         CreateUserID = webUser.CreateUserID,
                         Email = webUser.Email,
                         IsValid = true,
-                        IsSuperAdminCreate = true
+                        UserType = (int)RoleType.项目管理员
                     };
                     context.Project.Add(project);
                     context.User.Add(entity);
@@ -148,6 +148,7 @@ namespace NYB.DeviceManagementSystem.BLL
                 return new CResult<bool>(false, ErrorCode.SaveDbChangesFailed);
             }
         }
+
         public CResult<bool> UpdateProjectInfo(WebProject webProject)
         {
             LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
@@ -169,7 +170,7 @@ namespace NYB.DeviceManagementSystem.BLL
                 project.Name = webProject.Name;
                 project.Note = webProject.Note;
 
-                var user = context.User.FirstOrDefault(t => t.ProjectID == webProject.ID && t.IsSuperAdminCreate == true);
+                var user = context.User.FirstOrDefault(t => t.UserType == (int)RoleType.项目管理员 && t.ProjectID == webProject.ID);
                 if (user == null)
                 {
                     return new CResult<bool>(false, ErrorCode.DataNoExist);
@@ -208,7 +209,7 @@ namespace NYB.DeviceManagementSystem.BLL
                     Name = project.Name,
                 };
 
-                var user = context.User.FirstOrDefault(t => t.ProjectID == project.ID && t.IsSuperAdminCreate);
+                var user = context.User.FirstOrDefault(t => t.UserType == (int)RoleType.项目管理员 && t.ProjectID == webProject.ID);
                 var webUser = new WebUser
                 {
                     ID = user.UserID,
@@ -243,14 +244,14 @@ namespace NYB.DeviceManagementSystem.BLL
 
                 project.IsValid = false;
 
-                var entity = context.User.FirstOrDefault(t => t.IsValid && t.IsSuperAdminCreate == true && t.ProjectID == project.ID);
+                var entity = context.User.FirstOrDefault(t => t.IsValid && t.UserType == (int)RoleType.项目管理员 && t.ProjectID == projectID);
                 if (entity != null)
                 {
-                    var deleteFlag = Membership.DeleteUser(entity.LoginName);
-                    if (deleteFlag == false)
-                    {
-                        return new CResult<bool>(false, ErrorCode.SaveDbChangesFailed);
-                    }
+                    //var deleteFlag = Membership.DeleteUser(entity.LoginName);
+                    //if (deleteFlag == false)
+                    //{
+                    //    return new CResult<bool>(false, ErrorCode.SaveDbChangesFailed);
+                    //}
 
                     entity.IsValid = false;
                 }

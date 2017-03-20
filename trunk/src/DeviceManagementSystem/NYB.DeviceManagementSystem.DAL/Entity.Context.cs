@@ -35,5 +35,6 @@ namespace NYB.DeviceManagementSystem.DAL
         public DbSet<User> User { get; set; }
         public DbSet<Attachment> Attachment { get; set; }
         public DbSet<MaintainRecord> MaintainRecord { get; set; }
+        public DbSet<OrderClient> OrderClient { get; set; }
     }
 }

@@ -394,9 +394,20 @@ namespace NYB.DeviceManagementSystem.BLL
                     Role = role,
                 };
 
-                if (role == RoleType.超级管理员.ToString())
+                if (role == RoleType.超级管理员.ToString() || role == RoleType.客户管理员.ToString())
                 {
                 }
+                //else if (role == RoleType.客户管理员.ToString())
+                //{
+                //    var project = context.OrderClient.FirstOrDefault(t => t.IsValid == true && t.ID == user.OrderClientID);
+
+                //    if (project == null)
+                //    {
+                //        return new CResult<WebUser>(null, ErrorCode.UserNameOrPasswordWrong);
+                //    }
+
+                //    webUser = project.ID;
+                //}
                 else
                 {
                     var project = context.Project.FirstOrDefault(t => t.IsValid == true && t.ID == user.ProjectID);
