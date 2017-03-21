@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="WebAttachment.cs" />
     <Compile Include="WebDevice.cs" />
+    <Compile Include="WebMaintainItem.cs" />
     <Compile Include="WebMaintainRecord.cs" />
     <Compile Include="WebOrderClient.cs" />
     <Compile Include="WebRepairRecord.cs" />
