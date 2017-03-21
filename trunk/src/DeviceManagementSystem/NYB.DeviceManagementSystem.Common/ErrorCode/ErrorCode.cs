@@ -111,10 +111,10 @@ namespace NYB.DeviceManagementSystem.Common
         UserNotExist = 20109,
 
         /// <summary>
-        /// 设备名称不允许重复
+        /// 设备编号不允许重复
         /// </summary>
-        [DescriptionAttribute("设备名称不允许重复")]
-        DeviceNameIsExist = 20110,
+        [DescriptionAttribute("设备编号不允许重复")]
+        DeviceNumIsExist = 20110,
 
         /// <summary>
         /// 设备类型名称不允许重复
@@ -169,5 +169,17 @@ namespace NYB.DeviceManagementSystem.Common
         /// </summary>
         [DescriptionAttribute("修改密码失败")]
         ChangePasswordError = 20119,
+
+        /// <summary>
+        /// 客户名称不允许重复
+        /// </summary>
+        [DescriptionAttribute("客户名称不允许重复")]
+        OrderClientNameIsExist = 20117,
+
+        /// <summary>
+        /// 项目管理员不允许删除
+        /// </summary>
+        [DescriptionAttribute("项目管理员不允许删除")]
+        ProjectAdminCannotDelete = 20117,
     }
 }

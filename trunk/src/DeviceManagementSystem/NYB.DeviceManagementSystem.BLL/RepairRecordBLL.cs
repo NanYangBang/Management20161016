@@ -12,6 +12,8 @@ using System.Linq.Expressions;
 using System.Data;
 using System.Web.Security;
 using System.Reflection;
+using System.Web;
+using System.IO;
 
 namespace NYB.DeviceManagementSystem.BLL
 {
@@ -76,63 +78,63 @@ namespace NYB.DeviceManagementSystem.BLL
             }
         }
 
-        public CResult<List<WebRepairRecord>> GetRepairRecordListByDeviceID(string deviceID, out int totalCount, string searchInfo, int pageIndex = 1, int pageSize = 10, string orderby = null, bool ascending = false)
-        {
-            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
-            LogHelper.Info("deviceID", deviceID);
+        //public CResult<List<WebRepairRecord>> GetRepairRecordListByDeviceID(string deviceID, out int totalCount, string searchInfo, int pageIndex = 1, int pageSize = 10, string orderby = null, bool ascending = false)
+        //{
+        //    LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+        //    LogHelper.Info("deviceID", deviceID);
 
-            using (DeviceMgmtEntities context = new DeviceMgmtEntities())
-            {
-                Expression<Func<RepairRecord, bool>> filter = t => t.DeviceID == deviceID && t.IsValid == true;
+        //    using (DeviceMgmtEntities context = new DeviceMgmtEntities())
+        //    {
+        //        Expression<Func<RepairRecord, bool>> filter = t => t.DeviceID == deviceID && t.IsValid == true;
 
-                if (string.IsNullOrWhiteSpace(searchInfo) == false)
-                {
-                    searchInfo = searchInfo.Trim().ToUpper();
-                    filter = filter.And(t => t.Note.ToUpper().Contains(searchInfo));
-                }
+        //        if (string.IsNullOrWhiteSpace(searchInfo) == false)
+        //        {
+        //            searchInfo = searchInfo.Trim().ToUpper();
+        //            filter = filter.And(t => t.Note.ToUpper().Contains(searchInfo));
+        //        }
 
-                var temp = context.RepairRecord.Where(filter).Page(out totalCount, pageIndex, pageSize, orderby, ascending, true);
+        //        var temp = context.RepairRecord.Where(filter).Page(out totalCount, pageIndex, pageSize, orderby, ascending, true);
 
-                var result = temp.Select(t => new WebRepairRecord()
-                {
-                    ID = t.ID,
-                    Note = t.Note,
-                    DeviceID = t.DeviceID,
-                    DeviceName = t.Device.Name,
-                    Operator = t.Operator,
-                    RepairDate = t.RepairDate,
-                    CreateDate = t.CreateDate,
-                    CreateUserID = t.CreateUserID,
-                    CreateUserName = t.User.Name,
-                    ProjectID = t.ProjectID
-                }).ToList();
+        //        var result = temp.Select(t => new WebRepairRecord()
+        //        {
+        //            ID = t.ID,
+        //            Note = t.Note,
+        //            DeviceID = t.DeviceID,
+        //            DeviceName = t.Device.Name,
+        //            Operator = t.Operator,
+        //            RepairDate = t.RepairDate,
+        //            CreateDate = t.CreateDate,
+        //            CreateUserID = t.CreateUserID,
+        //            CreateUserName = t.User.Name,
+        //            ProjectID = t.ProjectID
+        //        }).ToList();
 
-                LogHelper.Info("result", result);
+        //        LogHelper.Info("result", result);
 
-                return new CResult<List<WebRepairRecord>>(result);
-            }
-        }
+        //        return new CResult<List<WebRepairRecord>>(result);
+        //    }
+        //}
 
-        public CResult<bool> InsertRepairRecord(WebRepairRecord model)
+        public CResult<string> InsertRepairRecord(WebRepairRecord model)
         {
             LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
             LogHelper.Info("model", model);
 
             if (string.IsNullOrEmpty(model.ProjectID))
             {
-                return new CResult<bool>(false, ErrorCode.ParameterError);
+                return new CResult<string>(string.Empty, ErrorCode.ParameterError);
             }
 
             using (var context = new DeviceMgmtEntities())
             {
                 if (context.Project.Any(t => t.IsValid && t.ID == model.ProjectID) == false)
                 {
-                    return new CResult<bool>(false, ErrorCode.ProjectNotExist);
+                    return new CResult<string>(string.Empty, ErrorCode.ProjectNotExist);
                 }
 
                 if (context.Device.Any(t => t.ID == model.DeviceID) == false)
                 {
-                    return new CResult<bool>(false, ErrorCode.DeviceNotExist);
+                    return new CResult<string>(string.Empty, ErrorCode.DeviceNotExist);
                 }
 
                 var entity = new RepairRecord();
@@ -145,14 +147,62 @@ namespace NYB.DeviceManagementSystem.BLL
                 entity.ProjectID = model.ProjectID;
                 entity.Operator = model.Operator;
                 entity.DeviceID = model.DeviceID;
+                entity.Solution = model.Solution;
+                entity.Describe = model.Describe;
 
                 context.RepairRecord.Add(entity);
 
-                return context.Save();
+                if (context.SaveChanges() > 0)
+                {
+                    return new CResult<string>(entity.ID);
+                }
+                else
+                {
+                    return new CResult<string>("", ErrorCode.SaveDbChangesFailed);
+                }
             }
         }
 
-        public CResult<bool> UpdateRepairRecord(WebRepairRecord model)
+        public CResult<bool> AddRepairRecordFile(HttpPostedFileBase file, string repairRecordID)
+        {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("repairRecordID", repairRecordID);
+
+            using (var context = new DeviceMgmtEntities())
+            {
+                var date = DateTime.Now.ToString("yyyy-MM-dd");
+                var fileName = string.Format("{0}{1}", Guid.NewGuid().ToString(), Path.GetExtension(file.FileName));
+                var filePath = FileHelper.SaveFile(file, Path.Combine(SystemInfo.UploadFolder, date), fileName);
+                if (string.IsNullOrEmpty(filePath) == false)
+                {
+                    var fileMode = new Attachment()
+                    {
+                        DisplayName = file.FileName,
+                        FilePath = filePath,
+                        ID = Guid.NewGuid().ToString(),
+                        Note = "",
+                        RelationID = repairRecordID,
+                    };
+                    context.Attachment.Add(fileMode);
+                }
+                else
+                {
+                    return new CResult<bool>(false, ErrorCode.SaveFileFailed);
+                }
+
+                if (context.SaveChanges() > 0)
+                {
+                    return new CResult<bool>(true);
+                }
+                else
+                {
+                    FileHelper.DelFile(filePath);
+                }
+                return new CResult<bool>(true);
+            }
+        }
+
+        public CResult<bool> UpdateRepairRecord(WebRepairRecord model, List<string> deleteFiles)
         {
             LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
             LogHelper.Info("model", model);
@@ -173,9 +223,21 @@ namespace NYB.DeviceManagementSystem.BLL
                 entity.Note = model.Note;
                 entity.Operator = model.Operator;
                 entity.RepairDate = model.RepairDate;
-
+                entity.Solution = model.Solution;
+                entity.Describe = model.Describe;
 
                 context.Entry(entity).State = EntityState.Modified;
+
+                if (deleteFiles != null && deleteFiles.Count() > 0)
+                {
+                    var needDelete = context.Attachment.Where(t => deleteFiles.Contains(t.ID)).ToList();
+                    foreach (var item in needDelete)
+                    {
+                        context.Attachment.Remove(item);
+                        FileHelper.DelFile(item.FilePath);
+                    }
+                }
+
                 return context.Save();
             }
         }
@@ -209,8 +271,22 @@ namespace NYB.DeviceManagementSystem.BLL
                     CreateDate = entity.CreateDate,
                     CreateUserID = entity.CreateUserID,
                     CreateUserName = entity.User.Name,
-                    ProjectID = entity.ProjectID
+                    ProjectID = entity.ProjectID,
+                    Solution = entity.Solution,
+                    Describe = entity.Describe,
                 };
+
+                var attachments = context.Attachment.Where(a => a.RelationID == entity.ID).ToList();
+                foreach (var attachment in attachments)
+                {
+                    model.Attachments.Add(new WebAttachment()
+                    {
+                        DisplayName = attachment.DisplayName,
+                        FilePath = attachment.FilePath,
+                        ID = attachment.ID,
+                        Note = attachment.Note
+                    });
+                }
 
                 LogHelper.Info("result", model);
 
@@ -236,6 +312,12 @@ namespace NYB.DeviceManagementSystem.BLL
                 }
 
                 entity.IsValid = false;
+
+                var attachments = context.Attachment.Where(a => a.RelationID == entity.ID).ToList();
+                foreach (var attachment in attachments)
+                {
+                    FileHelper.DelFile(attachment.FilePath);
+                }
 
                 return context.Save();
             }

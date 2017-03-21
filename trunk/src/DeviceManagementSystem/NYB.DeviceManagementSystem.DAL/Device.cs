@@ -32,6 +32,8 @@ namespace NYB.DeviceManagementSystem.DAL
         public bool IsValid { get; set; }
         public System.DateTime CreateDate { get; set; }
         public string CreateUserID { get; set; }
+        public string Num { get; set; }
+        public int DeviceState { get; set; }
     
         public virtual DeviceType DeviceType { get; set; }
         public virtual Manufacturer Manufacturer { get; set; }

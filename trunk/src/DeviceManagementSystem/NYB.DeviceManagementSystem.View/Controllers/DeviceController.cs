@@ -9,6 +9,7 @@ using NYB.DeviceManagementSystem.BLL;
 using System.IO;
 using System.Diagnostics;
 using NYB.DeviceManagementSystem.Common;
+using NYB.DeviceManagementSystem.Common.Enum;
 
 namespace NYB.DeviceManagementSystem.View.Controllers
 {
@@ -17,18 +18,19 @@ namespace NYB.DeviceManagementSystem.View.Controllers
         //
         // GET: /Device/
 
-        public ActionResult Index(string searchInfo, int pageIndex = 1, int pageSize = 10, string orderBy = "", bool ascending = false)
+        public ActionResult Index(string searchInfo, DeviceStateEnum? deviceStateEnum = null, int pageIndex = 1, int pageSize = 10, string orderBy = "", bool ascending = false)
         {
             List<WebDevice> device = new List<WebDevice>();
             int totalCount = 0;
             DeviceBLL deviceBLL = new DeviceBLL();
-            var cResult = deviceBLL.GetDeviceList(out totalCount, this.GetCurrentProjectID(), searchInfo, pageIndex, pageSize, orderBy, ascending);
+            var cResult = deviceBLL.GetDeviceList(out totalCount, this.GetCurrentProjectID(), searchInfo, deviceStateEnum, pageIndex, pageSize, orderBy, ascending);
             if (cResult.Code == 0)
             {
                 device = cResult.Data;
             }
             var pageList = new PagedList<WebDevice>(device, pageIndex, pageSize);
             ViewBag.SearchInfo = searchInfo;
+            ViewBag.DeviceStateEnum = deviceStateEnum;
             return View(pageList);
         }
 
@@ -46,7 +48,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             ViewBag.DeviceType = deviceType.Data;
             ViewBag.Action = "Add";
             ViewBag.ReturnUrl = returnUrl;
-            
+
             WebDevice webDevice = new WebDevice();
             return View(webDevice);
         }
@@ -196,7 +198,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
         public ActionResult EditRepairRecord(WebRepairRecord webRepairRecord)
         {
             RepairRecordBLL repairRecordBLL = new RepairRecordBLL();
-            var cResult = repairRecordBLL.UpdateRepairRecord(webRepairRecord);
+            var cResult = repairRecordBLL.UpdateRepairRecord(webRepairRecord, null);
             return JsonContentHelper.GetJsonContent(cResult);
         }
 

@@ -337,6 +337,7 @@
     <Content Include="Images\del.png" />
     <Content Include="Images\download16.png" />
     <Content Include="Images\edit.png" />
+    <Content Include="Images\resetpassword.png" />
     <Content Include="Images\index_20.jpg" />
     <Content Include="Images\lockmarintain.png" />
     <Content Include="Images\logo.swf" />

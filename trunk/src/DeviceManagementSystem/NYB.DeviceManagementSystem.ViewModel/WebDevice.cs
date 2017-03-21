@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NYB.DeviceManagementSystem.Common.Enum;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -11,6 +12,11 @@ namespace NYB.DeviceManagementSystem.ViewModel
     public class WebDevice : ViewModelBase
     {
         public string ID { get; set; }
+
+        [DisplayName("编号")]
+        [Required]
+        [StringLength(30, ErrorMessage = "最大长度为30")]
+        public string Num { get; set; }
 
         [DisplayName("名称")]
         [Required]
@@ -43,6 +49,9 @@ namespace NYB.DeviceManagementSystem.ViewModel
 
         [DisplayName("供应商名称")]
         public string SupplierName { get; set; }
+
+        [DisplayName("设备状态")]
+        public DeviceStateEnum DeviceState { get; set; }
 
     }
 }

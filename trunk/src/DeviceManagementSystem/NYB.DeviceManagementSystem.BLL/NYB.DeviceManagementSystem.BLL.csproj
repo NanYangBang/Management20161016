@@ -47,7 +47,9 @@
   <ItemGroup>
     <Compile Include="DatabaseInitHelper.cs" />
     <Compile Include="DeviceBLL.cs" />
+    <Compile Include="MaintainItemBLL.cs" />
     <Compile Include="MaintainRecordBLL.cs" />
+    <Compile Include="OrderClientBLL.cs" />
     <Compile Include="RepairRecordBLL.cs" />
     <Compile Include="SupplierBLL.cs" />
     <Compile Include="ManufacturerBLL.cs" />

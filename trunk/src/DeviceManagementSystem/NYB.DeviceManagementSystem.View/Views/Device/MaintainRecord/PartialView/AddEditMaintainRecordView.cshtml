@@ -158,7 +158,7 @@
         $('td[name="time"] input').attr('readonly', 'readonly');
 
         if (Resource.Action == 'Update') {
-            $('#MaintainDate').val('@Model.MaintainDate');
+            $('#MaintainDate').val('@Model.MaintainDate.ToString("yyyy-MM-dd")');
         }
 
     }

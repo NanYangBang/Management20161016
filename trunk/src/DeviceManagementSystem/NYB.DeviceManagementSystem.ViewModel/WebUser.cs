@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NYB.DeviceManagementSystem.Common;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -125,15 +126,10 @@ namespace NYB.DeviceManagementSystem.ViewModel
             set { _email = value; }
         }
 
-        private string _role = string.Empty;
         /// <summary>
         /// 角色
         /// </summary>
         [Display(Name = "角色")]
-        public string Role
-        {
-            get { return _role; }
-            set { _role = value; }
-        }
+        public RoleType Role { get; set; }
     }
 }
