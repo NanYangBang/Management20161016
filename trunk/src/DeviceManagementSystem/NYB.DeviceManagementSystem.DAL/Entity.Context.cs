@@ -36,5 +36,8 @@ namespace NYB.DeviceManagementSystem.DAL
         public DbSet<Attachment> Attachment { get; set; }
         public DbSet<MaintainRecord> MaintainRecord { get; set; }
         public DbSet<OrderClient> OrderClient { get; set; }
+        public DbSet<DeviceTypeMaintainItemRel> DeviceTypeMaintainItemRel { get; set; }
+        public DbSet<MaintainItem> MaintainItem { get; set; }
+        public DbSet<MaintainRecordMaintainItemRel> MaintainRecordMaintainItemRel { get; set; }
     }
 }

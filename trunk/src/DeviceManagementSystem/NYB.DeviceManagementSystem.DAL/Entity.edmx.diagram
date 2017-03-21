@@ -31,6 +31,9 @@
         <AssociationConnector Association="DeviceMgmtModel.FK_MaintainRecord_Project" />
         <AssociationConnector Association="DeviceMgmtModel.FK_MaintainRecord_User" />
         <EntityTypeShape EntityType="DeviceMgmtModel.OrderClient" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="DeviceMgmtModel.DeviceTypeMaintainItemRel" Width="1.5" PointX="3.375" PointY="4.75" />
+        <EntityTypeShape EntityType="DeviceMgmtModel.MaintainItem" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="DeviceMgmtModel.MaintainRecordMaintainItemRel" Width="1.5" PointX="5.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
