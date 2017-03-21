@@ -42,5 +42,7 @@ namespace NYB.DeviceManagementSystem.ViewModel
         public string Note { get; set; }
 
         public List<WebAttachment> Attachments { get; set; }
+
+        public List<WebMaintainItem> MaintainItems { get; set; }
     }
 }
