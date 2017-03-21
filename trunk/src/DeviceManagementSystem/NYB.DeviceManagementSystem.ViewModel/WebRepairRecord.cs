@@ -10,6 +10,11 @@ namespace NYB.DeviceManagementSystem.ViewModel
 {
     public class WebRepairRecord : ViewModelBase
     {
+
+        public WebRepairRecord()
+        {
+            this.Attachments = new List<WebAttachment>();
+        }
         public string ID { get; set; }
 
         public string DeviceID { get; set; }
@@ -29,6 +34,16 @@ namespace NYB.DeviceManagementSystem.ViewModel
 
         [DisplayName("备注")]
         [StringLength(2000, ErrorMessage = "最大长度为2000")]
+
         public string Note { get; set; }
+        [DisplayName("故障现象及分析")]
+        [StringLength(2000, ErrorMessage = "最大长度为2000")]
+
+        public string Describe { get; set; }
+        [DisplayName("处理方案")]
+        [StringLength(2000, ErrorMessage = "最大长度为2000")]
+        public string Solution { get; set; }
+
+        public List<WebAttachment> Attachments { get; set; }
     }
 }
