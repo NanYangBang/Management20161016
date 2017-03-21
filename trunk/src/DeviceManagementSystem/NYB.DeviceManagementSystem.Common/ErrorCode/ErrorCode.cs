@@ -111,10 +111,10 @@ namespace NYB.DeviceManagementSystem.Common
         UserNotExist = 20109,
 
         /// <summary>
-        /// 设备名称不允许重复
+        /// 设备编号不允许重复
         /// </summary>
-        [DescriptionAttribute("设备名称不允许重复")]
-        DeviceNameIsExist = 20110,
+        [DescriptionAttribute("设备编号不允许重复")]
+        DeviceNumIsExist = 20110,
 
         /// <summary>
         /// 设备类型名称不允许重复

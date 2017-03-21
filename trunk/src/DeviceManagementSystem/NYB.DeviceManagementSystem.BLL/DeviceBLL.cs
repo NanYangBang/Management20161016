@@ -14,12 +14,13 @@ using System.Web.Security;
 using System.Web;
 using System.IO;
 using System.Reflection;
+using NYB.DeviceManagementSystem.Common.Enum;
 
 namespace NYB.DeviceManagementSystem.BLL
 {
     public class DeviceBLL
     {
-        public CResult<List<WebDevice>> GetDeviceList(out int totalCount, string projectID, string searchInfo, int pageIndex = 1, int pageSize = 10, string orderby = null, bool ascending = false)
+        public CResult<List<WebDevice>> GetDeviceList(out int totalCount, string projectID, string searchInfo, DeviceStateEnum? deviceStateEnum = null, int pageIndex = 1, int pageSize = 10, string orderby = null, bool ascending = false)
         {
             using (DeviceMgmtEntities context = new DeviceMgmtEntities())
             {
@@ -29,9 +30,15 @@ namespace NYB.DeviceManagementSystem.BLL
                 {
                     searchInfo = searchInfo.Trim().ToUpper();
                     filter = filter.And(t => t.Name.ToUpper().Contains(searchInfo)
+                        || t.Num.ToUpper().Contains(searchInfo)
                         || t.DeviceType.Name.Contains(searchInfo)
                         || (string.IsNullOrEmpty(t.SupplierID) == false && t.Supplier.Name.ToUpper().Contains(searchInfo))
                         || (string.IsNullOrEmpty(t.ManufacturerID) == false && t.Manufacturer.Name.ToUpper().Contains(searchInfo)));
+                }
+
+                if (deviceStateEnum.HasValue)
+                {
+                    filter = filter.And(t => t.DeviceState == (int)deviceStateEnum.Value);
                 }
 
                 if (string.IsNullOrEmpty(orderby))
@@ -45,8 +52,10 @@ namespace NYB.DeviceManagementSystem.BLL
                 var result = temp.Select(t => new WebDevice()
                 {
                     ID = t.ID,
-                    Name = t.Name,
+                    Num = t.Num,
                     Note = t.Note,
+                    Name = t.Name,
+                    DeviceState = (DeviceStateEnum)t.DeviceState,
 
                     CreateDate = t.CreateDate,
                     CreateUserID = t.CreateUserID,
@@ -85,15 +94,16 @@ namespace NYB.DeviceManagementSystem.BLL
                     return new CResult<bool>(false, ErrorCode.ProjectNotExist);
                 }
 
-                if (context.Device.Any(t => t.Name.ToUpper() == model.Name.ToUpper() && t.ProjectID == model.ProjectID && t.IsValid))
+                if (context.Device.Any(t => t.Num.ToUpper() == model.Num.ToUpper() && t.ProjectID == model.ProjectID && t.IsValid))
                 {
-                    return new CResult<bool>(false, ErrorCode.DeviceNameIsExist);
+                    return new CResult<bool>(false, ErrorCode.DeviceNumIsExist);
                 }
 
                 var entity = new Device();
                 entity.CreateDate = DateTime.Now;
                 entity.CreateUserID = model.CreateUserID;
                 entity.ID = Guid.NewGuid().ToString();
+                entity.Num = model.Num;
                 entity.Name = model.Name;
                 entity.IsValid = true;
                 entity.Note = model.Note;
@@ -103,6 +113,7 @@ namespace NYB.DeviceManagementSystem.BLL
                 entity.ManufacturerID = model.ManufacturerID;
                 entity.ProductDate = model.ProductDate;
                 entity.SupplierID = model.SupplierID;
+                entity.DeviceState = (int)model.DeviceState;
 
                 context.Device.Add(entity);
 
@@ -128,15 +139,17 @@ namespace NYB.DeviceManagementSystem.BLL
                     return new CResult<bool>(false, ErrorCode.DataNoExist);
                 }
 
-                if (context.Device.Any(t => t.Name.ToUpper() == model.Name.ToUpper() && t.ProjectID == entity.ProjectID && t.IsValid && t.ID != model.ID))
+                if (context.Device.Any(t => t.Num.ToUpper() == model.Num.ToUpper() && t.ProjectID == entity.ProjectID && t.IsValid && t.ID != model.ID))
                 {
-                    return new CResult<bool>(false, ErrorCode.DeviceNameIsExist);
+                    return new CResult<bool>(false, ErrorCode.DeviceNumIsExist);
                 }
 
+                entity.Num = model.Num;
                 entity.Name = model.Name;
                 entity.Note = model.Note;
                 entity.ProductDate = model.ProductDate;
                 entity.MaintainDate = model.MaintainDate;
+                entity.DeviceState = (int)model.DeviceState;
 
                 entity.DeviceTypeID = model.DeviceTypeID;
                 entity.ManufacturerID = model.ManufacturerID;
@@ -168,8 +181,10 @@ namespace NYB.DeviceManagementSystem.BLL
                 var model = new WebDevice()
                 {
                     ID = entity.ID,
-                    Name = entity.Name,
+                    Num = entity.Num,
                     Note = entity.Note,
+                    Name = entity.Name,
+                    DeviceState = (DeviceStateEnum)entity.DeviceState,
 
                     CreateDate = entity.CreateDate,
                     CreateUserID = entity.CreateUserID,
@@ -214,19 +229,6 @@ namespace NYB.DeviceManagementSystem.BLL
             }
         }
 
-        public CResult<bool> IsDeviceNameExist(string deviceName, string projectID)
-        {
-            if (string.IsNullOrEmpty(deviceName) || string.IsNullOrEmpty(projectID))
-            {
-                return new CResult<bool>(false, ErrorCode.ParameterError);
-            }
-
-            using (var context = new DeviceMgmtEntities())
-            {
-                var isExist = context.DeviceType.Any(t => t.Name.ToUpper() == deviceName.ToUpper() && t.ProjectID == projectID && t.IsValid);
-                return new CResult<bool>(isExist);
-            }
-        }
 
         public CResult<bool> ImportDeviceFromExcel(HttpPostedFileBase file, string projectID, string operatorUserID)
         {
@@ -255,8 +257,18 @@ namespace NYB.DeviceManagementSystem.BLL
             {
                 int i = 0;
                 var webDevice = new WebDevice();
+                webDevice.Num = row[i++].ToString();
                 webDevice.Name = row[i++].ToString();
                 webDevice.DeviceTypeName = row[i++].ToString();
+                DeviceStateEnum state;
+                if (Enum.TryParse<DeviceStateEnum>(row[i++].ToString(), out state))
+                {
+                    webDevice.DeviceState = state;
+                }
+                else
+                {
+                    webDevice.DeviceState = DeviceStateEnum.未使用;
+                }
                 webDevice.SupplierName = row[i++].ToString();
                 webDevice.ManufacturerName = row[i++].ToString();
 
@@ -278,11 +290,11 @@ namespace NYB.DeviceManagementSystem.BLL
             var deviceTypeNameList = webDeviceList.Select(t => t.DeviceTypeName).Distinct().ToList();
             var supplierNameList = webDeviceList.Select(t => t.SupplierName).Distinct().ToList();
             var manufacturerNameList = webDeviceList.Select(t => t.ManufacturerName).Distinct().ToList();
-            var deviceNameList = webDeviceList.Select(t => t.Name).Distinct().ToList();
+            var deviceNumList = webDeviceList.Select(t => t.Num).Distinct().ToList();
 
-            if (deviceNameList.Count < webDeviceList.Count)
+            if (deviceNumList.Count < webDeviceList.Count)
             {
-                return new CResult<bool>(false, ErrorCode.DeviceNameIsExist);
+                return new CResult<bool>(false, ErrorCode.DeviceNumIsExist);
             }
 
 
@@ -298,9 +310,9 @@ namespace NYB.DeviceManagementSystem.BLL
                     return new CResult<bool>(false, ErrorCode.UserNotExist);
                 }
 
-                if (context.Device.Any(t => t.ProjectID == projectID && t.IsValid && deviceNameList.Contains(t.Name)))
+                if (context.Device.Any(t => t.ProjectID == projectID && t.IsValid && deviceNumList.Contains(t.Num)))
                 {
-                    return new CResult<bool>(false, ErrorCode.DeviceNameIsExist);
+                    return new CResult<bool>(false, ErrorCode.DeviceNumIsExist);
                 }
 
                 var deviceTypeList = context.DeviceType.Where(t => t.IsValid && t.ProjectID == projectID && deviceTypeNameList.Contains(t.Name)).Select(t => new { t.ID, t.Name }).ToList();
@@ -333,6 +345,7 @@ namespace NYB.DeviceManagementSystem.BLL
                         IsValid = true,
                         MaintainDate = webDevice.MaintainDate,
                         ManufacturerID = manufacturerList.FirstOrDefault(t => t.Name == webDevice.ManufacturerName).ID,
+                        Num = webDevice.Num,
                         Name = webDevice.Name,
                         Note = webDevice.Note,
                         ProductDate = webDevice.ProductDate,
@@ -349,13 +362,13 @@ namespace NYB.DeviceManagementSystem.BLL
             }
         }
 
-        public CResult<string> ExportDeviceToExcel(string projectID, string searchInfo)
+        public CResult<string> ExportDeviceToExcel(string projectID, string searchInfo, DeviceStateEnum? deviceStateEnum = null)
         {
             LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
 
             int totalCount;
 
-            var result = GetDeviceList(out totalCount, projectID, searchInfo, 1, -1);
+            var result = GetDeviceList(out totalCount, projectID, searchInfo, deviceStateEnum, 1, -1);
             if (result.Code > 0)
             {
                 return new CResult<string>("", result.Code);
@@ -364,8 +377,10 @@ namespace NYB.DeviceManagementSystem.BLL
             var list = result.Data;
 
             var dataTable = new DataTable();
+            dataTable.Columns.Add("编号");
             dataTable.Columns.Add("名称");
             dataTable.Columns.Add("设备类型");
+            dataTable.Columns.Add("设备状态");
             dataTable.Columns.Add("供应商");
             dataTable.Columns.Add("生产厂商");
             dataTable.Columns.Add("生产日期", typeof(DateTime));
@@ -377,8 +392,10 @@ namespace NYB.DeviceManagementSystem.BLL
                 var row = dataTable.NewRow();
                 int i = 0;
 
+                row[i++] = item.Num;
                 row[i++] = item.Name;
                 row[i++] = item.DeviceTypeName;
+                row[i++] = item.DeviceState.ToString();
                 row[i++] = item.SupplierName;
                 row[i++] = item.ManufacturerName;
                 if (item.ProductDate.HasValue)

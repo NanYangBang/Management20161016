@@ -31,6 +31,8 @@
           <Property Name="IsValid" Type="bit" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
           <Property Name="CreateUserID" Type="nchar" MaxLength="36" Nullable="false" />
+          <Property Name="Num" Type="nvarchar" MaxLength="30" />
+          <Property Name="DeviceState" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="DeviceType">
           <Key>
@@ -517,6 +519,8 @@
           <NavigationProperty Name="User" Relationship="DeviceMgmtModel.FK_Device_User" FromRole="Device" ToRole="User" />
           <NavigationProperty Name="RepairRecord" Relationship="DeviceMgmtModel.FK_RepairRecord_Device" FromRole="Device" ToRole="RepairRecord" />
           <NavigationProperty Name="MaintainRecord" Relationship="DeviceMgmtModel.FK_MaintainRecord_Device" FromRole="Device" ToRole="MaintainRecord" />
+          <Property Name="Num" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="DeviceState" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="DeviceType">
           <Key>
@@ -873,6 +877,8 @@
           <EntitySetMapping Name="Device">
             <EntityTypeMapping TypeName="DeviceMgmtModel.Device">
               <MappingFragment StoreEntitySet="Device">
+                <ScalarProperty Name="DeviceState" ColumnName="DeviceState" />
+                <ScalarProperty Name="Num" ColumnName="Num" />
                 <ScalarProperty Name="CreateUserID" ColumnName="CreateUserID" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="IsValid" ColumnName="IsValid" />
