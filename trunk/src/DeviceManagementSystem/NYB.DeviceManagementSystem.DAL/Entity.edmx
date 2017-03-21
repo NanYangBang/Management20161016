@@ -161,8 +161,9 @@
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
           <Property Name="CreateUserID" Type="nchar" MaxLength="36" />
           <Property Name="IsValid" Type="bit" Nullable="false" />
-          <Property Name="UserType" Type="int" Nullable="false" />
+          <Property Name="Role" Type="int" Nullable="false" />
           <Property Name="OrderClientID" Type="nchar" MaxLength="36" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_Device_DeviceType">
           <End Role="DeviceType" Type="Self.DeviceType" Multiplicity="1" />
@@ -643,8 +644,9 @@
           <NavigationProperty Name="RepairRecord" Relationship="DeviceMgmtModel.FK_RepairRecord_User" FromRole="User" ToRole="RepairRecord" />
           <NavigationProperty Name="Supplier" Relationship="DeviceMgmtModel.FK_Supplier_User" FromRole="User" ToRole="Supplier" />
           <NavigationProperty Name="MaintainRecord" Relationship="DeviceMgmtModel.FK_MaintainRecord_User" FromRole="User" ToRole="MaintainRecord" />
-          <Property Name="UserType" Type="Int32" Nullable="false" />
           <Property Name="OrderClientID" Type="String" MaxLength="36" FixedLength="true" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Role" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_Device_DeviceType">
           <End Type="DeviceMgmtModel.DeviceType" Role="DeviceType" Multiplicity="1" />
@@ -990,8 +992,9 @@
           <EntitySetMapping Name="User">
             <EntityTypeMapping TypeName="DeviceMgmtModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="OrderClientID" ColumnName="OrderClientID" />
-                <ScalarProperty Name="UserType" ColumnName="UserType" />
                 <ScalarProperty Name="IsValid" ColumnName="IsValid" />
                 <ScalarProperty Name="CreateUserID" ColumnName="CreateUserID" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />

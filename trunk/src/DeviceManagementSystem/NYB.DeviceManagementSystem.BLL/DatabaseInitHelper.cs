@@ -37,7 +37,6 @@ namespace NYB.DeviceManagementSystem.BLL
                        CreateDate = DateTime.Now,
                        CreateUserID = "",
                        Email = "",
-                       IsSuperAdminCreate = false,
                        IsValid = true,
                        LoginName = "SuperAdmin",
                        ProjectID = "",

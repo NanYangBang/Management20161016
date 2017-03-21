@@ -48,7 +48,7 @@ namespace NYB.DeviceManagementSystem.BLL
                 }).ToList();
 
                 var projectIDs = result.Select(t => t.ID).ToList();
-                var users = context.User.Where(t => t.IsSuperAdminCreate && projectIDs.Contains(t.ProjectID)).Select(user => new WebUser
+                var users = context.User.Where(t => t.Role == (int)RoleType.项目管理员 && projectIDs.Contains(t.ProjectID)).Select(user => new WebUser
                 {
                     ID = user.UserID,
                     Address = user.Address,
@@ -58,7 +58,6 @@ namespace NYB.DeviceManagementSystem.BLL
                     Moblie = user.Moblie,
                     UserName = user.Name,
                     ProjectID = user.ProjectID
-
                 }).ToList();
 
                 foreach (var user in users)
@@ -95,57 +94,32 @@ namespace NYB.DeviceManagementSystem.BLL
 
                 var webUser = webProject.WebUser;
                 webUser.CreateUserID = webProject.CreateUserID;
-                MembershipCreateStatus status;
-                var currentUser = Membership.CreateUser(webUser.LoginName, webUser.Pwd, webUser.Email, null, null, true, null, out status);
 
-                if (status == MembershipCreateStatus.Success)
-                {
-                    Roles.AddUserToRole(currentUser.UserName, RoleType.项目管理员.ToString());
-
-                    var entity = new User()
-                    {
-                        UserID = currentUser.ProviderUserKey.ToString(),
-                        LoginName = webUser.LoginName,
-                        Name = webUser.UserName,
-                        ProjectID = project.ID,
-                        Address = webUser.Address,
-                        Telephone = webUser.TelPhone,
-                        CreateDate = DateTime.Now,
-                        CreateUserID = webUser.CreateUserID,
-                        Email = webUser.Email,
-                        IsValid = true,
-                        UserType = (int)RoleType.项目管理员
-                    };
-                    context.Project.Add(project);
-                    context.User.Add(entity);
-                    try
-                    {
-                        if (context.SaveChanges() > 0)
-                        {
-                            return new CResult<bool>(true);
-                        }
-                        else
-                        {
-                            Membership.DeleteUser(currentUser.UserName, true);
-                            return new CResult<bool>(false, ErrorCode.AddUserFault);
-                        }
-                    }
-                    catch
-                    {
-                        Membership.DeleteUser(currentUser.UserName, true);
-                        return new CResult<bool>(false, ErrorCode.AddUserFault);
-                    }
-                }
-                else if (status == MembershipCreateStatus.DuplicateUserName)
+                var userLoginName = webUser.LoginName.ToUpper();
+                if (context.User.Any(t => t.LoginName.ToUpper() == userLoginName))
                 {
                     return new CResult<bool>(false, ErrorCode.LoginNameIsExist);
                 }
-                else
-                {
-                    return new CResult<bool>(false, 1, status.ToString());
-                }
 
-                return new CResult<bool>(false, ErrorCode.SaveDbChangesFailed);
+                var entity = new User()
+                {
+                    UserID = Guid.NewGuid().ToString(),
+                    Password = webUser.Pwd,
+                    LoginName = webUser.LoginName,
+                    Name = webUser.UserName,
+                    ProjectID = project.ID,
+                    Address = webUser.Address,
+                    Telephone = webUser.TelPhone,
+                    CreateDate = DateTime.Now,
+                    CreateUserID = webUser.CreateUserID,
+                    Email = webUser.Email,
+                    IsValid = true,
+                    Role = (int)RoleType.项目管理员
+                };
+                context.Project.Add(project);
+                context.User.Add(entity);
+
+                return context.Save();
             }
         }
 
@@ -170,7 +144,7 @@ namespace NYB.DeviceManagementSystem.BLL
                 project.Name = webProject.Name;
                 project.Note = webProject.Note;
 
-                var user = context.User.FirstOrDefault(t => t.UserType == (int)RoleType.项目管理员 && t.ProjectID == webProject.ID);
+                var user = context.User.FirstOrDefault(t => t.Role == (int)RoleType.项目管理员 && t.ProjectID == webProject.ID);
                 if (user == null)
                 {
                     return new CResult<bool>(false, ErrorCode.DataNoExist);
@@ -209,7 +183,7 @@ namespace NYB.DeviceManagementSystem.BLL
                     Name = project.Name,
                 };
 
-                var user = context.User.FirstOrDefault(t => t.UserType == (int)RoleType.项目管理员 && t.ProjectID == webProject.ID);
+                var user = context.User.FirstOrDefault(t => t.Role == (int)RoleType.项目管理员 && t.ProjectID == webProject.ID);
                 var webUser = new WebUser
                 {
                     ID = user.UserID,
@@ -244,16 +218,10 @@ namespace NYB.DeviceManagementSystem.BLL
 
                 project.IsValid = false;
 
-                var entity = context.User.FirstOrDefault(t => t.IsValid && t.UserType == (int)RoleType.项目管理员 && t.ProjectID == projectID);
-                if (entity != null)
+                var users = context.User.Where(t => t.IsValid && t.ProjectID == projectID).ToList();
+                foreach (var user in users)
                 {
-                    //var deleteFlag = Membership.DeleteUser(entity.LoginName);
-                    //if (deleteFlag == false)
-                    //{
-                    //    return new CResult<bool>(false, ErrorCode.SaveDbChangesFailed);
-                    //}
-
-                    entity.IsValid = false;
+                    user.IsValid = false;
                 }
 
                 return context.Save();

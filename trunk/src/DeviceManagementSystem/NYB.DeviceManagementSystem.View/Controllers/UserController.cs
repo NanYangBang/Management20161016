@@ -49,7 +49,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             UserBLL userBLL = new UserBLL();
             webUser.ProjectID = this.GetCurrentProjectID();
             webUser.CreateUserID = this.GetCurrentUserID();
-            CResult<bool> cResult = userBLL.AddUser(webUser, false);
+            CResult<bool> cResult = userBLL.AddUser(webUser);
             return JsonContentHelper.GetJsonContent(cResult);
             //if (cResult.Code == 0)
             //{

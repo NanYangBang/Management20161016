@@ -50,7 +50,7 @@ namespace NYB.DeviceManagementSystem.BLL
                 }).ToList();
 
                 var ids = result.Select(t => t.ID).ToList();
-                var users = context.User.Where(t => t.UserType == (int)RoleType.客户管理员 && ids.Contains(t.OrderClientID)).Select(user => new WebUser
+                var users = context.User.Where(t => t.Role == (int)RoleType.客户管理员 && ids.Contains(t.OrderClientID)).Select(user => new WebUser
                 {
                     ID = user.UserID,
                     Address = user.Address,
@@ -96,58 +96,33 @@ namespace NYB.DeviceManagementSystem.BLL
 
                 var webUser = webOrderClient.WebUser;
                 webUser.CreateUserID = webOrderClient.CreateUserID;
-                MembershipCreateStatus status;
-                var currentUser = Membership.CreateUser(webUser.LoginName, webUser.Pwd, webUser.Email, null, null, true, null, out status);
 
-                if (status == MembershipCreateStatus.Success)
-                {
-                    Roles.AddUserToRole(currentUser.UserName, RoleType.客户管理员.ToString());
-
-                    var entity = new User()
-                    {
-                        UserID = currentUser.ProviderUserKey.ToString(),
-                        LoginName = webUser.LoginName,
-                        Name = webUser.UserName,
-                        //ProjectID = orderClient.ID,
-                        OrderClientID = orderClient.ID,
-                        Address = webUser.Address,
-                        Telephone = webUser.TelPhone,
-                        CreateDate = DateTime.Now,
-                        CreateUserID = webUser.CreateUserID,
-                        Email = webUser.Email,
-                        IsValid = true,
-                        UserType = (int)RoleType.客户管理员
-                    };
-                    context.OrderClient.Add(orderClient);
-                    context.User.Add(entity);
-                    try
-                    {
-                        if (context.SaveChanges() > 0)
-                        {
-                            return new CResult<bool>(true);
-                        }
-                        else
-                        {
-                            Membership.DeleteUser(currentUser.UserName, true);
-                            return new CResult<bool>(false, ErrorCode.AddUserFault);
-                        }
-                    }
-                    catch
-                    {
-                        Membership.DeleteUser(currentUser.UserName, true);
-                        return new CResult<bool>(false, ErrorCode.AddUserFault);
-                    }
-                }
-                else if (status == MembershipCreateStatus.DuplicateUserName)
+                var userLoginName = webUser.LoginName.ToUpper();
+                if (context.User.Any(t => t.LoginName.ToUpper() == userLoginName))
                 {
                     return new CResult<bool>(false, ErrorCode.LoginNameIsExist);
                 }
-                else
-                {
-                    return new CResult<bool>(false, 1, status.ToString());
-                }
 
-                return new CResult<bool>(false, ErrorCode.SaveDbChangesFailed);
+                var entity = new User()
+                {
+                    UserID = Guid.NewGuid().ToString(),
+                    LoginName = webUser.LoginName,
+                    Password = webUser.Pwd,
+                    Name = webUser.UserName,
+                    //ProjectID = orderClient.ID,
+                    OrderClientID = orderClient.ID,
+                    Address = webUser.Address,
+                    Telephone = webUser.TelPhone,
+                    CreateDate = DateTime.Now,
+                    CreateUserID = webUser.CreateUserID,
+                    Email = webUser.Email,
+                    IsValid = true,
+                    Role = (int)RoleType.客户管理员
+                };
+                context.OrderClient.Add(orderClient);
+                context.User.Add(entity);
+
+                return context.Save();
             }
         }
 
@@ -164,7 +139,8 @@ namespace NYB.DeviceManagementSystem.BLL
                     return new CResult<bool>(false, ErrorCode.DataNoExist);
                 }
 
-                if (context.OrderClient.Any(t => t.OrderClientName.ToUpper() == webOrderClient.Name.ToUpper() && t.IsValid && t.ID != webOrderClient.ID))
+                var name = webOrderClient.Name.ToUpper();
+                if (context.OrderClient.Any(t => t.OrderClientName.ToUpper() == name && t.IsValid && t.ID != webOrderClient.ID))
                 {
                     return new CResult<bool>(false, ErrorCode.OrderClientNameIsExist);
                 }
@@ -172,7 +148,7 @@ namespace NYB.DeviceManagementSystem.BLL
                 entity.OrderClientName = webOrderClient.Name;
                 entity.Note = webOrderClient.Note;
 
-                var user = context.User.FirstOrDefault(t => t.UserType == (int)RoleType.客户管理员 && t.OrderClientID == webOrderClient.ID);
+                var user = context.User.FirstOrDefault(t => t.Role == (int)RoleType.客户管理员 && t.OrderClientID == webOrderClient.ID);
                 if (user == null)
                 {
                     return new CResult<bool>(false, ErrorCode.DataNoExist);
@@ -211,7 +187,7 @@ namespace NYB.DeviceManagementSystem.BLL
                     Name = entity.OrderClientName,
                 };
 
-                var user = context.User.FirstOrDefault(t => t.UserType == (int)RoleType.客户管理员 && t.OrderClientID == webOrderClient.ID);
+                var user = context.User.FirstOrDefault(t => t.Role == (int)RoleType.客户管理员 && t.OrderClientID == webOrderClient.ID);
                 var webUser = new WebUser
                 {
                     ID = user.UserID,
@@ -246,7 +222,7 @@ namespace NYB.DeviceManagementSystem.BLL
 
                 orderClient.IsValid = false;
 
-                var entity = context.User.FirstOrDefault(t => t.UserType == (int)RoleType.客户管理员 && t.OrderClientID == orderClientID);
+                var entity = context.User.FirstOrDefault(t => t.Role == (int)RoleType.客户管理员 && t.OrderClientID == orderClientID);
                 if (entity != null)
                 {
                     var projects = context.Project.Where(t => t.IsValid && t.CreateUserID == entity.UserID).ToList();
@@ -255,11 +231,12 @@ namespace NYB.DeviceManagementSystem.BLL
                         project.IsValid = false;
                     }
 
-                    //var deleteFlag = Membership.DeleteUser(entity.LoginName);
-                    //if (deleteFlag == false)
-                    //{
-                    //    return new CResult<bool>(false, ErrorCode.SaveDbChangesFailed);
-                    //}
+                    var projectIDs = projects.Select(t => t.ID).ToList();
+                    var users = context.User.Where(t => t.IsValid && projectIDs.Contains(t.ProjectID));
+                    foreach (var user in users)
+                    {
+                        user.IsValid = false;
+                    }
 
                     entity.IsValid = false;
                 }

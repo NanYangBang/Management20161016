@@ -29,7 +29,7 @@ namespace NYB.DeviceManagementSystem.BLL
                 return new Common.CResult<List<WebUser>>(new List<WebUser>());
             }
 
-            Expression<Func<User, bool>> filter = t => t.IsValid && t.ProjectID == projectID && t.UserID != userID && t.IsSuperAdminCreate == false;
+            Expression<Func<User, bool>> filter = t => t.IsValid && t.ProjectID == projectID && t.UserID != userID;
 
             if (string.IsNullOrWhiteSpace(searchInfo) == false)
             {
@@ -57,12 +57,8 @@ namespace NYB.DeviceManagementSystem.BLL
                     LoginName = t.LoginName,
                     TelPhone = t.Telephone,
                     UserName = t.Name,
+                    Role = (RoleType)t.Role
                 }).ToList();
-
-                foreach (var item in result)
-                {
-                    item.Role = Roles.GetRolesForUser(item.LoginName).FirstOrDefault();
-                }
 
                 return new CResult<List<WebUser>>(result);
             }
@@ -87,9 +83,8 @@ namespace NYB.DeviceManagementSystem.BLL
                         TelPhone = entity.Telephone,
                         UserName = entity.Name,
                         Moblie = entity.Moblie,
+                        Role = (RoleType)entity.Role,
                     };
-
-                    webUser.Role = Roles.GetRolesForUser(webUser.LoginName).FirstOrDefault();
 
                     LogHelper.Info("result", webUser);
 
@@ -102,55 +97,10 @@ namespace NYB.DeviceManagementSystem.BLL
             }
         }
 
-        public CResult<WebUser> GetUserInfoByUserName(string userName)
-        {
-            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
-            LogHelper.Info("userName", userName);
-
-            if (string.IsNullOrWhiteSpace(userName))
-            {
-                return new CResult<WebUser>(null, ErrorCode.ParameterError);
-            }
-
-            using (var context = new DeviceMgmtEntities())
-            {
-                var entity = context.User.FirstOrDefault(t => t.IsValid && t.LoginName == userName);
-                if (entity != null)
-                {
-                    var webUser = new WebUser()
-                    {
-                        ID = entity.UserID,
-                        Address = entity.Address,
-                        Email = entity.Email,
-                        LoginName = entity.LoginName,
-                        TelPhone = entity.Telephone,
-                        Moblie = entity.Moblie,
-                        UserName = entity.Name,
-                    };
-
-                    webUser.Role = Roles.GetRolesForUser(webUser.LoginName).FirstOrDefault();
-
-                    LogHelper.Info("result", webUser);
-
-                    return new CResult<WebUser>(webUser);
-                }
-                else
-                {
-                    return new CResult<WebUser>(null, ErrorCode.DataNoExist);
-                }
-            }
-        }
-
-        public CResult<bool> AddUser(WebUser webUser, bool isSuperAdminCreate)
+        public CResult<bool> AddUser(WebUser webUser)
         {
             LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
             LogHelper.Info("webUser", webUser);
-            LogHelper.Info("isSuperAdminCreate", isSuperAdminCreate);
-
-            if (Roles.RoleExists(webUser.Role) == false)
-            {
-                return new CResult<bool>(false, ErrorCode.AddUserFault);
-            }
 
             using (DeviceMgmtEntities context = new DeviceMgmtEntities())
             {
@@ -165,54 +115,29 @@ namespace NYB.DeviceManagementSystem.BLL
                     return new CResult<bool>(false, ErrorCode.LoginNameIsExist);
                 }
 
-                MembershipCreateStatus status;
-                var currentUser = Membership.CreateUser(webUser.LoginName, webUser.Pwd, webUser.Email, null, null, true, null, out status);
-
-                if (status == MembershipCreateStatus.Success)
+                var entity = new User()
                 {
-                    Roles.AddUserToRole(currentUser.UserName, webUser.Role);
+                    UserID = Guid.NewGuid().ToString(),
+                    Password = webUser.Pwd,
+                    LoginName = webUser.LoginName,
+                    Name = webUser.UserName,
+                    ProjectID = webUser.ProjectID,
+                    Address = webUser.Address,
+                    Telephone = webUser.TelPhone,
+                    Moblie = webUser.Moblie,
+                    CreateDate = DateTime.Now,
+                    CreateUserID = webUser.CreateUserID,
+                    Email = webUser.Email,
+                    IsValid = true,
+                    Role = (int)webUser.Role,
+                };
+                context.User.Add(entity);
 
-                    var entity = new User()
-                    {
-                        UserID = currentUser.ProviderUserKey.ToString(),
-                        LoginName = webUser.LoginName,
-                        Name = webUser.UserName,
-                        ProjectID = webUser.ProjectID,
-                        Address = webUser.Address,
-                        Telephone = webUser.TelPhone,
-                        Moblie = webUser.Moblie,
-                        CreateDate = DateTime.Now,
-                        CreateUserID = webUser.CreateUserID,
-                        Email = webUser.Email,
-                        IsValid = true,
-                        IsSuperAdminCreate = isSuperAdminCreate
-                    };
-                    context.User.Add(entity);
-
-                    LoggerBLL.AddLog(context, webUser.CreateUserID, webUser.ProjectID, OperatTypeEnum.添加, _businessModel, "用户名：" + webUser.LoginName);
-
-                    try
-                    {
-                        if (context.SaveChanges() > 0)
-                        {
-                            return new CResult<bool>(true);
-                        }
-                        else
-                        {
-                            Membership.DeleteUser(currentUser.UserName, true);
-                            return new CResult<bool>(false, ErrorCode.AddUserFault);
-                        }
-                    }
-                    catch (DbEntityValidationException e)
-                    {
-                        Membership.DeleteUser(currentUser.UserName, true);
-                        return new CResult<bool>(false, ErrorCode.AddUserFault);
-                    }
-                }
+                //LoggerBLL.AddLog(context, webUser.CreateUserID, webUser.ProjectID, OperatTypeEnum.添加, _businessModel, "用户名：" + webUser.LoginName);
+                return context.Save();
             }
-
-            return new CResult<bool>(false, ErrorCode.ParameterError);
         }
+
         public CResult<bool> DeleteUserByID(string userID, string operatorUserID)
         {
             LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
@@ -228,10 +153,9 @@ namespace NYB.DeviceManagementSystem.BLL
                 var entity = context.User.FirstOrDefault(t => t.IsValid && t.UserID == userID);
                 if (entity != null)
                 {
-                    var deleteFlag = Membership.DeleteUser(entity.LoginName);
-                    if (deleteFlag == false)
+                    if (entity.Role == (int)RoleType.项目管理员)
                     {
-                        return new CResult<bool>(false, ErrorCode.SaveDbChangesFailed);
+                        return new CResult<bool>(false, ErrorCode.ProjectAdminCannotDelete);
                     }
 
                     entity.IsValid = false;
@@ -265,13 +189,7 @@ namespace NYB.DeviceManagementSystem.BLL
                 entity.Name = webUser.UserName;
                 entity.Telephone = webUser.TelPhone;
                 entity.Moblie = webUser.Moblie;
-
-                var role = Roles.GetRolesForUser(webUser.LoginName).FirstOrDefault();
-                if (role != webUser.Role)
-                {
-                    Roles.RemoveUserFromRole(webUser.LoginName, role);
-                    Roles.AddUserToRole(webUser.LoginName, webUser.Role);
-                }
+                entity.Role = (int)webUser.Role;
 
                 context.Entry(entity).State = EntityState.Modified;
                 LoggerBLL.AddLog(context, webUser.CreateUserID, entity.ProjectID, OperatTypeEnum.修改, _businessModel, "用户名：" + entity.LoginName);
@@ -297,25 +215,14 @@ namespace NYB.DeviceManagementSystem.BLL
                     return new CResult<bool>(false, ErrorCode.UserNotExist);
                 }
 
-                var user = Membership.GetUser(entity.LoginName);
-                if (user == null)
+                if (string.Equals(oldPassword, entity.Password))
                 {
-                    return new CResult<bool>(false, ErrorCode.UserNotExist);
+                    entity.Password = newPassword;
                 }
 
-                var flag = user.ChangePassword(oldPassword, newPassword);
+                //LoggerBLL.AddLog(context, operatorUserID, entity.ProjectID, OperatTypeEnum.修改, _businessModel, "用户名：" + entity.LoginName);
 
-                LoggerBLL.AddLog(context, operatorUserID, entity.ProjectID, OperatTypeEnum.修改, _businessModel, "用户名：" + entity.LoginName);
-                context.SaveChanges();
-
-                if (flag)
-                {
-                    return new CResult<bool>(true);
-                }
-                else
-                {
-                    return new CResult<bool>(false, ErrorCode.ChangePasswordError);
-                }
+                return context.Save();
             }
         }
 
@@ -336,26 +243,11 @@ namespace NYB.DeviceManagementSystem.BLL
                     return new CResult<bool>(false, ErrorCode.UserNotExist);
                 }
 
-                var user = Membership.GetUser(entity.LoginName);
-                if (user == null)
-                {
-                    return new CResult<bool>(false, ErrorCode.UserNotExist);
-                }
+                entity.Password = newPassword;
+                context.Entry(entity).State = EntityState.Modified;
 
-                var randomPwd = user.ResetPassword();
-                var flag = user.ChangePassword(randomPwd, newPassword);
-
-                LoggerBLL.AddLog(context, operatorUserID, entity.ProjectID, OperatTypeEnum.修改, _businessModel, "用户名：" + userID);
-                context.SaveChanges();
-
-                if (flag)
-                {
-                    return new CResult<bool>(true);
-                }
-                else
-                {
-                    return new CResult<bool>(false, ErrorCode.ChangePasswordError);
-                }
+                //   LoggerBLL.AddLog(context, operatorUserID, entity.ProjectID, OperatTypeEnum.修改, _businessModel, "用户名：" + userID);
+                return context.Save();
             }
         }
 
@@ -363,25 +255,14 @@ namespace NYB.DeviceManagementSystem.BLL
         {
             LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
 
-            var isExist = Membership.ValidateUser(userName, password);
-            if (isExist == false)
-            {
-                return new Common.CResult<WebUser>(null, ErrorCode.UserNameOrPasswordWrong);
-            }
-
             using (var context = new DeviceMgmtEntities())
             {
-                var user = context.User.FirstOrDefault(t => t.IsValid == true && t.LoginName == userName);
+                var user = context.User.FirstOrDefault(t => t.IsValid && t.LoginName == userName && t.Password == password);
                 if (user == null)
                 {
                     return new CResult<WebUser>(null, ErrorCode.UserNameOrPasswordWrong);
                 }
 
-                var role = Roles.GetRolesForUser(userName).FirstOrDefault();
-                if (string.IsNullOrWhiteSpace(role))
-                {
-                    return new CResult<WebUser>(null, ErrorCode.UserNameOrPasswordWrong);
-                }
                 WebUser webUser = new WebUser()
                 {
                     ID = user.UserID,
@@ -391,26 +272,15 @@ namespace NYB.DeviceManagementSystem.BLL
                     TelPhone = user.Telephone,
                     Moblie = user.Moblie,
                     UserName = user.Name,
-                    Role = role,
+                    Role = (RoleType)user.Role,
                 };
 
-                if (role == RoleType.超级管理员.ToString() || role == RoleType.客户管理员.ToString())
+                if (webUser.Role == RoleType.超级管理员 || webUser.Role == RoleType.客户管理员)
                 {
                 }
-                //else if (role == RoleType.客户管理员.ToString())
-                //{
-                //    var project = context.OrderClient.FirstOrDefault(t => t.IsValid == true && t.ID == user.OrderClientID);
-
-                //    if (project == null)
-                //    {
-                //        return new CResult<WebUser>(null, ErrorCode.UserNameOrPasswordWrong);
-                //    }
-
-                //    webUser = project.ID;
-                //}
                 else
                 {
-                    var project = context.Project.FirstOrDefault(t => t.IsValid == true && t.ID == user.ProjectID);
+                    var project = context.Project.FirstOrDefault(t => t.IsValid && t.ID == user.ProjectID);
 
                     if (project == null)
                     {
@@ -423,29 +293,6 @@ namespace NYB.DeviceManagementSystem.BLL
                 LogHelper.Info("result", webUser);
 
                 return new CResult<WebUser>(webUser);
-            }
-        }
-
-        public CResult<bool> IsUserNameExist(string userLoginName)
-        {
-            if (string.IsNullOrWhiteSpace(userLoginName))
-            {
-                return new CResult<bool>(false, ErrorCode.ParameterError);
-            }
-
-            userLoginName = userLoginName.Trim();
-
-            using (var context = new DeviceMgmtEntities())
-            {
-                userLoginName = userLoginName.ToUpper();
-                if (context.User.Any(u => u.LoginName.ToUpper() == userLoginName && u.IsValid))
-                {
-                    return new CResult<bool>(true);
-                }
-                else
-                {
-                    return new CResult<bool>(false);
-                }
             }
         }
     }

@@ -198,7 +198,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
         public ActionResult EditRepairRecord(WebRepairRecord webRepairRecord)
         {
             RepairRecordBLL repairRecordBLL = new RepairRecordBLL();
-            var cResult = repairRecordBLL.UpdateRepairRecord(webRepairRecord);
+            var cResult = repairRecordBLL.UpdateRepairRecord(webRepairRecord, null);
             return JsonContentHelper.GetJsonContent(cResult);
         }
 

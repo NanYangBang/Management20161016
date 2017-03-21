@@ -37,7 +37,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
                     Response.Cookies.Add(new HttpCookie("CurrentProjectIDStr", result.Data.ProjectID));
                     Response.Cookies.Add(new HttpCookie("CurrentUserName", result.Data.UserName));
                     Response.Cookies.Add(new HttpCookie("CurrentUserID", result.Data.ID));
-                    Response.Cookies.Add(new HttpCookie("CurrentRole", result.Data.Role));
+                    Response.Cookies.Add(new HttpCookie("CurrentRole", result.Data.Role.ToString()));
                     //
                     if (result.Data.Role != null)
                     {
@@ -45,7 +45,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
 
                         errorInfo = result.Msg;
 
-                        if (result.Data.Role == RoleType.超级管理员.ToString())
+                        if (result.Data.Role == RoleType.超级管理员)
                         {
                             return RedirectToAction("Index", "ProjectManager", new { _timepick = DateTime.Now.ToString("yyyyMMddhhmmssff") });
                         }
@@ -89,7 +89,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             HttpCookie cookie2 = new HttpCookie("ASP.NET_SessionId", "");
             cookie2.Expires = DateTime.Now.AddYears(-1);
             Response.Cookies.Add(cookie2);
- 
+
 
             return RedirectToAction("LogOn");
         }

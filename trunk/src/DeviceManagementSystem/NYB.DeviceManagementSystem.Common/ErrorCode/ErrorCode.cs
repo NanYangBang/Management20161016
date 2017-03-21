@@ -175,5 +175,11 @@ namespace NYB.DeviceManagementSystem.Common
         /// </summary>
         [DescriptionAttribute("客户名称不允许重复")]
         OrderClientNameIsExist = 20117,
+
+        /// <summary>
+        /// 项目管理员不允许删除
+        /// </summary>
+        [DescriptionAttribute("项目管理员不允许删除")]
+        ProjectAdminCannotDelete = 20117,
     }
 }
