@@ -332,6 +332,7 @@
     <Content Include="ConnectionStrings.config" />
     <Content Include="Content\ssi-uploader\images\Thumbs.db" />
     <Content Include="Content\ssi-uploader\ssi-uploader.min.css.map" />
+    <None Include="Properties\PublishProfiles\YWCS.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Images\del.png" />
     <Content Include="Images\download16.png" />
