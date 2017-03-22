@@ -73,7 +73,10 @@
           <Property Name="ID" Type="nchar" MaxLength="36" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="Note" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreateUserID" Type="nchar" MaxLength="36" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
           <Property Name="ProjectID" Type="nchar" MaxLength="36" Nullable="false" />
+          <Property Name="IsValid" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="MaintainRecord">
           <Key>
@@ -262,6 +265,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_MaintainItem_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="MaintainItem" Type="Self.MaintainItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="MaintainItem">
+              <PropertyRef Name="CreateUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_MaintainRecord_Device">
           <End Role="Device" Type="Self.Device" Multiplicity="1" />
           <End Role="MaintainRecord" Type="Self.MaintainRecord" Multiplicity="*" />
@@ -413,6 +428,10 @@
             <End Role="User" EntitySet="User" />
             <End Role="Log" EntitySet="Log" />
           </AssociationSet>
+          <AssociationSet Name="FK_MaintainItem_User" Association="Self.FK_MaintainItem_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="MaintainItem" EntitySet="MaintainItem" />
+          </AssociationSet>
           <AssociationSet Name="FK_MaintainRecord_Device" Association="Self.FK_MaintainRecord_Device">
             <End Role="Device" EntitySet="Device" />
             <End Role="MaintainRecord" EntitySet="MaintainRecord" />
@@ -529,6 +548,10 @@
           <EntitySet Name="DeviceTypeMaintainItemRel" EntityType="DeviceMgmtModel.DeviceTypeMaintainItemRel" />
           <EntitySet Name="MaintainItem" EntityType="DeviceMgmtModel.MaintainItem" />
           <EntitySet Name="MaintainRecordMaintainItemRel" EntityType="DeviceMgmtModel.MaintainRecordMaintainItemRel" />
+          <AssociationSet Name="FK_MaintainItem_User" Association="DeviceMgmtModel.FK_MaintainItem_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="MaintainItem" EntitySet="MaintainItem" />
+          </AssociationSet>
         </EntityContainer>
         <EnumType Name="TestEnum" />
         <EntityType Name="Device">
@@ -678,6 +701,7 @@
           <Property Name="OrderClientID" Type="String" MaxLength="36" FixedLength="true" Unicode="true" />
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Role" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="MaintainItem" Relationship="DeviceMgmtModel.FK_MaintainItem_User" FromRole="User" ToRole="MaintainItem" />
         </EntityType>
         <Association Name="FK_Device_DeviceType">
           <End Type="DeviceMgmtModel.DeviceType" Role="DeviceType" Multiplicity="1" />
@@ -921,6 +945,10 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="Note" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="ProjectID" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="true" />
+          <Property Name="IsValid" Type="Boolean" Nullable="false" />
+          <Property Name="CreateUserID" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="User" Relationship="DeviceMgmtModel.FK_MaintainItem_User" FromRole="MaintainItem" ToRole="User" />
         </EntityType>
         <EntityType Name="MaintainRecordMaintainItemRel">
           <Key>
@@ -930,6 +958,18 @@
           <Property Name="MaintainRecordID" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="true" />
           <Property Name="MaintainItemID" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="true" />
         </EntityType>
+        <Association Name="FK_MaintainItem_User">
+          <End Type="DeviceMgmtModel.User" Role="User" Multiplicity="1" />
+          <End Type="DeviceMgmtModel.MaintainItem" Role="MaintainItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="MaintainItem">
+              <PropertyRef Name="CreateUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1118,6 +1158,9 @@
           <EntitySetMapping Name="MaintainItem">
             <EntityTypeMapping TypeName="DeviceMgmtModel.MaintainItem">
               <MappingFragment StoreEntitySet="MaintainItem">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateUserID" ColumnName="CreateUserID" />
+                <ScalarProperty Name="IsValid" ColumnName="IsValid" />
                 <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
                 <ScalarProperty Name="Note" ColumnName="Note" />
                 <ScalarProperty Name="Name" ColumnName="Name" />

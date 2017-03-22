@@ -433,5 +433,19 @@ namespace NYB.DeviceManagementSystem.BLL
                 return new CResult<string>("", ErrorCode.SystemError);
             }
         }
+
+        public CResult<int> GetMaintainCount(string projectID)
+        {
+            using (DeviceMgmtEntities context = new DeviceMgmtEntities())
+            {
+                var today = DateTime.Now.Date;
+
+                var result = context.Device.Count(t => t.ProjectID == projectID && t.IsValid && t.DeviceState != (int)DeviceStateEnum.报废 && t.MaintainDate.HasValue && t.MaintainDate.Value <= today);
+
+                LogHelper.Info("result", result);
+
+                return new CResult<int>(result);
+            }
+        }
     }
 }

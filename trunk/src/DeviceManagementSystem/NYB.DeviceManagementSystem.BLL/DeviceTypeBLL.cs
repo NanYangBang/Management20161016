@@ -101,6 +101,15 @@ namespace NYB.DeviceManagementSystem.BLL
                     return new CResult<bool>(false, ErrorCode.DeviceTypeNameIsExist);
                 }
 
+                var maintainItemIDs = model.MaintainItems.Select(t => t.ID).ToList();
+                if (maintainItemIDs.Count > 0)
+                {
+                    if (context.MaintainItem.Count(t => maintainItemIDs.Contains(t.ID) && t.IsValid && t.ProjectID == model.ProjectID) < maintainItemIDs.Count)
+                    {
+                        return new CResult<bool>(false, ErrorCode.MaintainItemNotExist);
+                    }
+                }
+
                 var entity = new DeviceType();
                 entity.CreateDate = DateTime.Now;
                 entity.CreateUserID = model.CreateUserID;
@@ -109,6 +118,17 @@ namespace NYB.DeviceManagementSystem.BLL
                 entity.IsValid = true;
                 entity.Note = model.Note;
                 entity.ProjectID = model.ProjectID;
+
+                foreach (var item in model.MaintainItems)
+                {
+                    var relation = new DeviceTypeMaintainItemRel()
+                    {
+                        DeviceTypeID = entity.ID,
+                        MaintainItemID = item.ID
+                    };
+
+                    context.DeviceTypeMaintainItemRel.Add(relation);
+                }
 
                 context.DeviceType.Add(entity);
 
@@ -142,6 +162,39 @@ namespace NYB.DeviceManagementSystem.BLL
                 entity.Name = model.Name;
                 entity.Note = model.Note;
 
+                var maintainItemIDs = model.MaintainItems.Select(t => t.ID).ToList();
+                if (maintainItemIDs.Count > 0)
+                {
+                    if (context.MaintainItem.Count(t => maintainItemIDs.Contains(t.ID) && t.IsValid && t.ProjectID == model.ProjectID) < maintainItemIDs.Count)
+                    {
+                        return new CResult<bool>(false, ErrorCode.MaintainItemNotExist);
+                    }
+                }
+
+                var oldRelations = context.DeviceTypeMaintainItemRel.Where(t => t.DeviceTypeID == entity.ID);
+
+                var oldRelationItemIDs = oldRelations.Select(t => t.MaintainItemID);
+                var newRelationItemIDs = model.MaintainItems.Select(t => t.ID).ToList();
+
+                var needDeletes = oldRelations.Where(t => newRelationItemIDs.Contains(t.MaintainItemID) == false).ToList();
+                var needAdd = model.MaintainItems.Where(t => oldRelationItemIDs.Contains(t.ID) == false).ToList();
+
+                foreach (var item in needDeletes)
+                {
+                    context.DeviceTypeMaintainItemRel.Remove(item);
+                }
+
+                foreach (var item in needAdd)
+                {
+                    var relation = new DeviceTypeMaintainItemRel()
+                        {
+                            DeviceTypeID = entity.ID,
+                            MaintainItemID = item.ID
+                        };
+
+                    context.DeviceTypeMaintainItemRel.Add(relation);
+                }
+
                 context.Entry(entity).State = EntityState.Modified;
                 return context.Save();
             }
@@ -165,13 +218,23 @@ namespace NYB.DeviceManagementSystem.BLL
                     return new CResult<WebDeviceType>(null, ErrorCode.DeviceTypeNotExist);
                 }
 
+                var items = (from rel in context.DeviceTypeMaintainItemRel
+                             join item in context.MaintainItem on rel.MaintainItemID equals item.ID
+                             where rel.DeviceTypeID == entity.ID
+                             select new WebMaintainItem()
+                             {
+                                 ID = item.ID,
+                                 Name = item.Name
+                             }).ToList();
+
                 var model = new WebDeviceType()
                 {
                     CreateDate = entity.CreateDate,
                     ID = entity.ID,
                     Name = entity.Name,
                     ProjectID = entity.ProjectID,
-                    Note = entity.Note
+                    Note = entity.Note,
+                    MaintainItems = items
                 };
 
                 LogHelper.Info("result", model);
@@ -203,6 +266,12 @@ namespace NYB.DeviceManagementSystem.BLL
                 }
 
                 entity.IsValid = false;
+
+                var removeRels = context.DeviceTypeMaintainItemRel.Where(t => t.DeviceTypeID == entity.ID).ToList();
+                foreach (var item in removeRels)
+                {
+                    context.DeviceTypeMaintainItemRel.Remove(item);
+                }
 
                 return context.Save();
             }

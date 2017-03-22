@@ -174,12 +174,31 @@ namespace NYB.DeviceManagementSystem.Common
         /// 客户名称不允许重复
         /// </summary>
         [DescriptionAttribute("客户名称不允许重复")]
-        OrderClientNameIsExist = 20117,
+        OrderClientNameIsExist = 20120,
 
         /// <summary>
         /// 项目管理员不允许删除
         /// </summary>
         [DescriptionAttribute("项目管理员不允许删除")]
-        ProjectAdminCannotDelete = 20117,
+        ProjectAdminCannotDelete = 20121,
+
+        /// <summary>
+        /// 保养条目已存在
+        /// </summary>
+        [DescriptionAttribute("保养条目已存在")]
+        MaintainItemExist = 20122,
+
+        /// <summary>
+        /// 保养条目存在关联数据
+        /// </summary>
+        [DescriptionAttribute("保养条目存在关联数据")]
+        MaintainItemUsed = 20123,
+
+        /// <summary>
+        /// 保养条目不存在
+        /// </summary>
+        [DescriptionAttribute("保养条目不存在")]
+        MaintainItemNotExist = 20122,
+
     }
 }

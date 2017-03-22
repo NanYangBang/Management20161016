@@ -18,5 +18,10 @@ namespace NYB.DeviceManagementSystem.DAL
         public string Name { get; set; }
         public string Note { get; set; }
         public string ProjectID { get; set; }
+        public bool IsValid { get; set; }
+        public string CreateUserID { get; set; }
+        public System.DateTime CreateDate { get; set; }
+    
+        public virtual User User { get; set; }
     }
 }
