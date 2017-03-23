@@ -24,6 +24,7 @@ namespace NYB.DeviceManagementSystem.ViewModel
 
         [Required(ErrorMessage = "客户名称必填")]
         [StringLength(30, ErrorMessage = "最大长度为30")]
+        [Display(Name = "客户名称")]
         public string Name
         {
             get { return _name; }
@@ -33,6 +34,7 @@ namespace NYB.DeviceManagementSystem.ViewModel
         private string _note = string.Empty;
 
         [StringLength(500, ErrorMessage = "最大长度为500")]
+        [Display(Name = "备注")]
         public string Note
         {
             get { return _note; }

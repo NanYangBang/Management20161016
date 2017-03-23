@@ -59,12 +59,12 @@ namespace NYB.DeviceManagementSystem.BLL
                     TelPhone = user.Telephone,
                     Moblie = user.Moblie,
                     UserName = user.Name,
-
+                    OrderClientID = user.OrderClientID,
                 }).ToList();
 
                 foreach (var user in users)
                 {
-                    var project = result.FirstOrDefault(t => t.ID == user.ProjectID);
+                    var project = result.FirstOrDefault(t => t.ID == user.OrderClientID);
                     project.WebUser = user;
                 }
 

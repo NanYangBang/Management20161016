@@ -126,10 +126,10 @@
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
           <Property Name="CreateUserID" Type="nchar" MaxLength="36" Nullable="false" />
           <Property Name="IsValid" Type="bit" Nullable="false" />
-          <Property Name="LogoFile" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="CompanyDescribe" Type="nvarchar" MaxLength="4000" Nullable="false" />
-          <Property Name="CompanyContact" Type="nvarchar" MaxLength="4000" Nullable="false" />
-          <Property Name="CompanyName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LogoFile" Type="nvarchar" MaxLength="200" />
+          <Property Name="CompanyDescribe" Type="nvarchar" MaxLength="4000" />
+          <Property Name="CompanyContact" Type="nvarchar" MaxLength="4000" />
+          <Property Name="CompanyName" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Project">
           <Key>
@@ -179,7 +179,7 @@
             <PropertyRef Name="UserID" />
           </Key>
           <Property Name="UserID" Type="nchar" MaxLength="36" Nullable="false" />
-          <Property Name="ProjectID" Type="nchar" MaxLength="36" Nullable="false" />
+          <Property Name="ProjectID" Type="nchar" MaxLength="36" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="LoginName" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="50" />
@@ -681,7 +681,7 @@
             <PropertyRef Name="UserID" />
           </Key>
           <Property Name="UserID" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="true" />
-          <Property Name="ProjectID" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="true" />
+          <Property Name="ProjectID" Type="String" MaxLength="36" FixedLength="true" Unicode="true" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LoginName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -924,10 +924,10 @@
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="CreateUserID" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="true" />
           <Property Name="IsValid" Type="Boolean" Nullable="false" />
-          <Property Name="LogoFile" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="CompanyDescribe" Type="String" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <Property Name="CompanyContact" Type="String" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <Property Name="CompanyName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LogoFile" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyDescribe" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyContact" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="DeviceTypeMaintainItemRel">
           <Key>

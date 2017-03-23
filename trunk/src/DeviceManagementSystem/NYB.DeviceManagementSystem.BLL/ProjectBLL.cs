@@ -17,13 +17,13 @@ namespace NYB.DeviceManagementSystem.BLL
 {
     public class ProjectBLL
     {
-        public CResult<List<WebProject>> GetProjectList(out int totalCount, string searchInfo, int pageIndex = 1, int pageSize = 10, string orderby = null, bool ascending = false)
+        public CResult<List<WebProject>> GetProjectList(out int totalCount, string userID, string searchInfo, int pageIndex = 1, int pageSize = 10, string orderby = null, bool ascending = false)
         {
             LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
 
             using (DeviceMgmtEntities context = new DeviceMgmtEntities())
             {
-                Expression<Func<Project, bool>> filter = t => t.IsValid == true;
+                Expression<Func<Project, bool>> filter = t => t.IsValid && t.CreateUserID == userID;
 
                 if (string.IsNullOrWhiteSpace(searchInfo) == false)
                 {

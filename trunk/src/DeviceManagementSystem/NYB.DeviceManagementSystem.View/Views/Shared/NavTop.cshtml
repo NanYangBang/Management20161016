@@ -20,16 +20,26 @@
             <a href="@Url.Action("Index", "User", new { _ = DateTime.Now.Ticks })"> 系统管理</a>
         </li>
     }
-    
-    @if (role == NYB.DeviceManagementSystem.Common.RoleType.超级管理员.ToString())
+
+    @if (role == NYB.DeviceManagementSystem.Common.RoleType.客户管理员.ToString())
     {
         <li actionname="项目管理">
             <a href="@Url.Action("Index", "ProjectManager", new { _ = DateTime.Now.Ticks })">项目管理</a>
         </li>
     }
 
-    <li actionname="关于我们">
-        <a href="@(Url.Action("Index", "AboutUs", new { _ = DateTime.Now.Ticks }))">关于我们</a>
-    </li>
+    @if (role == NYB.DeviceManagementSystem.Common.RoleType.超级管理员.ToString())
+    {
+        <li actionname="客户管理">
+            <a href="@Url.Action("Index", "OrderClientManager", new { _ = DateTime.Now.Ticks })">客户管理</a>
+        </li>
+    }
+
+    @if (role != NYB.DeviceManagementSystem.Common.RoleType.超级管理员.ToString())
+    {
+        <li actionname="关于我们">
+            <a href="@(Url.Action("Index", "AboutUs", new { _ = DateTime.Now.Ticks }))">关于我们</a>
+        </li>
+    }
 </ul>
 

@@ -11,10 +11,10 @@ namespace System.Web.Mvc
         public static string GetCurrentProjectID(this Controller controller)
         {
             var projectID = controller.Request.Cookies["CurrentProjectIDStr"].Value;
-            if (string.IsNullOrEmpty(projectID))
-            {
-                throw new Exception("CurrentProjectIDStr is empty , maybe cookie id disable ");
-            }
+            //if (string.IsNullOrEmpty(projectID))
+            //{
+            //    throw new Exception("CurrentProjectIDStr is empty , maybe cookie id disable ");
+            //}
 
             return projectID;
         }

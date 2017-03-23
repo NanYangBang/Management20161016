@@ -39,13 +39,17 @@ namespace NYB.DeviceManagementSystem.View.Controllers
                     Response.Cookies.Add(new HttpCookie("CurrentUserID", result.Data.ID));
                     Response.Cookies.Add(new HttpCookie("CurrentRole", result.Data.Role.ToString()));
                     //
-                    if (result.Data.Role != null)
+                    if (result.Data.Role != 0)
                     {
                         FormsAuthentication.SetAuthCookie(LoginName, false);
 
                         errorInfo = result.Msg;
 
                         if (result.Data.Role == RoleType.超级管理员)
+                        {
+                            return RedirectToAction("Index", "OrderClientManager", new { _timepick = DateTime.Now.ToString("yyyyMMddhhmmssff") });
+                        }
+                        else if (result.Data.Role == RoleType.客户管理员)
                         {
                             return RedirectToAction("Index", "ProjectManager", new { _timepick = DateTime.Now.ToString("yyyyMMddhhmmssff") });
                         }

@@ -1,0 +1,14 @@
+delete from dbo.Attachment;
+delete from dbo.RepairRecord;
+delete from dbo.MaintainRecordMaintainItemRel;
+delete from dbo.MaintainRecord;
+delete from dbo.DeviceType;
+delete from dbo.DeviceTypeMaintainItemRel;
+delete from dbo.MaintainItem;
+delete from dbo.Device;
+delete from dbo.Supplier;
+delete from dbo.Manufacturer;
+delete from [DeviceMgmt].[dbo].[Log];
+delete from dbo.OrderClient;
+delete from dbo.Project;
+delete from [DeviceMgmt].[dbo].[User] where LoginName!='SuperAdmin';
