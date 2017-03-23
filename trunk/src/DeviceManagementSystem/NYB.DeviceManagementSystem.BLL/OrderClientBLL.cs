@@ -245,6 +245,34 @@ namespace NYB.DeviceManagementSystem.BLL
             }
         }
 
+        public CResult<WebOrderClient> GetCompanyInfo(string orderClientID)
+        {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("orderClientID", orderClientID);
+
+            using (var context = new DeviceMgmtEntities())
+            {
+                var entity = context.OrderClient.FirstOrDefault(t => t.ID == orderClientID);
+                if (entity == null)
+                {
+                    return new CResult<WebOrderClient>(null, ErrorCode.DataNoExist);
+                }
+
+                var webOrderClient = new WebOrderClient()
+                {
+                    LogoFile = entity.LogoFile,
+                    CompanyContact = entity.CompanyContact,
+                    CompanyDescribe = entity.CompanyDescribe,
+                    CompanyName = entity.CompanyName,
+                    ID = entity.ID,
+                };
+
+                LogHelper.Info("result", webOrderClient);
+
+                return new CResult<WebOrderClient>(webOrderClient);
+            }
+        }
+
         public CResult<bool> UpdateCompanyInfo(WebOrderClient companyInfo)
         {
             LogHelper.Info(MethodBase.GetCurrentMethod().ToString());

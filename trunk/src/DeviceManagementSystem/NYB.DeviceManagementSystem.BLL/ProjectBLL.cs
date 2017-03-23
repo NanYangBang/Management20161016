@@ -114,7 +114,8 @@ namespace NYB.DeviceManagementSystem.BLL
                     CreateUserID = webUser.CreateUserID,
                     Email = webUser.Email,
                     IsValid = true,
-                    Role = (int)RoleType.项目管理员
+                    Role = (int)RoleType.项目管理员,
+                    OrderClientID = webUser.OrderClientID
                 };
                 context.Project.Add(project);
                 context.User.Add(entity);
@@ -193,6 +194,7 @@ namespace NYB.DeviceManagementSystem.BLL
                     TelPhone = user.Telephone,
                     Moblie = user.Moblie,
                     UserName = user.Name,
+                    OrderClientID = user.OrderClientID
                 };
 
                 webProject.WebUser = webUser;

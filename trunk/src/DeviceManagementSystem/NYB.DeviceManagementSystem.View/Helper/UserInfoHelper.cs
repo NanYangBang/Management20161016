@@ -29,5 +29,15 @@ namespace System.Web.Mvc
             return userID;
         }
 
+        public static string GetCurrentOrderClientID(this Controller controller)
+        {
+            var OrderClientID = controller.Request.Cookies["OrderClientID"].Value;
+            if (string.IsNullOrEmpty(OrderClientID))
+            {
+                throw new Exception("OrderClientID is empty , maybe cookie id disable ");
+            }
+            return OrderClientID;
+        }
+
     }
 }

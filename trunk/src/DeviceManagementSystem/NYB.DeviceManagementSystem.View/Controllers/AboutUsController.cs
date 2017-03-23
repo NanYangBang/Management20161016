@@ -1,4 +1,6 @@
-﻿using System;
+﻿using NYB.DeviceManagementSystem.BLL;
+using NYB.DeviceManagementSystem.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,8 +15,36 @@ namespace NYB.DeviceManagementSystem.View.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            var result = new OrderClientBLL().GetCompanyInfo(this.GetCurrentOrderClientID());
+
+            return View(result.Data);
         }
+
+        public ActionResult UpdateAboutUs()
+        {
+            var result = new OrderClientBLL().GetCompanyInfo(this.GetCurrentOrderClientID());
+
+            return View(result.Data);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateAboutUs(WebOrderClient webOrderClient)
+        {
+            webOrderClient.ID = this.GetCurrentOrderClientID();
+
+            var cResult = new OrderClientBLL().UpdateCompanyInfo(webOrderClient);
+
+            return JsonContentHelper.GetJsonContent(cResult);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateLogo(HttpPostedFileBase fileData)
+        {
+            var cResult = new OrderClientBLL().UpdateCompayLogo(fileData, this.GetCurrentOrderClientID());
+
+            return JsonContentHelper.GetJsonContent(cResult);
+        }
+
     }
 }
 

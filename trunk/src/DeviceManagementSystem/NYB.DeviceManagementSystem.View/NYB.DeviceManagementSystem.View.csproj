@@ -507,6 +507,7 @@
     <Content Include="Views\OrderClientManager\Index.cshtml" />
     <Content Include="Views\OrderClientManager\UpdateOrderClient.cshtml" />
     <Content Include="Views\OrderClientManager\ResetPassword.cshtml" />
+    <Content Include="Views\AboutUs\UpdateAboutUs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NYB.DeviceManagementSystem.BLL\NYB.DeviceManagementSystem.BLL.csproj">
