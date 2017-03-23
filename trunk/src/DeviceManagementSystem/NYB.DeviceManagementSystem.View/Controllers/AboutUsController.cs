@@ -20,10 +20,11 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             return View(result.Data);
         }
 
-        public ActionResult UpdateAboutUs()
+        public ActionResult UpdateAboutUs(string returnUrl)
         {
             var result = new OrderClientBLL().GetCompanyInfo(this.GetCurrentOrderClientID());
 
+            ViewBag.ReturnUrl = returnUrl;
             return View(result.Data);
         }
 

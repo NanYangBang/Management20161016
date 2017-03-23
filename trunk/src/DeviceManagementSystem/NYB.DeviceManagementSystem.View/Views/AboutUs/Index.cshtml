@@ -40,7 +40,7 @@
 
 <div class="aboutus" actionname="关于我们">
     <div>
-        @Html.Action("UpdateAboutUs", new { _ = DateTime.Now.Ticks });
+        <input type="button" style="float:right" class="blue-button" id="UpdateAboutUs" value="修改" />
     </div>
     <div class="desc">
         <h2>公司简介</h2>
@@ -55,10 +55,12 @@
             </p>*@
     </div>
     <div class="contectUs">
-        @Html.DisplayFor(model => model.CompanyContact)
+        <h2>联系我们</h2>
+        <p>
+            @Html.DisplayFor(model => model.CompanyContact)
+        </p>
 
-
-        @*<h2>联系我们</h2>
+        @*
             <p>公司名称：北京优稳昌盛科技有限公司</p>
             <p>公司地址：北京市海淀区永丰产业基地丰贤中路11号</p>
             <p>电   话：010-82895826   62680021   62698169</p>
@@ -70,3 +72,11 @@
             <p><a target="_blank" href="http://www.ywcs.com.cn">官网：www.ywcs.com.cn</a></p>*@
     </div>
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#UpdateAboutUs").click(function () {
+            window.location = '@Url.Action("UpdateAboutUs", "AboutUs", new { returnUrl = Request.Url.AbsoluteUri, _ = DateTime.Now.Ticks })'
+        });
+    });
+</script>

@@ -347,6 +347,7 @@
     <Content Include="Images\lookrepair.png" />
     <Content Include="Images\maintainimg.png" />
     <Content Include="Images\repairimg.png" />
+    <Content Include="Scripts\AboutUs\UpdatePartial.js" />
     <Content Include="Scripts\base.js" />
     <Content Include="Scripts\common.js" />
     <Content Include="Scripts\Common\Left.js" />

@@ -3,7 +3,6 @@
 }
 @model NYB.DeviceManagementSystem.ViewModel.WebOrderClient
 
-
 <style type="text/css">
     .aboutus {
         margin-left: 50px;
@@ -38,35 +37,64 @@
     }
 </style>
 
+<script src="@Url.Content("~/Scripts/AboutUs/UpdatePartial.js")"></script>
+
 <div class="aboutus" actionname="关于我们">
-    <div>
-        @Html.Action("", "", new { returnUrl = Request.Url.AbsoluteUri, _ = DateTime.Now.Ticks });
-    </div>
-    <div class="desc">
-        <h2>公司简介</h2>
-        <p>
-            @Html.DisplayFor(model => model.CompanyDescribe)
-        </p>
-        @*<p>
-                北京优稳昌盛科技有限公司（简称：北京优稳昌盛）的使命是成为电气自动化整体解决方案和高效燃烧技术优势品牌及机电试验设备的最佳供应商。
-            </p>
+    <form method="post">
+        @Html.HiddenFor(model => model.ID)
+        <div class="desc">
+            <h2>@Html.DisplayFor(model => model.CompanyName)</h2>
+            @Html.TextBoxFor(model => model.CompanyName)
+        </div>
+        <div class="desc">
+            <h2>系统图标</h2>
             <p>
-                公司确立的方向是专注于电气自动化整体解决方案以及机电一体化试验设备和高效燃烧技术。应用研究和工程开发主要集中于先进智能控制技术与应用、工业现场总线技术、无线传输、专用传感技术、机电一体化等方面。公司下设：基础产品技术中心和生产车间。
-            </p>*@
-    </div>
-    <div class="contectUs">
-        @Html.DisplayFor(model => model.CompanyContact)
 
+            </p>
+        </div>
 
-        @*<h2>联系我们</h2>
-        <p>公司名称：北京优稳昌盛科技有限公司</p>
-        <p>公司地址：北京市海淀区永丰产业基地丰贤中路11号</p>
-        <p>电   话：010-82895826   62680021   62698169</p>
-        <p>传   真：010-62680021-802</p>
-        <p>客服热线：400-688-2812</p>
-        <p>邮   编：100085</p>
-        <p>QQ：512011548</p>
-        <p>Email：ywcs2010@126.com</p>
-        <p><a target="_blank" href="http://www.ywcs.com.cn">官网：www.ywcs.com.cn</a></p>*@
-    </div>
+        <div class="desc">
+            <h2>@Html.DisplayFor(model => model.CompanyDescribe)</h2>
+            @Html.TextAreaFor(model => model.CompanyDescribe)
+            @*<p>
+                    北京优稳昌盛科技有限公司（简称：北京优稳昌盛）的使命是成为电气自动化整体解决方案和高效燃烧技术优势品牌及机电试验设备的最佳供应商。
+                </p>
+                <p>
+                    公司确立的方向是专注于电气自动化整体解决方案以及机电一体化试验设备和高效燃烧技术。应用研究和工程开发主要集中于先进智能控制技术与应用、工业现场总线技术、无线传输、专用传感技术、机电一体化等方面。公司下设：基础产品技术中心和生产车间。
+                </p>*@
+        </div>
+        <div class="contectUs">
+            <h2>@Html.DisplayFor(model => model.CompanyContact)</h2>
+            @Html.TextAreaFor(model => model.CompanyContact)
+
+            @*
+                <p>公司名称：北京优稳昌盛科技有限公司</p>
+                <p>公司地址：北京市海淀区永丰产业基地丰贤中路11号</p>
+                <p>电   话：010-82895826   62680021   62698169</p>
+                <p>传   真：010-62680021-802</p>
+                <p>客服热线：400-688-2812</p>
+                <p>邮   编：100085</p>
+                <p>QQ：512011548</p>
+                <p>Email：ywcs2010@126.com</p>
+                <p><a target="_blank" href="http://www.ywcs.com.cn">官网：www.ywcs.com.cn</a></p>*@
+        </div>
+
+        <div class="common-details-operation-panel">
+            <p class="UpdatePile-btn">
+                <input type="submit" id="btnSave" value="保存" class="blue-button" />
+                <a class="link-after-button" href="@ViewBag.ReturnUrl">返回</a>
+            </p>
+        </div>
+    </form>
 </div>
+
+<script type="text/javascript">
+    window.Resource = {
+        UrlEdit: '@Url.Action("UpdateAboutUs", "AboutUs", new { _ = DateTime.Now.Ticks })',
+        ReturnUrl: '@ViewBag.ReturnUrl',
+    }
+
+    $(document).ready(function () {
+        SaveEvent();
+    })
+</script>
