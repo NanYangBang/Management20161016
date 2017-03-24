@@ -1,0 +1,178 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+@using Webdiyer.WebControls.Mvc
+@using NYB.DeviceManagementSystem.Common
+@using NYB.DeviceManagementSystem.ViewModel
+@model PagedList<NYB.DeviceManagementSystem.ViewModel.WebMaintainItem>
+@Styles.Render("~/Content/User/User.css")
+<script type="text/javascript" src="@Url.Content("~/Scripts/User/Index.js")"></script>
+
+<style type="text/css">
+    body .content .uploadifyButton {
+        height: 24px;
+        line-height: 22px;
+        margin-top: 5px;
+    }
+
+    #btnExport {
+        display: block;
+        width: 200px;
+        float: left;
+        margin-top: 20px;
+    }
+</style>
+
+<div leftname="保养条目管理" actionname="基础信息管理">
+    <form id="searchForm" method="get" class="userSearchForm">
+        <input type="text" name="searchInfo" id="seacheName" value="@(ViewBag.SearchInfo)" />
+        <input style="line-height:0px" type="submit" class="" id="btnSearch" value="搜索" />
+    </form>
+    <table class="table-common" id="pileInfo">
+        <thead>
+            <tr>
+                <th>
+                    名称
+                </th>
+                <th>
+                    备注
+                </th>
+                <th>
+                    创建人
+                </th>
+                <th>
+                    创建时间
+                </th>
+                <th class="operation-column">
+                    操作
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var maintainItem in Model)
+                {
+                    <tr pileid="">
+                        <td>
+                            @maintainItem.Name
+                        </td>
+                        <td title="@(@maintainItem.Note)" class="lengHideTd">
+                            @maintainItem.Note
+                        </td>
+                        <td>
+                            @maintainItem.CreateUserName
+                        </td>
+                        <td>
+                            @maintainItem.CreateDate.ToString("yyyy-MM-dd HH:mm:ss")
+                        </td>
+                        <td>
+                            @{var routeValues = new { maintainItemID = maintainItem.ID, returnUrl = Request.Url.AbsoluteUri, _ = DateTime.Now.Ticks };}
+                            <a title="修改" href="@(Url.Action("Edit", "MaintainItemManager", routeValues))"><img src="@Url.Content("~/Images/edit.png")" /></a>
+                            <a title="查看" href="@(Url.Action("Details", "MaintainIteMmanager", routeValues))"><img src="@Url.Content("~/Images/look.png")" /></a>
+                            <a href="#" onclick="DataDel('@maintainItem.ID','@(Url.Action("Delete", new { _ = DateTime.Now.Ticks }))')" name="DeleteDeviceType"><img src="@Url.Content("~/Images/del.png")" /></a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+    <div class="btn-opreate">
+        @Html.Partial("DisplayTemplates/PagerView", Model)
+        <div>
+            <input type="button" style="float:left" class="blue-button" id="addDeviceType" value="添加" />
+            <div style="width:100px;float:left;margin-left:20px" class="uploadProofParent"><input type="file" multiple id="uploadProof" /></div>
+            <a href="#" type="button" id="btnExport" value="导出">导出</a>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.uploadify.js")"></script>
+<link href="@Url.Content("~/Content/Plugin/jQueryUploadify/jquery.uploadify.css")" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript">
+    window.UrlResource = {
+        UrlAddAction: '@Url.Action("Create", new { returnUrl = Request.Url.AbsoluteUri })',
+        Auth: '@(Request.Cookies[FormsAuthentication.FormsCookieName] == null ? string.Empty : Request.Cookies[FormsAuthentication.FormsCookieName].Value)',
+        ImportExcel: '@(Url.Action("ImportExcel", new { _ = DateTime.Now.Ticks }))',
+        UrlImage: '@Url.Content("~/Content/Plugin/jQuery-UI-Timepicker/images/calendar.png")',
+        UrlCancelImage: '@Url.Content("~/Content/Plugin/jQueryUploadify/images/uploadify-cancel.png")',
+        UrlSwf: '@Url.Content("~/Content/Plugin/jQueryUploadify/flash/uploadify.swf")',
+        UrlExportExcel: '@Url.Action("ExportExcel", new { _ = DateTime.Now.Ticks })',
+        UrlDownLoad: '@Url.Action("DownloadFile")'
+    }
+
+    $(document).ready(function () {
+        $('#addDeviceType').click(function () {
+            window.location = window.UrlResource.UrlAddAction;
+        })
+        SearchInfoFocus('请输入名称、创建人');
+
+        uploadProof();
+        ExportExcel();
+    })
+
+    function uploadProof() {
+        $('#uploadProof').uploadify({
+            uploader: UrlResource.ImportExcel,
+            swf: UrlResource.UrlSwf,
+            cancelImage: UrlResource.UrlCancelImage,
+            buttonText: "导入",
+            auto: true,
+            width: 60,
+            height: 28,
+            multi: false,
+            postData: { token: UrlResource.Auth },
+            //checkExisting: false,
+            fileTypeDesc: '*.xls;*.xlsx;',
+            //removeCompleted: true,
+            fileTypeExts: '*.xls;*.xlsx;',
+            fileSizeLimit: 10240,
+            onQueueComplete: function () {
+                //location.reload();
+            },
+            onError: function (event, ID, fileObj, errorObj) {
+                alert("上传失败，请稍后再试！");
+            },
+            onUploadError: function (file, data) {
+            },
+            onUploadSuccess: function (file, data, response) {
+                var result = JSON.parse(data);
+                if (result.Code == 0) {
+                    location.reload();
+                } else {
+                    alert(result.Msg);
+                }
+            }
+        });
+    }
+
+    function ExportExcel() {
+        $("#btnExport").mousedown(function () {
+            this.innerText = '请稍后,正在导出文件...'
+
+        });
+        $("#btnExport").click(function () {
+            var button = $(this);
+            var searchInfo = $('#seacheName').val();
+            var orderbyFieldName = $.query.get('sortBy');
+            var ascending = $.query.get('ascending');
+
+            var url = String.format("{0}?searchInfo={1}", UrlResource.UrlExportExcel, searchInfo);
+            $.ajax(
+                        {
+                            url: url, async: false, type: 'get',
+                            success: function (data) {
+                                button.get(0).innerText = '导出'
+                                if (data.Code > 0) {
+                                    alert(data.Msg);
+                                } else {
+                                    button.attr('href', String.format("{0}?filePath={1}&fileName={2}", window.UrlResource.UrlDownLoad, data.Data, '保养条目.xls'));
+                                }
+                            }
+                        }
+                    );
+        });
+    }
+</script>

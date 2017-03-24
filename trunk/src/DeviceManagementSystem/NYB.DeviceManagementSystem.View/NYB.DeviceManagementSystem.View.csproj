@@ -194,6 +194,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BasicInfoManagerController.cs" />
     <Compile Include="Controllers\DeviceController.cs" />
+    <Compile Include="Controllers\MaintainItemManagerController.cs" />
     <Compile Include="Controllers\ManufactureManagerController.cs" />
     <Compile Include="Controllers\OrderClientManagerController.cs" />
     <Compile Include="Controllers\SharedController.cs" />
@@ -509,6 +510,12 @@
     <Content Include="Views\OrderClientManager\UpdateOrderClient.cshtml" />
     <Content Include="Views\OrderClientManager\ResetPassword.cshtml" />
     <Content Include="Views\AboutUs\UpdateAboutUs.cshtml" />
+    <Content Include="Views\MaintainItemManager\Create.cshtml" />
+    <Content Include="Views\MaintainItemManager\Edit.cshtml" />
+    <Content Include="Views\MaintainItemManager\Index.cshtml" />
+    <Content Include="Views\MaintainItemManager\NavLeft.cshtml" />
+    <Content Include="Views\MaintainItemManager\PartialView\MaintainItemDetailView.cshtml" />
+    <Content Include="Views\MaintainItemManager\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NYB.DeviceManagementSystem.BLL\NYB.DeviceManagementSystem.BLL.csproj">

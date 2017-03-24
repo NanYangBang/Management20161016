@@ -5,6 +5,9 @@
     string ControllerName = ViewContext.RouteData.Values["controller"] as string;
 }
 <ul id="leftUl">
+    <li leftname="保养条目管理">
+        <a href="@Url.Action("Index", "MaintainItemManager", new { _timepick = DateTime.Now.ToString("yyyyMMddhhmmssff") })">保养条目管理</a>
+    </li>
     @if (ControllerName == "DeviceTypeManager")
     {
         <li leftname="设备类别管理">

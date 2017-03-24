@@ -72,7 +72,7 @@
           </Key>
           <Property Name="ID" Type="nchar" MaxLength="36" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
-          <Property Name="Note" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Note" Type="nvarchar" MaxLength="100" />
           <Property Name="CreateUserID" Type="nchar" MaxLength="36" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
           <Property Name="ProjectID" Type="nchar" MaxLength="36" Nullable="false" />
@@ -179,7 +179,7 @@
             <PropertyRef Name="UserID" />
           </Key>
           <Property Name="UserID" Type="nchar" MaxLength="36" Nullable="false" />
-          <Property Name="ProjectID" Type="nchar" MaxLength="36" />
+          <Property Name="ProjectID" Type="nchar" MaxLength="36" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="LoginName" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="50" />
@@ -190,7 +190,7 @@
           <Property Name="CreateUserID" Type="nchar" MaxLength="36" />
           <Property Name="IsValid" Type="bit" Nullable="false" />
           <Property Name="Role" Type="int" Nullable="false" />
-          <Property Name="OrderClientID" Type="nchar" MaxLength="36" />
+          <Property Name="OrderClientID" Type="nchar" MaxLength="36" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_Device_DeviceType">
@@ -681,7 +681,7 @@
             <PropertyRef Name="UserID" />
           </Key>
           <Property Name="UserID" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="true" />
-          <Property Name="ProjectID" Type="String" MaxLength="36" FixedLength="true" Unicode="true" />
+          <Property Name="ProjectID" Type="String" MaxLength="36" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LoginName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -698,7 +698,7 @@
           <NavigationProperty Name="RepairRecord" Relationship="DeviceMgmtModel.FK_RepairRecord_User" FromRole="User" ToRole="RepairRecord" />
           <NavigationProperty Name="Supplier" Relationship="DeviceMgmtModel.FK_Supplier_User" FromRole="User" ToRole="Supplier" />
           <NavigationProperty Name="MaintainRecord" Relationship="DeviceMgmtModel.FK_MaintainRecord_User" FromRole="User" ToRole="MaintainRecord" />
-          <Property Name="OrderClientID" Type="String" MaxLength="36" FixedLength="true" Unicode="true" />
+          <Property Name="OrderClientID" Type="String" MaxLength="36" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Role" Type="Int32" Nullable="false" />
           <NavigationProperty Name="MaintainItem" Relationship="DeviceMgmtModel.FK_MaintainItem_User" FromRole="User" ToRole="MaintainItem" />
@@ -943,7 +943,7 @@
           </Key>
           <Property Name="ID" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="true" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="Note" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Note" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="ProjectID" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="true" />
           <Property Name="IsValid" Type="Boolean" Nullable="false" />
           <Property Name="CreateUserID" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="true" />
