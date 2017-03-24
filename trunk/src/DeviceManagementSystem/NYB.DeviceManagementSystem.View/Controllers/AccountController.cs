@@ -37,7 +37,8 @@ namespace NYB.DeviceManagementSystem.View.Controllers
                     Response.Cookies.Add(new HttpCookie("CurrentProjectIDStr", result.Data.ProjectID));
                     Response.Cookies.Add(new HttpCookie("CurrentUserName", result.Data.UserName));
                     Response.Cookies.Add(new HttpCookie("CurrentUserID", result.Data.ID));
-                    Response.Cookies.Add(new HttpCookie("CurrentRole", result.Data.Role.ToString()));
+                    var roleInt = (int)(result.Data.Role);
+                    Response.Cookies.Add(new HttpCookie("CurrentRole", roleInt.ToString()));
                     Response.Cookies.Add(new HttpCookie("OrderClientID", result.Data.OrderClientID));
                     //
                     if (result.Data.Role != 0)

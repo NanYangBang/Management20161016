@@ -10,7 +10,7 @@
 <div class="header">
     <a href='@Url.Action(String.Empty, String.Empty)' title="回到主页">
         <div id="header-logo" class="header-logo">
-            <h3 style="color:white;font-size:30px;">优稳运维管理系统</h3>
+            <h3 id="companyName" style="color:white;font-size:30px;">优稳运维管理系统</h3>
         </div>
     </a>
     <div class="header-message">
@@ -35,6 +35,45 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
+        var isSuperAdmin = '@(Request.Cookies.Get("CurrentRole").Value == ((int)NYB.DeviceManagementSystem.Common.RoleType.超级管理员).ToString())';
+
+        if (isSuperAdmin == 'False') {
+            if (sessionStorage.SessionID == null || sessionStorage.SessionID !== '@Session.SessionID') {
+                sessionStorage.SessionID = '@Session.SessionID'
+
+                $.get('@Url.Action("GetCompanyInfoJson", "AboutUs", new { _ = DateTime.Now.Ticks })', {}, function (result) {
+                    if (result.Code == '0') {
+                        sessionStorage.CompanyInfo = JSON.stringify({
+                            LogoFile: result.Data.LogoFile,
+                            CompanyName: result.Data.CompanyName
+                        });
+
+                        var companyInfo = JSON.parse(sessionStorage.CompanyInfo);
+                        if (companyInfo.LogoFile !== null & companyInfo.LogoFile !== '') {
+
+                        }
+
+                        if (companyInfo.CompanyName !== null & companyInfo.CompanyName !== '') {
+                            $('#companyName').text(companyInfo.CompanyName);
+                        }
+                    } else {
+                        alert(result.Msg);
+                    }
+                });
+            } else {
+                var companyInfo = JSON.parse(sessionStorage.CompanyInfo);
+                if (companyInfo.LogoFile !== null & companyInfo.LogoFile !== '') {
+
+                }
+
+                if (companyInfo.CompanyName !== null & companyInfo.CompanyName !== '') {
+                    $('#companyName').text(companyInfo.CompanyName);
+                }
+            }
+
+            var maintainCountVisible = '@(Request.Cookies.Get("CurrentRole").Value == ((int)NYB.DeviceManagementSystem.Common.RoleType.超级管理员).ToString())';
+        }
+
         @*$.get('@Url.Action("MaintainCount", "Device", new { _ = DateTime.Now.Ticks })', {}, function (data) {
             $("#maintainCount").text(data + 1);
         });*@

@@ -109,7 +109,7 @@ namespace NYB.DeviceManagementSystem.BLL
                     LoginName = webUser.LoginName,
                     Password = webUser.Pwd,
                     Name = webUser.UserName,
-                    //ProjectID = orderClient.ID,
+                    ProjectID = string.Empty,
                     OrderClientID = orderClient.ID,
                     Address = webUser.Address,
                     Telephone = webUser.TelPhone,

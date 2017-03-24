@@ -44,6 +44,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
         {
             ProjectBLL projectBLL = new ProjectBLL();
             webProject.CreateUserID = this.GetCurrentUserID();
+            webProject.WebUser.OrderClientID = this.GetCurrentOrderClientID();
             CResult<bool> cResult = projectBLL.InsertProject(webProject);
             return JsonContentHelper.GetJsonContent(cResult);
         }
