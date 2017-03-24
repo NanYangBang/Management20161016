@@ -3,7 +3,7 @@
     var role = int.Parse(Request.Cookies.Get("CurrentRole").Value);
 }
 <ul>
-    @if (role == (int)NYB.DeviceManagementSystem.Common.RoleType.管理员 || role == (int)NYB.DeviceManagementSystem.Common.RoleType.操作员)
+    @if (role == (int)NYB.DeviceManagementSystem.Common.RoleType.管理员 || role == (int)NYB.DeviceManagementSystem.Common.RoleType.操作员 || role == (int)NYB.DeviceManagementSystem.Common.RoleType.项目管理员)
     {
         <li actionname="设备管理">
             <a href="@Url.Action("Index", "Device", new { _ = DateTime.Now.Ticks })"> 设备管理</a>
@@ -14,7 +14,7 @@
         </li>
     }
 
-    @if (role == (int)NYB.DeviceManagementSystem.Common.RoleType.管理员)
+    @if (role == (int)NYB.DeviceManagementSystem.Common.RoleType.管理员 || role == (int)NYB.DeviceManagementSystem.Common.RoleType.项目管理员)
     {
         <li actionname="系统管理">
             <a href="@Url.Action("Index", "User", new { _ = DateTime.Now.Ticks })"> 系统管理</a>
