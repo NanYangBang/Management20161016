@@ -61,6 +61,12 @@
                         </td>
                     </tr>
                 </table>
+                <div class="row" style="margin:0px;">
+                    <div class="col-md-12">
+                        <h3 style="font-size:12px">保养记录附件（支持jpg、gif、txt、png和pdf格式文件）</h3>
+                        <input type="file" multiple id="ssi-upload" />
+                    </div>
+                </div>
             </fieldset>
         </div>
         <div class="common-details-operation-panel">
@@ -76,9 +82,9 @@
 <script type="text/javascript">
     window.Resource = {
         UrlAdd: '@Url.Action("AddRepairRecord", "Device", new { _ = DateTime.Now.Ticks })',
-        UrlEdit:'@(Url.Action("EditRepairRecord", "Device", new { _ = DateTime.Now.Ticks }))',
+        UrlEdit: '@(Url.Action("EditRepairRecord", "Device", new { _ = DateTime.Now.Ticks }))',
         ReturnUrl: '@returnUrl',
-        Action:'@(ViewBag.OperateAction)',
+        Action: '@(ViewBag.OperateAction)',
         UrlImage: '@Url.Content("~/Content/Plugin/jQuery-UI-Timepicker/images/calendar.png")',
         IsView: '@(isView)'
     }
@@ -89,6 +95,7 @@
         GetViewStatus();
         $('[name="DeviceName"]').attr('readonly', 'readonly');
         AddTxtAre();
+        uploadProof();
     })
 
     function BindDatePick() {

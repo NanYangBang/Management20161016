@@ -25,12 +25,21 @@
                 <table class="operateTable">
                     <tr>
                         <td>
+                            <b><em>*</em>设备编号</b>
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.Num)
+                            @Html.ValidationMessageFor(model => model.Num)
+                        </td>
+                        <td>
                             <b><em>*</em>设备名称</b>
                         </td>
                         <td>
                             @Html.TextBoxFor(model => model.Name)
                             @Html.ValidationMessageFor(model => model.Name)
                         </td>
+                    </tr>
+                    <tr>
                         <td>
                             <b><em>*</em>设备类型</b>
                         </td>
@@ -45,6 +54,20 @@
                                 }
                             </select>
 
+                        </td>
+
+                        <td>
+                            <b><em>*</em>供应商</b>
+                        </td>
+                        <td>
+                            @*@Html.TextBoxFor(model => model.SupplierID)
+                                @Html.ValidationMessageFor(model => model.SupplierID)*@
+                            <select value="" name="SupplierID">
+                                @foreach (KeyValuePair<string, string> dic in (Dictionary<string, string>)ViewBag.SupperList)
+                                {
+                                    <option @(dic.Key == Model.SupplierID ? "selected" : "") id="firstOption" value="@dic.Key">@dic.Value</option>
+                                }
+                            </select>
                         </td>
                     </tr>
                     <tr>
@@ -62,36 +85,35 @@
                                 }
                             </select>
                         </td>
-
-                        <td>
-                            <b><em>*</em>供应商</b>
-                        </td>
-                        <td>
-                            @*@Html.TextBoxFor(model => model.SupplierID)
-                                @Html.ValidationMessageFor(model => model.SupplierID)*@
-                            <select value="" name="SupplierID">
-                                @foreach (KeyValuePair<string, string> dic in (Dictionary<string, string>)ViewBag.SupperList)
-                                {
-                                    <option @(dic.Key == Model.SupplierID ? "selected" : "") id="firstOption" value="@dic.Key">@dic.Value</option>
-                                }
-                            </select>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <b>生产日期</b>
-                        </td>
-                        <td name="time">
-                            @Html.TextBoxFor(model => model.ProductDate)
-                            @Html.ValidationMessageFor(model => model.ProductDate)
-                        </td>
                         <td>
                             <b>保养日期</b>
                         </td>
                         <td name="time">
                             @Html.TextBoxFor(model => model.MaintainDate)
                             @Html.ValidationMessageFor(model => model.MaintainDate)
+                        </td>
+                    </tr>
+                    <tr>
+                        @if (ViewBag.Action == "Update")
+                        {
+                            <td>
+                                <b>设备状态</b>
+                            </td>
+                            <td name="time">
+                                <select value="" name="DeviceState">
+                                    @foreach (string item in Enum.GetNames(DeviceStateEnum))
+                                    {
+                                        <option id="firstOption" @(Model.DeviceState.ToString() == item ? "selected" : "") value="@((int)Enum.Parse(typeof(DeviceStateEnum),item) )">@item</option>
+                                    }
+                                </select>
+                            </td>
+                        }
+                        <td>
+                            <b>生产日期</b>
+                        </td>
+                        <td name="time">
+                            @Html.TextBoxFor(model => model.ProductDate)
+                            @Html.ValidationMessageFor(model => model.ProductDate)
                         </td>
                     </tr>
                     <tr>
@@ -150,7 +172,7 @@
             $('#ProductDate').val('@(Model.ProductDate.HasValue?  Model.ProductDate.Value.ToString("yyyy-MM-dd"):"")');
             $('#MaintainDate').val('@(Model.MaintainDate.HasValue? Model.MaintainDate.Value.ToString("yyyy-MM-dd"):"")');
         }
-        
+
 
     }
 

@@ -85,6 +85,8 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             ViewBag.Action = "Update";
             ViewBag.ReturnUrl = returnUrl;
             return View(webDevice);
+            
+            
         }
 
         [HttpPost]
