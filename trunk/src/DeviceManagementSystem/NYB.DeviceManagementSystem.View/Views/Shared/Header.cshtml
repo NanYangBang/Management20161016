@@ -10,12 +10,13 @@
 <div class="header">
     <a href='@Url.Action(String.Empty, String.Empty)' title="回到主页">
         <div id="header-logo" class="header-logo">
-            <h3 style="color:white;font-size:30px;">优稳运维管理系统</h3>
+            <h3 id="companyName" style="color:white;font-size:30px;">优稳运维管理系统</h3>
         </div>
     </a>
     <div class="header-message">
         <ul>
             <li><a target="_blank" href="http://www.ywcs.com.cn">官网</a></li>
+            <li id="maintainCountStr"><a href="@Url.Action("Index", "Device")">需保养设备</a><a id="maintainCount" href="@Url.Action("Index", "Device")">0</a></li>
             <li><a id="resetPasswordRef" href="@Url.Action("ChangePassword", "Account")">修改密码</a></li>
             <li class="last-border"><a href="@Url.Action("LogOff", "Account", new { _ = DateTime.Now.Ticks })">退出</a></li>
         </ul>
@@ -34,6 +35,67 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
+        var isSuperAdmin = '@(Request.Cookies.Get("CurrentRole").Value == ((int)NYB.DeviceManagementSystem.Common.RoleType.超级管理员).ToString())';
+        @{
+             var role=Request.Cookies.Get("CurrentRole").Value;
+             bool maintainCountVisible=false;
+
+             if (role==((int)NYB.DeviceManagementSystem.Common.RoleType.操作员).ToString()
+                 ||role==((int)NYB.DeviceManagementSystem.Common.RoleType.管理员).ToString()
+                 ||role==((int)NYB.DeviceManagementSystem.Common.RoleType.项目管理员).ToString())
+             {
+                 maintainCountVisible=true;
+             }
+         }
+
+        if ('@maintainCountVisible' == 'True') {
+            $("#maintainCountStr").show();
+        } else {
+            $("#maintainCountStr").hide();
+        }
+
+        if (isSuperAdmin == 'False') {
+            if (sessionStorage.SessionID == null || sessionStorage.SessionID !== '@Session.SessionID') {
+                sessionStorage.SessionID = '@Session.SessionID'
+
+                if ('@maintainCountVisible' == 'True') {
+                    $.get('@Url.Action("MaintainCount", "Device", new { _ = DateTime.Now.Ticks })', {}, function (data) {
+                        $("#maintainCount").text(data);
+                    });
+                }
+
+                $.get('@Url.Action("GetCompanyInfoJson", "AboutUs", new { _ = DateTime.Now.Ticks })', {}, function (result) {
+                    if (result.Code == '0') {
+                        sessionStorage.CompanyInfo = JSON.stringify({
+                            LogoFile: result.Data.LogoFile,
+                            CompanyName: result.Data.CompanyName
+                        });
+
+                        var companyInfo = JSON.parse(sessionStorage.CompanyInfo);
+                        if (companyInfo.LogoFile !== null & companyInfo.LogoFile !== '') {
+
+                        }
+
+                        if (companyInfo.CompanyName !== null & companyInfo.CompanyName !== '') {
+                            $('#companyName').text(companyInfo.CompanyName);
+                        }
+                    } else {
+                        alert(result.Msg);
+                    }
+                });
+            } else {
+                var companyInfo = JSON.parse(sessionStorage.CompanyInfo);
+                if (companyInfo.LogoFile !== null & companyInfo.LogoFile !== '') {
+
+                }
+
+                if (companyInfo.CompanyName !== null & companyInfo.CompanyName !== '') {
+                    $('#companyName').text(companyInfo.CompanyName);
+                }
+            }
+        }
+
+
 
         $("#passwordDialog").dialog({
             autoOpen: false,
@@ -56,7 +118,6 @@
             width: 850,
             height: 400
         });
-
     })
 
 

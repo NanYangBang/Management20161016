@@ -1,9 +1,9 @@
 ﻿@{
     Layout = "~/Views/Shared/NavTopTemplate.cshtml";
-    var role = Request.Cookies.Get("CurrentRole").Value;
+    var role = int.Parse(Request.Cookies.Get("CurrentRole").Value);
 }
 <ul>
-    @if (role == NYB.DeviceManagementSystem.Common.RoleType.管理员.ToString() || role == NYB.DeviceManagementSystem.Common.RoleType.操作员.ToString())
+    @if (role == (int)NYB.DeviceManagementSystem.Common.RoleType.管理员 || role == (int)NYB.DeviceManagementSystem.Common.RoleType.操作员 || role == (int)NYB.DeviceManagementSystem.Common.RoleType.项目管理员)
     {
         <li actionname="设备管理">
             <a href="@Url.Action("Index", "Device", new { _ = DateTime.Now.Ticks })"> 设备管理</a>
@@ -14,22 +14,32 @@
         </li>
     }
 
-    @if (role == NYB.DeviceManagementSystem.Common.RoleType.管理员.ToString())
+    @if (role == (int)NYB.DeviceManagementSystem.Common.RoleType.管理员 || role == (int)NYB.DeviceManagementSystem.Common.RoleType.项目管理员)
     {
         <li actionname="系统管理">
             <a href="@Url.Action("Index", "User", new { _ = DateTime.Now.Ticks })"> 系统管理</a>
         </li>
     }
-    
-    @if (role == NYB.DeviceManagementSystem.Common.RoleType.超级管理员.ToString())
+
+    @if (role == (int)NYB.DeviceManagementSystem.Common.RoleType.客户管理员)
     {
         <li actionname="项目管理">
             <a href="@Url.Action("Index", "ProjectManager", new { _ = DateTime.Now.Ticks })">项目管理</a>
         </li>
     }
 
-    <li actionname="关于我们">
-        <a href="@(Url.Action("Index", "AboutUs", new { _ = DateTime.Now.Ticks }))">关于我们</a>
-    </li>
+    @if (role == (int)NYB.DeviceManagementSystem.Common.RoleType.超级管理员)
+    {
+        <li actionname="客户管理">
+            <a href="@Url.Action("Index", "OrderClientManager", new { _ = DateTime.Now.Ticks })">客户管理</a>
+        </li>
+    }
+
+    @if (role != (int)NYB.DeviceManagementSystem.Common.RoleType.超级管理员)
+    {
+        <li actionname="关于我们">
+            <a href="@(Url.Action("Index", "AboutUs", new { _ = DateTime.Now.Ticks }))">关于我们</a>
+        </li>
+    }
 </ul>
 

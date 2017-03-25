@@ -365,5 +365,17 @@ namespace NYB.DeviceManagementSystem.View.Controllers
 
         }
 
+        public ActionResult MaintainCount()
+        {
+            int count = 0;
+            var projectID = this.GetCurrentProjectID();
+
+            if (string.IsNullOrWhiteSpace(projectID) == false)
+            {
+                count = new DeviceBLL().GetMaintainCount(this.GetCurrentProjectID()).Data;
+            }
+
+            return JsonContentHelper.GetJsonContent(count);
+        }
     }
 }

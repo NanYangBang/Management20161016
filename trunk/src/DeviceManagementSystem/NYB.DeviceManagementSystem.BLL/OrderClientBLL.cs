@@ -59,12 +59,12 @@ namespace NYB.DeviceManagementSystem.BLL
                     TelPhone = user.Telephone,
                     Moblie = user.Moblie,
                     UserName = user.Name,
-
+                    OrderClientID = user.OrderClientID,
                 }).ToList();
 
                 foreach (var user in users)
                 {
-                    var project = result.FirstOrDefault(t => t.ID == user.ProjectID);
+                    var project = result.FirstOrDefault(t => t.ID == user.OrderClientID);
                     project.WebUser = user;
                 }
 
@@ -109,7 +109,7 @@ namespace NYB.DeviceManagementSystem.BLL
                     LoginName = webUser.LoginName,
                     Password = webUser.Pwd,
                     Name = webUser.UserName,
-                    //ProjectID = orderClient.ID,
+                    ProjectID = string.Empty,
                     OrderClientID = orderClient.ID,
                     Address = webUser.Address,
                     Telephone = webUser.TelPhone,
@@ -242,6 +242,34 @@ namespace NYB.DeviceManagementSystem.BLL
                 }
 
                 return context.Save();
+            }
+        }
+
+        public CResult<WebOrderClient> GetCompanyInfo(string orderClientID)
+        {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("orderClientID", orderClientID);
+
+            using (var context = new DeviceMgmtEntities())
+            {
+                var entity = context.OrderClient.FirstOrDefault(t => t.ID == orderClientID);
+                if (entity == null)
+                {
+                    return new CResult<WebOrderClient>(null, ErrorCode.DataNoExist);
+                }
+
+                var webOrderClient = new WebOrderClient()
+                {
+                    LogoFile = entity.LogoFile,
+                    CompanyContact = entity.CompanyContact,
+                    CompanyDescribe = entity.CompanyDescribe,
+                    CompanyName = entity.CompanyName,
+                    ID = entity.ID,
+                };
+
+                LogHelper.Info("result", webOrderClient);
+
+                return new CResult<WebOrderClient>(webOrderClient);
             }
         }
 

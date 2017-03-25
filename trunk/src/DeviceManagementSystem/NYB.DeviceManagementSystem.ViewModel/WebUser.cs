@@ -10,6 +10,8 @@ namespace NYB.DeviceManagementSystem.ViewModel
 {
     public class WebUser : ViewModelBase
     {
+        public string OrderClientID { get; set; }
+
         private string _id;
 
         public string ID
@@ -90,6 +92,7 @@ namespace NYB.DeviceManagementSystem.ViewModel
         /// 地址
         /// </summary>
         [StringLength(100, ErrorMessage = "最大长度为100")]
+        [Display(Name = "地址")]
         public string Address
         {
             get { return _address; }

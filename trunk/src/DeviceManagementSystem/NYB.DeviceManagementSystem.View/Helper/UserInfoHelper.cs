@@ -11,10 +11,10 @@ namespace System.Web.Mvc
         public static string GetCurrentProjectID(this Controller controller)
         {
             var projectID = controller.Request.Cookies["CurrentProjectIDStr"].Value;
-            if (string.IsNullOrEmpty(projectID))
-            {
-                throw new Exception("CurrentProjectIDStr is empty , maybe cookie id disable ");
-            }
+            //if (string.IsNullOrEmpty(projectID))
+            //{
+            //    throw new Exception("CurrentProjectIDStr is empty , maybe cookie id disable ");
+            //}
 
             return projectID;
         }
@@ -27,6 +27,16 @@ namespace System.Web.Mvc
                 throw new Exception("CurrentUserID is empty , maybe cookie id disable ");
             }
             return userID;
+        }
+
+        public static string GetCurrentOrderClientID(this Controller controller)
+        {
+            var OrderClientID = controller.Request.Cookies["OrderClientID"].Value;
+            if (string.IsNullOrEmpty(OrderClientID))
+            {
+                throw new Exception("OrderClientID is empty , maybe cookie id disable ");
+            }
+            return OrderClientID;
         }
 
     }

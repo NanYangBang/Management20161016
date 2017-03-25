@@ -1,12 +1,13 @@
 ﻿@{
     ViewBag.Title = "Index";
 }
+@model NYB.DeviceManagementSystem.ViewModel.WebOrderClient
 
 
 <style type="text/css">
     .aboutus {
         margin-left: 50px;
-        margin-right:30px;
+        margin-right: 30px;
     }
 
         .aboutus h2 {
@@ -38,25 +39,47 @@
 </style>
 
 <div class="aboutus" actionname="关于我们">
+    @if (Request.Cookies.Get("CurrentRole").Value == ((int)NYB.DeviceManagementSystem.Common.RoleType.客户管理员).ToString())
+    {
+        <div>
+            <input type="button" style="float:right" class="blue-button" id="UpdateAboutUs" value="修改" />
+        </div>
+    }
     <div class="desc">
         <h2>公司简介</h2>
         <p>
-            北京优稳昌盛科技有限公司（简称：北京优稳昌盛）的使命是成为电气自动化整体解决方案和高效燃烧技术优势品牌及机电试验设备的最佳供应商。
+            @Html.DisplayFor(model => model.CompanyDescribe)
         </p>
-        <p>
-            公司确立的方向是专注于电气自动化整体解决方案以及机电一体化试验设备和高效燃烧技术。应用研究和工程开发主要集中于先进智能控制技术与应用、工业现场总线技术、无线传输、专用传感技术、机电一体化等方面。公司下设：基础产品技术中心和生产车间。
-        </p>
+        @*<p>
+                北京优稳昌盛科技有限公司（简称：北京优稳昌盛）的使命是成为电气自动化整体解决方案和高效燃烧技术优势品牌及机电试验设备的最佳供应商。
+            </p>
+            <p>
+                公司确立的方向是专注于电气自动化整体解决方案以及机电一体化试验设备和高效燃烧技术。应用研究和工程开发主要集中于先进智能控制技术与应用、工业现场总线技术、无线传输、专用传感技术、机电一体化等方面。公司下设：基础产品技术中心和生产车间。
+            </p>*@
     </div>
     <div class="contectUs">
         <h2>联系我们</h2>
-        <p>公司名称：北京优稳昌盛科技有限公司</p>
-        <p>公司地址：北京市海淀区永丰产业基地丰贤中路11号</p>
-        <p>电   话：010-82895826   62680021   62698169</p>
-        <p>传   真：010-62680021-802</p>
-        <p>客服热线：400-688-2812</p>
-        <p>邮   编：100085</p>
-        <p>QQ：512011548</p>
-        <p>Email：ywcs2010@126.com</p>
-        <p><a target="_blank" href="http://www.ywcs.com.cn">官网：www.ywcs.com.cn</a></p>
+        <p>
+            @Html.DisplayFor(model => model.CompanyContact)
+        </p>
+
+        @*
+            <p>公司名称：北京优稳昌盛科技有限公司</p>
+            <p>公司地址：北京市海淀区永丰产业基地丰贤中路11号</p>
+            <p>电   话：010-82895826   62680021   62698169</p>
+            <p>传   真：010-62680021-802</p>
+            <p>客服热线：400-688-2812</p>
+            <p>邮   编：100085</p>
+            <p>QQ：512011548</p>
+            <p>Email：ywcs2010@126.com</p>
+            <p><a target="_blank" href="http://www.ywcs.com.cn">官网：www.ywcs.com.cn</a></p>*@
     </div>
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#UpdateAboutUs").click(function () {
+            window.location = '@Url.Action("UpdateAboutUs", "AboutUs", new { returnUrl = Request.Url.AbsoluteUri, _ = DateTime.Now.Ticks })'
+        });
+    });
+</script>

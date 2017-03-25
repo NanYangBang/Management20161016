@@ -84,6 +84,7 @@ namespace NYB.DeviceManagementSystem.BLL
                         UserName = entity.Name,
                         Moblie = entity.Moblie,
                         Role = (RoleType)entity.Role,
+                        OrderClientID = entity.OrderClientID,
                     };
 
                     LogHelper.Info("result", webUser);
@@ -130,6 +131,7 @@ namespace NYB.DeviceManagementSystem.BLL
                     Email = webUser.Email,
                     IsValid = true,
                     Role = (int)webUser.Role,
+                    OrderClientID = webUser.OrderClientID,
                 };
                 context.User.Add(entity);
 
@@ -273,6 +275,7 @@ namespace NYB.DeviceManagementSystem.BLL
                     Moblie = user.Moblie,
                     UserName = user.Name,
                     Role = (RoleType)user.Role,
+                    OrderClientID = user.OrderClientID,
                 };
 
                 if (webUser.Role == RoleType.超级管理员 || webUser.Role == RoleType.客户管理员)

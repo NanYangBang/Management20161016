@@ -194,7 +194,9 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BasicInfoManagerController.cs" />
     <Compile Include="Controllers\DeviceController.cs" />
+    <Compile Include="Controllers\MaintainItemManagerController.cs" />
     <Compile Include="Controllers\ManufactureManagerController.cs" />
+    <Compile Include="Controllers\OrderClientManagerController.cs" />
     <Compile Include="Controllers\SharedController.cs" />
     <Compile Include="Controllers\SupplierManagerController.cs" />
     <Compile Include="Controllers\DeviceTypeManagerController.cs" />
@@ -346,6 +348,7 @@
     <Content Include="Images\lookrepair.png" />
     <Content Include="Images\maintainimg.png" />
     <Content Include="Images\repairimg.png" />
+    <Content Include="Scripts\AboutUs\UpdatePartial.js" />
     <Content Include="Scripts\base.js" />
     <Content Include="Scripts\common.js" />
     <Content Include="Scripts\Common\Left.js" />
@@ -389,6 +392,8 @@
     <Content Include="Scripts\MicrosoftMvcValidation.debug.js" />
     <Content Include="Scripts\MicrosoftMvcValidation.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\OrderClientManger\AddUpdatePartial.js" />
+    <Content Include="Scripts\OrderClientManger\ResetPassword.js" />
     <Content Include="Scripts\ProjectManger\AddUpdatePartial.js" />
     <Content Include="Scripts\Common\Index.js" />
     <Content Include="Scripts\ProjectManger\ResetPassword.js" />
@@ -499,6 +504,18 @@
     <Content Include="Views\ProjectManager\ResetPassword.cshtml" />
     <Content Include="Views\User\PartialView\ChangePassWord.cshtml" />
     <Content Include="Views\Shared\_Layout3.cshtml" />
+    <Content Include="Views\OrderClientManager\PartialView\AddUpdatePartialView.cshtml" />
+    <Content Include="Views\OrderClientManager\AddOrderClient.cshtml" />
+    <Content Include="Views\OrderClientManager\Index.cshtml" />
+    <Content Include="Views\OrderClientManager\UpdateOrderClient.cshtml" />
+    <Content Include="Views\OrderClientManager\ResetPassword.cshtml" />
+    <Content Include="Views\AboutUs\UpdateAboutUs.cshtml" />
+    <Content Include="Views\MaintainItemManager\Create.cshtml" />
+    <Content Include="Views\MaintainItemManager\Edit.cshtml" />
+    <Content Include="Views\MaintainItemManager\Index.cshtml" />
+    <Content Include="Views\MaintainItemManager\NavLeft.cshtml" />
+    <Content Include="Views\MaintainItemManager\PartialView\MaintainItemDetailView.cshtml" />
+    <Content Include="Views\MaintainItemManager\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NYB.DeviceManagementSystem.BLL\NYB.DeviceManagementSystem.BLL.csproj">

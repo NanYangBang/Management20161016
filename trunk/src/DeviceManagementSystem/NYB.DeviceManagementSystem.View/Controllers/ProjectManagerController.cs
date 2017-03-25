@@ -20,7 +20,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             List<WebProject> userList = new List<WebProject>();
             int totalCount = 0;
             ProjectBLL projectBLL = new ProjectBLL();
-            var cResult = projectBLL.GetProjectList(out totalCount, searchInfo, pageIndex, pageSize, orderBy, ascending);
+            var cResult = projectBLL.GetProjectList(out totalCount, this.GetCurrentUserID(), searchInfo, pageIndex, pageSize, orderBy, ascending);
             if (cResult.Code == 0)
             {
                 userList = cResult.Data;
@@ -44,6 +44,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
         {
             ProjectBLL projectBLL = new ProjectBLL();
             webProject.CreateUserID = this.GetCurrentUserID();
+            webProject.WebUser.OrderClientID = this.GetCurrentOrderClientID();
             CResult<bool> cResult = projectBLL.InsertProject(webProject);
             return JsonContentHelper.GetJsonContent(cResult);
         }

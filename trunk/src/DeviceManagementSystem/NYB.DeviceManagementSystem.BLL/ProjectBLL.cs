@@ -17,13 +17,13 @@ namespace NYB.DeviceManagementSystem.BLL
 {
     public class ProjectBLL
     {
-        public CResult<List<WebProject>> GetProjectList(out int totalCount, string searchInfo, int pageIndex = 1, int pageSize = 10, string orderby = null, bool ascending = false)
+        public CResult<List<WebProject>> GetProjectList(out int totalCount, string userID, string searchInfo, int pageIndex = 1, int pageSize = 10, string orderby = null, bool ascending = false)
         {
             LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
 
             using (DeviceMgmtEntities context = new DeviceMgmtEntities())
             {
-                Expression<Func<Project, bool>> filter = t => t.IsValid == true;
+                Expression<Func<Project, bool>> filter = t => t.IsValid && t.CreateUserID == userID;
 
                 if (string.IsNullOrWhiteSpace(searchInfo) == false)
                 {
@@ -114,7 +114,8 @@ namespace NYB.DeviceManagementSystem.BLL
                     CreateUserID = webUser.CreateUserID,
                     Email = webUser.Email,
                     IsValid = true,
-                    Role = (int)RoleType.项目管理员
+                    Role = (int)RoleType.项目管理员,
+                    OrderClientID = webUser.OrderClientID
                 };
                 context.Project.Add(project);
                 context.User.Add(entity);
@@ -193,6 +194,7 @@ namespace NYB.DeviceManagementSystem.BLL
                     TelPhone = user.Telephone,
                     Moblie = user.Moblie,
                     UserName = user.Name,
+                    OrderClientID = user.OrderClientID
                 };
 
                 webProject.WebUser = webUser;

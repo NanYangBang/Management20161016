@@ -41,7 +41,7 @@
                     </dt>
                     <dd>
                         <span class="inline-block">@Html.TextBoxFor(m => m.LoginName, new { tabIndex = 1 })</span>
-                        
+
                         @*<span class="inline-block">@Html.CheckBoxFor(m => m.RememberMe) @Html.LabelFor(m => m.RememberMe)</span>*@
                     </dd>
                     <dt></dt>
@@ -74,3 +74,11 @@
 
 </body>
 </html>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#subLogin').click(function () {
+            sessionStorage.clear();
+        });
+    });
+</script>
