@@ -44,6 +44,10 @@ namespace NYB.DeviceManagementSystem.View.Controllers
                 var result = new DeviceTypeBLL().GetDeviceTypeByID(deviceTypeID);
                 if (result.Code == 0)
                 {
+                    int totalCount;
+                    var items = new MaintainItemBLL().GetMaintainItemList(out totalCount, this.GetCurrentProjectID(), "", 1, -1, "Name", true);
+                    ViewBag.AllMaintainItems = items.Data;
+
                     return View(result.Data);
                 }
             }
