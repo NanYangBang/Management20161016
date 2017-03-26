@@ -44,6 +44,10 @@ namespace NYB.DeviceManagementSystem.View.Controllers
                 var result = new DeviceTypeBLL().GetDeviceTypeByID(deviceTypeID);
                 if (result.Code == 0)
                 {
+                    int totalCount;
+                    var items = new MaintainItemBLL().GetMaintainItemList(out totalCount, this.GetCurrentProjectID(), "", 1, -1, "Name", true);
+                    ViewBag.AllMaintainItems = items.Data;
+
                     return View(result.Data);
                 }
             }
@@ -55,8 +59,12 @@ namespace NYB.DeviceManagementSystem.View.Controllers
 
         public ActionResult Create(string returnUrl)
         {
+            int totalCount;
+            var result = new MaintainItemBLL().GetMaintainItemList(out totalCount, this.GetCurrentProjectID(), "", 1, -1, "Name", true);
+
             ViewBag.ReturnUrl = returnUrl;
             ViewBag.Action = "Create";
+            ViewBag.AllMaintainItems = result.Data;
             return View(new WebDeviceType());
         }
 
@@ -87,6 +95,10 @@ namespace NYB.DeviceManagementSystem.View.Controllers
                 var result = new DeviceTypeBLL().GetDeviceTypeByID(deviceTypeID);
                 if (result.Code == 0)
                 {
+                    int totalCount;
+                    var items = new MaintainItemBLL().GetMaintainItemList(out totalCount, this.GetCurrentProjectID(), "", 1, -1, "Name", true);
+                    ViewBag.AllMaintainItems = items.Data;
+
                     return View(result.Data);
                 }
             }
@@ -102,6 +114,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
         {
             try
             {
+                webDeviceType.ProjectID = this.GetCurrentProjectID();
                 var result = new DeviceTypeBLL().UpdateDeviceType(webDeviceType);
                 return JsonContentHelper.GetJsonContent(result);
             }

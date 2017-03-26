@@ -12,7 +12,15 @@
     }
     string isView = ViewBag.IsView;
     isView = string.IsNullOrWhiteSpace(isView) ? "" : isView.ToString();
+
+    List<WebMaintainItem> allMaintainItems = ViewBag.AllMaintainItems;
 }
+<link href="~/Scripts/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Scripts/duallistbox/bootstrap-duallistbox.min.css" rel="stylesheet" />
+@*<script src="@Url.Content("~/Scripts/jquery-1.8.2.min.js")" type="text/javascript"></script>*@
+<script src="@Url.Content("~/Scripts/bootstrap-3.3.5-dist/js/bootstrap.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/duallistbox/jquery.bootstrap-duallistbox.min.js")" type="text/javascript"></script>
+
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
 <link rel="Stylesheet" href="@Url.Content("~/Content/Common/OperateTable.css")" />
@@ -43,6 +51,30 @@
                             @Html.ValidationMessageFor(model => model.Note)
                         </td>
                     </tr>
+                    <tr>
+                        <td>
+                            <b>保养条目</b>
+                        </td>
+                        <td>
+                            @*@Html.DropDownList("maintainItems", selectListItems);*@
+                            <select multiple="multiple" size="10" name="maintainItems" id="maintainItems">
+                                @{
+                                    var selectIDs = Model.MaintainItems.Select(t => t.ID).ToList();
+                                    foreach (var item in allMaintainItems)
+                                    {
+                                        if (selectIDs.Contains(item.ID))
+                                        {
+                                            <option value="@(item.ID)" selected="selected">@item.Name</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@(item.ID)">@item.Name</option>
+                                        }
+                                    }
+                                }
+                            </select>
+                        </td>
+                    </tr>
                 </table>
             </fieldset>
         </div>
@@ -67,7 +99,9 @@
     }
 
     $(document).ready(function () {
-        SaveEvent(); AddTxtAre();
+        SaveEvent();
+        AddTxtAre();
+        listbox();
     })
 
     function SaveEvent() {
@@ -79,10 +113,18 @@
             var ID = $('[name="ID"]').val();
             var Name = $('[name="Name"]').val();
             var Note = $('textarea[name="Note"]').val();
+            var MaintainItems = [];
 
-            param.ID = ID;
-            param.Name = Name;
-            param.Note = Note;
+            var items = $('#maintainItems').val();
+            if (items !== null) {
+                for (var i = 0; i < items.length; i++) {
+                    param['MaintainItems[' + i + '].ID'] = items[i];
+                }
+            }   
+
+            param['ID'] = ID;
+            param['Name'] = Name;
+            param['Note'] = Note;
 
             if ($('span.errorMessage').length == 0 && $('.field-validation-error').length == 0) {
                 if (Resource.UrlAction == 'Create') {
@@ -108,6 +150,18 @@
         });
     }
 
-
-
+    function listbox() {
+        var demo2 = $('#maintainItems').bootstrapDualListbox({
+            nonSelectedListLabel: '所有保养条目',
+            selectedListLabel: '需保养条目',
+            preserveSelectionOnMove: 'moved',
+            moveOnSelect: false,
+            filterPlaceHolder: '名称',
+            infoText: '共{0}条',
+            infoTextEmpty: '共0条',
+            infoTextFiltered: '<span class="label label-warning">从 {1} 条中过滤出 {0} 条</span>',
+            filterTextClear: '显示全部'
+            //nonSelectedFilter: 'ion ([7-9]|[1][0-2])'
+        });
+    }
 </script>

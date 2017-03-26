@@ -148,5 +148,12 @@ namespace NYB.DeviceManagementSystem.View.Controllers
 
         }
 
+        public ActionResult GetAllMaintainItems()
+        {
+            int totalCount;
+            var result = new MaintainItemBLL().GetMaintainItemList(out totalCount, this.GetCurrentProjectID(), "", 1, -1, "Name", true);
+            
+            return JsonContentHelper.GetJsonContent(result);
+        }
     }
 }
