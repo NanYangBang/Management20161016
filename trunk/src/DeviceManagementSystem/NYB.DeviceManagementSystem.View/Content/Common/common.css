@@ -113,7 +113,7 @@ select {
 .nav-left {
     /*position: fixed;*/
     overflow: auto;
-    min-height:400px;
+    min-height: 400px;
     left: 0;
     float: left;
     width: 200px;
@@ -934,3 +934,12 @@ ul li {
 
 
 
+.wrap .content .resetFont {
+    font-size: 12px;
+    font-family: SimSun,Arial;
+    /*font-weight:lighter;*/
+}
+
+.wrap .content .resetFont td>b>label {
+    font-weight:100;
+}
