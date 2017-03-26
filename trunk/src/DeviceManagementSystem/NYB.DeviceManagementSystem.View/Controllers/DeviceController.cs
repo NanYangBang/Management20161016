@@ -247,6 +247,14 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             return JsonContentHelper.GetJsonContent(cResult);
         }
 
+        [HttpPost]
+        public ActionResult AddRepairRecordFile(HttpPostedFileBase fileData, string maintainRecordID)
+        {
+            RepairRecordBLL repairRecordBLL = new RepairRecordBLL();
+            var cResult = repairRecordBLL.AddRepairRecordFile(fileData, maintainRecordID);
+            return JsonContentHelper.GetJsonContent(cResult);
+        }
+
         [HttpGet]
         public ActionResult EditMaintainRecord(string maintainRecordID, string deviceName, string returnUrl)
         {

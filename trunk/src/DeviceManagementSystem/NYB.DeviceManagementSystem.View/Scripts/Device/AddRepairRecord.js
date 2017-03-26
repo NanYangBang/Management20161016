@@ -113,11 +113,6 @@ function SaveEvent() {
         param.ID = ID;
 
         if ($('span.errorMessage').length == 0 && $('.field-validation-error').length == 0) {
-            //if (Resource.Action == 'Add') {
-            //    AjaxEvent(Resource.UrlAdd, param);
-            //} else {
-            //    AjaxEvent(Resource.UrlEdit, param);
-            //}
             if (Resource.Action == 'Add') {
                 handleAction = Resource.UrlAdd;
                 SaveAjax(handleAction, webEntity, fileLenth, MaintainRecordID);

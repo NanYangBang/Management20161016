@@ -377,7 +377,7 @@ function LimitTextBoxMaxLength() {
 }
 
 $(document).ready(function () {
-    ApplyStyleToCommonTable();
+    //ApplyStyleToCommonTable();
     //LimitTextBoxMaxLength();
     hideDeleteButton();
     BindKeyDownEventToSearchBox();

@@ -86,7 +86,9 @@
         ReturnUrl: '@returnUrl',
         Action: '@(ViewBag.OperateAction)',
         UrlImage: '@Url.Content("~/Content/Plugin/jQuery-UI-Timepicker/images/calendar.png")',
-        IsView: '@(isView)'
+        IsView: '@(isView)',
+        UrlAddFile: '@(Url.Action("AddRepairRecordFile", "Device", new { _ = DateTime.Now.Ticks }))',
+        UrlEditFile: '@(Url.Action("AddRepairRecordFile", "Device", new { _ = DateTime.Now.Ticks }))'
     }
 
     $(document).ready(function () {

@@ -30,7 +30,6 @@ namespace NYB.DeviceManagementSystem.BLL
                     filter = filter.And(t => t.Name.ToUpper().Contains(searchInfo));
                 }
 
-
                 if (string.IsNullOrEmpty(orderby))
                 {
                     orderby = "CreateDate";

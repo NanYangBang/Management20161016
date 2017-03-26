@@ -1,5 +1,7 @@
 ﻿@using NYB.DeviceManagementSystem.ViewModel;
 @using NYB.DeviceManagementSystem.Common;
+@using NYB.DeviceManagementSystem.Common.Enum;
+
 @model NYB.DeviceManagementSystem.ViewModel.WebDevice
 @{
     ViewBag.Title = "";
@@ -101,7 +103,7 @@
                             </td>
                             <td name="time">
                                 <select value="" name="DeviceState">
-                                    @foreach (string item in Enum.GetNames(DeviceStateEnum))
+                                    @foreach (string item in Enum.GetNames(typeof(DeviceStateEnum)))
                                     {
                                         <option id="firstOption" @(Model.DeviceState.ToString() == item ? "selected" : "") value="@((int)Enum.Parse(typeof(DeviceStateEnum),item) )">@item</option>
                                     }
