@@ -85,8 +85,8 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             ViewBag.Action = "Update";
             ViewBag.ReturnUrl = returnUrl;
             return View(webDevice);
-            
-            
+
+
         }
 
         [HttpPost]
@@ -218,6 +218,10 @@ namespace NYB.DeviceManagementSystem.View.Controllers
         [HttpGet]
         public ActionResult AddMainTainRecord(string deviceID, string deviceName, string returnUrl)
         {
+            int totalCount;
+            var items = new MaintainItemBLL().GetMaintainItemListByDeviceID(deviceID);
+            ViewBag.AllMaintainItems = items.Data;
+
             ViewBag.ReturnUrl = returnUrl;
             ViewBag.DeviceName = deviceName;
             ViewBag.DeviceID = deviceID;
@@ -266,6 +270,10 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             ViewBag.LeftName = "保养记录信息";
             MaintainRecordBLL maintainRecordBLL = new MaintainRecordBLL();
             var cResult = maintainRecordBLL.GetMaintainRecordByID(maintainRecordID);
+
+            var items = new MaintainItemBLL().GetMaintainItemListByDeviceID(cResult.Data.DeviceID);
+            ViewBag.AllMaintainItems = items.Data;
+
             return View("MaintainRecord/AddMainTainRecord", cResult.Data);
         }
 

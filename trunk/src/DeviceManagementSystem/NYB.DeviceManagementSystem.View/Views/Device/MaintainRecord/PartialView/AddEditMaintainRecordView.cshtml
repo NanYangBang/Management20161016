@@ -1,11 +1,18 @@
-﻿@model NYB.DeviceManagementSystem.ViewModel.WebMaintainRecord
+﻿@using NYB.DeviceManagementSystem.ViewModel;
+@model NYB.DeviceManagementSystem.ViewModel.WebMaintainRecord
 
 @{
     ViewBag.Title = "AddRepairRecordPartialView";
     string isView = ViewBag.IsView;
     isView = string.IsNullOrWhiteSpace(isView) ? "" : isView.ToString();
     string returnUrl = ViewBag.ReturnUrl;
+    List<WebMaintainItem> allMaintainItems = ViewBag.AllMaintainItems;
 }
+
+<link href="~/Scripts/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Scripts/duallistbox/bootstrap-duallistbox.min.css" rel="stylesheet" />
+@*<script src="@Url.Content("~/Scripts/bootstrap-3.3.5-dist/js/bootstrap.min.js")" type="text/javascript"></script>*@
+<script src="@Url.Content("~/Scripts/duallistbox/jquery.bootstrap-duallistbox.min.js")" type="text/javascript"></script>
 
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 
@@ -63,6 +70,30 @@
                         <td wt="550" ht="80" class="lengthTd">
                             @Html.TextAreaFor(model => model.Note)
                             @Html.ValidationMessageFor(model => model.Note)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>保养条目</b>
+                        </td>
+                        <td>
+                            @*@Html.DropDownList("maintainItems", selectListItems);*@
+                            <select multiple="multiple" style="width:179px" size="10" name="maintainItems" id="maintainItems">
+                                @{
+                                    var selectIDs = Model.MaintainItems.Select(t => t.ID).ToList();
+                                    foreach (var item in allMaintainItems)
+                                    {
+                                        if (selectIDs.Contains(item.ID))
+                                        {
+                                            <option value="@(item.ID)" selected="selected">@item.Name</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@(item.ID)">@item.Name</option>
+                                        }
+                                    }
+                                }
+                            </select>
                         </td>
                     </tr>
                 </table>
@@ -126,6 +157,7 @@
     }
 
     $(document).ready(function () {
+        listbox();
         BindDatePick();
         uploadProof();
         loadUplodify();
@@ -161,6 +193,21 @@
             $('#MaintainDate').val('@Model.MaintainDate.ToString("yyyy-MM-dd")');
         }
 
+    }
+
+    function listbox() {
+        var demo2 = $('#maintainItems').bootstrapDualListbox({
+            nonSelectedListLabel: '所有保养条目',
+            selectedListLabel: '需保养条目',
+            preserveSelectionOnMove: 'moved',
+            moveOnSelect: false,
+            filterPlaceHolder: '名称',
+            infoText: '共{0}条',
+            infoTextEmpty: '共0条',
+            infoTextFiltered: '<span class="label label-warning">从 {1} 条中过滤出 {0} 条</span>',
+            filterTextClear: '显示全部'
+            //nonSelectedFilter: 'ion ([7-9]|[1][0-2])'
+        });
     }
 
 </script>
