@@ -96,7 +96,7 @@ namespace NYB.DeviceManagementSystem.BLL
                 {
                     return new CResult<string>("", ErrorCode.DeviceNotExist);
                 }
-
+                
                 var entity = new MaintainRecord();
                 entity.CreateDate = DateTime.Now;
                 entity.CreateUserID = model.CreateUserID;

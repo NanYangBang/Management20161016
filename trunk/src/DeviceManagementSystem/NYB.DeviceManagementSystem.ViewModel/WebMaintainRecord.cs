@@ -13,6 +13,7 @@ namespace NYB.DeviceManagementSystem.ViewModel
         public WebMaintainRecord()
         {
             Attachments = new List<WebAttachment>();
+            MaintainItems = new List<WebMaintainItem>();
         }
 
         public string ID { get; set; }

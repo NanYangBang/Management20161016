@@ -97,6 +97,13 @@ function loadUplodify() {
                 webEntity['delIDList[' + i + ']'] = Resource.delID[i];
             }
 
+            var items = $('#maintainItems').val();
+            if (items !== null) {
+                for (var i = 0; i < items.length; i++) {
+                    webEntity['webMaintainRecord.MaintainItems[' + i + '].ID'] = items[i];
+                }
+            }
+
             var fileLenth = $('div.uploadifyProgress').length;
             var handleAction;
             if (Resource.IsAddRecord == 'False') {
