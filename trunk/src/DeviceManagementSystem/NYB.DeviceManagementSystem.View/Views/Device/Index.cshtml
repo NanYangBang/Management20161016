@@ -36,6 +36,9 @@
         <thead>
             <tr>
                 <th>
+                    编号
+                </th>
+                <th>
                     名称
                 </th>
                 <th>
@@ -47,13 +50,13 @@
                 <th>
                     供应商
                 </th>
-                <th style="width:90px">
+                <th class="dateColumn">
                     生产日期
                 </th>
-                <th style="width:90px">
+                <th class="dateColumn">
                     保养日期
                 </th>
-                <th>
+                <th class="datetimeColumn">
                     创建时间
                 </th>
                 @*<th>
@@ -69,6 +72,9 @@
                 foreach (var device in Model)
                 {
                     <tr pileid="">
+                        <td>
+                            @device.Num
+                        </td>
                         <td>
                             @device.Name
                         </td>

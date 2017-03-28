@@ -128,13 +128,14 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             ViewBag.DeviceID = deviceID;
             ViewBag.OperateAction = "Add";
             ViewBag.LeftName = "设备信息";
+            ViewBag.IsAddRecord = "True";
             WebRepairRecord webRepairRecord = new WebRepairRecord();
             webRepairRecord.RepairDate = DateTime.Now.Date;
             return View("RepairRecord/AddRepairRecord", webRepairRecord);
         }
 
         [HttpPost]
-        public ActionResult AddRepairRecord(WebRepairRecord webRepairRecord)
+        public ActionResult AddRepairRecord(WebRepairRecord webRepairRecord, List<string> delIDList)
         {
             RepairRecordBLL repairRecord = new RepairRecordBLL();
             webRepairRecord.CreateDate = DateTime.Now;
@@ -171,6 +172,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             ViewBag.DeviceID = "";
             ViewBag.RepairRecordID = repairRecordID;
             ViewBag.OperateAction = "Update";
+            ViewBag.IsAddRecord = "False";
             ViewBag.LeftName = "维修记录信息";
             WebRepairRecord webRepairRecord = new WebRepairRecord();
             RepairRecordBLL repairRecordBLL = new RepairRecordBLL();
@@ -197,10 +199,10 @@ namespace NYB.DeviceManagementSystem.View.Controllers
         }
 
         [HttpPost]
-        public ActionResult EditRepairRecord(WebRepairRecord webRepairRecord)
+        public ActionResult EditRepairRecord(WebRepairRecord webRepairRecord, List<string> delIDList)
         {
             RepairRecordBLL repairRecordBLL = new RepairRecordBLL();
-            var cResult = repairRecordBLL.UpdateRepairRecord(webRepairRecord, null);
+            var cResult = repairRecordBLL.UpdateRepairRecord(webRepairRecord, delIDList);
             return JsonContentHelper.GetJsonContent(cResult);
         }
 

@@ -15,6 +15,7 @@ function SaveEvent() {
         var MaintainDate = $('[name="MaintainDate"]').val();
         var Note = $('textarea[name="Note"]').val();
         var DeviceState = $('[name="DeviceState"]').val();
+        var Num = $('#Num').val();
 
         param.Name = Name;
         param.DeviceTypeID = DeviceTypeID;
@@ -25,6 +26,7 @@ function SaveEvent() {
         param.Note = Note;
         param.ID = ID;
         param.DeviceState = DeviceState;
+        param.Num = Num;
 
         if ($('span.errorMessage').length == 0 && $('.field-validation-error').length == 0) {
             if (Resource.UrlAction == 'Add') {

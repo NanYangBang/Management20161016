@@ -932,14 +932,28 @@ ul li {
     margin-left: 8px;
 }
 
-
-
-.wrap .content .resetFont {
+body .wrap .content .resetFont {
     font-size: 12px;
     font-family: SimSun,Arial;
     /*font-weight:lighter;*/
 }
 
-.wrap .content .resetFont td>b>label {
-    font-weight:100;
+.wrap .content .resetWeight {
+    font-weight: 100;
+}
+
+.wrap .content .resetFont td > b {
+    font-weight: 100;
+}
+
+    .wrap .content .resetFont td > b > label {
+        font-weight: 100;
+    }
+
+.dateColumn {
+    width: 90px;
+}
+
+.datetimeColumn {
+    width: 130px;
 }

@@ -49,6 +49,8 @@ function loadUplodify() {
         var fileName = $(this).attr('fileName');
 
         $('#jq22 li img[fileName=' + '"' + fileName + '"' + ']').trigger('click');
+        console.log($('#jq22 li img[fileName=' + '"' + fileName + '"' + ']'));
+
     });
 
     $(document).on('click', '.btnDel', function () {
@@ -92,6 +94,7 @@ function loadUplodify() {
 }
 
 function SaveEvent() {
+
     $('form').submit(function (e) {
         e.preventDefault();
         var returnUrl = window.Resource.returnUrl;
@@ -105,21 +108,26 @@ function SaveEvent() {
         var Note = $('textarea[Name="Note"]').val();
         var ID = $('[Name="RepairRecordID"]').val();
 
-        param.DeviceID = DeviceID;
-        param.DeviceName = DeviceName;
-        param.Operator = Operator;
-        param.RepairDate = RepairDate;
-        param.Note = Note;
-        param.ID = ID;
+        param['webRepairRecord.DeviceID'] = DeviceID;
+        param['webRepairRecord.DeviceName'] = DeviceName;
+        param['webRepairRecord.Operator'] = Operator;
+        param['webRepairRecord.RepairDate'] = RepairDate;
+        param['webRepairRecord.Note'] = Note;
+        param['webRepairRecord.ID'] = ID;
+        for (var i = 0; i < Resource.delID.length; i++) {
+            param['delIDList[' + i + ']'] = Resource.delID[i];
+        }
 
+        var fileLenth = $('div.uploadifyProgress').length;
+        var handleAction;
         if ($('span.errorMessage').length == 0 && $('.field-validation-error').length == 0) {
             if (Resource.Action == 'Add') {
                 handleAction = Resource.UrlAdd;
-                SaveAjax(handleAction, webEntity, fileLenth, MaintainRecordID);
+                SaveAjax(handleAction, param, fileLenth, ID);
             } else {
-                webEntity.reviewID = -1;
+                param.reviewID = -1;
                 handleAction = Resource.UrlEdit;
-                SaveAjax(handleAction, webEntity, fileLenth, MaintainRecordID);
+                SaveAjax(handleAction, param, fileLenth, ID);
             }
         }
     });

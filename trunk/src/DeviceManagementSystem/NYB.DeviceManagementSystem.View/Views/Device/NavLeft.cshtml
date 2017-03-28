@@ -5,7 +5,7 @@
     string ControllerName = ViewContext.RouteData.Values["controller"] as string;
 }
 
-<ul id="leftUl">
+<ul class="resetFont resetWeight" id="leftUl">
     <li leftname="设备信息">
         <a href="@Url.Action("Index", "Device", new { _ = DateTime.Now.Ticks })">设备信息</a>
     </li>
