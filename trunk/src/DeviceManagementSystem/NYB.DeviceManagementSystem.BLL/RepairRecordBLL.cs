@@ -64,6 +64,8 @@ namespace NYB.DeviceManagementSystem.BLL
                     Note = t.Note,
                     DeviceID = t.DeviceID,
                     DeviceName = t.Device.Name,
+                    Describe = t.Describe,
+                    Solution = t.Solution,
                     Operator = t.Operator,
                     RepairDate = t.RepairDate,
                     CreateDate = t.CreateDate,

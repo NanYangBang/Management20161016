@@ -110,6 +110,17 @@ namespace NYB.DeviceManagementSystem.BLL
 
                 context.MaintainRecord.Add(entity);
 
+                foreach (var item in model.MaintainItems)
+                {
+                    var relation = new MaintainRecordMaintainItemRel()
+                    {
+                        MaintainRecordID = entity.ID,
+                        MaintainItemID = item.ID
+                    };
+
+                    context.MaintainRecordMaintainItemRel.Add(relation);
+                }
+
                 if (context.SaveChanges() > 0)
                 {
                     return new CResult<string>(entity.ID);
@@ -192,6 +203,31 @@ namespace NYB.DeviceManagementSystem.BLL
                         FileHelper.DelFile(item.FilePath);
                     }
                 }
+
+                var oldRelations = context.MaintainRecordMaintainItemRel.Where(t => t.MaintainRecordID == entity.ID);
+
+                var oldRelationItemIDs = oldRelations.Select(t => t.MaintainItemID);
+                var newRelationItemIDs = model.MaintainItems.Select(t => t.ID).ToList();
+
+                var needDeletes = oldRelations.Where(t => newRelationItemIDs.Contains(t.MaintainItemID) == false).ToList();
+                var needAdd = model.MaintainItems.Where(t => oldRelationItemIDs.Contains(t.ID) == false).ToList();
+
+                foreach (var item in needDeletes)
+                {
+                    context.MaintainRecordMaintainItemRel.Remove(item);
+                }
+
+                foreach (var item in needAdd)
+                {
+                    var relation = new MaintainRecordMaintainItemRel()
+                    {
+                        MaintainRecordID = entity.ID,
+                        MaintainItemID = item.ID
+                    };
+
+                    context.MaintainRecordMaintainItemRel.Add(relation);
+                }
+
                 if (context.SaveChanges() > 0)
                 {
                     return new CResult<string>("");
@@ -246,6 +282,18 @@ namespace NYB.DeviceManagementSystem.BLL
                         Note = attachment.Note
                     });
                 }
+
+                var items = (from rel in context.MaintainRecordMaintainItemRel
+                             join item in context.MaintainItem on rel.MaintainItemID equals item.ID
+                             where rel.MaintainRecordID == entity.ID
+                             select new WebMaintainItem()
+                             {
+                                 ID = item.ID,
+                                 Name = item.Name
+                             }).ToList();
+
+                model.MaintainItems = items;
+
 
                 LogHelper.Info("result", model);
 

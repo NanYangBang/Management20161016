@@ -291,6 +291,10 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             ViewBag.IsView = "True";
             MaintainRecordBLL maintainRecordBLL = new MaintainRecordBLL();
             var cResult = maintainRecordBLL.GetMaintainRecordByID(maintainRecordID);
+
+            var items = new MaintainItemBLL().GetMaintainItemListByDeviceID(cResult.Data.DeviceID);
+            ViewBag.AllMaintainItems = items.Data;
+
             return View("MaintainRecord/PartialView/AddEditMaintainRecordView", cResult.Data);
         }
 
