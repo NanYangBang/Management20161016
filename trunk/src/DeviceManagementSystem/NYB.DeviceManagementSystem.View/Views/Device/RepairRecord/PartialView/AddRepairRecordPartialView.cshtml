@@ -116,10 +116,12 @@
         UrlEditFile: '@(Url.Action("AddRepairRecordFile", "Device", new { _ = DateTime.Now.Ticks }))',
         UrlSwf: '@Url.Content("~/Content/Plugin/jQueryUploadify/flash/uploadify.swf")',
         UrlCancelImage: '@Url.Content("~/Content/Plugin/jQueryUploadify/images/uploadify-cancel.png")',
+        UrlViewPicture: '@(Url.Action("ViewPicture", "Device", new { _ = DateTime.Now.Ticks }))',
         delID: [],
         IsAddRecord: '@(ViewBag.IsAddRecord)',
         ImgDownLoad: '@(Url.Content("~/Images/download16.png"))',
         UrlDownLoad: '@(Url.Action("DownloadFile", "Device"))',
+        LocalUrl: '@(Request.Url.Host)',
     }
 
     $(document).ready(function () {
