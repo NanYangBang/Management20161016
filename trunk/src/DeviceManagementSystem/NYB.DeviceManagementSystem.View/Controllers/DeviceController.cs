@@ -30,7 +30,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             }
             var pageList = new PagedList<WebDevice>(device, pageIndex, pageSize);
             ViewBag.SearchInfo = searchInfo;
-            ViewBag.DeviceStateEnum = deviceStateEnum;
+            ViewBag.DeviceStateEnum = deviceStateEnum.HasValue ? deviceStateEnum.ToString() : deviceStateEnum.ToString();
             return View(pageList);
         }
 

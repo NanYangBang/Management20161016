@@ -1,5 +1,6 @@
 ﻿@using Webdiyer.WebControls.Mvc
 @using NYB.DeviceManagementSystem.Common
+@using NYB.DeviceManagementSystem.Common.Enum
 @using NYB.DeviceManagementSystem.ViewModel
 @model PagedList<NYB.DeviceManagementSystem.ViewModel.WebDevice>
 @Styles.Render("~/Content/User/User.css")
@@ -29,6 +30,15 @@
 <div leftname="设备信息" actionname="设备管理">
     <form method="get" id="searchForm" class="userSearchForm">
         <input type="text" name="searchInfo" id="seacheName" value="@(ViewBag.SearchInfo)" />
+
+        <select value="" name="deviceStateEnum" style="height:28px;width:100px;">
+            <option value="0">全部</option>
+            @foreach (string item in Enum.GetNames(typeof(DeviceStateEnum)))
+            {
+                <option id="firstOption" @(ViewBag.DeviceStateEnum == item ? "selected" : "") value="@((int)Enum.Parse(typeof(DeviceStateEnum), item))">@item</option>
+            }
+        </select>
+
         <input style="line-height:0px" type="submit" class="" id="btnSearch" value="搜索" />
     </form>
 
