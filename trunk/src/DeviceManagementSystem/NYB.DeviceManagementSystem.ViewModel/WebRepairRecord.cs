@@ -36,7 +36,7 @@ namespace NYB.DeviceManagementSystem.ViewModel
         [StringLength(2000, ErrorMessage = "最大长度为2000")]
 
         public string Note { get; set; }
-        [DisplayName("故障现象及分析")]
+        [DisplayName("故障现象分析")]
         [StringLength(2000, ErrorMessage = "最大长度为2000")]
 
         public string Describe { get; set; }

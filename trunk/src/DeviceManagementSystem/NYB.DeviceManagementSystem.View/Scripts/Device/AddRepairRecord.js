@@ -107,12 +107,16 @@ function SaveEvent() {
         var RepairDate = $('[Name="RepairDate"]').val();
         var Note = $('textarea[Name="Note"]').val();
         var ID = $('[Name="RepairRecordID"]').val();
+        var Describe = $('[Name="Describe"]').val();
+        var Solution = $('[Name="Solution"]').val();
 
         param['webRepairRecord.DeviceID'] = DeviceID;
         param['webRepairRecord.DeviceName'] = DeviceName;
         param['webRepairRecord.Operator'] = Operator;
         param['webRepairRecord.RepairDate'] = RepairDate;
         param['webRepairRecord.Note'] = Note;
+        param['webRepairRecord.Solution'] = Solution;
+        param['webRepairRecord.Describe'] = Describe;
         param['webRepairRecord.ID'] = ID;
         for (var i = 0; i < Resource.delID.length; i++) {
             param['delIDList[' + i + ']'] = Resource.delID[i];

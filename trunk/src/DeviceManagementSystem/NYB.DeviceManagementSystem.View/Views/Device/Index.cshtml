@@ -1,5 +1,6 @@
 ﻿@using Webdiyer.WebControls.Mvc
 @using NYB.DeviceManagementSystem.Common
+@using NYB.DeviceManagementSystem.Common.Enum
 @using NYB.DeviceManagementSystem.ViewModel
 @model PagedList<NYB.DeviceManagementSystem.ViewModel.WebDevice>
 @Styles.Render("~/Content/User/User.css")
@@ -29,6 +30,15 @@
 <div leftname="设备信息" actionname="设备管理">
     <form method="get" id="searchForm" class="userSearchForm">
         <input type="text" name="searchInfo" id="seacheName" value="@(ViewBag.SearchInfo)" />
+
+        <select value="" name="deviceStateEnum" style="height:28px;width:100px;">
+            <option value="0">全部</option>
+            @foreach (string item in Enum.GetNames(typeof(DeviceStateEnum)))
+            {
+                <option id="firstOption" @(ViewBag.DeviceStateEnum == item ? "selected" : "") value="@((int)Enum.Parse(typeof(DeviceStateEnum), item))">@item</option>
+            }
+        </select>
+
         <input style="line-height:0px" type="submit" class="" id="btnSearch" value="搜索" />
     </form>
 
@@ -50,9 +60,12 @@
                 <th>
                     供应商
                 </th>
-                <th class="dateColumn">
-                    生产日期
+                <th>
+                    设备状态
                 </th>
+                @*<th class="dateColumn">
+                        生产日期
+                    </th>*@
                 <th class="dateColumn">
                     保养日期
                 </th>
@@ -60,8 +73,8 @@
                     创建时间
                 </th>
                 @*<th>
-                    备注
-                </th>*@
+                        备注
+                    </th>*@
                 <th style="width:250px;" class="operation-column">
                     操作
                 </th>
@@ -88,7 +101,8 @@
                             @device.SupplierName
                         </td>
                         <td>
-                            @(!device.ProductDate.HasValue ? "" : device.ProductDate.Value.ToString("yyyy-MM-dd"))
+                            @device.DeviceState.ToString()
+                            @*@(!device.ProductDate.HasValue ? "" : device.ProductDate.Value.ToString("yyyy-MM-dd"))*@
                         </td>
                         <td>
                             @(!device.MaintainDate.HasValue ? "" : device.MaintainDate.Value.ToString("yyyy-MM-dd"))
@@ -97,8 +111,8 @@
                             @device.CreateDate.ToString("yyyy-MM-dd HH:mm:ss")
                         </td>
                         @*<td title="@(@device.Note)" class="lengHideTd">
-                            @device.Note
-                        </td>*@
+                                @device.Note
+                            </td>*@
                         <td class="opreateTd">
                             @{var routeValues = new { deviceTypeID = device.ID, deviceName = device.Name, returnUrl = Request.Url.AbsoluteUri, _ = DateTime.Now.Ticks };}
                             @{var addRepairObj = new { deviceID = device.ID, returnUrl = Request.Url.AbsoluteUri, deviceName = device.Name, _ = DateTime.Now.Ticks }; }

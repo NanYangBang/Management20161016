@@ -43,7 +43,7 @@
     <form method="post">
         @Html.HiddenFor(model => model.ID)
         <div class="desc">
-            <h2>@Html.DisplayFor(model => model.CompanyName)</h2>
+            <h2>@Html.LabelFor(model => model.CompanyName)</h2>
             @Html.TextBoxFor(model => model.CompanyName)
         </div>
         <div class="desc">
@@ -54,7 +54,7 @@
         </div>
 
         <div class="desc">
-            <h2>@Html.DisplayFor(model => model.CompanyDescribe)</h2>
+            <h2>@Html.LabelFor(model => model.CompanyDescribe)</h2>
             @Html.TextAreaFor(model => model.CompanyDescribe)
             @*<p>
                     北京优稳昌盛科技有限公司（简称：北京优稳昌盛）的使命是成为电气自动化整体解决方案和高效燃烧技术优势品牌及机电试验设备的最佳供应商。
@@ -64,7 +64,7 @@
                 </p>*@
         </div>
         <div class="contectUs">
-            <h2>@Html.DisplayFor(model => model.CompanyContact)</h2>
+            <h2>@Html.LabelFor(model => model.CompanyContact)</h2>
             @Html.TextAreaFor(model => model.CompanyContact)
 
             @*
