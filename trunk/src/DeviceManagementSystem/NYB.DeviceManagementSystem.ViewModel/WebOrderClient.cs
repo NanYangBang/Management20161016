@@ -58,8 +58,17 @@ namespace NYB.DeviceManagementSystem.ViewModel
         public string CreateUserID { get; set; }
 
         public string LogoFile { get; set; }
+
+        [StringLength(2000, ErrorMessage = "最大长度为2000")]
+        [Display(Name = "公司简介")]
         public string CompanyDescribe { get; set; }
+
+        [StringLength(2000, ErrorMessage = "最大长度为2000")]
+        [Display(Name = "联系我们")]
         public string CompanyContact { get; set; }
+
+        [StringLength(20, ErrorMessage = "最大长度为20")]
+        [Display(Name = "系统名称")]
         public string CompanyName { get; set; }
     }
 }
