@@ -15,21 +15,21 @@ namespace NYB.DeviceManagementSystem.View.Controllers
 
         public ActionResult Index()
         {
-            var result = new OrderClientBLL().GetCompanyInfo(this.GetCurrentOrderClientID());
+            var result = OrderClientBLL.GetCompanyInfo(this.GetCurrentOrderClientID());
 
             return View(result.Data);
         }
 
         public ActionResult GetCompanyInfoJson()
         {
-            var result = new OrderClientBLL().GetCompanyInfo(this.GetCurrentOrderClientID());
+            var result = OrderClientBLL.GetCompanyInfo(this.GetCurrentOrderClientID());
 
             return JsonContentHelper.GetJsonContent(result);
         }
 
         public ActionResult UpdateAboutUs(string returnUrl)
         {
-            var result = new OrderClientBLL().GetCompanyInfo(this.GetCurrentOrderClientID());
+            var result = OrderClientBLL.GetCompanyInfo(this.GetCurrentOrderClientID());
 
             ViewBag.ReturnUrl = returnUrl;
             return View(result.Data);

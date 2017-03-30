@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NYB.DeviceManagementSystem.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -39,5 +40,15 @@ namespace System.Web.Mvc
             return OrderClientID;
         }
 
+        public static RoleType GetCurrentRole(this Controller controller)
+        {
+            int role;
+            var CurrentRole = controller.Request.Cookies["CurrentRole"].Value;
+            if (int.TryParse(CurrentRole, out role) == false)
+            {
+                throw new Exception("CurrentRole is empty , maybe cookie id disable ");
+            }
+            return (RoleType)role;
+        }
     }
 }

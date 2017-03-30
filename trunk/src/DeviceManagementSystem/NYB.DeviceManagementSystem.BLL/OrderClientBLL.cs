@@ -245,7 +245,7 @@ namespace NYB.DeviceManagementSystem.BLL
             }
         }
 
-        public CResult<WebOrderClient> GetCompanyInfo(string orderClientID)
+        public static CResult<WebOrderClient> GetCompanyInfo(string orderClientID)
         {
             LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
             LogHelper.Info("orderClientID", orderClientID);
