@@ -336,6 +336,7 @@
     <Content Include="Content\ssi-uploader\images\Thumbs.db" />
     <Content Include="Content\ssi-uploader\ssi-uploader.min.css.map" />
     <None Include="Properties\PublishProfiles\YWCS.pubxml" />
+    <Content Include="Images\projectmanage.png" />
     <Content Include="Scripts\bootstrap-3.3.5-dist\css\bootstrap-theme.css.map" />
     <Content Include="Scripts\bootstrap-3.3.5-dist\css\bootstrap.css.map" />
     <Content Include="Scripts\bootstrap-3.3.5-dist\fonts\glyphicons-halflings-regular.eot" />

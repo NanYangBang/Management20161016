@@ -105,5 +105,16 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             return JsonContentHelper.GetJsonContent(result);
         }
 
+        [HttpGet]
+        public ActionResult ManageProject(string projectID)
+        {
+            Response.Cookies.Add(new HttpCookie("ManageProjectID", projectID));
+            if (this.GetCurrentRole() != RoleType.客户管理员)
+            {
+                throw new Exception("权限不足");
+            }
+
+            return RedirectToAction("Index", "User");
+        }
     }
 }
