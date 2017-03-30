@@ -5,6 +5,9 @@
 @model PagedList<NYB.DeviceManagementSystem.ViewModel.WebDevice>
 @Styles.Render("~/Content/User/User.css")
 
+@{
+    var toady = DateTime.Now.Date;
+}
 <style type="text/css">
     body .content .uploadifyButton {
         height: 24px;
@@ -38,7 +41,7 @@
                 <option id="firstOption" @(ViewBag.DeviceStateEnum == item ? "selected" : "") value="@((int)Enum.Parse(typeof(DeviceStateEnum), item))">@item</option>
             }
         </select>
-
+        @Html.Hidden("isMaintainSearch", ViewBag.IsMaintainSearch == true ? true : false)
         <input style="line-height:0px" type="submit" class="" id="btnSearch" value="搜索" />
     </form>
 
@@ -105,7 +108,14 @@
                             @*@(!device.ProductDate.HasValue ? "" : device.ProductDate.Value.ToString("yyyy-MM-dd"))*@
                         </td>
                         <td>
-                            @(!device.MaintainDate.HasValue ? "" : device.MaintainDate.Value.ToString("yyyy-MM-dd"))
+                            @if (device.MaintainDate.HasValue && device.MaintainDate.Value <= toady)
+                            {
+                                @Html.Label(device.MaintainDate.Value.ToString("yyyy-MM-dd"), new { @style="color:red;"});
+                            }
+                            else
+                            {
+                                @(device.MaintainDate.HasValue == false ? "" : device.MaintainDate.Value.ToString("yyyy-MM-dd"));
+                            }
                         </td>
                         <td>
                             @device.CreateDate.ToString("yyyy-MM-dd HH:mm:ss")
@@ -229,8 +239,10 @@
             var searchInfo = $('#seacheName').val();
             var orderbyFieldName = $.query.get('sortBy');
             var ascending = $.query.get('ascending');
+            var deviceStateEnum = $('#deviceStateEnum').val();
+            var isMaintainSearch = $('#isMaintainSearch').val();
 
-            var url = String.format("{0}?searchInfo={1}", UrlResource.UrlExportExcel, searchInfo);
+            var url = String.format("{0}?searchInfo={1}&deviceStateEnum={2}&isMaintainSearch={3}", UrlResource.UrlExportExcel, searchInfo, deviceStateEnum, isMaintainSearch);
             //		$.get(url, function (data) {
             //			ToggleLoadingHint();
             //			if (data.Code > 0) {

@@ -16,7 +16,7 @@
     <div class="header-message">
         <ul>
             <li><a target="_blank" href="http://www.ywcs.com.cn">官网</a></li>
-            <li id="maintainCountStr"><a href="@Url.Action("Index", "Device")">需保养设备</a><a id="maintainCount" href="@Url.Action("Index", "Device")">0</a></li>
+            <li id="maintainCountStr"><a href="@Url.Action("Index", "Device", new { isMaintainSearch = true})">需保养设备</a><a id="maintainCount" href="@Url.Action("Index", "Device", new { isMaintainSearch = true })">0</a></li>
             <li><a id="resetPasswordRef" href="@Url.Action("ChangePassword", "Account")">修改密码</a></li>
             <li class="last-border"><a href="@Url.Action("LogOff", "Account", new { _ = DateTime.Now.Ticks })">退出</a></li>
         </ul>
@@ -71,31 +71,26 @@
                             CompanyName: result.Data.CompanyName
                         });
 
-                        var companyInfo = JSON.parse(sessionStorage.CompanyInfo);
-                        if (companyInfo.LogoFile !== null & companyInfo.LogoFile !== '') {
-
-                        }
-
-                        if (companyInfo.CompanyName !== null & companyInfo.CompanyName !== '') {
-                            $('#companyName').text(companyInfo.CompanyName);
-                        }
+                        setCompanyInfo();
                     } else {
                         alert(result.Msg);
                     }
                 });
             } else {
-                var companyInfo = JSON.parse(sessionStorage.CompanyInfo);
-                if (companyInfo.LogoFile !== null & companyInfo.LogoFile !== '') {
-
-                }
-
-                if (companyInfo.CompanyName !== null & companyInfo.CompanyName !== '') {
-                    $('#companyName').text(companyInfo.CompanyName);
-                }
+                setCompanyInfo();
             }
         }
 
+        function setCompanyInfo() {
+            var companyInfo = JSON.parse(sessionStorage.CompanyInfo);
+            if (companyInfo.LogoFile !== null & companyInfo.LogoFile !== '') {
 
+            }
+
+            if (companyInfo.CompanyName !== null & companyInfo.CompanyName !== '') {
+                $('#companyName').text(companyInfo.CompanyName);
+            }
+        }
 
         $("#passwordDialog").dialog({
             autoOpen: false,

@@ -18,12 +18,12 @@ namespace NYB.DeviceManagementSystem.View.Controllers
         //
         // GET: /Device/
 
-        public ActionResult Index(string searchInfo, DeviceStateEnum? deviceStateEnum = null, int pageIndex = 1, int pageSize = 10, string orderBy = "", bool ascending = false)
+        public ActionResult Index(string searchInfo, DeviceStateEnum? deviceStateEnum = null, bool isMaintainSearch = false, int pageIndex = 1, int pageSize = 10, string orderBy = "", bool ascending = false)
         {
             List<WebDevice> device = new List<WebDevice>();
             int totalCount = 0;
             DeviceBLL deviceBLL = new DeviceBLL();
-            var cResult = deviceBLL.GetDeviceList(out totalCount, this.GetCurrentProjectID(), searchInfo, deviceStateEnum, pageIndex, pageSize, orderBy, ascending);
+            var cResult = deviceBLL.GetDeviceList(out totalCount, this.GetCurrentProjectID(), searchInfo, isMaintainSearch, deviceStateEnum, pageIndex, pageSize, orderBy, ascending);
             if (cResult.Code == 0)
             {
                 device = cResult.Data;
@@ -31,6 +31,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             var pageList = new PagedList<WebDevice>(device, pageIndex, pageSize);
             ViewBag.SearchInfo = searchInfo;
             ViewBag.DeviceStateEnum = deviceStateEnum.HasValue ? deviceStateEnum.ToString() : deviceStateEnum.ToString();
+            ViewBag.IsMaintainSearch = isMaintainSearch;
             return View(pageList);
         }
 
@@ -380,9 +381,9 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             return JsonContentHelper.GetJsonContent(result);
         }
 
-        public ActionResult ExportExcel(string searchInfo)
+        public ActionResult ExportExcel(string searchInfo, DeviceStateEnum? deviceStateEnum = null, bool isMaintainSearch = false)
         {
-            var result = new DeviceBLL().ExportDeviceToExcel(this.GetCurrentProjectID(), searchInfo);
+            var result = new DeviceBLL().ExportDeviceToExcel(this.GetCurrentProjectID(), searchInfo, deviceStateEnum, isMaintainSearch);
             return JsonContentHelper.GetJsonContent(result);
 
         }
@@ -394,7 +395,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
 
             if (string.IsNullOrWhiteSpace(projectID) == false)
             {
-                count = new DeviceBLL().GetMaintainCount(this.GetCurrentProjectID()).Data;
+                count = DeviceBLL.GetMaintainCount(projectID).Data;
             }
 
             return JsonContentHelper.GetJsonContent(count);

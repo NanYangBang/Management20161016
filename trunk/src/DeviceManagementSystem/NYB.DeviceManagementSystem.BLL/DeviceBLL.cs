@@ -20,7 +20,7 @@ namespace NYB.DeviceManagementSystem.BLL
 {
     public class DeviceBLL
     {
-        public CResult<List<WebDevice>> GetDeviceList(out int totalCount, string projectID, string searchInfo, DeviceStateEnum? deviceStateEnum = null, int pageIndex = 1, int pageSize = 10, string orderby = null, bool ascending = false)
+        public CResult<List<WebDevice>> GetDeviceList(out int totalCount, string projectID, string searchInfo, bool isMaintainSearch = false, DeviceStateEnum? deviceStateEnum = null, int pageIndex = 1, int pageSize = 10, string orderby = null, bool ascending = false)
         {
             using (DeviceMgmtEntities context = new DeviceMgmtEntities())
             {
@@ -34,6 +34,12 @@ namespace NYB.DeviceManagementSystem.BLL
                         || t.DeviceType.Name.Contains(searchInfo)
                         || (string.IsNullOrEmpty(t.SupplierID) == false && t.Supplier.Name.ToUpper().Contains(searchInfo))
                         || (string.IsNullOrEmpty(t.ManufacturerID) == false && t.Manufacturer.Name.ToUpper().Contains(searchInfo)));
+                }
+
+                if (isMaintainSearch)
+                {
+                    var today = DateTime.Now.Date;
+                    filter = filter.And(t => t.DeviceState != (int)DeviceStateEnum.报废 && t.MaintainDate.HasValue && t.MaintainDate.Value <= today);
                 }
 
                 if (deviceStateEnum.HasValue)
@@ -362,13 +368,13 @@ namespace NYB.DeviceManagementSystem.BLL
             }
         }
 
-        public CResult<string> ExportDeviceToExcel(string projectID, string searchInfo, DeviceStateEnum? deviceStateEnum = null)
+        public CResult<string> ExportDeviceToExcel(string projectID, string searchInfo, DeviceStateEnum? deviceStateEnum = null, bool isMaintainSearch = false)
         {
             LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
 
             int totalCount;
 
-            var result = GetDeviceList(out totalCount, projectID, searchInfo, deviceStateEnum, 1, -1);
+            var result = GetDeviceList(out totalCount, projectID, searchInfo, isMaintainSearch, deviceStateEnum, 1, -1);
             if (result.Code > 0)
             {
                 return new CResult<string>("", result.Code);
@@ -434,7 +440,7 @@ namespace NYB.DeviceManagementSystem.BLL
             }
         }
 
-        public CResult<int> GetMaintainCount(string projectID)
+        public static CResult<int> GetMaintainCount(string projectID)
         {
             using (DeviceMgmtEntities context = new DeviceMgmtEntities())
             {
