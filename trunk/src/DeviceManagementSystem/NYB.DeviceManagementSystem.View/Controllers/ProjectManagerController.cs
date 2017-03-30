@@ -27,6 +27,14 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             }
             var pageList = new PagedList<WebProject>(userList, pageIndex, pageSize);
             ViewBag.SearchInfo = searchInfo;
+
+            if (Request.Cookies.AllKeys.Contains("ManageProjectID"))
+            {
+                Request.Cookies.Remove("ManageProjectID");
+                Response.Cookies["ManageProjectID"].Expires = DateTime.Now.AddDays(-10);
+            }
+
+
             return View(pageList);
         }
 
@@ -114,7 +122,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
                 throw new Exception("权限不足");
             }
 
-            return RedirectToAction("Index", "User");
+            return RedirectToAction("Index", "Device");
         }
     }
 }

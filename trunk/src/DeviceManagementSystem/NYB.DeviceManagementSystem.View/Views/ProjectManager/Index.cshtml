@@ -72,7 +72,7 @@
                             <a title="修改" href="@(Url.Action("UpdateProject", "ProjectManager", routeValues))"><img src="@Url.Content("~/Images/edit.png")" /></a>
                             <a href="#" title="删除" onclick="DataDel('@project.ID','@(Url.Action("Delete", new { _ = DateTime.Now.Ticks }))')" name="DeleteDeviceType"><img src="@Url.Content("~/Images/del.png")" /></a>
                             <a title="重置密码" href="@(Url.Action("ResetPassword", "ProjectManager", new { userID = project.WebUser.ID, returnUrl = Request.Url.AbsoluteUri, _ = DateTime.Now.Ticks }))"><img src="@Url.Content("~/Images/resetpassword.png")" /></a>
-                            <a title="管理项目" href="@(Url.Action("ResetPassword", "ProjectManager", new { userID = project.WebUser.ID, returnUrl = Request.Url.AbsoluteUri, _ = DateTime.Now.Ticks }))"><img src="@Url.Content("~/Images/projectmanage.png")" /></a>
+                            <a title="管理项目" href="@(Url.Action("ManageProject", "ProjectManager", new { projectID = project.ID, returnUrl = Request.Url.AbsoluteUri, _ = DateTime.Now.Ticks }))"><img src="@Url.Content("~/Images/projectmanage.png")" /></a>
                         </td>
                     </tr>
                 }

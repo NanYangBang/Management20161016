@@ -49,15 +49,21 @@ namespace NYB.DeviceManagementSystem.View.Controllers
 
                         if (result.Data.Role == RoleType.超级管理员)
                         {
+                            Session["LogoHomeUrl"] = Url.Action("Index", "OrderClientManager");
+
                             return RedirectToAction("Index", "OrderClientManager", new { _timepick = DateTime.Now.ToString("yyyyMMddhhmmssff") });
                         }
                         else if (result.Data.Role == RoleType.客户管理员)
                         {
+                            Session["LogoHomeUrl"] = Url.Action("Index", "ProjectManager");
+
                             return RedirectToAction("Index", "ProjectManager", new { _timepick = DateTime.Now.ToString("yyyyMMddhhmmssff") });
                         }
                         else
                         {
-                            return RedirectToAction("Index", "User", new { _timepick = DateTime.Now.ToString("yyyyMMddhhmmssff") });
+                            Session["LogoHomeUrl"] = Url.Action("Index", "Device");
+
+                            return RedirectToAction("Index", "Device", new { _timepick = DateTime.Now.ToString("yyyyMMddhhmmssff") });
                         }
                     }
                 }
