@@ -42,6 +42,16 @@ namespace NYB.DeviceManagementSystem.View.Controllers
 
             var cResult = new OrderClientBLL().UpdateCompanyInfo(webOrderClient);
 
+            if (cResult.Code == 0 && cResult.Data)
+            {
+                var companyInfo = OrderClientBLL.GetCompanyInfo(this.GetCurrentOrderClientID());
+
+                if (companyInfo.Code == 0)
+                {
+                    Session["CompanyName"] = companyInfo.Data.CompanyName;
+                }
+            }
+
             return JsonContentHelper.GetJsonContent(cResult);
         }
 
@@ -49,6 +59,16 @@ namespace NYB.DeviceManagementSystem.View.Controllers
         public ActionResult UpdateLogo(HttpPostedFileBase fileData)
         {
             var cResult = new OrderClientBLL().UpdateCompayLogo(fileData, this.GetCurrentOrderClientID());
+
+            if (cResult.Code == 0 && cResult.Data)
+            {
+                var companyInfo = OrderClientBLL.GetCompanyInfo(this.GetCurrentOrderClientID());
+
+                if (companyInfo.Code == 0)
+                {
+                    Session["LogoFileUrl"] = Url.Content(string.Format("~/{0}", companyInfo.Data.LogoFile));
+                }
+            }
 
             return JsonContentHelper.GetJsonContent(cResult);
         }

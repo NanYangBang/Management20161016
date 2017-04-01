@@ -50,20 +50,33 @@ namespace NYB.DeviceManagementSystem.View.Controllers
                         if (result.Data.Role == RoleType.超级管理员)
                         {
                             Session["LogoHomeUrl"] = Url.Action("Index", "OrderClientManager");
+                            Session["LogoFileUrl"] = "";
+                            Session["CompanyName"] = "优稳运维管理系统";
 
                             return RedirectToAction("Index", "OrderClientManager", new { _timepick = DateTime.Now.ToString("yyyyMMddhhmmssff") });
                         }
-                        else if (result.Data.Role == RoleType.客户管理员)
-                        {
-                            Session["LogoHomeUrl"] = Url.Action("Index", "ProjectManager");
-
-                            return RedirectToAction("Index", "ProjectManager", new { _timepick = DateTime.Now.ToString("yyyyMMddhhmmssff") });
-                        }
                         else
                         {
-                            Session["LogoHomeUrl"] = Url.Action("Index", "Device");
+                            var companyInfo = OrderClientBLL.GetCompanyInfo(this.GetCurrentOrderClientID());
 
-                            return RedirectToAction("Index", "Device", new { _timepick = DateTime.Now.ToString("yyyyMMddhhmmssff") });
+                            if (companyInfo.Code == 0)
+                            {
+                                Session["LogoFileUrl"] = Url.Content(string.Format("~/{0}", companyInfo.Data.LogoFile));
+                                Session["CompanyName"] = companyInfo.Data.CompanyName;
+                            }
+
+                            if (result.Data.Role == RoleType.客户管理员)
+                            {
+                                Session["LogoHomeUrl"] = Url.Action("Index", "ProjectManager");
+
+                                return RedirectToAction("Index", "ProjectManager", new { _timepick = DateTime.Now.ToString("yyyyMMddhhmmssff") });
+                            }
+                            else
+                            {
+                                Session["LogoHomeUrl"] = Url.Action("Index", "Device");
+
+                                return RedirectToAction("Index", "Device", new { _timepick = DateTime.Now.ToString("yyyyMMddhhmmssff") });
+                            }
                         }
                     }
                 }

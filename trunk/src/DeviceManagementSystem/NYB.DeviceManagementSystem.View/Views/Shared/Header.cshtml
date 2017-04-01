@@ -9,11 +9,15 @@
 <link rel="Stylesheet" href="@Url.Content("~/Content/Common/OperateTable.css")" />
 <link rel="stylesheet" href="~/Content/themes/jquery-ui.css">
 <div class="header">
-    <a href='@Session["LogoHomeUrl"]' title="回到主页">
-        <div id="header-logo" class="header-logo">
-            <h3 id="companyName" style="color:white;font-size:30px;">优稳运维管理系统</h3>
-        </div>
-    </a>
+    <div>
+        <img src="@(Session["LogoFileUrl"])" style="max-width:100px;max-height:100px;float:left;" />
+        <a href='@Session["LogoHomeUrl"]' title="回到主页">
+            <div id="header-logo" class="header-logo">
+                <h3 id="companyName" style="color:white;font-size:30px;">@(Session["CompanyName"])</h3>
+            </div>
+        </a>
+    </div>
+
     <div class="header-message">
         <ul>
             <li><a target="_blank" href="http://www.ywcs.com.cn">官网</a></li>
@@ -65,7 +69,7 @@
                     });
                 }
 
-                $.get('@Url.Action("GetCompanyInfoJson", "AboutUs", new { _ = DateTime.Now.Ticks })', {}, function (result) {
+                @*$.get('@Url.Action("GetCompanyInfoJson", "AboutUs", new { _ = DateTime.Now.Ticks })', {}, function (result) {
                     if (result.Code == '0') {
                         sessionStorage.CompanyInfo = JSON.stringify({
                             LogoFile: result.Data.LogoFile,
@@ -76,22 +80,22 @@
                     } else {
                         alert(result.Msg);
                     }
-                });
+                });*@
             } else {
-                setCompanyInfo();
+                //setCompanyInfo();
             }
         }
 
-        function setCompanyInfo() {
-            var companyInfo = JSON.parse(sessionStorage.CompanyInfo);
-            if (companyInfo.LogoFile !== null & companyInfo.LogoFile !== '') {
+        //function setCompanyInfo() {
+        //    var companyInfo = JSON.parse(sessionStorage.CompanyInfo);
+        //    if (companyInfo.LogoFile !== null & companyInfo.LogoFile !== '') {
 
-            }
+        //    }
 
-            if (companyInfo.CompanyName !== null & companyInfo.CompanyName !== '') {
-                $('#companyName').text(companyInfo.CompanyName);
-            }
-        }
+        //    if (companyInfo.CompanyName !== null & companyInfo.CompanyName !== '') {
+        //        $('#companyName').text(companyInfo.CompanyName);
+        //    }
+        //}
 
         $("#passwordDialog").dialog({
             autoOpen: false,

@@ -39,18 +39,22 @@
 
 <script src="@Url.Content("~/Scripts/AboutUs/UpdatePartial.js")"></script>
 
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.uploadify.js")"></script>
+<link href="@Url.Content("~/Content/Plugin/jQueryUploadify/jquery.uploadify.css")" rel="stylesheet" type="text/css" />
+
 <div class="aboutus" actionname="关于我们">
     <form method="post">
         @Html.HiddenFor(model => model.ID)
         <div class="desc">
+            <h2>系统图标</h2>
+            <div style="width:100px;float:left;margin-left:20px" class="uploadProofParent">
+                <input type="file" multiple id="uploadProof" />
+            </div>
+        </div>
+
+        <div class="desc">
             <h2>@Html.LabelFor(model => model.CompanyName)</h2>
             @Html.TextBoxFor(model => model.CompanyName)
-        </div>
-        <div class="desc">
-            <h2>系统图标</h2>
-            <p>
-
-            </p>
         </div>
 
         <div class="desc">
@@ -92,9 +96,50 @@
     window.Resource = {
         UrlEdit: '@Url.Action("UpdateAboutUs", "AboutUs", new { _ = DateTime.Now.Ticks })',
         ReturnUrl: '@ViewBag.ReturnUrl',
+
+        Auth: '@(Request.Cookies[FormsAuthentication.FormsCookieName] == null ? string.Empty : Request.Cookies[FormsAuthentication.FormsCookieName].Value)',
+        Import: '@(Url.Action("UpdateLogo", "AboutUs", new { _ = DateTime.Now.Ticks }))',
+        UrlCancelImage: '@Url.Content("~/Content/Plugin/jQueryUploadify/images/uploadify-cancel.png")',
+        UrlSwf: '@Url.Content("~/Content/Plugin/jQueryUploadify/flash/uploadify.swf")',
     }
 
     $(document).ready(function () {
         SaveEvent();
+        uploadProof();
     })
+
+    function uploadProof() {
+        $('#uploadProof').uploadify({
+            uploader: Resource.Import,
+            swf: Resource.UrlSwf,
+            cancelImage: Resource.UrlCancelImage,
+            buttonText: "上传",
+            auto: true,
+            width: 60,
+            height: 28,
+            multi: false,
+            postData: { token: Resource.Auth },
+            //checkExisting: false,
+            fileTypeDesc: '*.png;',
+            //removeCompleted: true,
+            fileTypeExts: '*.png;',
+            fileSizeLimit: 500,
+            onQueueComplete: function () {
+                //location.reload();
+            },
+            onError: function (event, ID, fileObj, errorObj) {
+                alert("上传失败，请稍后再试！");
+            },
+            onUploadError: function (file, data) {
+            },
+            onUploadSuccess: function (file, data, response) {
+                var result = JSON.parse(data);
+                if (result.Code == 0) {
+                    location.reload();
+                } else {
+                    alert(result.Msg);
+                }
+            }
+        });
+    }
 </script>

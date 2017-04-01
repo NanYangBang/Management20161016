@@ -311,7 +311,7 @@ namespace NYB.DeviceManagementSystem.BLL
                     var orderClient = context.OrderClient.FirstOrDefault(t => t.IsValid && t.ID == orderClientID);
                     if (string.IsNullOrEmpty(orderClient.LogoFile) == false)
                     {
-                        FileHelper.DelFile(filePath);
+                        FileHelper.DelFile(orderClient.LogoFile);
                     }
                     orderClient.LogoFile = filePath;
                 }
