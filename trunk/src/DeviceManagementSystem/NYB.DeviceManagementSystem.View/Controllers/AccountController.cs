@@ -88,7 +88,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
 
         public ActionResult LogOff()
         {
-            // 避免缓存
+            //避免缓存
             Response.Cache.SetAllowResponseInBrowserHistory(false);
             Response.Cache.SetCacheability(HttpCacheability.NoCache);
             Response.Cache.SetExpires(DateTime.UtcNow.AddMinutes(-1));

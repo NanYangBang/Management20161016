@@ -1,4 +1,5 @@
 ﻿using NYB.DeviceManagementSystem.Common;
+using NYB.DeviceManagementSystem.View.App_Start;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,6 +10,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using System.Web.Security;
 
 namespace NYB.DeviceManagementSystem.View
 {
@@ -20,7 +22,7 @@ namespace NYB.DeviceManagementSystem.View
 
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-
+            filters.Add(new SessionAuthorizeAttribute());
         }
 
         public static void RegisterRoutes(RouteCollection routes)
@@ -37,23 +39,6 @@ namespace NYB.DeviceManagementSystem.View
                 "noparam", // 路由名称
                 "{controller}/{action}/{id}", // 带有参数的 URL
                 new { controller = "Account", action = "LogOn", id = UrlParameter.Optional } // 参数默认值
-            );
-
-            routes.MapRoute(
-                "Pile", // 路由名称
-                "Pile/{action}/{id}", // 带有参数的 URL
-                new { controller = "PileConInfo", action = "Index", id = UrlParameter.Optional }// 参数默认值				
-            );
-            routes.MapRoute(
-                "ConstructionInformation", // 路由名称
-                "ConstructionInformation/{action}/{id}", // 带有参数的 URL
-                new { controller = "PileConInfo", action = "Index", id = UrlParameter.Optional }// 参数默认值				
-            );
-
-            routes.MapRoute(
-                "Schedule", // 路由名称
-                "Schedule/{action}/{id}", // 带有参数的 URL
-                new { controller = "ScheduleManage", action = "Index", id = UrlParameter.Optional } // 参数默认值
             );
 
             routes.MapRoute(
@@ -77,14 +62,6 @@ namespace NYB.DeviceManagementSystem.View
 
         private static void DelTempFile()
         {
-            //var bll = new NYB.DeviceManagementSystem.BLL.MaintainRecordBLL();
-            //bll.DeleteMaintainRecord("fdsaf");
-            //var test = new NYB.DeviceManagementSystem.ViewModel.WebDevice();
-            //var list = new List<NYB.DeviceManagementSystem.ViewModel.WebDevice>();
-            //list.Add(test);
-            //list.Add(test);
-            //NYB.DeviceManagementSystem.Common.Logger.LogHelper.Info(list);
-
             NYB.DeviceManagementSystem.Common.Logger.LogHelper.Info("删除temp文件夹");
 
             var needDeletePath = Path.Combine(SystemInfo.BaseDirectory, SystemInfo.TempFileFolder);
