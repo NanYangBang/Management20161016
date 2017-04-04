@@ -9,7 +9,7 @@ function SaveEvent() {
         var ID = $('[name="ID"]').val();
 
         param.userID = ID;
-        param.newPassword = Pwd;
+        param.newPassword = md5(Pwd);
 
         if ($('span.errorMessage').length == 0 && $('.field-validation-error').length == 0) {
             AjaxEvent(Resource.UrlEdit, param);

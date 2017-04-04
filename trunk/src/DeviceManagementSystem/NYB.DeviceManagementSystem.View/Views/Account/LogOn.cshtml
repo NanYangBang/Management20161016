@@ -27,17 +27,19 @@
 
     <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
 
+    <script src="@Url.Content("~/Scripts/js-md5.js")" type="text/javascript"></script>
+
     @using (Html.BeginForm())
     {
         <div class="prompt">
             @Html.ValidationSummary(true, "登录不成功。请更正错误并重试。")
         </div>
         <div class="logon-panel">
-            <div><h2 class="projectTitle">优稳运维管理系统</h2></div>
+            <div><h2 class="projectTitle">运维管理系统</h2></div>
             <fieldset>
                 <dl class="logon-controls">
                     <dt>
-                        @Html.LabelFor(m => m.UserName)
+                        @Html.LabelFor(m => m.LoginName)
                     </dt>
                     <dd>
                         <span class="inline-block">@Html.TextBoxFor(m => m.LoginName, new { tabIndex = 1 })</span>
@@ -77,7 +79,11 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#subLogin').click(function () {
+        $('#subLogin').click(function (e) {
+            var md5pwd = md5($('#Pwd').val());
+            $('#Pwd').val(md5pwd);
+            //e.preventDefault();            
+
             sessionStorage.clear();
         });
     });

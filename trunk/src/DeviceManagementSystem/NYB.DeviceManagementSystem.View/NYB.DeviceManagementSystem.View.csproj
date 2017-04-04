@@ -407,6 +407,7 @@
     <Content Include="Scripts\jq_scroll.js" />
     <Content Include="Scripts\knockout-2.2.0.debug.js" />
     <Content Include="Scripts\knockout-2.2.0.js" />
+    <Content Include="Scripts\js-md5.js" />
     <Content Include="Scripts\MicrosoftAjax.debug.js" />
     <Content Include="Scripts\MicrosoftAjax.js" />
     <Content Include="Scripts\MicrosoftMvcAjax.debug.js" />
@@ -419,6 +420,7 @@
     <Content Include="Scripts\ProjectManger\AddUpdatePartial.js" />
     <Content Include="Scripts\Common\Index.js" />
     <Content Include="Scripts\ProjectManger\ResetPassword.js" />
+    <Content Include="Scripts\Viewer\ResetPassword.js" />
     <Content Include="Scripts\Silverlight.js" />
     <Content Include="Scripts\ssi-uploader\bootstrap.min.js" />
     <Content Include="Scripts\ssi-uploader\jquery-2.1.1.min.js" />

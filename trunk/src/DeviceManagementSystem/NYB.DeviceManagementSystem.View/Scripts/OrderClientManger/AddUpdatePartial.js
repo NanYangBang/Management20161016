@@ -21,7 +21,10 @@ function SaveEvent() {
         param.Name = Name;
         param['WebUser.LoginName'] = LoginName;
         param['WebUser.UserName'] = UserName;
-        param['WebUser.Pwd'] = Pwd;
+
+        var md5pwd = md5(Pwd);
+
+        param['WebUser.Pwd'] = md5pwd;
         param['WebUser.TelPhone'] = TelPhone;
         param['WebUser.Address'] = Address;
         param['WebUser.Email'] = Email;

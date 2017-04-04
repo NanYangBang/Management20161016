@@ -11,11 +11,21 @@ namespace System.Web.Mvc
     {
         public static string GetCurrentProjectID(this Controller controller)
         {
-            var projectID = controller.Request.Cookies["CurrentProjectIDStr"].Value;
-            //if (string.IsNullOrEmpty(projectID))
-            //{
-            //    throw new Exception("CurrentProjectIDStr is empty , maybe cookie id disable ");
-            //}
+            string projectID;
+            var role = GetCurrentRole(controller);
+            if (role == RoleType.客户管理员)
+            {
+                projectID = controller.Request.Cookies["ManageProjectID"].Value;
+            }
+            else
+            {
+                projectID = controller.Request.Cookies["CurrentProjectIDStr"].Value;
+            }
+
+            if (string.IsNullOrEmpty(projectID))
+            {
+                throw new Exception("CurrentProjectIDStr is empty , maybe cookie id disable ");
+            }
 
             return projectID;
         }

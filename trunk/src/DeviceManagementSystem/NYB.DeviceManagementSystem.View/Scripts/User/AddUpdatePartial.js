@@ -18,7 +18,7 @@ function SaveEvent() {
         param.ID = ID;
         param.UserName = UserName;
         param.LoginName = LoginName;
-        param.Pwd = Pwd;
+        param.Pwd = md5(Pwd);
         param.Address = Address;
         param.TelPhone = TelPhone;
         param.Role = RoleName;

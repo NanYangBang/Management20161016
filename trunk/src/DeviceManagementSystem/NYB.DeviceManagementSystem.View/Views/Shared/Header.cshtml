@@ -40,7 +40,6 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        var isSuperAdmin = '@(Request.Cookies.Get("CurrentRole").Value == ((int)NYB.DeviceManagementSystem.Common.RoleType.超级管理员).ToString())';
         @{
              var role=Request.Cookies.Get("CurrentRole").Value;
              bool maintainCountVisible=false;
@@ -51,51 +50,25 @@
              {
                  maintainCountVisible=true;
              }
+             else if(role==((int)NYB.DeviceManagementSystem.Common.RoleType.客户管理员).ToString())
+             {
+                 var ManageProjectID = Request.Cookies.Get("ManageProjectID");
+                 if (ManageProjectID != null && string.IsNullOrWhiteSpace(ManageProjectID.Value) == false)
+                 {
+                     maintainCountVisible = true;
+                 }
+             }
          }
 
         if ('@maintainCountVisible' == 'True') {
             $("#maintainCountStr").show();
+
+            $.get('@Url.Action("MaintainCount", "Device", new { _ = DateTime.Now.Ticks })', {}, function (data) {
+                $("#maintainCount").text(data);
+            });
         } else {
             $("#maintainCountStr").hide();
         }
-
-        if (isSuperAdmin == 'False') {
-            if (sessionStorage.SessionID == null || sessionStorage.SessionID !== '@Session.SessionID') {
-                sessionStorage.SessionID = '@Session.SessionID'
-
-                if ('@maintainCountVisible' == 'True') {
-                    $.get('@Url.Action("MaintainCount", "Device", new { _ = DateTime.Now.Ticks })', {}, function (data) {
-                        $("#maintainCount").text(data);
-                    });
-                }
-
-                @*$.get('@Url.Action("GetCompanyInfoJson", "AboutUs", new { _ = DateTime.Now.Ticks })', {}, function (result) {
-                    if (result.Code == '0') {
-                        sessionStorage.CompanyInfo = JSON.stringify({
-                            LogoFile: result.Data.LogoFile,
-                            CompanyName: result.Data.CompanyName
-                        });
-
-                        setCompanyInfo();
-                    } else {
-                        alert(result.Msg);
-                    }
-                });*@
-            } else {
-                //setCompanyInfo();
-            }
-        }
-
-        //function setCompanyInfo() {
-        //    var companyInfo = JSON.parse(sessionStorage.CompanyInfo);
-        //    if (companyInfo.LogoFile !== null & companyInfo.LogoFile !== '') {
-
-        //    }
-
-        //    if (companyInfo.CompanyName !== null & companyInfo.CompanyName !== '') {
-        //        $('#companyName').text(companyInfo.CompanyName);
-        //    }
-        //}
 
         $("#passwordDialog").dialog({
             autoOpen: false,

@@ -51,13 +51,13 @@ namespace NYB.DeviceManagementSystem.View.Controllers
                         {
                             Session["LogoHomeUrl"] = Url.Action("Index", "OrderClientManager");
                             Session["LogoFileUrl"] = "";
-                            Session["CompanyName"] = "优稳运维管理系统";
+                            Session["CompanyName"] = "运维管理系统";
 
                             return RedirectToAction("Index", "OrderClientManager", new { _timepick = DateTime.Now.ToString("yyyyMMddhhmmssff") });
                         }
                         else
                         {
-                            var companyInfo = OrderClientBLL.GetCompanyInfo(this.GetCurrentOrderClientID());
+                            var companyInfo = OrderClientBLL.GetCompanyInfo(result.Data.OrderClientID);
 
                             if (companyInfo.Code == 0)
                             {
