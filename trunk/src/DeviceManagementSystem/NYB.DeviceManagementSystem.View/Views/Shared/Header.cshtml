@@ -10,10 +10,10 @@
 <link rel="stylesheet" href="~/Content/themes/jquery-ui.css">
 <div class="header">
     <div>
-        <img src="@(Session["LogoFileUrl"])" style="max-width:100px;max-height:100px;float:left;" />
-        <a href='@Session["LogoHomeUrl"]' title="回到主页">
+        <img src="@(Request.Cookies.Get("LogoFileUrl").Value)" style="max-width:100px;max-height:100px;float:left;" />
+        <a href='@(Request.Cookies.Get("LogoHomeUrl").Value)' title="回到主页">
             <div id="header-logo" class="header-logo">
-                <h3 id="companyName" style="color:white;font-size:30px;">@(Session["CompanyName"])</h3>
+                <h3 id="companyName" style="color:white;font-size:30px;">@(Request.Cookies.Get("CompanyName").Value)</h3>
             </div>
         </a>
     </div>

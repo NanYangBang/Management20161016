@@ -1,5 +1,4 @@
 ﻿using NYB.DeviceManagementSystem.Common;
-using NYB.DeviceManagementSystem.View.App_Start;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,7 +21,6 @@ namespace NYB.DeviceManagementSystem.View
 
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-            filters.Add(new SessionAuthorizeAttribute());
         }
 
         public static void RegisterRoutes(RouteCollection routes)
@@ -55,10 +53,23 @@ namespace NYB.DeviceManagementSystem.View
             RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
+
             BundleTable.EnableOptimizations = false;
 
             DelTempFile();
         }
+
+        //protected void Session_Start(object sender, EventArgs e)
+        //{
+        //    if (HttpContext.Current.Request.IsAuthenticated)
+        //    {
+        //        NYB.DeviceManagementSystem.Common.Logger.LogHelper.Info("session start");
+
+        //        FormsAuthentication.SignOut();
+        //        FormsAuthentication.RedirectToLoginPage("Session=Expired");
+        //        HttpContext.Current.Response.End();
+        //    }
+        //}
 
         private static void DelTempFile()
         {
