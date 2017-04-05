@@ -49,9 +49,10 @@ namespace NYB.DeviceManagementSystem.View.Controllers
 
                         if (result.Data.Role == RoleType.超级管理员)
                         {
-                            Session["LogoHomeUrl"] = Url.Action("Index", "OrderClientManager");
-                            Session["LogoFileUrl"] = "";
-                            Session["CompanyName"] = "运维管理系统";
+                            Response.Cookies.Add(new HttpCookie("LogoHomeUrl", Url.Action("Index", "OrderClientManager")));
+
+                            Response.Cookies.Add(new HttpCookie("LogoFileUrl", ""));
+                            Response.Cookies.Add(new HttpCookie("CompanyName", "运维管理系统"));
 
                             return RedirectToAction("Index", "OrderClientManager", new { _timepick = DateTime.Now.ToString("yyyyMMddhhmmssff") });
                         }
@@ -61,19 +62,19 @@ namespace NYB.DeviceManagementSystem.View.Controllers
 
                             if (companyInfo.Code == 0)
                             {
-                                Session["LogoFileUrl"] = Url.Content(string.Format("~/{0}", companyInfo.Data.LogoFile));
-                                Session["CompanyName"] = companyInfo.Data.CompanyName;
+                                Response.Cookies.Add(new HttpCookie("LogoFileUrl", Url.Content(string.Format("~/{0}", companyInfo.Data.LogoFile))));
+                                Response.Cookies.Add(new HttpCookie("CompanyName", companyInfo.Data.CompanyName));
                             }
 
                             if (result.Data.Role == RoleType.客户管理员)
                             {
-                                Session["LogoHomeUrl"] = Url.Action("Index", "ProjectManager");
+                                Response.Cookies.Add(new HttpCookie("LogoHomeUrl", Url.Action("Index", "ProjectManager")));
 
                                 return RedirectToAction("Index", "ProjectManager", new { _timepick = DateTime.Now.ToString("yyyyMMddhhmmssff") });
                             }
                             else
                             {
-                                Session["LogoHomeUrl"] = Url.Action("Index", "Device");
+                                Response.Cookies.Add(new HttpCookie("LogoHomeUrl", Url.Action("Index", "Device")));
 
                                 return RedirectToAction("Index", "Device", new { _timepick = DateTime.Now.ToString("yyyyMMddhhmmssff") });
                             }

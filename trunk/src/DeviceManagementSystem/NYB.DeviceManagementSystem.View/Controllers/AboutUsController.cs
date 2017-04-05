@@ -48,7 +48,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
 
                 if (companyInfo.Code == 0)
                 {
-                    Session["CompanyName"] = companyInfo.Data.CompanyName;
+                    Response.Cookies.Add(new HttpCookie("CompanyName", companyInfo.Data.CompanyName));
                 }
             }
 
@@ -66,7 +66,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
 
                 if (companyInfo.Code == 0)
                 {
-                    Session["LogoFileUrl"] = Url.Content(string.Format("~/{0}", companyInfo.Data.LogoFile));
+                    Response.Cookies.Add(new HttpCookie("LogoFileUrl", Url.Content(string.Format("~/{0}", companyInfo.Data.LogoFile))));
                 }
             }
 

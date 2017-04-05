@@ -59,17 +59,17 @@ namespace NYB.DeviceManagementSystem.View
             DelTempFile();
         }
 
-        protected void Session_Start(object sender, EventArgs e)
-        {
-            if (HttpContext.Current.Request.IsAuthenticated)
-            {
-                NYB.DeviceManagementSystem.Common.Logger.LogHelper.Info("session start");
+        //protected void Session_Start(object sender, EventArgs e)
+        //{
+        //    if (HttpContext.Current.Request.IsAuthenticated)
+        //    {
+        //        NYB.DeviceManagementSystem.Common.Logger.LogHelper.Info("session start");
 
-                FormsAuthentication.SignOut();
-                FormsAuthentication.RedirectToLoginPage("Session=Expired");
-                HttpContext.Current.Response.End();
-            }
-        }
+        //        FormsAuthentication.SignOut();
+        //        FormsAuthentication.RedirectToLoginPage("Session=Expired");
+        //        HttpContext.Current.Response.End();
+        //    }
+        //}
 
         private static void DelTempFile()
         {
