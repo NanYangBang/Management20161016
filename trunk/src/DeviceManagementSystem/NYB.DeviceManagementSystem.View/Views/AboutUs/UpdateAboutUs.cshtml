@@ -20,7 +20,19 @@
             padding-bottom: 10px;
         }
 
-        .aboutus p {
+        .aboutus b {
+            padding-left: 20px;
+            background-image: url(../Images/index_20.jpg);
+            background-repeat: no-repeat;
+            font-size: 16px;
+            font-weight: bolder;
+            margin: 0 20px 10px 0;
+            padding-bottom: 10px;
+            display: inline-block;
+            float: left;
+        }
+
+        .aboutus h2 .aboutus p {
             font-size: 14px;
             text-indent: 2em;
             line-height: 25px;
@@ -34,7 +46,21 @@
 
     .desc {
         margin-top: 20px;
+        min-height: 40px;
+        border-bottom: 2px dashed #8C8585;
     }
+
+        .desc dd input[type="text"] {
+            height: 28px;
+            line-height: 28px;
+            width: 400px;
+        }
+
+        .desc dd textarea {
+            height:120px;
+            width:400px;
+            margin-bottom:10px;
+        }
 </style>
 
 <script src="@Url.Content("~/Scripts/AboutUs/UpdatePartial.js")"></script>
@@ -45,47 +71,34 @@
 <div class="aboutus" actionname="关于我们">
     <form method="post">
         @Html.HiddenFor(model => model.ID)
-        <div class="desc">
-            <h2>系统图标</h2>
-            <div style="width:100px;float:left;margin-left:20px" class="uploadProofParent">
+        <dl class="desc">
+            <dt><b>系统图标</b></dt>
+            <dd style="width:100px;float:left;margin-top:-10px;" class="uploadProofParent">
                 <input type="file" multiple id="uploadProof" />
-            </div>
-        </div>
+            </dd>
+        </dl>
 
-        <div class="desc">
-            <h2>@Html.LabelFor(model => model.CompanyName)</h2>
-            @Html.TextBoxFor(model => model.CompanyName)
-        </div>
-
-        <div class="desc">
-            <h2>@Html.LabelFor(model => model.CompanyDescribe)</h2>
-            @Html.TextAreaFor(model => model.CompanyDescribe)
+        <dl class="desc">
+            <dt class="strtext"><b>@Html.LabelFor(model => model.CompanyName)</b></dt>
+            <dd>@Html.TextBoxFor(model => model.CompanyName)</dd>
+        </dl>
+        <dl class="desc">
+            <dt><b>@Html.LabelFor(model => model.CompanyDescribe)</b></dt>
+            <dd>@Html.TextAreaFor(model => model.CompanyDescribe)</dd>
             @*<p>
                     北京优稳昌盛科技有限公司（简称：北京优稳昌盛）的使命是成为电气自动化整体解决方案和高效燃烧技术优势品牌及机电试验设备的最佳供应商。
                 </p>
                 <p>
                     公司确立的方向是专注于电气自动化整体解决方案以及机电一体化试验设备和高效燃烧技术。应用研究和工程开发主要集中于先进智能控制技术与应用、工业现场总线技术、无线传输、专用传感技术、机电一体化等方面。公司下设：基础产品技术中心和生产车间。
                 </p>*@
-        </div>
-        <div class="contectUs">
-            <h2>@Html.LabelFor(model => model.CompanyContact)</h2>
-            @Html.TextAreaFor(model => model.CompanyContact)
-
-            @*
-                <p>公司名称：北京优稳昌盛科技有限公司</p>
-                <p>公司地址：北京市海淀区永丰产业基地丰贤中路11号</p>
-                <p>电   话：010-82895826   62680021   62698169</p>
-                <p>传   真：010-62680021-802</p>
-                <p>客服热线：400-688-2812</p>
-                <p>邮   编：100085</p>
-                <p>QQ：512011548</p>
-                <p>Email：ywcs2010@126.com</p>
-                <p><a target="_blank" href="http://www.ywcs.com.cn">官网：www.ywcs.com.cn</a></p>*@
-        </div>
-
-        <div class="common-details-operation-panel">
-            <p class="UpdatePile-btn">
-                <input type="submit" id="btnSave" value="保存" class="blue-button" />
+        </dl>
+        <dl class="contectUs desc">
+            <dt><b>@Html.LabelFor(model => model.CompanyContact)</b></dt>
+            <dd>@Html.TextAreaFor(model => model.CompanyContact)</dd>
+        </dl>
+        <div class="">
+            <p style="margin-left:103px;" class="UpdatePile-btn">
+                <input type="submit"  id="btnSave" value="保存" class="blue-button" />
                 <a class="link-after-button" href="@ViewBag.ReturnUrl">返回</a>
             </p>
         </div>

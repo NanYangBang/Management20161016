@@ -100,3 +100,7 @@
 .common-details-panel fieldset {
     margin-bottom: 20px;
 }
+
+.operateTable .blue-button {
+    width:80px;
+}

@@ -10,10 +10,11 @@
 }
 <style type="text/css">
     .content .form-control {
-        width: 267px;
+        width: 262px;
     }
+
     .content .bootstrap-duallistbox-container {
-        margin-right:10px;
+        width: 585px;
     }
 </style>
 
@@ -48,7 +49,7 @@
             <fieldset>
                 <table class="operateTable" style="font-size:12px;">
                     <tr>
-                        <td>
+                        <td style="width:90px;">
                             <b>设备名称</b>
                         </td>
                         <td>
@@ -75,37 +76,13 @@
                         <td>
                             <b>备注</b>
                         </td>
-                        <td wt="550" ht="80" class="lengthTd">
+                        <td wt="558" ht="80" class="lengthTd">
                             @Html.TextAreaFor(model => model.Note)
                             @Html.ValidationMessageFor(model => model.Note)
                         </td>
                     </tr>
-                    @*<tr>
-                        <td>
-                            <b>保养条目</b>
-                        </td>
-                        <td>
-                            <select multiple="multiple" size="10" name="maintainItems" id="maintainItems">
-                                @{
-                                    var selectIDs = Model.MaintainItems.Select(t => t.ID).ToList();
-                                    foreach (var item in allMaintainItems)
-                                    {
-                                        if (selectIDs.Contains(item.ID))
-                                        {
-                                            <option value="@(item.ID)" selected="selected">@item.Name</option>
-                                        }
-                                        else
-                                        {
-                                            <option value="@(item.ID)">@item.Name</option>
-                                        }
-                                    }
-                                }
-                            </select>
-                        </td>
-                    </tr>*@
                 </table>
-                
-                <table style="margin:10px 0 0 0;" class="operateTable">
+                <table style="margin-top:10px;" class="operateTable">
                     <tr>
                         <td>
                             <b>保养条目</b>
@@ -130,20 +107,41 @@
                         </td>
                     </tr>
                 </table>
-                
-                <div class="row">
-                    <div class="col-md-12">
-                        <h3 style="font-size:12px">保养记录附件（支持jpg、gif、txt、png和pdf格式文件）</h3>
-                        <input type="file" multiple id="ssi-upload" />
-                    </div>
-                </div>
+                <table class="operateTable">
+                    <tr>
+                        <td style="width:90px;">
+                            <b style="visibility:hidden">保养条目</b>
+                        </td>
+                        <td>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h3 style="font-size:12px">保养记录附件（支持jpg、gif、txt、png和pdf格式文件）</h3>
+                                    <input type="file" multiple id="ssi-upload" />
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                @*<div class="row" style="margin:20px 0 0 0 ;">
+                        <div class="col-md-12">
+                            <h3 style="font-size:12px">保养记录附件（支持jpg、gif、txt、png和pdf格式文件）</h3>
+                            <input type="file" multiple id="ssi-upload" />
+                        </div>
+                    </div>*@
             </fieldset>
         </div>
         <div class="common-details-operation-panel">
-            <p class="UpdatePile-btn">
-                <input type="submit" id="btnSave" value="保存" class="blue-button" />
-                <a style="font-size:12px" class="link-after-button" href="@ViewBag.ReturnUrl">返回</a>
-            </p>
+           @* <p class="UpdatePile-btn">*@
+            <table class="operateTable">
+                <tr>
+                    <td style="width:90px; visibility:hidden"><b>ssdsds</b></td>
+                    <td>
+                        <input type="submit" id="btnSave" value="保存" class="blue-button" />
+                        <a style="font-size:12px" class="link-after-button" href="@ViewBag.ReturnUrl">返回</a>
+                    </td>
+                </tr>
+            </table>
+            @*</p>*@
         </div>
     </form>
 </div>

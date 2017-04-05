@@ -41,13 +41,13 @@
 <div class="aboutus" actionname="关于我们">
     @if (Request.Cookies.Get("CurrentRole").Value == ((int)NYB.DeviceManagementSystem.Common.RoleType.客户管理员).ToString())
     {
-        <div>
+        <div style="width:100%;height:30px;">
             <input type="button" style="float:right" class="blue-button" id="UpdateAboutUs" value="修改" />
         </div>
     }
     <div class="desc">
         <h2>公司简介</h2>
-        <p style="white-space:pre-wrap">
+        <p>
             @Html.DisplayFor(model => model.CompanyDescribe)
         </p>
         @*<p>
@@ -59,7 +59,7 @@
     </div>
     <div class="contectUs">
         <h2>联系我们</h2>
-        <p style="white-space:pre-wrap">
+        <p style="white-space: pre-line">
             @Html.DisplayFor(model => model.CompanyContact)
         </p>
 
