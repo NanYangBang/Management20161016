@@ -122,7 +122,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
                 throw new Exception("权限不足");
             }
 
-            return RedirectToAction("Index", "Device");
+            return RedirectToAction("Index", "Device", new { _timepick = DateTime.Now.ToString("yyyyMMddhhmmssff") });
         }
     }
 }

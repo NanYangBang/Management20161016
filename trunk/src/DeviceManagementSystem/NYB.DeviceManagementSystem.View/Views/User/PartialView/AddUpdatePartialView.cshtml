@@ -105,7 +105,7 @@
                             <select value="" name="Role">
                                 @foreach (string roleName in Enum.GetNames(typeof(RoleType)))
                                 {
-                                    if (roleName != RoleType.超级管理员.ToString())
+                                    if (roleName != RoleType.超级管理员.ToString() && roleName != RoleType.客户管理员.ToString() && roleName != RoleType.项目管理员.ToString())
                                     {
                                         if (roleName == @Model.Role.ToString())
                                         {

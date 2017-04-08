@@ -36,7 +36,7 @@
 
         <label>设备状态</label>
         <select value="" name="deviceStateEnum" style="height:28px;width:100px;">
-            <option value="0">全部</option>
+            <option value="">全部</option>
             @foreach (string item in Enum.GetNames(typeof(DeviceStateEnum)))
             {
                 <option id="firstOption" @(ViewBag.DeviceStateEnum == item ? "selected" : "") value="@((int)Enum.Parse(typeof(DeviceStateEnum), item))">@item</option>

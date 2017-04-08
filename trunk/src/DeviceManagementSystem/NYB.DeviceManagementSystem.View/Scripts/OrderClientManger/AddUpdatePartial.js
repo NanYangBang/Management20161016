@@ -3,7 +3,7 @@ function SaveEvent() {
     $('form').submit(function (e) {
         e.preventDefault();
         var returnUrl = $('[name="returnUrl"]');
-        
+
         var param = {};
         var WebUser = {};
         var ID = $('[name="ID"]').val();
@@ -22,9 +22,11 @@ function SaveEvent() {
         param['WebUser.LoginName'] = LoginName;
         param['WebUser.UserName'] = UserName;
 
-        var md5pwd = md5(Pwd);
+        if (Pwd !== null && Pwd !== undefined) {
+            var md5pwd = md5(Pwd);
+            param['WebUser.Pwd'] = md5pwd;
+        }
 
-        param['WebUser.Pwd'] = md5pwd;
         param['WebUser.TelPhone'] = TelPhone;
         param['WebUser.Address'] = Address;
         param['WebUser.Email'] = Email;
