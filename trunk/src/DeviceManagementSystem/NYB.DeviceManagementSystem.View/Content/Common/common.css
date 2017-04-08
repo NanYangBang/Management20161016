@@ -937,6 +937,10 @@ body .wrap .content .resetFont {
     font-family: SimSun,Arial;
     /*font-weight:lighter;*/
 }
+body .header .resetFont {
+    font-size: 12px;
+    font-family: SimSun,Arial;
+}
 
 .wrap .content .resetWeight {
     font-weight: 100;

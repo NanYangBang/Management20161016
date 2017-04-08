@@ -16,12 +16,12 @@
         }
         <a href='@(Request.Cookies.Get("LogoHomeUrl").Value+"?_="+DateTime.Now.Ticks)' title="回到主页">
             <div id="header-logo" class="header-logo">
-                <h3 id="companyName" style="color: white; font-size: 30px; font-weight: normal; margin: 0; font-family: SimSun,Arial;">@(Request.Cookies.Get("CompanyName").Value)</h3>
+                <h3 id="companyName" style="color: white; font-size: 30px; font-weight: 300; margin: 0; font-family: SimSun,Arial;">@(Request.Cookies.Get("CompanyName").Value)</h3>
             </div>
         </a>
     </div>
 
-    <div class="header-message">
+    <div class="header-message resetFont">
         <ul>
             <li><a target="_blank" href="http://www.ywcs.com.cn">官网</a></li>
             <li id="maintainCountStr"><a href="@Url.Action("Index", "Device", new { isMaintainSearch = true})">需保养设备</a><a id="maintainCount" href="@Url.Action("Index", "Device", new { isMaintainSearch = true })">0</a></li>
