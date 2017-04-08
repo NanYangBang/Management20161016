@@ -25,7 +25,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
                 {
                     list = cResult.Data;
                 }
-                var pageList = new PagedList<WebMaintainItem>(list, pageIndex, pageSize);
+                var pageList = new PagedList<WebMaintainItem>(list, pageIndex, pageSize,totalCount);
                 ViewBag.SearchInfo = searchInfo;
                 return View(pageList);
             }
@@ -132,7 +132,6 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             fileName = Url.Encode(fileName).Replace("+", "%20");
             return File(absolutePath, "application/object", fileName);
         }
-
 
         [HttpPost]
         public ActionResult ImportExcel(HttpPostedFileBase fileData)

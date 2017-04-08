@@ -26,7 +26,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             {
                 userList = cResult.Data;
             }
-            var pageList = new PagedList<WebUser>(userList, pageIndex, pageSize);
+            var pageList = new PagedList<WebUser>(userList, pageIndex, pageSize,totalCount);
             ViewBag.SearchInfo = searchInfo;
             return View(pageList);
         }

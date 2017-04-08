@@ -25,7 +25,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             {
                 userList = cResult.Data;
             }
-            var pageList = new PagedList<WebProject>(userList, pageIndex, pageSize);
+            var pageList = new PagedList<WebProject>(userList, pageIndex, pageSize,totalCount);
             ViewBag.SearchInfo = searchInfo;
 
             if (Request.Cookies.AllKeys.Contains("ManageProjectID"))

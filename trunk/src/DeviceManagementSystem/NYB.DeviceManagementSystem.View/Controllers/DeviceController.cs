@@ -28,7 +28,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             {
                 device = cResult.Data;
             }
-            var pageList = new PagedList<WebDevice>(device, pageIndex, pageSize);
+            var pageList = new PagedList<WebDevice>(device, pageIndex, pageSize,totalCount);
             ViewBag.SearchInfo = searchInfo;
             ViewBag.DeviceStateEnum = deviceStateEnum.HasValue ? deviceStateEnum.ToString() : deviceStateEnum.ToString();
             ViewBag.IsMaintainSearch = isMaintainSearch;
