@@ -111,7 +111,7 @@
                         <td>
                             @if (device.MaintainDate.HasValue && device.MaintainDate.Value <= toady)
                             {
-                                @Html.Label(device.MaintainDate.Value.ToString("yyyy-MM-dd"), new { @style="color:red;"});
+                                @Html.Label(device.MaintainDate.Value.ToString("yyyy-MM-dd"), new { @style = "color:red;" });
                             }
                             else
                             {
@@ -176,7 +176,7 @@
         SearchInfoFocus('请输入设备名称、设备类型、生产厂商或供应商');
 
         uploadProof();
-        ExportExcel();
+        ExportExcel('请输入设备名称、设备类型、生产厂商或供应商');
         BindDatePick();
     })
 
@@ -230,7 +230,7 @@
         $('.time').attr('readonly', 'readonly');
     }
 
-    function ExportExcel() {
+    function ExportExcel(prompt) {
         $("#btnExport").mousedown(function () {
             this.innerText = '请稍后,正在导出文件...'
 
@@ -242,6 +242,10 @@
             var ascending = $.query.get('ascending');
             var deviceStateEnum = $('#deviceStateEnum').val();
             var isMaintainSearch = $('#isMaintainSearch').val();
+
+            if (searchInfo == prompt) {
+                searchInfo = '';
+            }
 
             var url = String.format("{0}&searchInfo={1}&deviceStateEnum={2}&isMaintainSearch={3}", UrlResource.UrlExportExcel, searchInfo, deviceStateEnum, isMaintainSearch);
             //		$.get(url, function (data) {

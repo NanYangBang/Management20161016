@@ -34,7 +34,7 @@
     <form method="post">
         @(Html.Hidden("returnUrl", returnUrl))
         <div class="common-details-panel">
-            <h2>添加维修记录</h2>
+            <h2>@(ViewBag.TitleName)</h2>
             <input type="hidden" name="DeviceID" value="@(ViewBag.DeviceID)" />
             <input type="hidden" name="RepairRecordID" value="@(ViewBag.RepairRecordID)" />
             <fieldset>
@@ -152,7 +152,6 @@
     $(document).ready(function () {
         SaveEvent();
         BindDatePick();
-        GetViewStatus();
         $('[name="DeviceName"]').attr('readonly', 'readonly');
         AddTxtAre();
         uploadProof();
@@ -160,6 +159,7 @@
         var viewer = new Viewer(document.getElementById('jq22'), {
             url: 'data-original'
         });
+        GetViewStatus();
     })
 
     function BindDatePick() {

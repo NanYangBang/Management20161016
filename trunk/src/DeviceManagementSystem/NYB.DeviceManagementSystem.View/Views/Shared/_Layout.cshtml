@@ -70,6 +70,7 @@
                 if (Resource.hasOwnProperty('IsView')) {
                     if (Resource.IsView == 'True') {
                         $('form input[type="text"]').attr('readonly', 'readonly');
+                        $('form textarea').attr('readonly', 'readonly');
                         $('form input[type="button"]').remove();
                         $('form select').attr('readonly', 'readonly');
                         $('form input[type="submit"]').remove();

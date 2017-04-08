@@ -130,6 +130,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             ViewBag.OperateAction = "Add";
             ViewBag.LeftName = "设备信息";
             ViewBag.IsAddRecord = "True";
+            ViewBag.TitleName = "添加维修记录";
             WebRepairRecord webRepairRecord = new WebRepairRecord();
             webRepairRecord.RepairDate = DateTime.Now.Date;
             return View("RepairRecord/AddRepairRecord", webRepairRecord);
@@ -175,6 +176,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             ViewBag.OperateAction = "Update";
             ViewBag.IsAddRecord = "False";
             ViewBag.LeftName = "维修记录信息";
+            ViewBag.TitleName = "修改维修记录";
             WebRepairRecord webRepairRecord = new WebRepairRecord();
             RepairRecordBLL repairRecordBLL = new RepairRecordBLL();
             webRepairRecord = repairRecordBLL.GetRepairRecordByID(repairRecordID).Data;
@@ -192,6 +194,8 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             ViewBag.OperateAction = "View";
             ViewBag.LeftName = "维修记录信息";
             ViewBag.IsView = "True";
+            ViewBag.IsAddRecord = "False";
+            ViewBag.TitleName = "查看维修记录";
             WebRepairRecord webRepairRecord = new WebRepairRecord();
             RepairRecordBLL repairRecordBLL = new RepairRecordBLL();
             webRepairRecord = repairRecordBLL.GetRepairRecordByID(repairRecordID).Data;
