@@ -220,11 +220,16 @@ namespace NYB.DeviceManagementSystem.BLL
                 if (string.Equals(oldPassword, entity.Password))
                 {
                     entity.Password = newPassword;
+                    return context.Save();
+                }
+                else
+                {
+                    return new CResult<bool>(false, ErrorCode.ChangePasswordError);
                 }
 
                 //LoggerBLL.AddLog(context, operatorUserID, entity.ProjectID, OperatTypeEnum.修改, _businessModel, "用户名：" + entity.LoginName);
 
-                return context.Save();
+
             }
         }
 

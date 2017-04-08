@@ -11,7 +11,7 @@
 <div class="header">
     <div>
         <img src="@(Request.Cookies.Get("LogoFileUrl").Value)" style="max-width:100px;max-height:100px;float:left;" />
-        <a href='@(Request.Cookies.Get("LogoHomeUrl").Value)' title="回到主页">
+        <a href='@(Request.Cookies.Get("LogoHomeUrl").Value+"?_="+DateTime.Now.Ticks)' title="回到主页">
             <div id="header-logo" class="header-logo">
                 <h3 id="companyName" style="color:white;font-size:30px;">@(Request.Cookies.Get("CompanyName").Value)</h3>
             </div>
