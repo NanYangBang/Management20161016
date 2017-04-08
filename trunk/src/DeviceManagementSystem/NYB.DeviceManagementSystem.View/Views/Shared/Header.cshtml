@@ -16,7 +16,7 @@
         }
         <a href='@(Request.Cookies.Get("LogoHomeUrl").Value+"?_="+DateTime.Now.Ticks)' title="回到主页">
             <div id="header-logo" class="header-logo">
-                <h3 id="companyName" style="color:white;font-size:30px;">@(Request.Cookies.Get("CompanyName").Value)</h3>
+                <h3 id="companyName" style="color:white;font-size:30px;font-weight:normal;margin:0; ">@(Request.Cookies.Get("CompanyName").Value)</h3>
             </div>
         </a>
     </div>
