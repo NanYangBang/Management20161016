@@ -153,13 +153,14 @@
             this.innerText = '请稍后,正在导出文件...'
 
         });
-        $("#btnExport").click(function () {
+        $("#btnExport").click(function (e) {
+            
             var button = $(this);
             var searchInfo = $('#seacheName').val();
             var orderbyFieldName = $.query.get('sortBy');
             var ascending = $.query.get('ascending');
 
-            var url = String.format("{0}?searchInfo={1}", UrlResource.UrlExportExcel, searchInfo);
+            var url = String.format("{0}&searchInfo={1}", UrlResource.UrlExportExcel, searchInfo);
             $.ajax(
                         {
                             url: url, async: false, type: 'get',

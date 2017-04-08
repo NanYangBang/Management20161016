@@ -35,7 +35,7 @@
         <input type="text" name="searchInfo" id="seacheName" value="@(ViewBag.SearchInfo)" />
 
         <label>设备状态</label>
-        <select value="" name="deviceStateEnum" style="height:28px;width:100px;">
+        <select value="" id="deviceStateEnum" name="deviceStateEnum" style="height:28px;width:100px;">
             <option value="">全部</option>
             @foreach (string item in Enum.GetNames(typeof(DeviceStateEnum)))
             {
@@ -243,7 +243,7 @@
             var deviceStateEnum = $('#deviceStateEnum').val();
             var isMaintainSearch = $('#isMaintainSearch').val();
 
-            var url = String.format("{0}?searchInfo={1}&deviceStateEnum={2}&isMaintainSearch={3}", UrlResource.UrlExportExcel, searchInfo, deviceStateEnum, isMaintainSearch);
+            var url = String.format("{0}&searchInfo={1}&deviceStateEnum={2}&isMaintainSearch={3}", UrlResource.UrlExportExcel, searchInfo, deviceStateEnum, isMaintainSearch);
             //		$.get(url, function (data) {
             //			ToggleLoadingHint();
             //			if (data.Code > 0) {
