@@ -181,9 +181,9 @@ select {
 /*头部*/
 .header-logo {
     width: 444px;
-    height: 62px;
+    height: 42px;
     float: left;
-    margin: 8px 0 0 10px;
+    margin: 20px 0 0 10px;
     background-repeat: no-repeat;
 }
 
@@ -956,4 +956,16 @@ body .wrap .content .resetFont {
 
 .datetimeColumn {
     width: 130px;
+}
+
+.mt30 {
+    margin-top: 30px;
+}
+
+.mt20 {
+    margin-top: 20px;
+}
+
+.mt10 {
+    margin-top: 10px;
 }

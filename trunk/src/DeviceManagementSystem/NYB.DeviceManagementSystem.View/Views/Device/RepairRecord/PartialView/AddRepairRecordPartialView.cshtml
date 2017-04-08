@@ -63,29 +63,29 @@
                             @Html.ValidationMessageFor(model => model.RepairDate)
                         </td>
                     </tr>
-                    <tr>
+                    <tr style="height:100px;">
                         <td>
                             <b>@Html.LabelFor(model => model.Describe)</b>
                         </td>
-                        <td wt="550" ht="80" style="margin-top:5px" class="lengthTd">
+                        <td wt="550" ht="80" class="lengthTd">
                             @Html.TextAreaFor(model => model.Describe)
                             @Html.ValidationMessageFor(model => model.Describe)
                         </td>
                     </tr>
-                    <tr>
+                    <tr style="height:100px;">
                         <td>
                             <b>@Html.LabelFor(model => model.Solution)</b>
                         </td>
-                        <td wt="550" ht="80" style="margin-top:5px" class="lengthTd">
+                        <td wt="550" ht="80" class="lengthTd">
                             @Html.TextAreaFor(model => model.Solution)
                             @Html.ValidationMessageFor(model => model.Solution)
                         </td>
                     </tr>
-                    <tr>
+                    <tr style="height:100px;">
                         <td>
                             <b>备注</b>
                         </td>
-                        <td wt="550" ht="80" style="margin-top:5px" class="lengthTd">
+                        <td wt="550" ht="80" class="lengthTd">
                             @Html.TextAreaFor(model => model.Note)
                             @Html.ValidationMessageFor(model => model.Note)
                         </td>
@@ -103,7 +103,6 @@
                             </div>
                         </td>
                     </tr>
-
                 </table>
             </fieldset>
         </div>
