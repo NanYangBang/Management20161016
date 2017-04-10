@@ -20,8 +20,8 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="nchar" MaxLength="36" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
-          <Property Name="Note" Type="nvarchar" MaxLength="100" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Note" Type="nvarchar" MaxLength="1000" />
           <Property Name="DeviceTypeID" Type="nchar" MaxLength="36" Nullable="false" />
           <Property Name="ManufacturerID" Type="nchar" MaxLength="36" />
           <Property Name="SupplierID" Type="nchar" MaxLength="36" />
@@ -39,7 +39,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="nchar" MaxLength="36" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="30" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
           <Property Name="Note" Type="nvarchar" MaxLength="100" />
           <Property Name="ProjectID" Type="nchar" MaxLength="36" />
           <Property Name="IsValid" Type="bit" Nullable="false" />
@@ -71,7 +71,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="nchar" MaxLength="36" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Note" Type="nvarchar" MaxLength="100" />
           <Property Name="CreateUserID" Type="nchar" MaxLength="36" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
@@ -559,8 +559,8 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="true" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="Note" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Note" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="DeviceTypeID" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="true" />
           <Property Name="ManufacturerID" Type="String" MaxLength="36" FixedLength="true" Unicode="true" />
           <Property Name="SupplierID" Type="String" MaxLength="36" FixedLength="true" Unicode="true" />
@@ -584,7 +584,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="true" />
-          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Note" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="ProjectID" Type="String" MaxLength="36" FixedLength="true" Unicode="true" />
           <Property Name="IsValid" Type="Boolean" Nullable="false" />
@@ -942,7 +942,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="true" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Note" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="ProjectID" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="true" />
           <Property Name="IsValid" Type="Boolean" Nullable="false" />

@@ -54,7 +54,7 @@
                             @Html.ValidationMessageFor(model => model.WebUser.LoginName)
                         </td>
                         <td>
-                            <b>电话</b>
+                            <b>@Html.LabelFor(model => model.WebUser.TelPhone)</b>
                         </td>
                         <td>
                             @Html.TextBoxFor(model => model.WebUser.TelPhone)

@@ -181,6 +181,11 @@ namespace NYB.DeviceManagementSystem.Common.Helper
                             continue;
                         }
 
+                        if (row.Cells.Count < dt.Columns.Count)
+                        {
+                            break;
+                        }
+
                         DataRow dr = dt.NewRow();
                         foreach (ICell item in row.Cells)
                         {
