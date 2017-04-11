@@ -72,7 +72,10 @@
                             @*@Html.ActionLink("修改", "EditMaintainRecord", routeValues)*@
                             <a title="修改" href="@(Url.Action("EditMaintainRecord", "Device", routeValues))"><img src="@Url.Content("~/Images/edit.png")" /></a>
                             @*<a href="#" onclick="DeleteDeviceRepairRecord('@device.ID')" name="DeleteDeviceType">刪除</a>*@
-                            <a href="#" title="删除" onclick="DeleteDeviceRepairRecord('@device.ID')" name="DeleteDeviceType"><img src="@Url.Content("~/Images/del.png")" /></a>
+                            @if (int.Parse(Request.Cookies.Get("CurrentRole").Value) != (int)RoleType.操作员)
+                            {
+                                <a href="#" title="删除" onclick="DeleteDeviceRepairRecord('@device.ID')" name="DeleteDeviceType"><img src="@Url.Content("~/Images/del.png")" /></a>
+                            }
                             <a title="查看" href="@(Url.Action("ViewMaintainRecord", "Device", routeValues))"><img src="@Url.Content("~/Images/look.png")" /></a>
                         </td>
                     </tr>

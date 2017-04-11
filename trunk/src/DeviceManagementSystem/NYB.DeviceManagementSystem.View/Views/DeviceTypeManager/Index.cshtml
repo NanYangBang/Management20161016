@@ -54,7 +54,10 @@
                             @{var routeValues = new { deviceTypeID = deviceType.ID, returnUrl = Request.Url.AbsoluteUri, _ = DateTime.Now.Ticks };}
                             <a title="修改" href="@(Url.Action("Edit", "DeviceTypeManager", routeValues))"><img src="@Url.Content("~/Images/edit.png")" /></a>
                             <a title="查看" href="@(Url.Action("Details", "DeviceTypeManager", routeValues))"><img src="@Url.Content("~/Images/look.png")" /></a>
-                            <a href="#" onclick="DataDel('@deviceType.ID','@(Url.Action("Delete", new { _ = DateTime.Now.Ticks }))')" name="DeleteDeviceType"><img src="@Url.Content("~/Images/del.png")" /></a>
+                            @if (int.Parse(Request.Cookies.Get("CurrentRole").Value) != (int)RoleType.操作员)
+                            {
+                                <a href="#" onclick="DataDel('@deviceType.ID','@(Url.Action("Delete", new { _ = DateTime.Now.Ticks }))')" name="DeleteDeviceType"><img src="@Url.Content("~/Images/del.png")" /></a>
+                            }
                         </td>
                     </tr>
                 }
