@@ -54,10 +54,10 @@
                             @Html.ValidationMessageFor(model => model.WebUser.LoginName)
                         </td>
                         <td>
-                            <b>@Html.LabelFor(model => model.WebUser.TelPhone)</b>
+                            <b><em>*</em>@Html.LabelFor(model => model.WebUser.TelPhone)</b>
                         </td>
                         <td>
-                            @Html.TextBoxFor(model => model.WebUser.TelPhone, new object { })
+                            @Html.TextBoxFor(model => model.WebUser.TelPhone, new Dictionary<string, object>() { { "data-val-required", "联系电话" } })
                             @Html.ValidationMessageFor(model => model.WebUser.TelPhone)
                         </td>
                     </tr>
