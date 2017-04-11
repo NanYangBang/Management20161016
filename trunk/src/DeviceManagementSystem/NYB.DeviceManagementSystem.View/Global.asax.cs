@@ -93,41 +93,50 @@ namespace NYB.DeviceManagementSystem.View
         }
 
         #region 添加Uploadify的Cookie值
-        //protected void Application_BeginRequest(object sender, EventArgs e)
-        //{
-        //    //flash 上传组件Session 值恢复
-        //    //如果网站中还用到了Membership的FormsAuthentication验证，则还需要把AUTHID也按照SessionID的方法进行处理
-        //    //'scriptData': {"ASPSESSID": "<%=Session.SessionID %>","AUTHID" : "<%=Request.Cookies[FormsAuthentication.FormsCookieName].Value%>"}
-        //    try {
-        //        string session_param_name = "ASPSESSID";
-        //        string session_cookie_name = "ASP.NET_SESSIONID";
-        //        if (HttpContext.Current.Request.Form[session_param_name] != null) {
-        //            UpdateCookie(session_cookie_name, HttpContext.Current.Request.Form[session_param_name]);
-        //        } else if (HttpContext.Current.Request.QueryString[session_param_name] != null) {
-        //            UpdateCookie(session_cookie_name, HttpContext.Current.Request.QueryString[session_param_name]);
-        //        }
+        protected void Application_BeginRequest(object sender, EventArgs e)
+        {
+            //flash 上传组件Session 值恢复
+            //如果网站中还用到了Membership的FormsAuthentication验证，则还需要把AUTHID也按照SessionID的方法进行处理
+            //'scriptData': {"ASPSESSID": "<%=Session.SessionID %>","AUTHID" : "<%=Request.Cookies[FormsAuthentication.FormsCookieName].Value%>"}
+            try
+            {
+                string session_param_name = "ASPSESSID";
+                string session_cookie_name = "ASP.NET_SESSIONID";
+                if (HttpContext.Current.Request.Form[session_param_name] != null)
+                {
+                    UpdateCookie(session_cookie_name, HttpContext.Current.Request.Form[session_param_name]);
+                }
+                else if (HttpContext.Current.Request.QueryString[session_param_name] != null)
+                {
+                    UpdateCookie(session_cookie_name, HttpContext.Current.Request.QueryString[session_param_name]);
+                }
 
-        //        string auth_param_name = "AUTHID";
-        //        string auth_cookie_name = FormsAuthentication.FormsCookieName;
-        //        if (HttpContext.Current.Request.Form[auth_param_name] != null) {
-        //            UpdateCookie(auth_cookie_name, HttpContext.Current.Request.Form[auth_param_name]);
-        //        } else if (HttpContext.Current.Request.QueryString[auth_param_name] != null) {
-        //            UpdateCookie(auth_cookie_name, HttpContext.Current.Request.QueryString[auth_param_name]);
-        //        }
+                string auth_param_name = "AUTHID";
+                string auth_cookie_name = FormsAuthentication.FormsCookieName;
+                if (HttpContext.Current.Request.Form[auth_param_name] != null)
+                {
+                    UpdateCookie(auth_cookie_name, HttpContext.Current.Request.Form[auth_param_name]);
+                }
+                else if (HttpContext.Current.Request.QueryString[auth_param_name] != null)
+                {
+                    UpdateCookie(auth_cookie_name, HttpContext.Current.Request.QueryString[auth_param_name]);
+                }
 
-        //    } catch (Exception ex) { }
-        //}
+            }
+            catch (Exception ex) { }
+        }
 
-        //void UpdateCookie(string cookie_name, string cookie_value)
-        //{
-        //    HttpCookie cookie = HttpContext.Current.Request.Cookies.Get(cookie_name);
-        //    if (cookie == null) {
-        //        cookie = new HttpCookie(cookie_name);
-        //        HttpContext.Current.Request.Cookies.Add(cookie);
-        //    }
-        //    cookie.Value = cookie_value;
-        //    HttpContext.Current.Request.Cookies.Set(cookie);
-        //}
+        void UpdateCookie(string cookie_name, string cookie_value)
+        {
+            HttpCookie cookie = HttpContext.Current.Request.Cookies.Get(cookie_name);
+            if (cookie == null)
+            {
+                cookie = new HttpCookie(cookie_name);
+                HttpContext.Current.Request.Cookies.Add(cookie);
+            }
+            cookie.Value = cookie_value;
+            HttpContext.Current.Request.Cookies.Set(cookie);
+        }
         #endregion
     }
 }

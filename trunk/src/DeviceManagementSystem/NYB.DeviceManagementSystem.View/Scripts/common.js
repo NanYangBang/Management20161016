@@ -335,7 +335,7 @@ function BindNonNumberBlocker(selector, allowNegative, allowZero) {
 }
 
 function BindDatePickerTriggerEvent() {
-    return;
+    //return;
 
     $('.ui-datepicker-trigger').click(AppendClearButtonToDatePicker);
 
