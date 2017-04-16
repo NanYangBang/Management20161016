@@ -12,7 +12,7 @@ function uploadProof() {
         auto: false,
         width: 60,
         multi: true,
-        //postData: { token: Resource.Auth },
+        postData: { token: Resource.Auth },
         //checkExisting: false,
         fileTypeDesc: '*.jpg;*.jpeg;*.png',
         //removeCompleted: true,

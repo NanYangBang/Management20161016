@@ -8,6 +8,7 @@
 @{
     var toady = DateTime.Now.Date;
 }
+<meta http-equiv="content-type" content="application/ms-excel; charset=UTF-8" />
 <style type="text/css">
     body .content .uploadifyButton {
         height: 24px;
@@ -33,7 +34,6 @@
 <div leftname="设备信息" actionname="设备管理">
     <form method="get" id="searchForm" class="userSearchForm">
         <input type="text" name="searchInfo" id="seacheName" value="@(ViewBag.SearchInfo)" />
-
         <label>设备状态</label>
         <select value="" id="deviceStateEnum" name="deviceStateEnum" style="height:28px;width:100px;">
             <option value="">全部</option>
@@ -43,6 +43,15 @@
             }
         </select>
         @Html.Hidden("isMaintainSearch", ViewBag.IsMaintainSearch == true ? true : false)
+        <label>每页显示行数</label>
+        <select name="pageSize" style="height:28px;">
+            <option @(ViewBag.PageSize == 10 ? "selected" : "") value="10">10</option>
+            <option @(ViewBag.PageSize == 15 ? "selected" : "") value="15">15</option>
+            <option @(ViewBag.PageSize == 20 ? "selected" : "") value="20">20</option>
+            <option @(ViewBag.PageSize == 25 ? "selected" : "") value="25">25</option>
+            <option @(ViewBag.PageSize == 30 ? "selected" : "") value="30">30</option>
+        </select>
+
         <input style="line-height:0px" type="submit" class="" id="btnSearch" value="搜索" />
     </form>
 
@@ -146,6 +155,7 @@
             }
         </tbody>
     </table>
+
     <div class="btn-opreate">
         @Html.Partial("DisplayTemplates/PagerView", Model)
         <div>

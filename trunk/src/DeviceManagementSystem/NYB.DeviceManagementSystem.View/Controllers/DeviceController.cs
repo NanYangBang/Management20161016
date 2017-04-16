@@ -31,6 +31,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             var pageList = new PagedList<WebDevice>(device, pageIndex, pageSize,totalCount);
             ViewBag.SearchInfo = searchInfo;
             ViewBag.DeviceStateEnum = deviceStateEnum.HasValue ? deviceStateEnum.ToString() : deviceStateEnum.ToString();
+            ViewBag.PageSize = pageSize;
             ViewBag.IsMaintainSearch = isMaintainSearch;
             return View(pageList);
         }
@@ -162,6 +163,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
                 webRepairRecordList = cResult.Data;
             }
             ViewBag.SearchInfo = searchInfo;
+            ViewBag.PageSize = pageSize;
             var pageList = new PagedList<WebRepairRecord>(webRepairRecordList, pageIndex, pageSize, totalCount);
             return View("RepairRecord/RepairRecordList", pageList);
         }
@@ -328,6 +330,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             }
             var pageList = new PagedList<WebMaintainRecord>(webRepairRecordList, pageIndex, pageSize, totalCount);
             ViewBag.SearchInfo = searchInfo;
+            ViewBag.PageSize = pageSize;
             return View("MaintainRecord/MaintainRecordList", pageList);
         }
 

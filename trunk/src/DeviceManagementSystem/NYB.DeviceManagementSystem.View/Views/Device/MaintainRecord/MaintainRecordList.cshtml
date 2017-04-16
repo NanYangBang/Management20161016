@@ -22,6 +22,15 @@
         <label>结束时间</label>
         <input name="endTime" txttype="time" class="time" type="text" value="@(ViewBag.EndTime)" />
         <input type="text" name="searchInfo" id="seacheName" value="@(ViewBag.SearchInfo)" />
+
+        <label>每页显示行数</label>
+        <select name="pageSize" style="height:28px;">
+            <option @(ViewBag.PageSize == 10 ? "selected" : "") value="10">10</option>
+            <option @(ViewBag.PageSize == 15 ? "selected" : "") value="15">15</option>
+            <option @(ViewBag.PageSize == 20 ? "selected" : "") value="20">20</option>
+            <option @(ViewBag.PageSize == 25 ? "selected" : "") value="25">25</option>
+            <option @(ViewBag.PageSize == 30 ? "selected" : "") value="30">30</option>
+        </select>
         <input style="line-height:0px" type="submit" class="" id="btnSearch" value="搜索" />
     </form>
     <table class="table-common" id="pileInfo">

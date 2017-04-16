@@ -27,7 +27,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             }
             var pageList = new PagedList<WebProject>(userList, pageIndex, pageSize,totalCount);
             ViewBag.SearchInfo = searchInfo;
-
+            ViewBag.PageSize = pageSize;
             if (Request.Cookies.AllKeys.Contains("ManageProjectID"))
             {
                 Request.Cookies.Remove("ManageProjectID");

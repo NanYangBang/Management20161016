@@ -337,6 +337,7 @@
     <Content Include="Content\ssi-uploader\ssi-uploader.min.css.map" />
     <None Include="Properties\PublishProfiles\test.pubxml" />
     <None Include="Properties\PublishProfiles\YWCS.pubxml" />
+    <Content Include="Images\alarm-透明.gif" />
     <Content Include="Images\projectmanage.png" />
     <Content Include="Scripts\bootstrap-3.3.5-dist\css\bootstrap-theme.css.map" />
     <Content Include="Scripts\bootstrap-3.3.5-dist\css\bootstrap.css.map" />
@@ -576,7 +577,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>1382</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

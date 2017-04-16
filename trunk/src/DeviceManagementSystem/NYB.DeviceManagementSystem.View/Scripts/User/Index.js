@@ -20,7 +20,7 @@ function DataDel(id, url) {
 }
 
 function SearchInfoFocus(prompt) {
-    var domeSearInfoText = $('#searchForm input[type="text"][txtType!="time"]');
+    var domeSearInfoText = $('#searchForm input[type="text"][txtType!="time"][name!="pageSize"]');
 
     var firstVal = domeSearInfoText.val();
     if (firstVal == '') {

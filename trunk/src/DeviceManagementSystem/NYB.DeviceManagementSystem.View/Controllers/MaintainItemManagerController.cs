@@ -27,6 +27,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
                 }
                 var pageList = new PagedList<WebMaintainItem>(list, pageIndex, pageSize,totalCount);
                 ViewBag.SearchInfo = searchInfo;
+                ViewBag.PageSize = pageSize;
                 return View(pageList);
             }
             catch (Exception)

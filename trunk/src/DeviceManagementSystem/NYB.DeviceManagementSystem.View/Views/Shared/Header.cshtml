@@ -24,7 +24,10 @@
     <div class="header-message resetFont">
         <ul>
             <li><a target="_blank" href="http://www.ywcs.com.cn">官网</a></li>
-            <li id="maintainCountStr"><a href="@Url.Action("Index", "Device", new { isMaintainSearch = true})">需保养设备</a><a id="maintainCount" href="@Url.Action("Index", "Device", new { isMaintainSearch = true })">0</a></li>
+            <li><a target="_blank" href="@Url.Content("~/Content/Help.docx")">帮助</a></li>
+            <li id="maintainCountStr">
+            <img style="float: left; margin-right: 4px; margin-top: -2px;" src="@Url.Content("~/Images/alarm-透明.gif")" />
+            <a href="@Url.Action("Index", "Device", new { isMaintainSearch = true})">需保养设备</a><a id="maintainCount" href="@Url.Action("Index", "Device", new { isMaintainSearch = true })">0</a></li>
             <li><a id="resetPasswordRef" href="@Url.Action("ChangePassword", "Account")">修改密码</a></li>
             <li class="last-border"><a href="@Url.Action("LogOff", "Account", new { _ = DateTime.Now.Ticks })">退出</a></li>
         </ul>
@@ -67,6 +70,9 @@
             $("#maintainCountStr").show();
 
             $.get('@Url.Action("MaintainCount", "Device", new { _ = DateTime.Now.Ticks })', {}, function (data) {
+                if (data <= 0) {
+                    $('#maintainCountStr img').remove();
+                }
                 $("#maintainCount").text(data);
             });
         } else {
@@ -99,9 +105,6 @@
 
     $("#resetPasswordRef").click(function (e) {
         e.preventDefault();
-        @*$.post('@(Url.Action("ChangePassWord", "User", new { _ = DateTime.Now.Ticks }))', {}, function (data) {
-            $('#passwordDialog').append(data);
-        });*@
 
         $.ajax({
             type: 'get',

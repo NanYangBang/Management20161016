@@ -16,6 +16,10 @@
     .content .bootstrap-duallistbox-container {
         width: 585px;
     }
+    .content .form-control {
+        overflow:scroll;
+    }
+
 </style>
 
 <link href="~/Scripts/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -95,7 +99,7 @@
                                     {
                                         if (selectIDs.Contains(item.ID))
                                         {
-                                            <option value="@(item.ID)" selected="selected">@item.Name</option>
+                                            <option title="@item.Name" value="@(item.ID)" selected="selected">@item.Name</option>
                                         }
                                         else
                                         {
@@ -131,7 +135,7 @@
             </fieldset>
         </div>
         <div class="common-details-operation-panel">
-           @* <p class="UpdatePile-btn">*@
+            @* <p class="UpdatePile-btn">*@
             <table class="operateTable">
                 <tr>
                     <td style="width:90px; visibility:hidden"><b>ssdsds</b></td>
@@ -203,7 +207,15 @@
             $('#Operator').val('');
             $('#Operator').keyup();
         }
+        AddTitle();
     })
+
+    function AddTitle() {
+
+        $('.form-control option').each(function () {
+            $(this).attr('title',$(this).text());
+        })
+    }
 
     function BindDatePick() {
         var path = Resource.UrlImage;
