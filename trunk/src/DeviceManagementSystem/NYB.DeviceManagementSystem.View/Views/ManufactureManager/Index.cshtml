@@ -43,8 +43,8 @@
                     创建时间
                 </th>
                 @*<th>
-                    备注
-                </th>*@
+                        备注
+                    </th>*@
                 <th class="operation-column">
                     操作
                 </th>
@@ -71,8 +71,8 @@
                             @manufacturer.Address
                         </td>
                         @*<td title="@(@manufacturer.Note)" class="lengHideTd">
-                            @manufacturer.Note
-                        </td>*@
+                                @manufacturer.Note
+                            </td>*@
                         <td>
                             @manufacturer.CreateDate.ToString("yyyy-MM-dd HH:mm:ss")
                         </td>
@@ -82,7 +82,10 @@
                             <a title="修改" href="@(Url.Action("Edit", "ManufactureManager", routeValues))"><img src="@Url.Content("~/Images/edit.png")" /></a>
                             @*@Html.ActionLink("查看", "Details", routeValues)*@
                             <a title="查看" href="@(Url.Action("Details", "ManufactureManager", routeValues))"><img src="@Url.Content("~/Images/look.png")" /></a>
-                            <a href="#" onclick="DataDel('@manufacturer.ID','@(Url.Action("Delete", new { _ = DateTime.Now.Ticks }))')" name="DeleteManufacturer"><img src="@Url.Content("~/Images/del.png")" /></a>
+                            @if (int.Parse(Request.Cookies.Get("CurrentRole").Value) != (int)RoleType.操作员)
+                            {
+                                <a href="#" onclick="DataDel('@manufacturer.ID','@(Url.Action("Delete", new { _ = DateTime.Now.Ticks }))')" name="DeleteManufacturer"><img src="@Url.Content("~/Images/del.png")" /></a>
+                            }
                         </td>
                     </tr>
                 }
