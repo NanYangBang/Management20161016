@@ -72,7 +72,6 @@
     <Compile Include="Enum\BusinessModelEnum.cs" />
     <Compile Include="Enum\DeviceStateEnum.cs" />
     <Compile Include="Enum\OperatTypeEnum.cs" />
-    <Compile Include="Enum\PageSizeEnum.cs" />
     <Compile Include="Enum\RoleType.cs" />
     <Compile Include="ErrorCode\DescriptionAttribute.cs" />
     <Compile Include="ErrorCode\ErrorCode.cs" />
