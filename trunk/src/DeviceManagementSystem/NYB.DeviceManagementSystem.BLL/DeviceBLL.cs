@@ -258,6 +258,8 @@ namespace NYB.DeviceManagementSystem.BLL
                 return new CResult<bool>(false, ErrorCode.FileContainNoData);
             }
 
+            LogHelper.Info("读取数据行数为"+dataTable.Rows.Count);
+
             var webDeviceList = new List<WebDevice>();
             foreach (DataRow row in dataTable.Rows)
             {
