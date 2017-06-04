@@ -28,6 +28,8 @@ namespace NYB.DeviceManagementSystem.View.Controllers
                 var pageList = new PagedList<WebMaintainItem>(list, pageIndex, pageSize,totalCount);
                 ViewBag.SearchInfo = searchInfo;
                 ViewBag.PageSize = pageSize;
+                ViewBag.ProjectID = this.GetCurrentProjectID();
+                ViewBag.UserID = this.GetCurrentUserID();
                 return View(pageList);
             }
             catch (Exception)
@@ -135,9 +137,9 @@ namespace NYB.DeviceManagementSystem.View.Controllers
         }
 
         [HttpPost]
-        public ActionResult ImportExcel(HttpPostedFileBase fileData)
+        public ActionResult ImportExcel(HttpPostedFileBase fileData, string ProjectID = "", string UserID = "")
         {
-            var result = new MaintainItemBLL().ImportMaintainItemFromExcel(fileData, this.GetCurrentProjectID(), this.GetCurrentUserID());
+            var result = new MaintainItemBLL().ImportMaintainItemFromExcel(fileData, ProjectID, UserID);
             return JsonContentHelper.GetJsonContent(result);
         }
 

@@ -180,8 +180,10 @@
         UrlCancelImage: '@Url.Content("~/Content/Plugin/jQueryUploadify/images/uploadify-cancel.png")',
         UrlSwf: '@Url.Content("~/Content/Plugin/jQueryUploadify/flash/uploadify.swf")',
         UrlExportExcel: '@Url.Action("ExportExcel", new { _ = DateTime.Now.Ticks })',
-        UrlDownLoad: '@Url.Action("DownloadFile")'
-    }
+        UrlDownLoad: '@Url.Action("DownloadFile")',
+        ProjectID: '@(ViewBag.ProjectID)',
+        UserID:'@(ViewBag.UserID)'
+        }
 
     $(document).ready(function () {
         AddRection();
@@ -203,7 +205,7 @@
             width: 60,
             height: 28,
             multi: false,
-            postData: { token: UrlResource.Auth },
+            postData: { token: UrlResource.Auth, ProjectID: UrlResource.ProjectID, UserID: UrlResource.UserID },
             //checkExisting: false,
             fileTypeDesc: '*.xls;*.xlsx;',
             //removeCompleted: true,

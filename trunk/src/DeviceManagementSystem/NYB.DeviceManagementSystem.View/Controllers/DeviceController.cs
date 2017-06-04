@@ -28,11 +28,13 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             {
                 device = cResult.Data;
             }
-            var pageList = new PagedList<WebDevice>(device, pageIndex, pageSize,totalCount);
+            var pageList = new PagedList<WebDevice>(device, pageIndex, pageSize, totalCount);
             ViewBag.SearchInfo = searchInfo;
             ViewBag.DeviceStateEnum = deviceStateEnum.HasValue ? deviceStateEnum.ToString() : deviceStateEnum.ToString();
             ViewBag.PageSize = pageSize;
             ViewBag.IsMaintainSearch = isMaintainSearch;
+            ViewBag.ProjectID = this.GetCurrentProjectID();
+            ViewBag.UserID = this.GetCurrentUserID();       
             return View(pageList);
         }
 
@@ -382,9 +384,11 @@ namespace NYB.DeviceManagementSystem.View.Controllers
         }
 
         [HttpPost]
-        public ActionResult ImportExcel(HttpPostedFileBase fileData)
+        public ActionResult ImportExcel(HttpPostedFileBase fileData, string ProjectID = "", string UserID = "")
         {
-            var result = new DeviceBLL().ImportDeviceFromExcel(fileData, this.GetCurrentProjectID(), this.GetCurrentUserID());
+            // var currentUserID = this.GetCurrentUserID();
+            //var gao = this.GetCurrentUserID();
+            var result = new DeviceBLL().ImportDeviceFromExcel(fileData, ProjectID, UserID);
             return JsonContentHelper.GetJsonContent(result);
         }
 
@@ -392,7 +396,6 @@ namespace NYB.DeviceManagementSystem.View.Controllers
         {
             var result = new DeviceBLL().ExportDeviceToExcel(this.GetCurrentProjectID(), searchInfo, deviceStateEnum, isMaintainSearch);
             return JsonContentHelper.GetJsonContent(result);
-
         }
 
         public ActionResult MaintainCount()
