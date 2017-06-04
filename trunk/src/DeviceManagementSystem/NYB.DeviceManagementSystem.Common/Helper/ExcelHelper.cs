@@ -186,6 +186,7 @@ namespace NYB.DeviceManagementSystem.Common.Helper
                             break;
                         }
 
+                        bool emptyRow = true;
                         DataRow dr = dt.NewRow();
                         foreach (ICell item in row.Cells)
                         {
@@ -220,7 +221,7 @@ namespace NYB.DeviceManagementSystem.Common.Helper
                                             string str = item.StringCellValue;
                                             if (!string.IsNullOrEmpty(str))
                                             {
-                                                dr[item.ColumnIndex] = str.ToString();
+                                                dr[item.ColumnIndex] = str.Trim();
                                             }
                                             else
                                             {
@@ -248,7 +249,7 @@ namespace NYB.DeviceManagementSystem.Common.Helper
                                     string strValue = item.StringCellValue;
                                     if (string.IsNullOrEmpty(strValue) == false)
                                     {
-                                        dr[item.ColumnIndex] = strValue.ToString();
+                                        dr[item.ColumnIndex] = strValue.Trim();
                                     }
                                     else
                                     {
@@ -261,8 +262,20 @@ namespace NYB.DeviceManagementSystem.Common.Helper
                                     dr[item.ColumnIndex] = string.Empty;
                                     break;
                             }
+
+                            if (dr[item.ColumnIndex] != null && string.IsNullOrEmpty(dr[item.ColumnIndex].ToString())==false)
+                            {
+                                emptyRow = false;
+                            }
                         }
-                        dt.Rows.Add(dr);
+                        if (emptyRow==false)
+                        {
+                            dt.Rows.Add(dr);
+                        }
+                        else
+                        {
+                            Logger.LogHelper.Info("出现空行index为"+dt.Rows.Count+1);
+                        }
                     }
                 }
             }
