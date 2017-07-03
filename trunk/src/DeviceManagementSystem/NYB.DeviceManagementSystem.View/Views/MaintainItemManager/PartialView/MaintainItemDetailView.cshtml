@@ -66,7 +66,7 @@
     window.Resource = {
         UrlAdd: '@Url.Action("Create", new { _ = DateTime.Now.Ticks })',
         UrlEdit: '@Url.Action("Edit", new { _ = DateTime.Now.Ticks })',
-        ReturnUrl: '@returnUrl',
+        ReturnUrl: $('#returnUrl').val(),
         UrlAction: '@ViewBag.Action',
         IsView: '@(isView)'
     }

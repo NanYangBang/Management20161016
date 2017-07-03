@@ -16,10 +16,10 @@
     .content .bootstrap-duallistbox-container {
         width: 585px;
     }
-    .content .form-control {
-        overflow:scroll;
-    }
 
+    .content .form-control {
+        overflow: scroll;
+    }
 </style>
 
 <link href="~/Scripts/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -174,7 +174,7 @@
         UrlAdd: '@Url.Action("AddMainTainRecord", "Device", new { _ = DateTime.Now.Ticks })',
         UrlEdit: '@(Url.Action("EditMaintainRecord", "Device", new { _ = DateTime.Now.Ticks }))',
         Auth: '@(Request.Cookies[FormsAuthentication.FormsCookieName] == null ? string.Empty : Request.Cookies[FormsAuthentication.FormsCookieName].Value)',
-        ReturnUrl: '@returnUrl',
+        ReturnUrl: $('#returnUrl').val(),
         IsAddRecord: '@(ViewBag.IsAddRecord)',
         Action: '@(ViewBag.OperateAction)',
         UrlAddFile: '@(Url.Action("AddMaintainRecordFile", "Device", new { _ = DateTime.Now.Ticks }))',
@@ -213,7 +213,7 @@
     function AddTitle() {
 
         $('.form-control option').each(function () {
-            $(this).attr('title',$(this).text());
+            $(this).attr('title', $(this).text());
         })
     }
 

@@ -144,7 +144,7 @@
     window.Resource = {
         UrlAdd: '@Url.Action("CreateDevice", "Device", new { _ = DateTime.Now.Ticks })',
         UrlEdit: '@Url.Action("EditDevice", "Device", new { _ = DateTime.Now.Ticks })',
-        ReturnUrl: '@returnUrl',
+        ReturnUrl: $('#returnUrl').val(),
         UrlAction: '@ViewBag.Action',
         UrlImage: '@Url.Content("~/Content/Plugin/jQuery-UI-Timepicker/images/calendar.png")'
     }
@@ -174,7 +174,7 @@
             $('#ProductDate').val('@(Model.ProductDate.HasValue?  Model.ProductDate.Value.ToString("yyyy-MM-dd"):"")');
             $('#MaintainDate').val('@(Model.MaintainDate.HasValue? Model.MaintainDate.Value.ToString("yyyy-MM-dd"):"")');
         }
-
+        
 
     }
 

@@ -121,7 +121,7 @@
     window.Resource = {
         UrlAdd: '@Url.Action("AddOrderClient", "OrderClientManager", new { _ = DateTime.Now.Ticks })',
         UrlEdit: '@Url.Action("UpdateOrderClient", "OrderClientManager", new { _ = DateTime.Now.Ticks })',
-        ReturnUrl: '@returnUrl',
+        ReturnUrl: $('#returnUrl').val(),
         UrlAction: '@ViewBag.Action',
         IsView: '@(isView)'
     }

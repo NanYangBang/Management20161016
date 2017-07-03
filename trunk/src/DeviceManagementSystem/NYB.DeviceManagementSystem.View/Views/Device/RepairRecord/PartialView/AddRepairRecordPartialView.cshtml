@@ -134,7 +134,7 @@
         UrlAdd: '@Url.Action("AddRepairRecord", "Device", new { _ = DateTime.Now.Ticks })',
         Auth: '@(Request.Cookies[FormsAuthentication.FormsCookieName] == null ? string.Empty : Request.Cookies[FormsAuthentication.FormsCookieName].Value)',
         UrlEdit: '@(Url.Action("EditRepairRecord", "Device", new { _ = DateTime.Now.Ticks }))',
-        ReturnUrl: '@returnUrl',
+        ReturnUrl: $('#returnUrl').val(),
         Action: '@(ViewBag.OperateAction)',
         UrlImage: '@Url.Content("~/Content/Plugin/jQuery-UI-Timepicker/images/calendar.png")',
         IsView: '@(isView)',
