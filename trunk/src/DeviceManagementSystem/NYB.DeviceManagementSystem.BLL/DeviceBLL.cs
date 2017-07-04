@@ -235,6 +235,33 @@ namespace NYB.DeviceManagementSystem.BLL
             }
         }
 
+        public CResult<bool> DeleteDeviceBatch(List<string> DeviceIDList)
+        {
+            LogHelper.Info(MethodBase.GetCurrentMethod().ToString());
+            LogHelper.Info("DeviceIDList", DeviceIDList);
+
+            if (DeviceIDList == null || DeviceIDList.Count == 0)
+            {
+                return new CResult<bool>(false, ErrorCode.ParameterError);
+            }
+
+            using (var context = new DeviceMgmtEntities())
+            {
+                var entityList = context.Device.Where(t => DeviceIDList.Contains(t.ID)).ToList();
+
+                if (entityList.Count != DeviceIDList.Count)
+                {
+                    return new CResult<bool>(false, ErrorCode.DataNoExist);
+                }
+
+                foreach (var entity in entityList)
+                {
+                    entity.IsValid = false;                    
+                }
+
+                return context.Save();
+            }
+        }
 
         public CResult<bool> ImportDeviceFromExcel(HttpPostedFileBase file, string projectID, string operatorUserID)
         {
@@ -258,7 +285,7 @@ namespace NYB.DeviceManagementSystem.BLL
                 return new CResult<bool>(false, ErrorCode.FileContainNoData);
             }
 
-            LogHelper.Info("读取数据行数为"+dataTable.Rows.Count);
+            LogHelper.Info("读取数据行数为" + dataTable.Rows.Count);
 
             var webDeviceList = new List<WebDevice>();
             foreach (DataRow row in dataTable.Rows)
@@ -355,7 +382,7 @@ namespace NYB.DeviceManagementSystem.BLL
                         ManufacturerID = manufacturerList.FirstOrDefault(t => t.Name == webDevice.ManufacturerName).ID,
                         Num = webDevice.Num,
                         Name = webDevice.Name,
-                        DeviceState=(int)webDevice.DeviceState,
+                        DeviceState = (int)webDevice.DeviceState,
                         Note = webDevice.Note,
                         ProductDate = webDevice.ProductDate,
                         ProjectID = projectID,
