@@ -355,6 +355,7 @@ namespace NYB.DeviceManagementSystem.BLL
                         ManufacturerID = manufacturerList.FirstOrDefault(t => t.Name == webDevice.ManufacturerName).ID,
                         Num = webDevice.Num,
                         Name = webDevice.Name,
+                        DeviceState=(int)webDevice.DeviceState,
                         Note = webDevice.Note,
                         ProductDate = webDevice.ProductDate,
                         ProjectID = projectID,
