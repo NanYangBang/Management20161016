@@ -34,7 +34,7 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             ViewBag.PageSize = pageSize;
             ViewBag.IsMaintainSearch = isMaintainSearch;
             ViewBag.ProjectID = this.GetCurrentProjectID();
-            ViewBag.UserID = this.GetCurrentUserID();       
+            ViewBag.UserID = this.GetCurrentUserID();
             return View(pageList);
         }
 
@@ -65,6 +65,13 @@ namespace NYB.DeviceManagementSystem.View.Controllers
             DeviceBLL deviceBLL = new DeviceBLL();
             var cResult = deviceBLL.InsertDevice(webDevice);
             return JsonContentHelper.GetJsonContent(cResult);
+        }
+
+        public ActionResult DeleteMeviceMui(List<string> ids)
+        {
+            DeviceBLL deviceBLL = new DeviceBLL();
+            var result = deviceBLL.DeleteDeviceBatch(ids);
+            return JsonContentHelper.GetJsonContent(result);
         }
 
         [HttpGet]

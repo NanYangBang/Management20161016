@@ -58,6 +58,9 @@
     <table class="table-common" id="pileInfo">
         <thead>
             <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" class="allcheck" />
+                </th>
                 <th>
                     编号
                 </th>
@@ -98,6 +101,9 @@
                 foreach (var device in Model)
                 {
                     <tr pileid="">
+                        <td style="text-align:center;padding:0;width:10px;">
+                            <input vs="@(device.ID)" type="checkbox" class="thischeck" />
+                        </td>
                         <td>
                             @device.Num
                         </td>
@@ -162,6 +168,7 @@
     <div class="btn-opreate">
         @Html.Partial("DisplayTemplates/PagerView", Model)
         <div>
+            <input type="button" style="float:left" class="" id="delButton" value="删除" />
             <input type="button" style="float:left" class="blue-button" id="addButton" value="添加" />
             <div style="width:100px;float:left;margin-left:20px" class="uploadProofParent"><input type="file" multiple id="uploadProof" /></div>
             <a href="#" type="button" id="btnExport" value="导出">导出</a>
@@ -182,8 +189,8 @@
         UrlExportExcel: '@Url.Action("ExportExcel", new { _ = DateTime.Now.Ticks })',
         UrlDownLoad: '@Url.Action("DownloadFile")',
         ProjectID: '@(ViewBag.ProjectID)',
-        UserID:'@(ViewBag.UserID)'
-        }
+        UserID: '@(ViewBag.UserID)'
+    }
 
     $(document).ready(function () {
         AddRection();
@@ -193,7 +200,43 @@
         uploadProof();
         ExportExcel('请输入设备名称、设备类型、生产厂商或供应商');
         BindDatePick();
+        checkBoxAll();
     })
+
+    function checkBoxAll() {
+        $('.allcheck').change(function (e) {
+            console.log($(this).attr('checked'));
+            if ($(this).attr('checked') == 'checked') {
+                $('.thischeck').attr('checked', 'true');
+            } else {
+                $('.thischeck').removeAttr('checked');
+            }
+
+        })
+
+        $('#delButton').click(function () {
+            var iddoms = $('.thischeck:checked');
+            if (iddoms.length > 0) {
+
+                var param = {};
+                iddoms.each(function (i, e) {
+                    param['ids[' + i + ']'] = $(e).attr('vs');
+                })
+
+                if (confirm('是否确认删除？') == true) {
+                    $.post('@Url.Action("DeleteMeviceMui")', param, function (data) {
+                        if (data.Code == 0) {
+                            window.location.reload();
+                        } else {
+                            alert(data.Msg);
+                        }
+                    })
+                }
+            } else {
+                alert('请选择要删除的项');
+            }
+        })
+    }
 
     function uploadProof() {
         $('#uploadProof').uploadify({
